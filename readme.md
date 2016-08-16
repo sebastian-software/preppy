@@ -1,6 +1,6 @@
-# Pre-Publish Library <br/>![Downloads][npm-version-img] ![Downloads][npm-downloads-img] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] ![Dependencies][deps-img]
+# Pre Publish Library <br/>![Downloads][npm-version-img] ![Downloads][npm-downloads-img] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] ![Dependencies][deps-img]
 
-Pre-Publish Library is a solution for simplifying pre-publishing typical JavaScript projects for publishing to NPM.
+Pre Publish Library is a solution for simplifying pre-publishing typical JavaScript projects for publishing to NPM.
 
 [deps-img]: https://david-dm.org/sebastian-software/prepublish-lib.svg
 [npm]: https://www.npmjs.com/package/prepublish-lib
@@ -27,7 +27,7 @@ $ npm install --save-dev prepublish-lib
 
 ## Usage
 
-Pre-Publish Lib comes with a binary which can be called from within your `scripts` section
+Pre Publish Library comes with a binary which can be called from within your `scripts` section
 in the `package.json` file.
 
 ```json

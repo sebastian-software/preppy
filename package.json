@@ -2,11 +2,18 @@
   "name": "prepublish-lib",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "keywords": [
+    "npm",
+    "publish",
+    "library"
+  ],
+  "engines": {
+    "node": "~6.3.0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Sebastian Werner",
+  "license": "MIT",
+  "main": "bin/prepublish-lib",
+  "scripts": {
+    "prepublish": "node bin/prepublish-lib"
+  }
 }

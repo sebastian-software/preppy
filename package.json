@@ -1,6 +1,6 @@
 {
   "name": "prepublish-lib",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "keywords": [
     "npm",
@@ -17,12 +17,11 @@
   "license": "MIT",
   "main": "bin/prepublish-lib",
   "scripts": {
-    "lint": "eslint src/",
+    "lint": "eslint --quiet src/ test/ || true",
     "nsp": "nsp check --output summary",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",
-    "lint": "eslint --quiet src/ test/ || true",
     "test": "npm run prepublish && node bin/prepublish-lib",
     "prepublish": "rollup -c rollup.cfg"
   },

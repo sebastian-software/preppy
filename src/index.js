@@ -33,7 +33,7 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
   {
     console.log(`Bundling ${pkg.name} v${pkg.version} as ${format}...`)
 
-    rollup({
+    return rollup({
       entry: entry,
       cache,
       onwarn: function() {},
@@ -57,7 +57,9 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
       callback(null)
     )
     .catch((err) =>
+    {
+      console.error(err)
       callback(`Error during bundling ${format}: ${err}`)
-    )
+    })
   })
 })

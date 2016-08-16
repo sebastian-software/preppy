@@ -23,6 +23,12 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
   var moduleId = pkg.name
   var moduleName = camelCase(pkg.name)
 
+  const outputFileMatrix = {
+    "cjs": pkg.main || "lib/index.js",
+    "es" : pkg.module || pkg["jsnext:main"] || "lib/index.es.js",
+    "umd": pkg.browser || "lib/index.umd.js"
+  }
+
   eachSeries(formats, (format, callback) =>
   {
     console.log(`Bundling ${pkg.name} v${pkg.version} as ${format}...`)
@@ -44,7 +50,7 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
         moduleName,
         banner,
         sourceMap: true,
-        dest: `lib/out.${format}.js`
+        dest: outputFileMatrix[format]
       })
     )
     .then(() =>

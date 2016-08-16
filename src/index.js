@@ -1,4 +1,4 @@
-import path from "path"
+import { resolve } from "path"
 
 import { rollup } from "rollup"
 import buble from "rollup-plugin-buble"
@@ -13,7 +13,7 @@ import camelCase from "lodash/camelCase"
 var readPackageAsync = denodeify(readPackage)
 var cache;
 
-readPackageAsync(path.resolve("package.json")).then(function(pkg)
+readPackageAsync(resolve("package.json")).then(function(pkg)
 {
   var entry = "src/index.js"
   var banner = `/*! ${pkg.name} v${pkg.version} by ${pkg.author.name} */`

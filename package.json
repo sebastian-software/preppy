@@ -14,7 +14,8 @@
   "license": "MIT",
   "main": "bin/prepublish-lib",
   "scripts": {
-    "prepublish": "node bin/prepublish-lib"
+    "test": "npm run prepublish && node bin/prepublish-lib",
+    "prepublish": "rollup -c rollup.cfg"
   },
   "dependencies": {
     "async": "^2.0.1",

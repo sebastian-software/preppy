@@ -15,7 +15,7 @@
   },
   "author": "Sebastian Werner",
   "license": "MIT",
-  "main": "bin/prepublish-lib",
+  "main": "lib/index.js",
   "scripts": {
     "lint": "eslint --quiet src/ test/ || true",
     "nsp": "nsp check --output summary",

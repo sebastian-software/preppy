@@ -17,6 +17,7 @@
     "prepublish": "node bin/prepublish-lib"
   },
   "dependencies": {
+    "async": "^2.0.1",
     "denodeify": "^1.2.1",
     "lodash": "^4.15.0",
     "read-package-json": "^2.0.4",

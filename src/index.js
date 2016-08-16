@@ -41,7 +41,9 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
     return rollup({
       entry: entry,
       cache,
-      onwarn: function() {},
+      onwarn: function(msg) {
+        console.warn(msg)
+      },
       plugins:
       [
         buble(),

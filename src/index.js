@@ -7,8 +7,8 @@ import commonjs from "rollup-plugin-commonjs"
 
 import readPackage from "read-package-json"
 import denodeify from "denodeify"
-import eachSeries from "async/eachSeries"
-import camelCase from "lodash/camelCase"
+import { eachSeries } from "async"
+import { camelCase } from "lodash"
 
 var readPackageAsync = denodeify(readPackage)
 var cache;

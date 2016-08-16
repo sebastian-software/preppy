@@ -10,6 +10,9 @@
   "engines": {
     "node": "~6.3.0"
   },
+  "bin": {
+    "prepublish-lib": "./bin/prepublish-lib"
+  },
   "author": "Sebastian Werner",
   "license": "MIT",
   "main": "bin/prepublish-lib",

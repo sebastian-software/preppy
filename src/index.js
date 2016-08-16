@@ -11,9 +11,9 @@ import { eachSeries } from "async"
 import { camelCase } from "lodash"
 
 var readPackageAsync = denodeify(readPackage)
-var cache;
+var cache
 
-readPackageAsync(resolve("package.json")).then(function(pkg)
+readPackageAsync(resolve("package.json")).then((pkg) =>
 {
   var entry = "src/index.js"
   var banner = `/*! ${pkg.name} v${pkg.version} by ${pkg.author.name} */`
@@ -23,7 +23,7 @@ readPackageAsync(resolve("package.json")).then(function(pkg)
   var moduleId = pkg.name
   var moduleName = camelCase(pkg.name)
 
-  eachSeries(formats, function(format, callback)
+  eachSeries(formats, (format, callback) =>
   {
     console.log(`Bundling ${pkg.name} v${pkg.version} as ${format}...`)
 
@@ -37,9 +37,8 @@ readPackageAsync(resolve("package.json")).then(function(pkg)
         commonjs({ include: "node_modules/**" })
       ]
     })
-    .then(function (bundle)
-    {
-      return bundle.write({
+    .then((bundle) =>
+      bundle.write({
         format,
         moduleId,
         moduleName,
@@ -47,13 +46,12 @@ readPackageAsync(resolve("package.json")).then(function(pkg)
         sourceMap: true,
         dest: `lib/out.${format}.js`
       })
-    })
-    .then(function()
-    {
-      callback(null);
-    })
-    .catch(function(err) {
+    )
+    .then(() =>
+      callback(null)
+    )
+    .catch((err) =>
       callback(`Error during bundling ${format}: ${err}`)
-    })
+    )
   })
 })

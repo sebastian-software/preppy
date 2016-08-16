@@ -17,6 +17,7 @@
   "license": "MIT",
   "main": "bin/prepublish-lib",
   "scripts": {
+    "lint": "eslint src/",
     "nsp": "nsp check --output summary",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
@@ -38,5 +39,8 @@
     "rollup-plugin-buble": "^0.13.0",
     "rollup-plugin-commonjs": "^3.3.1",
     "rollup-plugin-node-resolve": "^2.0.0"
+  },
+  "devDependencies": {
+    "s15e-javascript": "^0.2.3"
   }
 }

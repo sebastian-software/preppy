@@ -6,6 +6,7 @@ import nodeResolve from "rollup-plugin-node-resolve"
 import commonjs from "rollup-plugin-commonjs"
 import uglify from "rollup-plugin-uglify"
 import fse from "fs-extra"
+import path from "path"
 
 import readPackage from "read-package-json"
 import denodeify from "denodeify"
@@ -29,12 +30,12 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
   var moduleId = pkg.name
   var moduleName = camelCase(pkg.name)
 
-  const outputFolder = process.argv[3] ? path.resolve(process.argv[3], "lib") : "lib"
+  const outputFolder = process.argv[3] ? process.argv[3] : "lib"
   const outputFileMatrix = {
-    "cjs": pkg.main || `${outputFolder}/index.js`,
-    "es" : pkg.module || pkg["jsnext:main"] || `${outputFolder}/index.es.js`,
-    "umd": pkg.browser || `${outputFolder}/index.umd.js`,
-    "umd-min": pkg.browser ? pkg.browser.replace(".js", ".min.js") : `${outputFolder}/index.umd.min.js`
+    "cjs": outputFolder ? `${outputFolder}/index.js` : pkg.main || null,
+    "es" : outputFolder ? `${outputFolder}/index.es.js` : pkg.module || pkg["jsnext:main"] || null,
+    "umd": outputFolder ? `${outputFolder}/index.umd.js` : pkg.browser || null,
+    "umd-min": outputFolder ? `${outputFolder}/index.umd.min.js` : pkg.browser.replace(".js", ".min.js") || null
   }
 
   eachSeries(formats, (format, callback) =>
@@ -81,4 +82,9 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
       callback(`Error during bundling ${format}: ${err}`)
     })
   })
+})
+.catch(function(err)
+{
+  console.error("Error while building: ", err)
+  process.exit(1)
 })

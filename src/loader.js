@@ -47,14 +47,6 @@ function processStyle(code, id, dest)
     })
 }
 
-const staticAST = {
-  type: "Program",
-  sourceType: "module",
-  start: 0,
-  end: null,
-  body: []
-}
-
 const externalIds = {}
 
 
@@ -138,7 +130,6 @@ export default function(outputFolder)
                 console.log("Processed:", fileSource, "=>", fileDest)
 
                 resolve({
-                  ast : staticAST,
                   code: `import h${fileHash} from "./${idDest}"; export default h${fileHash};`,
                   map: { mappings: "" }
                 })
@@ -153,7 +144,6 @@ export default function(outputFolder)
                 console.log("Copied:", fileSource, "=>", fileDest)
 
                 resolve({
-                  ast : staticAST,
                   code: `import h${fileHash} from "./${idDest}"; export default h${fileHash};`,
                   map: { mappings: "" }
                 })

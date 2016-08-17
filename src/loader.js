@@ -55,13 +55,31 @@ const staticAST = {
   body: []
 }
 
+const externalIds = {}
+
 
 export default function(outputFolder)
 {
   return {
     name: "file-loader",
 
-    transform: function(code, id)
+    resolveId: function(importee, importer) {
+      console.log("RR: Testing:", importee)
+      if (importee in externalIds) {
+        console.log("RR: Marking external!")
+
+        // This does not seem to work!
+
+        // "returning any other falsy value signals that importee should be treated as an external module
+        // and not included in the bundle." -- https://github.com/rollup/rollup/wiki/Plugins#creating-plugins
+        return false
+      }
+
+      console.log("RR: Delegating...")
+    },
+
+
+    transformxx: function(code, id)
     {
       if (!isAssetFile(id))
         return null
@@ -101,6 +119,8 @@ export default function(outputFolder)
             var fileHash = hash.digest("hex").slice(0, 8)
             var idDest = path.basename(id, fileExt) + "-" + fileHash + destExt
             var fileDest = path.join(outputFolder, idDest)
+
+            externalIds["./" + idDest] = true
 
             if (fileExt in styleExtensions)
             {

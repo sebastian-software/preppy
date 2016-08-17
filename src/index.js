@@ -29,12 +29,12 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
   var moduleId = pkg.name
   var moduleName = camelCase(pkg.name)
 
-  const outputFolder = "lib"
+  const outputFolder = process.argv[3] ? path.resolve(process.argv[3], "lib") : "lib"
   const outputFileMatrix = {
-    "cjs": pkg.main || "lib/index.js",
-    "es" : pkg.module || pkg["jsnext:main"] || "lib/index.es.js",
-    "umd": pkg.browser || "lib/index.umd.js",
-    "umd-min": pkg.browser ? pkg.browser.replace(".js", ".min.js") : "lib/index.umd.min.js"
+    "cjs": pkg.main || `${outputFolder}/index.js`,
+    "es" : pkg.module || pkg["jsnext:main"] || `${outputFolder}/index.es.js`,
+    "umd": pkg.browser || `${outputFolder}/index.umd.js`,
+    "umd-min": pkg.browser ? pkg.browser.replace(".js", ".min.js") : `${outputFolder}/index.umd.min.js`
   }
 
   eachSeries(formats, (format, callback) =>

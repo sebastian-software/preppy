@@ -55,26 +55,24 @@ export default function(outputFolder)
   return {
     name: "file-loader",
 
-    isExternal: function(id) {
+    isExternal: function(id)
+    {
       var baseName = "./" + path.basename(id)
       if (baseName in externalIds) {
-        return true;
+        return true
       }
     },
 
-    resolveId: function(importee, importer) {
-      console.log("RR: Testing:", importee)
-      if (importee in externalIds) {
-        console.log("RR: Marking external!")
-
-        // This does not seem to work!
-
+    resolveId: function(importee, importer)
+    {
+      if (importee in externalIds)
+      {
+        // This does not yet seem to work!
+        // See also: https://github.com/rollup/rollup/issues/861
         // "returning any other falsy value signals that importee should be treated as an external module
         // and not included in the bundle." -- https://github.com/rollup/rollup/wiki/Plugins#creating-plugins
         return false
       }
-
-      console.log("RR: Delegating...")
     },
 
 
@@ -123,12 +121,8 @@ export default function(outputFolder)
 
             if (fileExt in styleExtensions)
             {
-              console.log("Processing style:", id)
-
               return processStyle(fileData, fileSource, fileDest).then(function()
               {
-                console.log("Processed:", fileSource, "=>", fileDest)
-
                 resolve({
                   code: `import h${fileHash} from "./${idDest}"; export default h${fileHash};`,
                   map: { mappings: "" }
@@ -137,12 +131,8 @@ export default function(outputFolder)
             }
             else
             {
-              console.log("Processing asset:", id)
-
               return copyAsync(fileSource, fileDest).then(function()
               {
-                console.log("Copied:", fileSource, "=>", fileDest)
-
                 resolve({
                   code: `import h${fileHash} from "./${idDest}"; export default h${fileHash};`,
                   map: { mappings: "" }

@@ -1,17 +1,22 @@
-import { resolve } from "path"
+import { resolve, extname, basename, dirname, join } from "path"
 
 import { rollup } from "rollup"
 import buble from "rollup-plugin-buble"
 import nodeResolve from "rollup-plugin-node-resolve"
 import commonjs from "rollup-plugin-commonjs"
 import uglify from "rollup-plugin-uglify"
+import fse from "fs-extra"
 
 import readPackage from "read-package-json"
 import denodeify from "denodeify"
 import { eachSeries } from "async"
 import { camelCase } from "lodash"
 
+import loader from "./loader"
+
 var readPackageAsync = denodeify(readPackage)
+var copyAsync = denodeify(fse.copy)
+
 var cache
 
 readPackageAsync(resolve("package.json")).then((pkg) =>
@@ -24,6 +29,7 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
   var moduleId = pkg.name
   var moduleName = camelCase(pkg.name)
 
+  const outputFolder = "lib"
   const outputFileMatrix = {
     "cjs": pkg.main || "lib/index.js",
     "es" : pkg.module || pkg["jsnext:main"] || "lib/index.es.js",
@@ -49,6 +55,7 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
         buble(),
         deepBundle ? nodeResolve({ jsnext: true, main: true }) : null,
         commonjs({ include: "node_modules/**" }),
+        loader(),
         fileMode === "min" ? uglify() : null
       ].filter((entry) => entry != null)
     })

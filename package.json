@@ -34,12 +34,16 @@
     "denodeify": "^1.2.1",
     "fs-extra": "^0.30.0",
     "lodash": "^4.15.0",
+    "postcss": "^5.1.2",
+    "postcss-scss": "^0.1.9",
+    "postcss-smart-import": "^0.2.3",
     "read-package-json": "^2.0.4",
     "rollup": "^0.34.9",
     "rollup-plugin-buble": "^0.13.0",
     "rollup-plugin-commonjs": "^3.3.1",
     "rollup-plugin-node-resolve": "^2.0.0",
-    "rollup-plugin-uglify": "^1.0.1"
+    "rollup-plugin-uglify": "^1.0.1",
+    "sugarss": "^0.1.5"
   },
   "devDependencies": {
     "s15e-javascript": "^0.2.3"

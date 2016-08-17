@@ -44,20 +44,25 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
     var fileFormat = format.split("-")[0]
     var fileMode = format.split("-")[1]
 
+    var fileMapper = loader(outputFolder)
+
     return rollup({
       entry: entry,
       cache,
       onwarn: function(msg) {
         console.warn(msg)
       },
+      external: function(id) {
+        return fileMapper.isExternal(id)
+      },
       plugins:
       [
         buble(),
-        deepBundle ? nodeResolve({ jsnext: true, main: true }) : null,
+        deepBundle ? nodeResolve({ module: true, jsnext: true, main: true, browser: fileFormat === "umd" }) : null,
         commonjs({ include: "node_modules/**" }),
-        loader(outputFolder),
+        fileMapper,
         fileMode === "min" ? uglify() : null
-      ].filter((entry) => entry != null)
+      ].filter((plugin) => Boolean(plugin))
     })
     .then((bundle) =>
       bundle.write({

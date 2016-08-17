@@ -63,6 +63,13 @@ export default function(outputFolder)
   return {
     name: "file-loader",
 
+    isExternal: function(id) {
+      var baseName = "./" + path.basename(id)
+      if (baseName in externalIds) {
+        return true;
+      }
+    },
+
     resolveId: function(importee, importer) {
       console.log("RR: Testing:", importee)
       if (importee in externalIds) {

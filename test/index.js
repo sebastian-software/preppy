@@ -6,7 +6,3 @@ console.log("Classes from SSS:", classes2)
 
 import url from "./logo.svg"
 console.log("Logo URL:", url)
-
-var elem = document.createElement("div")
-elem.className = classes1.root
-document.body.appendChild(elem)

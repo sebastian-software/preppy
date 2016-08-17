@@ -52,9 +52,7 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
       onwarn: function(msg) {
         console.warn(msg)
       },
-      external: function(id) {
-        return fileMapper.isExternal(id)
-      },
+      external: fileMapper.isExternal,
       plugins:
       [
         buble(),

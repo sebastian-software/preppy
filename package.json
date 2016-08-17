@@ -22,7 +22,7 @@
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",
-    "test": "npm run prepublish && node bin/prepublish-lib test/index.js",
+    "test": "npm run prepublish && node bin/prepublish-lib test/index.js && webpack --config webpack.config.js && node dist/bundle.js",
     "prepublish": "rollup -c rollup.cfg"
   },
   "repository": {
@@ -46,6 +46,8 @@
     "sugarss": "^0.1.5"
   },
   "devDependencies": {
-    "s15e-javascript": "^0.2.3"
+    "file-loader": "^0.9.0",
+    "s15e-javascript": "^0.2.3",
+    "webpack": "^2.1.0-beta.20"
   }
 }

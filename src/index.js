@@ -15,13 +15,13 @@ import { camelCase } from "lodash"
 import loader from "./loader"
 
 var readPackageAsync = denodeify(readPackage)
-var copyAsync = denodeify(fse.copy)
 
 var cache
 
 readPackageAsync(resolve("package.json")).then((pkg) =>
 {
-  var entry = "src/index.js"
+  // Read entry file from command line... fallback to typical default location
+  var entry = process.argv[2] || "src/index.js"
   var banner = `/*! ${pkg.name} v${pkg.version} by ${pkg.author.name} */`
   var formats = [ "es", "cjs", "umd", "umd-min" ]
   var deepBundle = false
@@ -55,7 +55,7 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
         buble(),
         deepBundle ? nodeResolve({ jsnext: true, main: true }) : null,
         commonjs({ include: "node_modules/**" }),
-        loader(),
+        loader(outputFolder),
         fileMode === "min" ? uglify() : null
       ].filter((entry) => entry != null)
     })

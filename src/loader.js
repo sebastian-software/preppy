@@ -1,8 +1,12 @@
-var fs = require("fs")
-var path = require("path")
-var crypto = require("crypto");
+import fs from "fs"
+import path from "path"
+import crypto from "crypto"
+import denodeify from "denodeify"
+import fse from "fs-extra"
 
-export default function()
+var copyAsync = denodeify(fse.copy)
+
+export default function(outputFolder)
 {
   return {
     name: "file-loader",

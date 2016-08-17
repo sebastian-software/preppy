@@ -17,8 +17,8 @@ function isAssetFile(id) {
   return !(fileExt === "" || (/^(json|jsx|js|es|es5|es6)$/).exec(fileExt))
 }
 
-
-const styleExtensions = {
+const styleExtensions =
+{
   ".css": null,
   ".sss": postcssParserSugarss,
   ".scss": postcssParserScss
@@ -28,11 +28,21 @@ const postcssPlugins = [
   postcssSmartImport()
 ]
 
-function processStyle(code, id, dest) {
+function processStyle(code, id, dest)
+{
+  var parser = styleExtensions[path.extname(id)]
   return postcss(postcssPlugins)
-    .process(code, { from: id, to: dest }).then((result) => {
+    .process(code,
+      {
+        from: id,
+        to: dest,
+        parser: parser,
+        extensions: ['.css', '.sss', '.scss']
+      })
+    .then((result) => {
       return writeAsync(dest, result)
-    }).catch(function(err) {
+    })
+    .catch(function(err) {
       console.error(err)
     })
 }
@@ -50,18 +60,17 @@ export default function(outputFolder)
 {
   return {
     name: "file-loader",
+
     transform: function(code, id)
     {
       if (!isAssetFile(id))
         return null
 
-      console.log("Transform: ", id, code)
       return {
         code: `export default "FIXME-PROTECT-IMPORT"`,
         map: { mappings: "" }
       }
     },
-
 
     load: function(id)
     {
@@ -88,10 +97,10 @@ export default function(outputFolder)
             var fileHasher = crypto.createHash("sha1")
             var fileSource = id
             var fileExt = path.extname(id)
+            var destExt = fileExt in styleExtensions ? ".css" : fileExt
             var fileHash = hash.digest("hex").slice(0, 8)
-            var idDest = path.basename(id, fileExt) + "-" + fileHash + fileExt
+            var idDest = path.basename(id, fileExt) + "-" + fileHash + destExt
             var fileDest = path.join(outputFolder, idDest)
-
 
             if (fileExt in styleExtensions)
             {

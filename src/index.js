@@ -58,7 +58,7 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
       [
         buble(),
         deepBundle ? nodeResolve({ module: true, jsnext: true, main: true, browser: fileFormat === "umd" }) : null,
-        commonjs({ include: "node_modules/**" }),
+        commonjs({ include: "node_modules/**", extensions: [ '.js', '.jsx', '.es5', '.es6', '.es', '.json' ] }),
         fileMapper,
         fileMode === "min" ? uglify() : null
       ].filter((plugin) => Boolean(plugin))

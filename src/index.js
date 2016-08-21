@@ -1,8 +1,6 @@
 import { resolve } from "path"
 
 import { rollup } from "rollup"
-import buble from "rollup-plugin-buble"
-import babel from "rollup-plugin-babel"
 import nodeResolve from "rollup-plugin-node-resolve"
 import commonjs from "rollup-plugin-commonjs"
 import uglify from "rollup-plugin-uglify"
@@ -14,11 +12,12 @@ import { camelCase } from "lodash"
 
 import loader from "./loader"
 
-var readPackageAsync = denodeify(readPackage)
+import es2015 from "./config/es2015"
+import react from "./config/react"
 
 var cache
 
-readPackageAsync(resolve("package.json")).then((pkg) =>
+denodeify(readPackage)(resolve("package.json")).then((pkg) =>
 {
   // Read entry file from command line... fallback to typical default location
   var entry = process.argv[2] || "src/index.js"
@@ -49,58 +48,9 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
     var transpilationMode = "react"
     var transpilerConfig =
     {
-      react: babel(
-        {
-          // Don't try to find .babelrc because we want to force this configuration.
-          babelrc: false,
-
-          exclude: "node_modules/**",
-          presets:
-          [
-            [
-              "es2015",
-              {
-                modules: false
-              }
-            ],
-            "es2016",
-            "react"
-          ],
-          plugins:
-          [
-            // function x(a, b, c,) { }
-            "babel-plugin-syntax-trailing-function-commas",
-
-            // await fetch()
-            "babel-plugin-syntax-async-functions",
-
-            // class { handleClick = () => { } }
-            "babel-plugin-transform-class-properties",
-
-            // { ...todo, completed: true }
-            "babel-plugin-transform-object-rest-spread",
-
-            // function* () { yield 42; yield 43; }
-            "babel-plugin-transform-regenerator",
-
-            // Polyfills the runtime needed for async/await and generators
-            [
-              "babel-plugin-transform-runtime",
-              {
-                helpers: false,
-                polyfill: false,
-                regenerator: true
-              }
-            ],
-
-            // Optimization: hoist JSX that never changes out of render()
-            "babel-plugin-transform-react-constant-elements"
-          ]
-        }),
-
-      basic: buble()
+      react,
+      es2015
     }
-
 
     return rollup({
       entry: entry,

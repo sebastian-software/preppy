@@ -12,7 +12,8 @@ import postcssParserScss from "postcss-scss"
 var copyAsync = denodeify(fse.copy)
 var writeAsync = denodeify(fse.outputFile)
 
-function isAssetFile(id) {
+function isAssetFile(id)
+{
   var fileExt = path.extname(id).slice(1)
   return !(fileExt === "" || (/^(json|jsx|js|es|es5|es6)$/).exec(fileExt))
 }
@@ -33,16 +34,16 @@ function processStyle(code, id, dest)
   var parser = styleExtensions[path.extname(id)]
   return postcss(postcssPlugins)
     .process(code,
-      {
-        from: id,
-        to: dest,
-        parser: parser,
-        extensions: ['.css', '.sss', '.scss']
-      })
+    {
+      from: id,
+      to: dest,
+      parser: parser,
+      extensions: [ ".css", ".sss", ".scss" ]
+    })
     .then((result) => {
       return writeAsync(dest, result)
     })
-    .catch(function(err) {
+    .catch((err) => {
       console.error(err)
     })
 }
@@ -58,12 +59,10 @@ export default function(outputFolder)
     isExternal: function(id)
     {
       var baseName = "./" + path.basename(id)
-      if (baseName in externalIds) {
-        return true
-      }
+      return baseName in externalIds
     },
 
-    resolveId: function(importee, importer)
+    resolveId: function(importee)
     {
       if (importee in externalIds)
       {
@@ -73,6 +72,8 @@ export default function(outputFolder)
         // and not included in the bundle." -- https://github.com/rollup/rollup/wiki/Plugins#creating-plugins
         return false
       }
+
+      return null
     },
 
     load: function(id)
@@ -93,7 +94,7 @@ export default function(outputFolder)
           if (data)
           {
             fileData += data
-            hash.update(data);
+            hash.update(data)
           }
           else
           {

@@ -2,7 +2,7 @@ import { resolve } from "path"
 
 import { rollup } from "rollup"
 import buble from "rollup-plugin-buble"
-import buble from "rollup-plugin-babel"
+import babel from "rollup-plugin-babel"
 import nodeResolve from "rollup-plugin-node-resolve"
 import commonjs from "rollup-plugin-commonjs"
 import uglify from "rollup-plugin-uglify"
@@ -46,6 +46,24 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
 
     var fileMapper = loader(outputFolder)
 
+    var transpilationMode = "react"
+    var transpilerConfig =
+    {
+      react: babel(
+      {
+        exclude: 'node_modules/**',
+        presets:
+        [
+          ["es2015", { "modules": false }],
+          "es2016",
+          "react"
+        ]
+      }),
+
+      basic: buble()
+    }
+
+
     return rollup({
       entry: entry,
       cache,
@@ -55,7 +73,7 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
       external: fileMapper.isExternal,
       plugins:
       [
-        buble(),
+        transpilerConfig[transpilationMode],
         deepBundle ? nodeResolve({ module: true, jsnext: true, main: true, browser: fileFormat === "umd" }) : null,
         commonjs({ include: "node_modules/**", extensions: [ '.js', '.jsx', '.es5', '.es6', '.es', '.json' ] }),
         fileMapper,

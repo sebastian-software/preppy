@@ -4,13 +4,12 @@ import { rollup } from "rollup"
 import nodeResolve from "rollup-plugin-node-resolve"
 import commonjs from "rollup-plugin-commonjs"
 import uglify from "rollup-plugin-uglify"
+import relink from "rollup-plugin-relink"
 
 import readPackage from "read-package-json"
 import denodeify from "denodeify"
 import { eachSeries } from "async"
 import { camelCase } from "lodash"
-
-import Mapper from "./loader"
 
 import es2015buble from "./config/es2015buble"
 import es2016loose from "./config/es2016loose"
@@ -59,7 +58,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
     var fileFormat = format.split("-")[0]
     var fileMode = format.split("-")[1]
 
-    var fileMapper = Mapper(outputFolder)
+    var fileRelink = relink(outputFolder)
 
     var transpilationMode = "react"
 
@@ -67,7 +66,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
       entry: entry,
       cache,
       onwarn: (msg) => console.warn(msg),
-      external: fileMapper.isExternal,
+      external: fileRelink.isExternal,
       plugins:
       [
         transpilerConfig[transpilationMode],
@@ -81,7 +80,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
           include: "node_modules/**",
           extensions: scriptExtensions
         }),
-        fileMapper,
+        fileRelink,
         fileMode === "min" ? uglify() : null
       ].filter((plugin) => Boolean(plugin))
     })

@@ -18,7 +18,6 @@ import es2016 from "./config/es2016"
 import react from "./config/react"
 import stage2 from "./config/stage2"
 import stage3 from "./config/stage3"
-import stage4 from "./config/stage4"
 
 const transpilerConfig =
 {
@@ -27,8 +26,7 @@ const transpilerConfig =
   es2016,
   react,
   stage2,
-  stage3,
-  stage4
+  stage3
 }
 
 var cache

@@ -3,6 +3,7 @@ import path from "path"
 import crypto from "crypto"
 import denodeify from "denodeify"
 import fse from "fs-extra"
+import { getHashDigest } from "loader-utils"
 
 import postcss from "postcss"
 import postcssSmartImport from "postcss-smart-import"
@@ -48,6 +49,10 @@ function processStyle(code, id, dest)
     })
 }
 
+const hashType = "sha256"
+const digestType = "base62"
+const digestLength = 8
+
 const externalIds = {}
 
 
@@ -84,50 +89,41 @@ export default function(outputFolder)
       const input = fs.createReadStream(id)
       const hash = crypto.createHash("sha256")
 
-      var fileData = ""
-
       return new Promise((resolve, reject) =>
       {
         input.on("readable", () =>
         {
-          var data = input.read()
-          if (data)
+          var fileSource = id
+          var fileContent = fs.readFileSync(fileSource)
+          var fileExt = path.extname(id)
+          var fileHash = getHashDigest(fileContent, hashType, digestType, digestLength)
+
+          var destExt = fileExt in styleExtensions ? ".css" : fileExt
+          var destId = path.basename(id, fileExt) + "-" + fileHash + destExt
+
+          var fileDest = path.join(outputFolder, destId)
+
+          externalIds["./" + destId] = true
+
+          if (fileExt in styleExtensions)
           {
-            fileData += data
-            hash.update(data)
+            return processStyle(fileContent, fileSource, fileDest).then(function()
+            {
+              resolve({
+                code: `import _${fileHash} from "./${destId}"; export default _${fileHash};`,
+                map: { mappings: "" }
+              })
+            })
           }
           else
           {
-            var fileHasher = crypto.createHash("sha1")
-            var fileSource = id
-            var fileExt = path.extname(id)
-            var destExt = fileExt in styleExtensions ? ".css" : fileExt
-            var fileHash = hash.digest("hex").slice(0, 8)
-            var idDest = path.basename(id, fileExt) + "-" + fileHash + destExt
-            var fileDest = path.join(outputFolder, idDest)
-
-            externalIds["./" + idDest] = true
-
-            if (fileExt in styleExtensions)
+            return copyAsync(fileSource, fileDest).then(function()
             {
-              return processStyle(fileData, fileSource, fileDest).then(function()
-              {
-                resolve({
-                  code: `import h${fileHash} from "./${idDest}"; export default h${fileHash};`,
-                  map: { mappings: "" }
-                })
+              resolve({
+                code: `import _${fileHash} from "./${destId}"; export default _${fileHash};`,
+                map: { mappings: "" }
               })
-            }
-            else
-            {
-              return copyAsync(fileSource, fileDest).then(function()
-              {
-                resolve({
-                  code: `import h${fileHash} from "./${idDest}"; export default h${fileHash};`,
-                  map: { mappings: "" }
-                })
-              })
-            }
+            })
           }
         })
       })

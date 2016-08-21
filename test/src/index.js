@@ -8,3 +8,13 @@ import url from "./logo.svg"
 console.log("Logo URL:", url)
 
 console.log("ES2016 Enabled:", 2**2===4)
+
+var ReactTest = function() {}
+
+var React = {
+  createElement: function(cls) {
+    return new cls;
+  }
+}
+
+console.log("React Enabled:", <ReactTest>Hello</ReactTest> instanceof ReactTest)

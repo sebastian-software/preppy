@@ -12,8 +12,24 @@ import { camelCase } from "lodash"
 
 import loader from "./loader"
 
-import es2015 from "./config/es2015"
+import es2015buble from "./config/es2015buble"
+import es2016loose from "./config/es2016loose"
+import es2016 from "./config/es2016"
 import react from "./config/react"
+import stage2 from "./config/stage2"
+import stage3 from "./config/stage3"
+import stage4 from "./config/stage4"
+
+const transpilerConfig =
+{
+  es2015buble,
+  es2016loose,
+  es2016,
+  react,
+  stage2,
+  stage3,
+  stage4
+}
 
 var cache
 
@@ -46,11 +62,6 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
     var fileMapper = loader(outputFolder)
 
     var transpilationMode = "react"
-    var transpilerConfig =
-    {
-      react,
-      es2015
-    }
 
     return rollup({
       entry: entry,

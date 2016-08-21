@@ -6,6 +6,7 @@ export default babel(
     babelrc: false,
 
     exclude: "node_modules/**",
+
     presets:
     [
       [
@@ -14,29 +15,31 @@ export default babel(
           modules: false
         }
       ],
+
       "es2016",
       "react"
     ],
+
     plugins:
     [
       // function x(a, b, c,) { }
-      "babel-plugin-syntax-trailing-function-commas",
+      "syntax-trailing-function-commas",
 
       // await fetch()
-      "babel-plugin-syntax-async-functions",
+      "syntax-async-functions",
 
       // class { handleClick = () => { } }
-      "babel-plugin-transform-class-properties",
+      "transform-class-properties",
 
       // { ...todo, completed: true }
-      "babel-plugin-transform-object-rest-spread",
+      "transform-object-rest-spread",
 
       // function* () { yield 42; yield 43; }
-      "babel-plugin-transform-regenerator",
+      "transform-regenerator",
 
       // Polyfills the runtime needed for async/await and generators
       [
-        "babel-plugin-transform-runtime",
+        "transform-runtime",
         {
           helpers: false,
           polyfill: false,
@@ -45,6 +48,6 @@ export default babel(
       ],
 
       // Optimization: hoist JSX that never changes out of render()
-      "babel-plugin-transform-react-constant-elements"
+      "transform-react-constant-elements"
     ]
   })

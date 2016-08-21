@@ -75,18 +75,6 @@ export default function(outputFolder)
       }
     },
 
-
-    transformxx: function(code, id)
-    {
-      if (!isAssetFile(id))
-        return null
-
-      return {
-        code: `export default "FIXME-PROTECT-IMPORT"`,
-        map: { mappings: "" }
-      }
-    },
-
     load: function(id)
     {
       if (!isAssetFile(id))

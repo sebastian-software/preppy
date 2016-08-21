@@ -1,12 +1,11 @@
-import { resolve, extname, basename, dirname, join } from "path"
+import { resolve } from "path"
 
 import { rollup } from "rollup"
 import buble from "rollup-plugin-buble"
+import buble from "rollup-plugin-babel"
 import nodeResolve from "rollup-plugin-node-resolve"
 import commonjs from "rollup-plugin-commonjs"
 import uglify from "rollup-plugin-uglify"
-import fse from "fs-extra"
-import path from "path"
 
 import readPackage from "read-package-json"
 import denodeify from "denodeify"

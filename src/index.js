@@ -10,7 +10,7 @@ import denodeify from "denodeify"
 import { eachSeries } from "async"
 import { camelCase } from "lodash"
 
-import loader from "./loader"
+import Mapper from "./loader"
 
 import es2015buble from "./config/es2015buble"
 import es2016loose from "./config/es2016loose"
@@ -18,6 +18,8 @@ import es2016 from "./config/es2016"
 import react from "./config/react"
 import stage2 from "./config/stage2"
 import stage3 from "./config/stage3"
+
+const scriptExtensions = [ ".js", ".jsx", ".es5", ".es6", ".es", ".json" ]
 
 const transpilerConfig =
 {
@@ -45,7 +47,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
   const outputFolder = process.argv[3] ? process.argv[3] : "lib"
   const outputFileMatrix = {
     "cjs": outputFolder ? `${outputFolder}/index.js` : pkg.main || null,
-    "es" : outputFolder ? `${outputFolder}/index.es.js` : pkg.module || pkg["jsnext:main"] || null,
+    "es": outputFolder ? `${outputFolder}/index.es.js` : pkg.module || pkg["jsnext:main"] || null,
     "umd": outputFolder ? `${outputFolder}/index.umd.js` : pkg.browser || null,
     "umd-min": outputFolder ? `${outputFolder}/index.umd.min.js` : pkg.browser.replace(".js", ".min.js") || null
   }
@@ -57,7 +59,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
     var fileFormat = format.split("-")[0]
     var fileMode = format.split("-")[1]
 
-    var fileMapper = loader(outputFolder)
+    var fileMapper = Mapper(outputFolder)
 
     var transpilationMode = "react"
 
@@ -69,8 +71,16 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
       plugins:
       [
         transpilerConfig[transpilationMode],
-        deepBundle ? nodeResolve({ module: true, jsnext: true, main: true, browser: fileFormat === "umd" }) : null,
-        commonjs({ include: "node_modules/**", extensions: [ ".js", ".jsx", ".es5", ".es6", ".es", ".json" ] }),
+        deepBundle ? nodeResolve({
+          module: true,
+          jsnext: true,
+          main: true,
+          browser: fileFormat === "umd"
+        }) : null,
+        commonjs({
+          include: "node_modules/**",
+          extensions: scriptExtensions
+        }),
         fileMapper,
         fileMode === "min" ? uglify() : null
       ].filter((plugin) => Boolean(plugin))

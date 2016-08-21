@@ -57,7 +57,12 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
           exclude: "node_modules/**",
           presets:
           [
-            [ "es2015", { modules: false } ],
+            [
+              "es2015",
+              {
+                modules: false
+              }
+            ],
             "es2016",
             "react"
           ],
@@ -79,12 +84,14 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
             "babel-plugin-transform-regenerator",
 
             // Polyfills the runtime needed for async/await and generators
-            ["babel-plugin-transform-runtime",
-            {
-              helpers: false,
-              polyfill: false,
-              regenerator: true
-            }],
+            [
+              "babel-plugin-transform-runtime",
+              {
+                helpers: false,
+                polyfill: false,
+                regenerator: true
+              }
+            ],
 
             // Optimization: hoist JSX that never changes out of render()
             "babel-plugin-transform-react-constant-elements"
@@ -98,15 +105,13 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
     return rollup({
       entry: entry,
       cache,
-      onwarn: function(msg) {
-        console.warn(msg)
-      },
+      onwarn: (msg) => console.warn(msg),
       external: fileMapper.isExternal,
       plugins:
       [
         transpilerConfig[transpilationMode],
         deepBundle ? nodeResolve({ module: true, jsnext: true, main: true, browser: fileFormat === "umd" }) : null,
-        commonjs({ include: "node_modules/**", extensions: [ '.js', '.jsx', '.es5', '.es6', '.es', '.json' ] }),
+        commonjs({ include: "node_modules/**", extensions: [ ".js", ".jsx", ".es5", ".es6", ".es", ".json" ] }),
         fileMapper,
         fileMode === "min" ? uglify() : null
       ].filter((plugin) => Boolean(plugin))
@@ -131,7 +136,7 @@ readPackageAsync(resolve("package.json")).then((pkg) =>
     })
   })
 })
-.catch(function(err)
+.catch((err) =>
 {
   console.error("Error while building: ", err)
   process.exit(1)

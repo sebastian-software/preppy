@@ -11,7 +11,7 @@
     "node": "~6.3.0"
   },
   "bin": {
-    "prepublish-lib": "./bin/prepublish-lib"
+    "prepublish-lib": "./bin/prepublish-lib.js"
   },
   "author": "Sebastian Werner",
   "license": "MIT",

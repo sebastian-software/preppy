@@ -3,6 +3,7 @@ import { resolve } from "path"
 import { rollup } from "rollup"
 import uglify from "rollup-plugin-uglify"
 import relink from "rollup-plugin-relink"
+import nodeResolve from "rollup-plugin-node-resolve"
 import builtinModules from "builtin-modules"
 
 import readPackage from "read-package-json"
@@ -24,7 +25,7 @@ for (var i=0, l=external.length; i<l; i++) {
   externalsMap[external[i]] = true
 }
 
-const scriptExtensions = [ ".js", ".jsx", ".es5", ".es6", ".es", ".json" ]
+const extensions = [ ".js", ".jsx", ".es5", ".es6", ".es", ".json" ]
 
 const transpilerConfig =
 {
@@ -44,7 +45,6 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
   var entry = process.argv[2] || "src/index.js"
   var banner = `/*! ${pkg.name} v${pkg.version} by ${pkg.author.name} */`
   var formats = pkg.browser ? [ "es", "cjs", "umd", "umd-min" ] : [ "es", "cjs" ]
-  var deepBundle = false
 
   var moduleId = pkg.name
   var moduleName = camelCase(pkg.name)
@@ -79,6 +79,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
       },
       plugins:
       [
+        nodeResolve({ extensions, jsnext: true, module: true, main: true }),
         transpilerConfig[transpilationMode],
         fileRelink,
         fileMode === "min" ? uglify() : null

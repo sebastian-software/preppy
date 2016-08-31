@@ -5,6 +5,9 @@ export default babel(
     // Don't try to find .babelrc because we want to force this configuration.
     babelrc: false,
 
+    // Allow usage of transform-runtime for referencing to a common library of polyfills
+    runtimeHelpers: true,
+
     exclude: "node_modules/**",
 
     presets:

@@ -1,10 +1,9 @@
 import { resolve } from "path"
 
 import { rollup } from "rollup"
-import nodeResolve from "rollup-plugin-node-resolve"
-import commonjs from "rollup-plugin-commonjs"
 import uglify from "rollup-plugin-uglify"
 import relink from "rollup-plugin-relink"
+import builtinModules from "builtin-modules"
 
 import readPackage from "read-package-json"
 import denodeify from "denodeify"
@@ -17,6 +16,13 @@ import latest from "./config/latest"
 import react from "./config/react"
 import stage2 from "./config/stage2"
 import stage3 from "./config/stage3"
+
+const pkg = require(resolve(process.cwd(), "package.json"))
+const external = Object.keys(pkg.dependencies).concat(builtinModules)
+const externalsMap = {}
+for (var i=0, l=external.length; i<l; i++) {
+  externalsMap[external[i]] = true
+}
 
 const scriptExtensions = [ ".js", ".jsx", ".es5", ".es6", ".es", ".json" ]
 
@@ -66,20 +72,12 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
       entry: entry,
       cache,
       onwarn: (msg) => console.warn(msg),
-      external: fileRelink.isExternal,
+      external: function(xxx) {
+        return externalsMap[xxx] || fileRelink.isExternal(xxx)
+      },
       plugins:
       [
         transpilerConfig[transpilationMode],
-        deepBundle ? nodeResolve({
-          module: true,
-          jsnext: true,
-          main: true,
-          browser: fileFormat === "umd"
-        }) : null,
-        commonjs({
-          include: "node_modules/**",
-          extensions: scriptExtensions
-        }),
         fileRelink,
         fileMode === "min" ? uglify() : null
       ].filter((plugin) => Boolean(plugin))

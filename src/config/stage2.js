@@ -17,6 +17,10 @@ export default babel(
       ],
 
       "es2016",
-      "stage-2"
+      "es2017",
+      "stage-2",
+
+      // Polyfills
+      "transform-runtime"
     ]
   })

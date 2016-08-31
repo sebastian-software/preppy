@@ -17,35 +17,20 @@ export default babel(
       ],
 
       "es2016",
+      "es2017",
       "react"
     ],
 
     plugins:
     [
-      // function x(a, b, c,) { }
-      "syntax-trailing-function-commas",
-
-      // await fetch()
-      "syntax-async-functions",
-
       // class { handleClick = () => { } }
       "transform-class-properties",
 
       // { ...todo, completed: true }
       "transform-object-rest-spread",
 
-      // function* () { yield 42; yield 43; }
-      "transform-regenerator",
-
-      // Polyfills the runtime needed for async/await and generators
-      [
-        "transform-runtime",
-        {
-          helpers: false,
-          polyfill: false,
-          regenerator: true
-        }
-      ],
+      // Polyfills
+      "transform-runtime",
 
       // Optimization: hoist JSX that never changes out of render()
       "transform-react-constant-elements"

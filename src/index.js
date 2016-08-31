@@ -72,8 +72,10 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
       entry: entry,
       cache,
       onwarn: (msg) => console.warn(msg),
-      external: function(xxx) {
-        return externalsMap[xxx] || fileRelink.isExternal(xxx)
+      external: function(pkg)
+      {
+        const purePkg = pkg.split("/")[0]
+        return externalsMap[purePkg] || fileRelink.isExternal(pkg)
       },
       plugins:
       [

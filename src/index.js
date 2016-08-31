@@ -37,7 +37,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
   // Read entry file from command line... fallback to typical default location
   var entry = process.argv[2] || "src/index.js"
   var banner = `/*! ${pkg.name} v${pkg.version} by ${pkg.author.name} */`
-  var formats = [ "es", "cjs", "umd", "umd-min" ]
+  var formats = pkg.browser ? [ "es", "cjs", "umd", "umd-min" ] : [ "es", "cjs" ]
   var deepBundle = false
 
   var moduleId = pkg.name

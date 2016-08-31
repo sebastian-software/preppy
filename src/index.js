@@ -11,9 +11,9 @@ import denodeify from "denodeify"
 import { eachSeries } from "async"
 import { camelCase } from "lodash"
 
-import es2015buble from "./config/es2015buble"
-import es2016loose from "./config/es2016loose"
-import es2016 from "./config/es2016"
+import es2015 from "./config/es2015"
+import latestloose from "./config/latestloose"
+import latest from "./config/latest"
 import react from "./config/react"
 import stage2 from "./config/stage2"
 import stage3 from "./config/stage3"
@@ -22,9 +22,9 @@ const scriptExtensions = [ ".js", ".jsx", ".es5", ".es6", ".es", ".json" ]
 
 const transpilerConfig =
 {
-  es2015buble,
-  es2016loose,
-  es2016,
+  es2015,
+  latestloose,
+  latest,
   react,
   stage2,
   stage3
@@ -58,7 +58,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
     var fileFormat = format.split("-")[0]
     var fileMode = format.split("-")[1]
 
-    var fileRelink = relink({outputFolder})
+    var fileRelink = relink({ outputFolder })
 
     var transpilationMode = "react"
 

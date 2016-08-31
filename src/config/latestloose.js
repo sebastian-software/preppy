@@ -12,14 +12,15 @@ export default babel(
       [
         "es2015",
         {
-          modules: false
+          modules: false,
+          loose: true
         }
       ],
 
       "es2016",
       "es2017",
 
-      // Polyfills
+      // Add Polyfills for Promise, Set, Map, etc. as needed
       "transform-runtime"
     ]
   })

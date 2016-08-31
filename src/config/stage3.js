@@ -20,7 +20,7 @@ export default babel(
       "es2017",
       "stage-3",
 
-      // Polyfills
+      // Add Polyfills for Promise, Set, Map, etc. as needed
       "transform-runtime"
     ]
   })

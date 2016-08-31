@@ -29,7 +29,7 @@ export default babel(
       // { ...todo, completed: true }
       "transform-object-rest-spread",
 
-      // Polyfills
+      // Add Polyfills for Promise, Set, Map, etc. as needed
       "transform-runtime",
 
       // Optimization: hoist JSX that never changes out of render()

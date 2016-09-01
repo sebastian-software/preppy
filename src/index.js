@@ -1,7 +1,6 @@
 import { resolve, relative } from "path"
 
 import { rollup } from "rollup"
-import uglify from "rollup-plugin-uglify"
 import relink from "rollup-plugin-relink"
 import nodeResolve from "rollup-plugin-node-resolve"
 import builtinModules from "builtin-modules"
@@ -42,9 +41,9 @@ var cache
 denodeify(readPackage)(resolve("package.json")).then((pkg) =>
 {
   // Read entry file from command line... fallback to typical default location
-  var entry = process.argv[2] || "src/index.js"
+  var entry = process.argv[2] || "./src/index.js"
   var banner = `/*! ${pkg.name} v${pkg.version} by ${pkg.author.name} */`
-  var formats = pkg.browser ? [ "es", "cjs", "umd", "umd-min" ] : [ "es", "cjs" ]
+  var formats = [ "es", "cjs" ]
 
   var moduleId = pkg.name
   var moduleName = camelCase(pkg.name)
@@ -52,9 +51,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
   const outputFolder = process.argv[3] ? process.argv[3] : "lib"
   const outputFileMatrix = {
     "cjs": outputFolder ? `${outputFolder}/index.js` : pkg.main || null,
-    "es": outputFolder ? `${outputFolder}/index.es.js` : pkg.module || pkg["jsnext:main"] || null,
-    "umd": outputFolder ? `${outputFolder}/index.umd.js` : pkg.browser || null,
-    "umd-min": outputFolder ? `${outputFolder}/index.umd.min.js` : pkg.browser.replace(".js", ".min.js") || null
+    "es": outputFolder ? `${outputFolder}/index.es.js` : pkg.module || pkg["jsnext:main"] || null
   }
 
   eachSeries(formats, (format, callback) =>
@@ -74,6 +71,10 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
       onwarn: (msg) => console.warn(msg),
       external: function(pkg)
       {
+        if (pkg === entry) {
+          return false
+        }
+
         if (fileRelink.isExternal(pkg)) {
           return true
         }
@@ -90,9 +91,8 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
       [
         nodeResolve({ extensions, jsnext: true, module: true, main: true }),
         transpilerConfig[transpilationMode],
-        fileRelink,
-        fileMode === "min" ? uglify() : null
-      ].filter((plugin) => Boolean(plugin))
+        fileRelink
+      ]
     })
     .then((bundle) =>
       bundle.write({

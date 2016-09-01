@@ -1,4 +1,4 @@
-import { resolve } from "path"
+import { resolve, relative } from "path"
 
 import { rollup } from "rollup"
 import uglify from "rollup-plugin-uglify"
@@ -74,8 +74,17 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
       onwarn: (msg) => console.warn(msg),
       external: function(pkg)
       {
-        const purePkg = pkg.split("/")[0]
-        return externalsMap[purePkg] || fileRelink.isExternal(pkg)
+        if (fileRelink.isExternal(pkg)) {
+          return true
+        }
+
+        if (pkg.charAt(0) === "/")
+        {
+          var rel = relative(process.cwd(), pkg)
+          return Boolean(/node_modules/.exec(rel))
+        }
+
+        return pkg.charAt(0) !== "."
       },
       plugins:
       [

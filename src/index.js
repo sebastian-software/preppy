@@ -1,4 +1,4 @@
-import { resolve, relative } from "path"
+import { resolve, relative, isAbsolute } from "path"
 
 import { rollup } from "rollup"
 import relink from "rollup-plugin-relink"
@@ -80,7 +80,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
           return true
         }
 
-        if (pkg.charAt(0) === "/")
+        if (isAbsolute(pkg))
         {
           var rel = relative(process.cwd(), pkg)
           return Boolean(/node_modules/.exec(rel))

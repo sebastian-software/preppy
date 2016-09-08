@@ -1,9 +1,11 @@
+var path = require("path")
+
 module.exports = {
-    context: __dirname + "/lib",
+    context: path.resolve(__dirname, "lib"),
     entry: "./index",
     target: "node",
     output: {
-        path: __dirname + "/dist",
+        path: path.resolve(__dirname, "dist"),
         filename: "bundle.js",
         libraryTarget: "commonjs2"
     },

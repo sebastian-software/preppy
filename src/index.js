@@ -18,7 +18,7 @@ import stage2 from "./config/stage2"
 import stage3 from "./config/stage3"
 
 const pkg = require(resolve(process.cwd(), "package.json"))
-const external = Object.keys(pkg.dependencies).concat(builtinModules)
+const external = [].concat(Object.keys(pkg.dependencies || {}), Object.keys(pkg.devDependencies || {}), Object.keys(pkg.peerDependencies || {}), builtinModules)
 const externalsMap = {}
 for (var i=0, l=external.length; i<l; i++) {
   externalsMap[external[i]] = true

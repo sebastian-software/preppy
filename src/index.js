@@ -47,6 +47,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
 
   var moduleId = pkg.name
   var moduleName = camelCase(pkg.name)
+  var verbose = true
 
   const outputFolder = process.argv[3] ? process.argv[3] : "lib"
   const outputFileMatrix = {
@@ -61,7 +62,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
     var fileFormat = format.split("-")[0]
     var fileMode = format.split("-")[1]
 
-    var fileRelink = relink({ outputFolder })
+    var fileRelink = relink({ outputFolder, verbose })
 
     var transpilationMode = "react"
 

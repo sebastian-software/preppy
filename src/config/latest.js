@@ -24,5 +24,10 @@ export default babel(
 
       // Add Polyfills for Promise, Set, Map, etc. as needed
       "transform-runtime"
+    ],
+
+    plugins: [
+      "transform-es3-property-literals",
+      "transform-es3-member-expression-literals"
     ]
   })

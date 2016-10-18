@@ -42,7 +42,14 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
 {
   // Read entry file from command line... fallback to typical default location
   var entry = process.argv[2] || "./src/index.js"
-  var banner = `/*! ${pkg.name} v${pkg.version} by ${pkg.author.name} */`
+  var banner = `/*! ${pkg.name} v${pkg.version}`
+
+  if (pkg.author) {
+    banner += ` by ${pkg.author.name}`
+  }
+
+  banner += ` */`
+
   var formats = [ "es", "cjs" ]
 
   var moduleId = pkg.name

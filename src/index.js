@@ -69,7 +69,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
     var fileFormat = format.split("-")[0]
     var fileMode = format.split("-")[1]
 
-    var fileRelink = relink({ outputFolder, verbose })
+    var fileRelink = relink({ outputFolder, entry, verbose })
 
     var transpilationMode = "react"
 

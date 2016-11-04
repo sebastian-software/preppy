@@ -20,7 +20,7 @@ import stage3 from "./config/stage3"
 const pkg = require(resolve(process.cwd(), "package.json"))
 const external = [].concat(Object.keys(pkg.dependencies || {}), Object.keys(pkg.devDependencies || {}), Object.keys(pkg.peerDependencies || {}), builtinModules)
 const externalsMap = {}
-for (var i=0, l=external.length; i<l; i++) {
+for (var i = 0, l = external.length; i < l; i++) {
   externalsMap[external[i]] = true
 }
 
@@ -58,8 +58,8 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
 
   const outputFolder = process.argv[3] ? process.argv[3] : "lib"
   const outputFileMatrix = {
-    "cjs": outputFolder ? `${outputFolder}/index.js` : pkg.main || null,
-    "es": outputFolder ? `${outputFolder}/index.es.js` : pkg.module || pkg["jsnext:main"] || null
+    cjs: outputFolder ? `${outputFolder}/index.js` : pkg.main || null,
+    es: outputFolder ? `${outputFolder}/index.es.js` : pkg.module || pkg["jsnext:main"] || null
   }
 
   eachSeries(formats, (format, callback) =>

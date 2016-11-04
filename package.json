@@ -58,7 +58,7 @@
   "devDependencies": {
     "file-loader": "^0.9.0",
     "rimraf": "^2.5.4",
-    "s15e-javascript": "^0.2.4",
+    "s15e-javascript": "^0.3.0",
     "webpack": "^2.1.0-beta.22"
   }
 }

@@ -80,23 +80,23 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
       entry: entry,
       cache,
       onwarn: (msg) => console.warn(msg),
-      external: function(pkg)
+      external: function(dependency)
       {
-        if (pkg === entry) {
+        if (dependency === entry) {
           return false
         }
 
-        if (fileRelink.isExternal(pkg)) {
+        if (fileRelink.isExternal(dependency)) {
           return true
         }
 
-        if (isAbsolute(pkg))
+        if (isAbsolute(dependency))
         {
-          var rel = relative(process.cwd(), pkg)
+          var rel = relative(process.cwd(), dependency)
           return Boolean(/node_modules/.exec(rel))
         }
 
-        return pkg.charAt(0) !== "."
+        return dependency.charAt(0) !== "."
       },
       plugins:
       [

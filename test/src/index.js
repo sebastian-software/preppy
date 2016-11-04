@@ -1,3 +1,8 @@
+/* eslint-disable no-magic-numbers */
+/* eslint-disable func-style */
+/* eslint-disable no-empty-function */
+/* eslint-disable lodash/prefer-noop */
+
 import classes1 from "./index.css"
 console.log("Classes from CSS:", classes1)
 
@@ -12,8 +17,8 @@ console.log("ES2016 Enabled:", 2 ** 2 === 4)
 var ReactTest = function() {}
 
 var React = {
-  createElement: function(cls) {
-    return new cls()
+  createElement: function(TestClass) {
+    return new TestClass()
   }
 }
 

@@ -18,7 +18,12 @@ import stage2 from "./config/stage2"
 import stage3 from "./config/stage3"
 
 const pkg = require(resolve(process.cwd(), "package.json"))
-const external = [].concat(Object.keys(pkg.dependencies || {}), Object.keys(pkg.devDependencies || {}), Object.keys(pkg.peerDependencies || {}), builtinModules)
+const external = [].concat(
+  Object.keys(pkg.dependencies || {}),
+  Object.keys(pkg.devDependencies || {}),
+  Object.keys(pkg.peerDependencies || {}),
+  builtinModules
+)
 const externalsMap = {}
 for (var i = 0, l = external.length; i < l; i++) {
   externalsMap[external[i]] = true
@@ -56,6 +61,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
   var moduleName = camelCase(pkg.name)
   var verbose = true
 
+  /* eslint-disable id-length */
   const outputFolder = process.argv[3] ? process.argv[3] : "lib"
   const outputFileMatrix = {
     cjs: outputFolder ? `${outputFolder}/index.js` : pkg.main || null,
@@ -65,9 +71,6 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
   eachSeries(formats, (format, callback) =>
   {
     console.log(`Bundling ${pkg.name} v${pkg.version} as ${format}...`)
-
-    var fileFormat = format.split("-")[0]
-    var fileMode = format.split("-")[1]
 
     var fileRelink = relink({ outputFolder, entry, verbose })
 
@@ -104,7 +107,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
     })
     .then((bundle) =>
       bundle.write({
-        format: fileFormat,
+        format,
         moduleId,
         moduleName,
         banner,
@@ -125,5 +128,7 @@ denodeify(readPackage)(resolve("package.json")).then((pkg) =>
 .catch((err) =>
 {
   console.error("Error while building: ", err)
+
+  /* eslint-disable no-process-exit */
   process.exit(1)
 })

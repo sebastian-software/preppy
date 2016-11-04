@@ -11,7 +11,10 @@ module.exports = {
   },
   module: {
     loaders: [
-            { test: /\.(svg|css)$/, loader: "file?name=[name].[ext]" }
+      {
+        test: /\.(svg|css)$/,
+        loader: "file?name=[name].[ext]"
+      }
     ]
   }
 }

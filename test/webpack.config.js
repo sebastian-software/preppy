@@ -1,3 +1,4 @@
+/* eslint-disable filenames/match-regex */
 var path = require("path")
 
 module.exports = {

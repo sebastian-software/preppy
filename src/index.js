@@ -5,8 +5,6 @@ import relink from "rollup-plugin-relink"
 import nodeResolve from "rollup-plugin-node-resolve"
 import builtinModules from "builtin-modules"
 
-import readPackage from "read-package-json"
-import denodeify from "denodeify"
 import { eachSeries } from "async"
 import { camelCase } from "lodash"
 
@@ -43,92 +41,81 @@ const transpilerConfig =
 
 var cache
 
-denodeify(readPackage)(resolve("package.json")).then((pkg) =>
+var entry = process.argv[2] || "./src/index.js"
+var banner = `/*! ${pkg.name} v${pkg.version}`
+
+if (pkg.author) {
+  banner += ` by ${pkg.author.name}`
+}
+
+banner += ` */`
+
+var formats = [ "es", "cjs" ]
+
+var moduleId = pkg.name
+var moduleName = camelCase(pkg.name)
+var verbose = true
+
+/* eslint-disable id-length */
+const outputFolder = process.argv[3] ? process.argv[3] : "lib"
+const outputFileMatrix = {
+  cjs: outputFolder ? `${outputFolder}/index.js` : pkg.main || null,
+  es: outputFolder ? `${outputFolder}/index.es.js` : pkg.module || pkg["jsnext:main"] || null
+}
+
+eachSeries(formats, (format, callback) =>
 {
-  // Read entry file from command line... fallback to typical default location
-  var entry = process.argv[2] || "./src/index.js"
-  var banner = `/*! ${pkg.name} v${pkg.version}`
+  console.log(`Bundling ${pkg.name} v${pkg.version} as ${format}...`)
 
-  if (pkg.author) {
-    banner += ` by ${pkg.author.name}`
-  }
+  var fileRelink = relink({ outputFolder, entry, verbose })
 
-  banner += ` */`
+  var transpilationMode = "react"
 
-  var formats = [ "es", "cjs" ]
-
-  var moduleId = pkg.name
-  var moduleName = camelCase(pkg.name)
-  var verbose = true
-
-  /* eslint-disable id-length */
-  const outputFolder = process.argv[3] ? process.argv[3] : "lib"
-  const outputFileMatrix = {
-    cjs: outputFolder ? `${outputFolder}/index.js` : pkg.main || null,
-    es: outputFolder ? `${outputFolder}/index.es.js` : pkg.module || pkg["jsnext:main"] || null
-  }
-
-  eachSeries(formats, (format, callback) =>
-  {
-    console.log(`Bundling ${pkg.name} v${pkg.version} as ${format}...`)
-
-    var fileRelink = relink({ outputFolder, entry, verbose })
-
-    var transpilationMode = "react"
-
-    return rollup({
-      entry: entry,
-      cache,
-      onwarn: (msg) => console.warn(msg),
-      external: function(dependency)
-      {
-        if (dependency === entry) {
-          return false
-        }
-
-        if (fileRelink.isExternal(dependency)) {
-          return true
-        }
-
-        if (isAbsolute(dependency))
-        {
-          var rel = relative(process.cwd(), dependency)
-          return Boolean(/node_modules/.exec(rel))
-        }
-
-        return dependency.charAt(0) !== "."
-      },
-      plugins:
-      [
-        nodeResolve({ extensions, jsnext: true, module: true, main: true }),
-        transpilerConfig[transpilationMode],
-        fileRelink
-      ]
-    })
-    .then((bundle) =>
-      bundle.write({
-        format,
-        moduleId,
-        moduleName,
-        banner,
-        sourceMap: true,
-        dest: outputFileMatrix[format]
-      })
-    )
-    .then(() =>
-      callback(null)
-    )
-    .catch((err) =>
+  return rollup({
+    entry: entry,
+    cache,
+    onwarn: (msg) => console.warn(msg),
+    external: function(dependency)
     {
-      console.error(err)
-      callback(`Error during bundling ${format}: ${err}`)
-    })
-  })
-})
-.catch((err) =>
-{
-  console.error("Error while building: ", err)
+      if (dependency === entry) {
+        return false
+      }
 
-  /* eslint-disable no-process-exit */
-  process.exit(1)
+      if (fileRelink.isExternal(dependency)) {
+        return true
+      }
+
+      if (isAbsolute(dependency))
+      {
+        var rel = relative(process.cwd(), dependency)
+        return Boolean(/node_modules/.exec(rel))
+      }
+
+      return dependency.charAt(0) !== "."
+    },
+    plugins:
+    [
+      nodeResolve({ extensions, jsnext: true, module: true, main: true }),
+      transpilerConfig[transpilationMode],
+      fileRelink
+    ]
+  })
+  .then((bundle) =>
+    bundle.write({
+      format,
+      moduleId,
+      moduleName,
+      banner,
+      sourceMap: true,
+      dest: outputFileMatrix[format]
+    })
+  )
+  .then(() =>
+    callback(null)
+  )
+  .catch((err) =>
+  {
+    console.error(err)
+    callback(`Error during bundling ${format}: ${err}`)
+  })
 })

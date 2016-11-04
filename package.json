@@ -43,11 +43,9 @@
     "babel-preset-stage-3": "^6.17.0",
     "babel-runtime": "^6.18.0",
     "builtin-modules": "^1.1.1",
-    "denodeify": "^1.2.1",
     "fs-extra": "^1.0.0",
     "loader-utils": "^0.2.16",
     "lodash": "^4.16.6",
-    "read-package-json": "^2.0.4",
     "rollup": "^0.36.3",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-buble": "^0.14.0",
@@ -58,7 +56,7 @@
   "devDependencies": {
     "file-loader": "^0.9.0",
     "rimraf": "^2.5.4",
-    "s15e-javascript": "^0.3.4",
+    "s15e-javascript": "^0.3.5",
     "webpack": "^2.1.0-beta.22"
   }
 }

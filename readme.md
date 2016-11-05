@@ -1,7 +1,10 @@
-# Pre Publish Library <br/>![Downloads][npm-version-img] ![Downloads][npm-downloads-img] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] ![Dependencies][deps-img]
+# Pre Publish Library <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
 
 Pre Publish Library is a solution for simplifying pre-publishing typical JavaScript projects for publishing to NPM.
 
+[sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
+[sponsor]: https://www.sebastian-software.de
+[deps]: https://david-dm.org/sebastian-software/prepublish-lib
 [deps-img]: https://david-dm.org/sebastian-software/prepublish-lib.svg
 [npm]: https://www.npmjs.com/package/prepublish-lib
 [npm-downloads-img]: https://img.shields.io/npm/dm/prepublish-lib.svg

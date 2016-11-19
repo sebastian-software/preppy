@@ -1,41 +1,43 @@
 import babel from "rollup-plugin-babel"
 
-export default babel(
-  {
-    // Don't try to find .babelrc because we want to force this configuration.
-    babelrc: false,
+export default babel({
+  // Don't try to find .babelrc because we want to force this configuration.
+  babelrc: false,
 
-    // Allow usage of transform-runtime for referencing to a common library of polyfills
-    runtimeHelpers: true,
+  // Allow usage of transform-runtime for referencing to a common library of polyfills
+  runtimeHelpers: true,
 
-    exclude: "node_modules/**",
+  exclude: "node_modules/**",
 
-    presets:
+  presets:
+  [
     [
-      [
-        "es2015",
-        {
-          modules: false
-        }
-      ],
-
-      "es2016",
-      "es2017",
-      "react"
+      "es2015",
+      {
+        modules: false
+      }
     ],
 
-    plugins:
-    [
-      // class { handleClick = () => { } }
-      "transform-class-properties",
+    "es2016",
+    "es2017",
+    "react"
+  ],
 
-      // { ...todo, completed: true }
-      "transform-object-rest-spread",
+  plugins:
+  [
+    // class { handleClick = () => { } }
+    "transform-class-properties",
 
-      // Add Polyfills for Promise, Set, Map, etc. as needed
-      "transform-runtime",
+    // { ...todo, completed: true }
+    "transform-object-rest-spread",
 
-      // Optimization: hoist JSX that never changes out of render()
-      "transform-react-constant-elements"
-    ]
-  })
+    // Add Polyfills for Promise, Set, Map, etc. as needed
+    "transform-runtime",
+
+    // Optimization: hoist JSX that never changes out of render()
+    "transform-react-constant-elements",
+
+    // Optimization: wrap propTypes into environment checks
+    "transform-react-remove-prop-types"
+  ]
+})

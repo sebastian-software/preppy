@@ -26,8 +26,7 @@ for (var i = 0, l = external.length; i < l; i++) {
 
 const extensions = [ ".js", ".jsx", ".es5", ".es6", ".es", ".json" ]
 
-const transpilerConfig =
-{
+const transpilerConfig = {
   es2015,
   latest,
   react
@@ -79,8 +78,7 @@ eachSeries(formats, (format, callback) =>
         return true
       }
 
-      if (isAbsolute(dependency))
-      {
+      if (isAbsolute(dependency)) {
         var rel = relative(process.cwd(), dependency)
         return Boolean(/node_modules/.exec(rel))
       }
@@ -93,23 +91,22 @@ eachSeries(formats, (format, callback) =>
       transpilerConfig[transpilationMode],
       fileRelink
     ]
-  })
-  .then((bundle) =>
-    bundle.write({
-      format,
-      moduleId,
-      moduleName,
-      banner,
-      sourceMap: true,
-      dest: outputFileMatrix[format]
+  }).then((bundle) =>
+      bundle.write({
+        format,
+        moduleId,
+        moduleName,
+        banner,
+        sourceMap: true,
+        dest: outputFileMatrix[format]
+      })
+    )
+    .then(() =>
+      callback(null)
+    )
+    .catch((err) =>
+    {
+      console.error(err)
+      callback(`Error during bundling ${format}: ${err}`)
     })
-  )
-  .then(() =>
-    callback(null)
-  )
-  .catch((err) =>
-  {
-    console.error(err)
-    callback(`Error during bundling ${format}: ${err}`)
-  })
 })

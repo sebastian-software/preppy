@@ -9,11 +9,8 @@ import { eachSeries } from "async"
 import { camelCase } from "lodash"
 
 import es2015 from "./config/es2015"
-import latestloose from "./config/latestloose"
 import latest from "./config/latest"
 import react from "./config/react"
-import stage2 from "./config/stage2"
-import stage3 from "./config/stage3"
 
 const pkg = require(resolve(process.cwd(), "package.json"))
 const external = [].concat(
@@ -32,11 +29,8 @@ const extensions = [ ".js", ".jsx", ".es5", ".es6", ".es", ".json" ]
 const transpilerConfig =
 {
   es2015,
-  latestloose,
   latest,
-  react,
-  stage2,
-  stage3
+  react
 }
 
 var cache

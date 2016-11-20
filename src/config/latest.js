@@ -11,22 +11,29 @@ export default babel({
 
   presets:
   [
-    [
-      "es2015",
-      {
+    [ "latest", {
+      es2015: {
         modules: false
       }
-    ],
-
-    "es2016",
-    "es2017",
-
-    // Add Polyfills for Promise, Set, Map, etc. as needed
-    "transform-runtime"
+    } ]
   ],
 
   plugins: [
+    // Improve some ES3 edge case to make code parseable by older clients
+    // e.g. when using reserved words as keys like "catch"
     "transform-es3-property-literals",
-    "transform-es3-member-expression-literals"
+    "transform-es3-member-expression-literals",
+
+    // Add Polyfills for Promise, Set, Map, etc. as needed
+    "transform-runtime",
+
+    // class { handleClick = () => { } }
+    "transform-class-properties",
+
+    // { ...todo, completed: true }
+    "transform-object-rest-spread",
+
+    // { ...todo, completed: true }
+    "transform-object-rest-spread"
   ]
 })

@@ -1627,7 +1627,7 @@ eslint-plugin-no-use-extend-native@^0.3.12:
     is-obj-prop "^1.0.0"
     is-proto-prop "^1.0.0"
 
-eslint-plugin-node@^3.0.3:
+eslint-plugin-node@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-3.0.4.tgz#e1a91f580ec081e4eda92772322103230f9f7a28"
   dependencies:
@@ -1637,7 +1637,7 @@ eslint-plugin-node@^3.0.3:
     resolve "^1.1.7"
     semver "5.3.0"
 
-eslint-plugin-promise@^3.4.0-0:
+eslint-plugin-promise@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-3.4.0.tgz#6ba9048c2df57be77d036e0c68918bc9b4fc4195"
 
@@ -3969,9 +3969,9 @@ rx-lite@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-3.1.2.tgz#19ce502ca572665f3b647b10939f97fd1615f102"
 
-s15e-javascript@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.5.3.tgz#97ac3ea58ad99c982bf4e11f9026a58c93f424b9"
+s15e-javascript@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.5.4.tgz#a09cef6d4db979f6fae35df00b24a985ada7ad24"
   dependencies:
     eslint "^3.10.2"
     eslint-find-rules "^1.14.3"
@@ -3983,8 +3983,8 @@ s15e-javascript@^0.5.3:
     eslint-plugin-jsx-a11y "^3.0.1"
     eslint-plugin-lodash "^2.2.0"
     eslint-plugin-no-use-extend-native "^0.3.12"
-    eslint-plugin-node "^3.0.3"
-    eslint-plugin-promise "^3.4.0-0"
+    eslint-plugin-node "^3.0.4"
+    eslint-plugin-promise "^3.4.0"
     eslint-plugin-react "^6.7.1"
     eslint-plugin-unicorn "^1.0.0"
     gulp "^3.9.1"
@@ -3992,7 +3992,7 @@ s15e-javascript@^0.5.3:
     gulp-stylelint "^3.4.0"
     postcss "^5.2.5"
     stylefmt "^4.4.0"
-    stylelint "^7.5.0"
+    stylelint "^7.6.0"
 
 semver@^4.1.0:
   version "4.3.6"
@@ -4231,7 +4231,7 @@ stylehacks@^2.3.0:
     text-table "^0.2.0"
     write-file-stdout "0.0.2"
 
-stylelint@^7.4.2, stylelint@^7.5.0:
+stylelint@^7.4.2, stylelint@^7.5.0, stylelint@^7.6.0:
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-7.6.0.tgz#ddeb06ccc95f72c119fcde5e85439fb7e9cde4df"
   dependencies:

@@ -12,11 +12,14 @@ module.exports = {
     libraryTarget: "commonjs2"
   },
   module: {
-    loaders: [
-      {
-        test: /\.(svg|css)$/,
-        loader: "file?name=[name].[ext]"
+    rules: [{
+      test: /\.(svg|css)$/,
+      use: {
+        loader: "file-loader",
+        options: {
+          name: "[name].[ext]"
+        }
       }
-    ]
+    }]
   }
 }

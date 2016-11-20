@@ -15,7 +15,7 @@ export default babel({
       es2015: {
         modules: false
       }
-    } ]
+    }]
   ],
 
   plugins: [
@@ -24,14 +24,14 @@ export default babel({
     "transform-es3-property-literals",
     "transform-es3-member-expression-literals",
 
-    // Add Polyfills for Promise, Set, Map, etc. as needed
-    "transform-runtime",
+    // Using centralized helpers but require generic Polyfills being loaded separately
+    // e.g. via Babel-Runtime or via services like polyfill.io.
+    [ "transform-runtime", {
+      polyfill: false
+    }],
 
     // class { handleClick = () => { } }
     "transform-class-properties",
-
-    // { ...todo, completed: true }
-    "transform-object-rest-spread",
 
     // { ...todo, completed: true }
     "transform-object-rest-spread"

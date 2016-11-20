@@ -14,6 +14,16 @@ console.log("Logo URL:", url)
 
 console.log("ES2016 Enabled:", 2 ** 2 === 4)
 
+new Promise(function(resolve, reject) {
+  resolve("resolved")
+}).then(function(first) {
+  console.log("Promise:", first)
+})
+
+var source = { first: 1, second: 2 }
+var destructed = { third: 3, ...source }
+console.log("Destructed:", destructed)
+
 var ReactTest = function() {}
 
 var React = {

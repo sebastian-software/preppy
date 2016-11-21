@@ -11,6 +11,7 @@ import { camelCase } from "lodash"
 import es2015 from "./config/es2015"
 import latest from "./config/latest"
 import react from "./config/react"
+import reactModern from "./config/react-modern"
 
 const pkg = require(resolve(process.cwd(), "package.json"))
 const external = [].concat(
@@ -29,7 +30,8 @@ const extensions = [ ".js", ".jsx", ".es5", ".es6", ".es", ".json" ]
 const transpilerConfig = {
   es2015,
   latest,
-  react
+  react,
+  reactModern
 }
 
 var cache
@@ -62,7 +64,7 @@ eachSeries(formats, (format, callback) =>
 
   var fileRelink = relink({ outputFolder, entry, verbose })
 
-  var transpilationMode = "react"
+  var transpilationMode = "reactModern"
 
   return rollup({
     entry: entry,

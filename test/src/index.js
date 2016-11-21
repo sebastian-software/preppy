@@ -27,7 +27,11 @@ var myArray = [ 1, 2, 3 ]
 console.log("Supports Array.includes?:", myArray.includes && myArray.includes(2))
 
 var mySet = new Set(myArray)
-console.log("Supports Set:", mySet.add(4))
+console.log("Supports Set:", mySet.add(4));
+
+(function(supportsDefault=true) {
+  console.log("Supports default parameters:", supportsDefault)
+})();
 
 let x = "outer"
 {
@@ -50,6 +54,13 @@ class MyClass{
     console.log("Called helper")
   }
 }
+
+async function returnLate() {
+  await new Promise(function(resolve, reject) {
+    setTimeout(resolve, 300)
+  })
+}
+console.log("Test Async:", returnLate() instanceof Promise)
 
 console.log("Initialized class:", new MyClass())
 

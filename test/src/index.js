@@ -20,9 +20,38 @@ new Promise(function(resolve, reject) {
   console.log("Promise:", first)
 })
 
+const CONSTANT = 123
+console.log("Constant:", CONSTANT)
+
+var myArray = [ 1, 2, 3 ]
+console.log("Supports Array.includes?:", myArray.includes && myArray.includes(2))
+
+var mySet = new Set(myArray)
+console.log("Supports Set:", mySet.add(4))
+
+let x = "outer"
+{
+  let x = "inner"
+  console.log("X Value from inner scope:", x)
+}
+console.log("X Value from outer scope:", x)
+
 var source = { first: 1, second: 2 }
 var destructed = { third: 3, ...source }
 console.log("Destructed:", destructed)
+
+class MyClass{
+  constructor() {
+    console.log("Called constructor")
+    this.helper()
+  }
+
+  helper() {
+    console.log("Called helper")
+  }
+}
+
+console.log("Initialized class:", new MyClass())
 
 var ReactTest = function() {}
 

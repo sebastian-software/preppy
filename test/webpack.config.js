@@ -4,8 +4,9 @@ var path = require("path")
 
 module.exports = {
   context: path.resolve(__dirname, "lib"),
-  entry: "./index",
+  entry: "./index.es5.esmodule.js",
   target: "node",
+  devtool: "source-maps",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",

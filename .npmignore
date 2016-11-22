@@ -1,4 +1,13 @@
 node_modules/
 src/
 test/
+
+.editorconfig
+.eslintrc.yml
+.gitattributes
+.gitignore
+.travis.yml
+
+appveyor.yml
 gulpfile.js
+rollup.cfg

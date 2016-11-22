@@ -45,7 +45,11 @@ var entry = process.argv[2] || "./src/index.js"
 var banner = `/*! ${pkg.name} v${pkg.version}`
 
 if (pkg.author) {
-  banner += ` by ${pkg.author.name}`
+  if (typeof pkg.author === "object") {
+    banner += ` by ${pkg.author.name} <${pkg.author.email}>`
+  } else if (typeof pkg.author === "string") {
+    banner += ` by ${pkg.author.name}`
+  }
 }
 
 banner += ` */`

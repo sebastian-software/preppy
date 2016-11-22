@@ -8,20 +8,7 @@ node_js:
 matrix:
   fast_finish: true
 
-env:
-  - CXX=g++-4.8
-
 cache:
   yarn: true
   directories:
     - node_modules
-
-install:
-  - yarn install
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8

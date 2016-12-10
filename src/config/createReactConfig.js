@@ -5,6 +5,9 @@ const additionalPresets = [
 ]
 
 const additionalPlugins = [
+  // Transform JSX and prefer built-in methods
+  [ "transform-react-jsx", { useBuiltIns: true }],
+
   // Optimization: hoist JSX that never changes out of render()
   "transform-react-constant-elements",
 

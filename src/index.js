@@ -63,7 +63,7 @@ eachOfSeries(formats, (format, formatIndex, formatCallback) =>
       entry,
       cache,
       onwarn: (msg) => console.warn(msg),
-      external: function(dependency)
+      external(dependency)
       {
         if (dependency === entry) {
           return false

@@ -36,7 +36,7 @@ export function createHelper(modern, presets = [], plugins = []) {
     exclude: "node_modules/**",
 
     presets: [
-      modern ? modernPreset : classicPreset ,
+      modern ? modernPreset : classicPreset,
 
       ...presets
     ],

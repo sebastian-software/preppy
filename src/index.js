@@ -88,22 +88,21 @@ const prepublishToRollup = {
 }
 
 var transpilationMode = "react"
+var transpilers = transpilerConfig[transpilationMode]
 
 eachOfSeries(formats, (format, formatIndex, formatCallback) =>
 {
-  var transpilers = transpilerConfig[transpilationMode]
   eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
   {
-    console.log("TRANSPILER-ID: " + transpilerId + "; FORMAT: " + format)
     var destFile = outputFileMatrix[`${transpilerId}-${format}`]
     if (!destFile) {
       return variantCallback(null)
     }
 
-    console.log(`Bundling ${pkg.name} v${pkg.version} as ${transpilerId} defined as ${format}...`)
+    console.log(`Bundling ${pkg.name} v${pkg.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
     var fileRelink = relink({ outputFolder, entry, verbose })
     rollup({
-      entry: entry,
+      entry,
       cache,
       onwarn: (msg) => console.warn(msg),
       external: function(dependency)

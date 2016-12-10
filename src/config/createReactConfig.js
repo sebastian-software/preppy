@@ -1,4 +1,4 @@
-import createHelper from "./createLatestConfig"
+import { createHelper } from "./createLatestConfig"
 
 const additionalPresets = [
   "react"

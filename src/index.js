@@ -7,35 +7,15 @@ import relink from "rollup-plugin-relink"
 import nodeResolve from "rollup-plugin-node-resolve"
 
 import getTranspilers from "./getTranspilers"
+import getBanner from "./getBanner"
 
 const pkg = require(resolve(process.cwd(), "package.json"))
 
-const extensions = [
-  ".js",
-  ".jsx",
-  ".json"
-]
-
 var cache
 
-var entry = process.argv[2] || "./src/index.js"
-var banner = `/*! ${pkg.name} v${pkg.version}`
-
-if (pkg.author) {
-  if (typeof pkg.author === "object") {
-    banner += ` by ${pkg.author.name} <${pkg.author.email}>`
-  } else if (typeof pkg.author === "string") {
-    banner += ` by ${pkg.author.name}`
-  }
-}
-
-banner += ` */`
-
-var formats = [ "esmodule", "commonjs" ]
-
-var moduleId = pkg.name
-var moduleName = camelCase(pkg.name)
-var verbose = false
+const entry = process.argv[2] || "./src/index.js"
+const outputFolder = process.argv[3]
+const verbose = false
 
 /* eslint-disable dot-notation */
 const outputFileMatrix = {
@@ -47,7 +27,6 @@ const outputFileMatrix = {
   "browser-modern-esmodule": pkg["browser:es2015"] || pkg["web:es2015"] || null
 }
 
-const outputFolder = process.argv[3]
 if (outputFolder) {
   outputFileMatrix["classic-commonjs"] = `${outputFolder}/node.classic.commonjs.js`
   outputFileMatrix["classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
@@ -58,14 +37,17 @@ if (outputFolder) {
 }
 
 // Rollups support these formats: 'amd', 'cjs', 'es', 'iife', 'umd'
-const prepublishToRollup = {
+const format2Rollup = {
   commonjs: "cjs",
   esmodule: "es"
 }
 
+const moduleId = pkg.name
+const moduleName = camelCase(moduleId)
+const banner = getBanner(pkg)
 const CWD = process.cwd()
+const formats = [ "esmodule", "commonjs" ]
 const transpilers = getTranspilers("react")
-
 eachOfSeries(formats, (format, formatIndex, formatCallback) =>
 {
   eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
@@ -101,7 +83,7 @@ eachOfSeries(formats, (format, formatIndex, formatCallback) =>
       plugins:
       [
         nodeResolve({
-          extensions,
+          extensions: [ ".js", ".jsx", ".json" ],
           jsnext: true,
           module: true,
           main: true
@@ -111,7 +93,7 @@ eachOfSeries(formats, (format, formatIndex, formatCallback) =>
       ]
     }).then((bundle) =>
         bundle.write({
-          format: prepublishToRollup[format],
+          format: format2Rollup[format],
           moduleId,
           moduleName,
           banner,

@@ -18,7 +18,6 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint --quiet src/ test/ || true",
-    "nsp": "nsp check --output summary",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",

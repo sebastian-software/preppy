@@ -8,13 +8,9 @@ import builtinModules from "builtin-modules"
 import { eachOfSeries } from "async"
 import { camelCase } from "lodash"
 
-import es2015 from "./config/es2015"
-
-import latest from "./config/latest"
-import latestModern from "./config/latest-modern"
-
-import react from "./config/react"
-import reactModern from "./config/react-modern"
+import createBubleConfig from "./config/createBubleConfig"
+import createLatestConfig from "./config/createLatestConfig"
+import createReactConfig from "./config/createReactConfig"
 
 const pkg = require(resolve(process.cwd(), "package.json"))
 const external = [].concat(
@@ -28,16 +24,20 @@ for (var i = 0, l = external.length; i < l; i++) {
   externalsMap[external[i]] = true
 }
 
-const extensions = [ ".js", ".jsx", ".json" ]
+const extensions = [
+  ".js",
+  ".jsx",
+  ".json"
+]
 
 // We try to benefit from native features when possible and offer
 // additional builds containing es2015 code for modern clients (Node v6, Chrome 50+, etc.)
 // For bundling you have to use a tool which is aware of the additional package entries
 // to access the additional exported library files though e.g. via 'main' fields in Webpack v2.
 const transpilerConfig = {
-  es2015: { es5: es2015 },
-  latest: { es5: latest, es2015: latestModern },
-  react: { es5: react, es2015: reactModern }
+  buble: createBubleConfig(),
+  latest: createLatestConfig(),
+  react: createReactConfig()
 }
 
 var cache
@@ -61,20 +61,24 @@ var moduleId = pkg.name
 var moduleName = camelCase(pkg.name)
 var verbose = false
 
-/* eslint-disable id-length */
+/* eslint-disable dot-notation */
 const outputFileMatrix = {
-  "es5-commonjs": pkg.main || null,
-  "es5-esmodule": pkg.module || pkg["jsnext:main"] || null,
-  "es2015-commonjs": pkg["main:es2015"] || null,
-  "es2015-esmodule": pkg["module:es2015"] || null
+  "classic-commonjs": pkg["main"] || null,
+  "classic-esmodule": pkg["module"] || pkg["jsnext:main"] || null,
+  "modern-commonjs": pkg["main:es2015"] || null,
+  "modern-esmodule": pkg["module:es2015"] || null,
+  "browser-classic-esmodule": pkg["browser"] || pkg["web"] || null,
+  "browser-modern-esmodule": pkg["browser:es2015"] || pkg["web:es2015"] || null
 }
 
 const outputFolder = process.argv[3]
 if (outputFolder) {
-  outputFileMatrix["es5-commonjs"] = `${outputFolder}/index.es5.commonjs.js`
-  outputFileMatrix["es5-esmodule"] = `${outputFolder}/index.es5.esmodule.js`
-  outputFileMatrix["es2015-commonjs"] = `${outputFolder}/index.es2015.commonjs.js`
-  outputFileMatrix["es2015-esmodule"] = `${outputFolder}/index.es2015.esmodule.js`
+  outputFileMatrix["classic-commonjs"] = `${outputFolder}/node.classic.commonjs.js`
+  outputFileMatrix["classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
+  outputFileMatrix["modern-commonjs"] = `${outputFolder}/node.modern.commonjs.js`
+  outputFileMatrix["modern-esmodule"] = `${outputFolder}/node.modern.esmodule.js`
+  outputFileMatrix["browser-classic-esmodule"] = `${outputFolder}/browser.classic.esmodule.js`
+  outputFileMatrix["browser-modern-esmodule"] = `${outputFolder}/browser.modern.esmodule.js`
 }
 
 // Rollups support these formats: 'amd', 'cjs', 'es', 'iife', 'umd'
@@ -90,13 +94,14 @@ eachOfSeries(formats, (format, formatIndex, formatCallback) =>
   var transpilers = transpilerConfig[transpilationMode]
   eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
   {
-    console.log(`Bundling ${pkg.name} v${pkg.version} as ${transpilerId} defined as ${format}...`)
-    var fileRelink = relink({ outputFolder, entry, verbose })
+    console.log("TRANSPILER-ID: " + transpilerId + "; FORMAT: " + format)
     var destFile = outputFileMatrix[`${transpilerId}-${format}`]
     if (!destFile) {
       return variantCallback(null)
     }
 
+    console.log(`Bundling ${pkg.name} v${pkg.version} as ${transpilerId} defined as ${format}...`)
+    var fileRelink = relink({ outputFolder, entry, verbose })
     rollup({
       entry: entry,
       cache,

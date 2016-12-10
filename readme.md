@@ -35,12 +35,12 @@
 - [NPM](https://www.npmjs.com/package/prepublish-lib)
 
 
-
 ## Installation
 
 ```console
 $ npm install --save-dev prepublish-lib
 ```
+
 
 ## Usage
 
@@ -53,14 +53,17 @@ in the `package.json` file.
 }
 ```
 
+
 ## Contributing
 
 * Pull requests and stars are always welcome.
 * For bugs and feature requests, please create an issue.
 * Pull requests must be accompanied by passing automated tests (`$ npm test`).
 
-## [License](license)
 
+## License
+
+[Apache License; Version 2.0, January 2004](http://www.apache.org/licenses/LICENSE-2.0)
 
 
 ## Copyright

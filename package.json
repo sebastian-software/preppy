@@ -15,8 +15,12 @@
   "bin": {
     "prepublish-lib": "./bin/prepublish-lib.js"
   },
-  "author": "Sebastian Werner",
-  "license": "MIT",
+  "author": {
+    "name": "Sebastian Werner",
+    "email": "s.werner@sebastian-software.de",
+    "url": "http://sebastian-software.de/werner"
+  },
+  "license": "Apache-2.0",
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint --quiet src/ test/ || true",

@@ -21,10 +21,10 @@ const verbose = false
 const outputFileMatrix = {
   "classic-commonjs": pkg["main"] || null,
   "classic-esmodule": pkg["module"] || pkg["jsnext:main"] || null,
-  "modern-commonjs": pkg["main:es2015"] || null,
-  "modern-esmodule": pkg["module:es2015"] || null,
+  "modern-commonjs": pkg["main:modern"] || null,
+  "modern-esmodule": pkg["module:modern"] || null,
   "browser-classic-esmodule": pkg["browser"] || pkg["web"] || pkg["browserify"] || null,
-  "browser-modern-esmodule": pkg["browser:es2015"] || pkg["web:es2015"] || pkg["browserify:es2015"] || null
+  "browser-modern-esmodule": pkg["browser:modern"] || pkg["web:modern"] || pkg["browserify:modern"] || null
 }
 
 if (outputFolder) {

@@ -24,9 +24,43 @@
 - **React Latest**: Like Babel Latest but with [React JSX transpilation](https://babeljs.io/docs/plugins/transform-react-jsx/). Plus support for encapsulating PropTypes. Plus optimization for constant elements during rendering.
 
 
+## Output Targets
+
+*Pre Publish Lib* produces builds depending on the entries of your packages `package.json`. It supports
+building for CommonJS and well as producing output with ES Modules. Just add the relevant entries to
+the configuration.
+
+- CommonJS Output: `main`
+- ES Module Output: `module` (or `jsnext:main` - deprecated)
+
+To offer separate NodeJS and Browser builds use one of the following keys for the browser bundle: `browser` or `web` or `browserify`. These bundles are always exported as ES Modules as we have the assumption that they are bundled by another tool like Webpack on the road to the browser.
+
+
 ## Classic & Modern
 
-*Pre Publish Lib* produces 
+You are able to export modules for ES2015 compatible environments, too. This happens in parallel and typically requires some heavy lifting on the bundling phase with Webpack, too. This is because we are using non-standardized configuration keys in package.json. Typically just append `:modern` to your normal targets:
+
+- CommonJS Output for NodeJS with ES2015 kept intact: `main:modern`
+- ES Modules Output for NodeJS with ES2015 kept intact: `module:modern`
+- Browser Output as ES Modules with ES2015 kept intact: `browser:modern`
+
+We are thinking of updating what we understand as modern regularly. Currently modern is not fixed by specific
+features we think of as modern but uses [babel-preset-env](https://github.com/babel/babel-preset-env) for selecting some common base of modern browsers.
+
+To make sense of all these new modules it would help to produce two different outputs. One for classic browsers and one for modern browsers. ES2015 enabled features are [rapidly catching up in performance](https://kpdecker.github.io/six-speed/). Some features are pretty hard to rework for older browsers like Generators, Async/Await, or even Block Scope. Therefor we think there is no need for sending modern clients the fully transpiled code down the wire. Keep in mind that you have to implement some basic client detection to send one or the other file to the matching client.
+
+Current "modern" set:
+
+- NodeJS 6
+- Safari 10
+- iOS 10
+- Edge 14
+- Chrome 54
+- Chrome for Android 54
+- Firefox 50
+- Firefox for Android 50
+
+With this you should get almost everything of ES2015.
 
 
 ## Links

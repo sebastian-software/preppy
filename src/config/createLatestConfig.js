@@ -49,7 +49,15 @@ export function createHelper(modern, presets = [], plugins = []) {
 
       // Using centralized helpers but require generic Polyfills being loaded separately
       // e.g. via Babel-Runtime or via services like polyfill.io.
+      // See also: https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime
       [ "transform-runtime", {
+        // default
+        helpers: true,
+
+        // default
+        regenerator: true,
+
+        // changed from default. More efficient to use real polyfills.
         polyfill: false
       }],
 

@@ -9,10 +9,11 @@ import { eachOfSeries } from "async"
 import { camelCase } from "lodash"
 
 import es2015 from "./config/es2015"
-import latest from "./config/latest"
-import react from "./config/react"
 
+import latest from "./config/latest"
 import latestModern from "./config/latest-modern"
+
+import react from "./config/react"
 import reactModern from "./config/react-modern"
 
 const pkg = require(resolve(process.cwd(), "package.json"))

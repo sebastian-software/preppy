@@ -37,7 +37,7 @@ export default babel({
     "transform-class-properties",
 
     // { ...todo, completed: true }
-    [ "transform-object-rest-spread", { useBuiltIns: true }]
+    [ "transform-object-rest-spread", { useBuiltIns: true }],
 
     // Optimization: hoist JSX that never changes out of render()
     "transform-react-constant-elements",

@@ -14,10 +14,19 @@ export default babel({
     [ "babel-preset-env", {
       targets: {
         node: 6,
-        browsers: [ "Safari 10", "iOS 10", "Edge 14", "Chrome 54", "Firefox 50" ]
+        browsers: [
+          "Safari 10",
+          "iOS 10",
+          "Edge 14",
+          "Chrome 54",
+          "ChromeAndroid 54",
+          "Firefox 50",
+          "FirefoxAndroid 50"
+        ]
       },
       modules: false,
-      debug: false
+      debug: false,
+      useBuiltIns: true
     }]
   ],
 
@@ -37,6 +46,6 @@ export default babel({
     "transform-class-properties",
 
     // { ...todo, completed: true }
-    "transform-object-rest-spread"
+    [ "transform-object-rest-spread", { useBuiltIns: true }]
   ]
 })

@@ -34,6 +34,6 @@ export default babel({
     "transform-class-properties",
 
     // { ...todo, completed: true }
-    "transform-object-rest-spread"
+    [ "transform-object-rest-spread", { useBuiltIns: true }]
   ]
 })

@@ -23,8 +23,8 @@ const outputFileMatrix = {
   "classic-esmodule": pkg["module"] || pkg["jsnext:main"] || null,
   "modern-commonjs": pkg["main:es2015"] || null,
   "modern-esmodule": pkg["module:es2015"] || null,
-  "browser-classic-esmodule": pkg["browser"] || pkg["web"] || null,
-  "browser-modern-esmodule": pkg["browser:es2015"] || pkg["web:es2015"] || null
+  "browser-classic-esmodule": pkg["browser"] || pkg["web"] || pkg["browserify"] || null,
+  "browser-modern-esmodule": pkg["browser:es2015"] || pkg["web:es2015"] || pkg["browserify:es2015"] || null
 }
 
 if (outputFolder) {

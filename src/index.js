@@ -9,7 +9,8 @@ import nodeResolve from "rollup-plugin-node-resolve"
 import getTranspilers from "./getTranspilers"
 import getBanner from "./getBanner"
 
-const pkg = require(resolve(process.cwd(), "package.json"))
+const CWD = process.cwd()
+const PKG = require(resolve(CWD, "package.json"))
 
 var cache
 
@@ -19,12 +20,12 @@ const verbose = false
 
 /* eslint-disable dot-notation */
 const outputFileMatrix = {
-  "classic-commonjs": pkg["main"] || null,
-  "classic-esmodule": pkg["module"] || pkg["jsnext:main"] || null,
-  "modern-commonjs": pkg["main:modern"] || null,
-  "modern-esmodule": pkg["module:modern"] || null,
-  "browser-classic-esmodule": pkg["browser"] || pkg["web"] || pkg["browserify"] || null,
-  "browser-modern-esmodule": pkg["browser:modern"] || pkg["web:modern"] || pkg["browserify:modern"] || null
+  "classic-commonjs": PKG["main"] || null,
+  "classic-esmodule": PKG["module"] || PKG["jsnext:main"] || null,
+  "modern-commonjs": PKG["main:modern"] || null,
+  "modern-esmodule": PKG["module:modern"] || null,
+  "browser-classic-esmodule": PKG["browser"] || PKG["web"] || PKG["browserify"] || null,
+  "browser-modern-esmodule": PKG["browser:modern"] || PKG["web:modern"] || PKG["browserify:modern"] || null
 }
 
 if (outputFolder) {
@@ -42,10 +43,9 @@ const format2Rollup = {
   esmodule: "es"
 }
 
-const moduleId = pkg.name
+const moduleId = PKG.name
 const moduleName = camelCase(moduleId)
-const banner = getBanner(pkg)
-const CWD = process.cwd()
+const banner = getBanner(PKG)
 const formats = [ "esmodule", "commonjs" ]
 const transpilers = getTranspilers("react")
 eachOfSeries(formats, (format, formatIndex, formatCallback) =>
@@ -57,7 +57,7 @@ eachOfSeries(formats, (format, formatIndex, formatCallback) =>
       return variantCallback(null)
     }
 
-    console.log(`Bundling ${pkg.name} v${pkg.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
+    console.log(`Bundling ${PKG.name} v${PKG.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
     var fileRelink = relink({ outputFolder, entry, verbose })
     rollup({
       entry,

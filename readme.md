@@ -49,7 +49,7 @@ features we think of as modern but uses [babel-preset-env](https://github.com/ba
 
 To make sense of all these new modules it would help to produce two different outputs. One for classic browsers and one for modern browsers. ES2015 enabled features are [rapidly catching up in performance](https://kpdecker.github.io/six-speed/). Some features are pretty hard to rework for older browsers like Generators, Async/Await, or even Block Scope. Therefor we think there is no need for sending modern clients the fully transpiled code down the wire. Keep in mind that you have to implement some basic client detection to send one or the other file to the matching client.
 
-Current "modern" set:
+Current *modern* set:
 
 - NodeJS 6
 - Safari 10
@@ -61,6 +61,17 @@ Current "modern" set:
 - Firefox for Android 50
 
 With this you should get almost everything of ES2015.
+
+
+## CSS and Assets
+
+TODO
+
+
+## Usage
+
+TODO
+
 
 
 ## Links

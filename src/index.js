@@ -1,28 +1,16 @@
 import { resolve, relative, isAbsolute } from "path"
+import { eachOfSeries } from "async"
+import { camelCase } from "lodash"
 
 import { rollup } from "rollup"
 import relink from "rollup-plugin-relink"
 import nodeResolve from "rollup-plugin-node-resolve"
-import builtinModules from "builtin-modules"
-
-import { eachOfSeries } from "async"
-import { camelCase } from "lodash"
 
 import createBubleConfig from "./config/createBubleConfig"
 import createLatestConfig from "./config/createLatestConfig"
 import createReactConfig from "./config/createReactConfig"
 
 const pkg = require(resolve(process.cwd(), "package.json"))
-const external = [].concat(
-  Object.keys(pkg.dependencies || {}),
-  Object.keys(pkg.devDependencies || {}),
-  Object.keys(pkg.peerDependencies || {}),
-  builtinModules
-)
-const externalsMap = {}
-for (var i = 0, l = external.length; i < l; i++) {
-  externalsMap[external[i]] = true
-}
 
 const extensions = [
   ".js",
@@ -87,8 +75,9 @@ const prepublishToRollup = {
   esmodule: "es"
 }
 
-var transpilationMode = "react"
-var transpilers = transpilerConfig[transpilationMode]
+const CWD = process.cwd()
+const transpilationMode = "react"
+const transpilers = transpilerConfig[transpilationMode]
 
 eachOfSeries(formats, (format, formatIndex, formatCallback) =>
 {
@@ -116,7 +105,7 @@ eachOfSeries(formats, (format, formatIndex, formatCallback) =>
         }
 
         if (isAbsolute(dependency)) {
-          var rel = relative(process.cwd(), dependency)
+          var rel = relative(CWD, dependency)
           return Boolean(/node_modules/.exec(rel))
         }
 
@@ -124,7 +113,12 @@ eachOfSeries(formats, (format, formatIndex, formatCallback) =>
       },
       plugins:
       [
-        nodeResolve({ extensions, jsnext: true, module: true, main: true }),
+        nodeResolve({
+          extensions,
+          jsnext: true,
+          module: true,
+          main: true
+        }),
         currentTranspiler,
         fileRelink
       ]

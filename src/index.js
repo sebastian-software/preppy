@@ -14,6 +14,7 @@ const PKG = require(resolve(CWD, "package.json"))
 
 var cache
 
+// FIXME for browser... andere Quelle wäre schon sinnvoll!!!
 const entry = process.argv[2] || "./src/index.js"
 const outputFolder = process.argv[3]
 const verbose = false

@@ -14,9 +14,9 @@ console.log("Logo URL:", url)
 
 console.log("ES2016 Enabled:", 2 ** 2 === 4)
 
-new Promise(function(resolve, reject) {
+new Promise((resolve, reject) => {
   resolve("resolved")
-}).then(function(first) {
+}).then((first) => {
   console.log("Promise:", first)
 })
 
@@ -29,9 +29,9 @@ console.log("Supports Array.includes?:", myArray.includes && myArray.includes(2)
 var mySet = new Set(myArray)
 console.log("Supports Set:", mySet.add(4));
 
-(function(supportsDefault=true) {
-  console.log("Supports default parameters:", supportsDefault)
-})();
+(function(supportsDefault = true) {
+console.log("Supports default parameters:", supportsDefault)
+})()
 
 let x = "outer"
 {
@@ -44,7 +44,7 @@ var source = { first: 1, second: 2 }
 var destructed = { third: 3, ...source }
 console.log("Destructed:", destructed)
 
-class MyClass{
+class MyClass {
   constructor() {
     console.log("Called constructor")
     this.helper()
@@ -56,7 +56,7 @@ class MyClass{
 }
 
 async function returnLate() {
-  await new Promise(function(resolve, reject) {
+  await new Promise((resolve, reject) => {
     setTimeout(resolve, 300)
   })
 }
@@ -67,7 +67,7 @@ console.log("Initialized class:", new MyClass())
 var ReactTest = function() {}
 
 var React = {
-  createElement: function(TestClass) {
+  createElement(TestClass) {
     return new TestClass()
   }
 }

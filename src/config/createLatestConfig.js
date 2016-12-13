@@ -25,13 +25,32 @@ const modernPreset = [ "babel-preset-env", {
   useBuiltIns: true
 }]
 
-export function createHelper(modern, presets = [], plugins = []) {
+export function createHelper(modern, minified, presets = [], plugins = []) {
+  if (minified) {
+    presets = presets.concat([
+      [ "babili", {
+        booleans: false,
+        infinity: false
+      }]
+    ])
+  }
+
   return babel({
     // Don't try to find .babelrc because we want to force this configuration.
     babelrc: false,
 
     // Allow usage of transform-runtime for referencing to a common library of polyfills
     runtimeHelpers: true,
+
+    // Remove comments - these are often positioned on the wrong positon after transpiling anyway
+    comments: false,
+
+    // No need for preserve perfect formatting
+    compact: true,
+
+    // Should the output be minified (not printing last semicolons in blocks, printing literal string
+    // values instead of escaped ones, stripping () from new when safe)
+    minified,
 
     exclude: "node_modules/**",
 
@@ -67,14 +86,21 @@ export function createHelper(modern, presets = [], plugins = []) {
       // { ...todo, completed: true }
       [ "transform-object-rest-spread", { useBuiltIns: true }],
 
+      // Eliminates unnecessary closures from your JavaScript in the name of performance
+      // https://github.com/codemix/babel-plugin-closure-elimination
+      "closure-elimination",
+
+      // Strip flow type annotations from your output code.
+      "transform-flow-strip-types",
+
       ...plugins
     ]
   })
 }
 
-export default function createLatestConfig() {
+export default function createLatestConfig(minified) {
   return {
-    classic: createHelper(false),
-    modern: createHelper(true)
+    classic: createHelper(false, minified),
+    modern: createHelper(true, minified)
   }
 }

@@ -15,9 +15,9 @@ const additionalPlugins = [
   "transform-react-remove-prop-types"
 ]
 
-export default function createReactConfig() {
+export default function createReactConfig(minified) {
   return {
-    classic: createHelper(false, additionalPresets, additionalPlugins),
-    modern: createHelper(true, additionalPresets, additionalPlugins)
+    classic: createHelper(false, minified, additionalPresets, additionalPlugins),
+    modern: createHelper(true, minified, additionalPresets, additionalPlugins)
   }
 }

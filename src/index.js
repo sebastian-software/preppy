@@ -5,6 +5,8 @@ import { camelCase } from "lodash"
 import { rollup } from "rollup"
 import relink from "rollup-plugin-relink"
 import nodeResolve from "rollup-plugin-node-resolve"
+import jsonPlugin from "rollup-plugin-json"
+import yamlPlugin from "rollup-plugin-yaml"
 
 import getTranspilers from "./getTranspilers"
 import getBanner from "./getBanner"
@@ -89,6 +91,8 @@ eachOfSeries(formats, (format, formatIndex, formatCallback) =>
           module: true,
           main: true
         }),
+        jsonPlugin,
+        yamlPlugin,
         currentTranspiler,
         fileRelink
       ]

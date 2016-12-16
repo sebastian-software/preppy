@@ -61,6 +61,10 @@ export function createHelper(modern, minified, presets = [], plugins = []) {
     ],
 
     plugins: [
+      // Cherry-picks Lodash modules so you don’t have to.
+      // https://www.npmjs.com/package/babel-plugin-lodash
+      "lodash",
+
       // Improve some ES3 edge case to make code parseable by older clients
       // e.g. when using reserved words as keys like "catch"
       "transform-es3-property-literals",

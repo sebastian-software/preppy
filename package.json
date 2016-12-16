@@ -37,6 +37,7 @@
   "dependencies": {
     "async": "^2.1.4",
     "babel-plugin-closure-elimination": "^1.1.14",
+    "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-transform-class-properties": "^6.19.0",
     "babel-plugin-transform-es3-member-expression-literals": "^6.8.0",
     "babel-plugin-transform-es3-property-literals": "^6.8.0",
@@ -56,14 +57,14 @@
     "rollup": "^0.37.0",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-buble": "^0.15.0",
-    "rollup-plugin-json": "^2.0.2",
+    "rollup-plugin-json": "^2.1.0",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-relink": "^0.3.1"
   },
   "devDependencies": {
     "file-loader": "^0.9.0",
     "rimraf": "^2.5.4",
-    "s15e-javascript": "^0.7.6",
+    "s15e-javascript": "^0.7.8",
     "webpack": "^2.1.0-beta.28"
   }
 }

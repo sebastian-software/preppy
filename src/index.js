@@ -2,6 +2,7 @@ import { resolve, relative, isAbsolute } from "path"
 import { eachOfSeries } from "async"
 import { camelCase } from "lodash"
 import fileExists from "file-exists"
+import meow from "meow"
 
 import { rollup } from "rollup"
 import relink from "rollup-plugin-relink"
@@ -18,8 +19,33 @@ const PKG = require(resolve(CWD, "package.json"))
 
 var cache
 
+
+
+const cli = meow(`
+  Usage
+    $ prepublish-lib
+
+  Options
+    --entry-node Entry file for NodeJS environment
+    --entry-browser Entry file for Browser environment
+
+    --output-folder Configure the output folder
+
+    -v, --verbose Verbose output mode
+    -q, --quiet Quiet output mode
+`, {
+  default: {
+    verbose: false,
+    quiet: false,
+
+    outputFolder: null
+  }
+})
+
+
 const outputFolder = process.argv[3]
-const verbose = false
+const verbose = cli.flags.verbose
+
 
 /* eslint-disable dot-notation */
 const outputFileMatrix = {

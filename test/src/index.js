@@ -12,6 +12,9 @@ console.log("Classes from SSS:", classes2)
 import url from "./logo.svg"
 console.log("Logo URL:", url)
 
+console.log("Package Name", process.env.NAME)
+console.log("Package Version", process.env.VERSION)
+
 console.log("ES2016 Enabled:", 2 ** 2 === 4)
 
 new Promise((resolve, reject) => {

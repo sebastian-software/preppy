@@ -8,6 +8,7 @@ import relink from "rollup-plugin-relink"
 import nodeResolve from "rollup-plugin-node-resolve"
 import jsonPlugin from "rollup-plugin-json"
 import yamlPlugin from "rollup-plugin-yaml"
+import replacePlugin from "rollup-plugin-replace"
 
 import getTranspilers from "./getTranspilers"
 import getBanner from "./getBanner"
@@ -88,6 +89,12 @@ function lookupBest(candidates) {
 
 function bundleTo({ entry, transpilerId, currentTranspiler, format, destFile, variantCallback }) {
   console.log(`Bundling ${PKG.name} v${PKG.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
+
+  var variables = {
+    "process.env.NAME": JSON.stringify(PKG.name),
+    "process.env.VERSION": JSON.stringify(PKG.version)
+  }
+
   var fileRelink = relink({ outputFolder, entry, verbose })
   rollup({
     entry,
@@ -120,6 +127,7 @@ function bundleTo({ entry, transpilerId, currentTranspiler, format, destFile, va
       }),
       jsonPlugin,
       yamlPlugin,
+      replacePlugin(variables),
       currentTranspiler,
       fileRelink
     ]

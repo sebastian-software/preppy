@@ -1,6 +1,7 @@
 import { resolve, relative, isAbsolute } from "path"
 import { eachOfSeries } from "async"
 import { camelCase } from "lodash"
+import fileExists from "file-exists"
 
 import { rollup } from "rollup"
 import relink from "rollup-plugin-relink"
@@ -16,26 +17,24 @@ const PKG = require(resolve(CWD, "package.json"))
 
 var cache
 
-// FIXME for browser... andere Quelle wäre schon sinnvoll!!!
-const entry = process.argv[2] || "./src/index.js"
 const outputFolder = process.argv[3]
 const verbose = false
 
 /* eslint-disable dot-notation */
 const outputFileMatrix = {
-  "classic-commonjs": PKG["main"] || null,
-  "classic-esmodule": PKG["module"] || PKG["jsnext:main"] || null,
-  "modern-commonjs": PKG["main:modern"] || null,
-  "modern-esmodule": PKG["module:modern"] || null,
+  "node-classic-commonjs": PKG["main"] || null,
+  "node-classic-esmodule": PKG["module"] || PKG["jsnext:main"] || null,
+  "node-modern-commonjs": PKG["main:modern"] || null,
+  "node-modern-esmodule": PKG["module:modern"] || null,
   "browser-classic-esmodule": PKG["browser"] || PKG["web"] || PKG["browserify"] || null,
   "browser-modern-esmodule": PKG["browser:modern"] || PKG["web:modern"] || PKG["browserify:modern"] || null
 }
 
 if (outputFolder) {
-  outputFileMatrix["classic-commonjs"] = `${outputFolder}/node.classic.commonjs.js`
-  outputFileMatrix["classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
-  outputFileMatrix["modern-commonjs"] = `${outputFolder}/node.modern.commonjs.js`
-  outputFileMatrix["modern-esmodule"] = `${outputFolder}/node.modern.esmodule.js`
+  outputFileMatrix["node-classic-commonjs"] = `${outputFolder}/node.classic.commonjs.js`
+  outputFileMatrix["node-classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
+  outputFileMatrix["node-modern-commonjs"] = `${outputFolder}/node.modern.commonjs.js`
+  outputFileMatrix["node-modern-esmodule"] = `${outputFolder}/node.modern.esmodule.js`
   outputFileMatrix["browser-classic-esmodule"] = `${outputFolder}/browser.classic.esmodule.js`
   outputFileMatrix["browser-modern-esmodule"] = `${outputFolder}/browser.modern.esmodule.js`
 }
@@ -49,23 +48,37 @@ const format2Rollup = {
 const moduleId = PKG.name
 const moduleName = camelCase(moduleId)
 const banner = getBanner(PKG)
+const envs = {
+  node: [ "src/index.js", "module/index.js", "src/server/index.js" ],
+  browser: [ "src/browser/index.js", "src/client/index.js", "src/browser.js", "src/client.js", "src/web.js" ]
+}
 const formats = [ "esmodule", "commonjs" ]
 const transpilers = getTranspilers("react")
-eachOfSeries(formats, (format, formatIndex, formatCallback) =>
+
+eachOfSeries(envs, (envEntries, envId, envCallback) =>
 {
-  eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
+  var entry = lookupBest(envEntries)
+  console.log("Valid entry: ", entry)
+  eachOfSeries(formats, (format, formatIndex, formatCallback) =>
   {
-    var destFile = outputFileMatrix[`${transpilerId}-${format}`]
-    if (destFile) {
-      return bundleTo({ transpilerId, currentTranspiler, format, destFile, variantCallback })
-    } else {
-      return variantCallback(null)
-    }
-  }, formatCallback)
+    eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
+    {
+      var destFile = outputFileMatrix[`${envId}-${transpilerId}-${format}`]
+      if (destFile) {
+        return bundleTo({ entry, transpilerId, currentTranspiler, format, destFile, variantCallback })
+      } else {
+        return variantCallback(null)
+      }
+    }, formatCallback)
+  })
 })
 
+function lookupBest(candidates) {
+  var filtered = candidates.filter(fileExists)
+  return filtered[0]
+}
 
-function bundleTo({ transpilerId, currentTranspiler, format, destFile, variantCallback }) {
+function bundleTo({ entry, transpilerId, currentTranspiler, format, destFile, variantCallback }) {
   console.log(`Bundling ${PKG.name} v${PKG.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
   var fileRelink = relink({ outputFolder, entry, verbose })
   rollup({
@@ -92,7 +105,7 @@ function bundleTo({ transpilerId, currentTranspiler, format, destFile, variantCa
     plugins:
     [
       nodeResolve({
-        extensions: [ ".js", ".jsx", ".json" ],
+        extensions: [ ".js", ".jsx", ".ts", ".tsx", ".json" ],
         jsnext: true,
         module: true,
         main: true

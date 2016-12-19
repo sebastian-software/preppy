@@ -3,6 +3,7 @@ import { eachOfSeries } from "async"
 import { camelCase } from "lodash"
 import fileExists from "file-exists"
 import meow from "meow"
+import chalk from "chalk"
 
 import { rollup } from "rollup"
 import relink from "rollup-plugin-relink"
@@ -115,7 +116,7 @@ eachOfSeries(envs, (envEntries, envId, envCallback) =>
   if (entry)
   {
     if (!quiet) {
-      console.log(`Using entry ${entry} for environment ${envId}`)
+      console.log(`Using entry ${chalk.blue(entry)} for environment ${chalk.blue(envId)}`)
     }
 
     eachOfSeries(formats, (format, formatIndex, formatCallback) =>
@@ -144,7 +145,7 @@ function lookupBest(candidates) {
 
 function bundleTo({ entry, envId, transpilerId, currentTranspiler, format, destFile, variantCallback }) {
   if (!quiet) {
-    console.log(`Bundling ${PKG.name} v${PKG.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
+    console.log(`${chalk.green(">>> Bundling")} ${chalk.magenta(PKG.name)}-${chalk.magenta(PKG.version)} as ${chalk.blue(transpilerId)} defined as ${chalk.blue(format)} to ${chalk.green(destFile)}...`)
   }
 
   var prefix = "process.env."

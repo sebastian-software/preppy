@@ -33,12 +33,13 @@ console.log("Supports Set:", mySet.add(4));
 console.log("Supports default parameters:", supportsDefault)
 })()
 
-let x = "outer"
+/* eslint-disable no-shadow */
+let testVariable = "outer"
 {
-  let x = "inner"
-  console.log("X Value from inner scope:", x)
+  let testVariable = "inner"
+  console.log("X Value from inner scope:", testVariable)
 }
-console.log("X Value from outer scope:", x)
+console.log("X Value from outer scope:", testVariable)
 
 var source = { first: 1, second: 2 }
 var destructed = { third: 3, ...source }

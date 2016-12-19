@@ -20,7 +20,7 @@
 *Pre Publish Lib* includes three transpiler configurations:
 
 - **[Buble](https://buble.surge.sh/guide/)**: Blazing fast ES2015+ transpiler where the goal is to have lightweight runtime code, too.
-- **[Babel Latest](https://babeljs.io/docs/plugins/preset-latest/)**: Latest configuration of Babel. Includes all of ES2015/ES2016/ES2017. Plus some ES3 helpers for maximum compability. Plus Support for [Object-Rest-Spread](https://babeljs.io/docs/plugins/transform-object-rest-spread/) and [Class Properties](https://babeljs.io/docs/plugins/transform-class-properties/). Uses [Transform-Runtime](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime) to externalize requirements to Polyfills. Resulting code needs all Polyfills for each library published with this tool. Typically by using services like [polyfill.io](https://qa.polyfill.io/v2/docs/) or [Babel Runtime](https://github.com/babel/babel/tree/master/packages/babel-runtime) aka [CoreJS](https://github.com/zloirock/core-js).
+- **[Babel Latest](https://babeljs.io/docs/plugins/preset-latest/)**: Latest configuration of Babel. Includes all of ES2015/ES2016/ES2017. Plus some ES3 helpers for maximum compatibility. Plus Support for [Object-Rest-Spread](https://babeljs.io/docs/plugins/transform-object-rest-spread/) and [Class Properties](https://babeljs.io/docs/plugins/transform-class-properties/). Uses [Transform-Runtime](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime) to externalize requirements to Polyfills. Resulting code needs all Polyfills for each library published with this tool. Typically by using services like [polyfill.io](https://qa.polyfill.io/v2/docs/) or [Babel Runtime](https://github.com/babel/babel/tree/master/packages/babel-runtime) aka [CoreJS](https://github.com/zloirock/core-js).
 - **React Latest**: Like Babel Latest but with [React JSX transpilation](https://babeljs.io/docs/plugins/transform-react-jsx/). Plus support for encapsulating PropTypes. Plus optimization for constant elements during rendering.
 
 
@@ -31,7 +31,7 @@ building for CommonJS and well as producing output with ES Modules. Just add the
 the configuration.
 
 - CommonJS Output: `main`
-- ES Module Output: `module` (or `jsnext:main` - deprecated)
+- ES Module Output: `module` (`jsnext:main` is deprecated)
 
 To offer separate NodeJS and Browser builds use one of the following keys for the browser bundle: `browser` or `web` or `browserify`. These bundles are always exported as ES Modules as we have the assumption that they are bundled by another tool like Webpack on the road to the browser.
 
@@ -63,6 +63,7 @@ Current *modern* set:
 With this you should get almost everything of ES2015.
 
 The modern builds [makes a lot of sense during development](https://medium.com/@gajus/dont-use-babel-transpilers-when-debugging-an-application-890ee528a5b3) as it results in shorter transpiler runtimes.
+
 
 ## CSS and Assets
 

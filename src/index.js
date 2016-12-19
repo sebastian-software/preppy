@@ -26,13 +26,13 @@ const cli = meow(`
     $ prepublish-lib
 
   Options
-    --entry-node Entry file for NodeJS environment
-    --entry-browser Entry file for Browser environment
+    --entry-node      Entry file for NodeJS environment
+    --entry-browser   Entry file for Browser environment
 
-    --output-folder Configure the output folder
+    --output-folder   Configure the output folder
 
-    -v, --verbose Verbose output mode
-    -q, --quiet Quiet output mode
+    -v, --verbose     Verbose output mode
+    -q, --quiet       Quiet output mode
 `, {
   default: {
     verbose: false,
@@ -43,8 +43,8 @@ const cli = meow(`
 })
 
 
-const outputFolder = process.argv[3]
 const verbose = cli.flags.verbose
+const quiet = cli.flags.quiet
 
 
 /* eslint-disable dot-notation */
@@ -57,6 +57,7 @@ const outputFileMatrix = {
   "browser-modern-esmodule": PKG["browser:modern"] || PKG["web:modern"] || PKG["browserify:modern"] || null
 }
 
+const outputFolder = cli.flags.outputFolder
 if (outputFolder) {
   outputFileMatrix["node-classic-commonjs"] = `${outputFolder}/node.classic.commonjs.js`
   outputFileMatrix["node-classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
@@ -75,19 +76,28 @@ const format2Rollup = {
 const moduleId = PKG.name
 const moduleName = camelCase(moduleId)
 const banner = getBanner(PKG)
-const envs = {
-  node: [ "src/index.js", "module/index.js", "src/server/index.js" ],
-  browser: [ "src/browser/index.js", "src/client/index.js", "src/browser.js", "src/client.js", "src/web.js" ]
-}
+const envs = {}
 const formats = [ "esmodule", "commonjs" ]
 const transpilers = getTranspilers("react")
+
+if (cli.flags.entryNode) {
+  envs.node = [ cli.flags.entryNode ]
+} else {
+  envs.node = [ "src/index.js", "module/index.js", "src/server/index.js" ]
+}
+
+if (cli.flags.entryBrowser) {
+  envs.browser = [ cli.flags.entryBrowser ]
+} else {
+  envs.browser = [ "src/browser/index.js", "src/client/index.js", "src/browser.js", "src/client.js", "src/web.js" ]
+}
 
 eachOfSeries(envs, (envEntries, envId, envCallback) =>
 {
   var entry = lookupBest(envEntries)
   if (entry)
   {
-    console.log("Valid entry:", entry)
+    console.log(`Using entry ${entry} for environment ${envId}`)
 
     eachOfSeries(formats, (format, formatIndex, formatCallback) =>
     {

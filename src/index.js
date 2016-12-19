@@ -1,4 +1,4 @@
-import { resolve, relative, isAbsolute } from "path"
+import { resolve, relative, isAbsolute, dirname } from "path"
 import { eachOfSeries } from "async"
 import { camelCase } from "lodash"
 import fileExists from "file-exists"
@@ -155,6 +155,7 @@ function bundleTo({ entry, envId, transpilerId, currentTranspiler, format, destF
     [`${prefix}TARGET`]: JSON.stringify(envId)
   }
 
+  var outputFolder = dirname(destFile)
   var fileRelink = relink({ outputFolder, entry, verbose })
   rollup({
     entry,

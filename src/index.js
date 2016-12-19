@@ -58,20 +58,27 @@ const transpilers = getTranspilers("react")
 eachOfSeries(envs, (envEntries, envId, envCallback) =>
 {
   var entry = lookupBest(envEntries)
-  console.log("Valid entry:", entry)
-
-  eachOfSeries(formats, (format, formatIndex, formatCallback) =>
+  if (entry)
   {
-    eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
+    console.log("Valid entry:", entry)
+
+    eachOfSeries(formats, (format, formatIndex, formatCallback) =>
     {
-      var destFile = outputFileMatrix[`${envId}-${transpilerId}-${format}`]
-      if (destFile) {
-        return bundleTo({ entry, transpilerId, currentTranspiler, format, destFile, variantCallback })
-      } else {
-        return variantCallback(null)
-      }
-    }, formatCallback)
-  })
+      eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
+      {
+        var destFile = outputFileMatrix[`${envId}-${transpilerId}-${format}`]
+        if (destFile) {
+          return bundleTo({ entry, transpilerId, currentTranspiler, format, destFile, variantCallback })
+        } else {
+          return variantCallback(null)
+        }
+      }, formatCallback)
+    }, envCallback)
+  }
+  else
+  {
+    envCallback(null)
+  }
 })
 
 function lookupBest(candidates) {

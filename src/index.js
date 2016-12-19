@@ -26,15 +26,17 @@ const cli = meow(`
     $ prepublish-lib
 
   Options
-    --entry-node      Entry file for NodeJS environment
-    --entry-browser   Entry file for Browser environment
+    --entry-node      Entry file for NodeJS environment [default = auto]
+    --entry-browser   Entry file for Browser environment [default = auto]
 
-    --output-folder   Configure the output folder
+    --output-folder   Configure the output folder [default = auto]
 
+    -t, --transpiler  Chose the transpiler/config to use. Either "react", "latest" or "buble". [default = latest]
     -x, --minified    Enabled minification of output files
+    -m, --sourcemap   Create a source map file during processing
 
-    -v, --verbose     Verbose output mode
-    -q, --quiet       Quiet output mode
+    -v, --verbose     Verbose output mode [default = false]
+    -q, --quiet       Quiet output mode [default = false]
 `, {
   default: {
     entryNode: null,
@@ -42,7 +44,9 @@ const cli = meow(`
 
     outputFolder: null,
 
-    minified: false
+    transpiler: "react",
+    minified: false,
+    sourcemap: true,
 
     verbose: false,
     quiet: false
@@ -52,6 +56,10 @@ const cli = meow(`
 
 const verbose = cli.flags.verbose
 const quiet = cli.flags.quiet
+
+if (verbose) {
+  console.log(cli.flags)
+}
 
 
 /* eslint-disable dot-notation */
@@ -116,7 +124,7 @@ eachOfSeries(envs, (envEntries, envId, envCallback) =>
       {
         var destFile = outputFileMatrix[`${envId}-${transpilerId}-${format}`]
         if (destFile) {
-          return bundleTo({ entry, transpilerId, currentTranspiler, format, destFile, variantCallback })
+          return bundleTo({ entry, envId, transpilerId, currentTranspiler, format, destFile, variantCallback })
         } else {
           return variantCallback(null)
         }
@@ -134,14 +142,15 @@ function lookupBest(candidates) {
   return filtered[0]
 }
 
-function bundleTo({ entry, transpilerId, currentTranspiler, format, destFile, variantCallback }) {
+function bundleTo({ entry, envId, transpilerId, currentTranspiler, format, destFile, variantCallback }) {
   if (!quiet) {
     console.log(`Bundling ${PKG.name} v${PKG.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
   }
 
   var variables = {
     "process.env.NAME": JSON.stringify(PKG.name),
-    "process.env.VERSION": JSON.stringify(PKG.version)
+    "process.env.VERSION": JSON.stringify(PKG.version),
+    "process.env.TARGET": JSON.stringify(envId)
   }
 
   var fileRelink = relink({ outputFolder, entry, verbose })
@@ -187,7 +196,7 @@ function bundleTo({ entry, transpilerId, currentTranspiler, format, destFile, va
         moduleId,
         moduleName,
         banner,
-        sourceMap: true,
+        sourceMap: cli.flags.sourcemap,
         dest: destFile
       })
     )

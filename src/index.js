@@ -147,10 +147,11 @@ function bundleTo({ entry, envId, transpilerId, currentTranspiler, format, destF
     console.log(`Bundling ${PKG.name} v${PKG.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
   }
 
+  var prefix = "process.env."
   var variables = {
-    "process.env.NAME": JSON.stringify(PKG.name),
-    "process.env.VERSION": JSON.stringify(PKG.version),
-    "process.env.TARGET": JSON.stringify(envId)
+    [`${prefix}NAME`]: JSON.stringify(PKG.name),
+    [`${prefix}VERSION`]: JSON.stringify(PKG.version),
+    [`${prefix}TARGET`]: JSON.stringify(envId)
   }
 
   var fileRelink = relink({ outputFolder, entry, verbose })

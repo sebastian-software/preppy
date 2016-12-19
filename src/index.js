@@ -56,63 +56,69 @@ eachOfSeries(formats, (format, formatIndex, formatCallback) =>
   eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
   {
     var destFile = outputFileMatrix[`${transpilerId}-${format}`]
-    if (!destFile) {
+    if (destFile) {
+      return bundleTo({ transpilerId, currentTranspiler, format, destFile, variantCallback })
+    } else {
       return variantCallback(null)
     }
-
-    console.log(`Bundling ${PKG.name} v${PKG.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
-    var fileRelink = relink({ outputFolder, entry, verbose })
-    rollup({
-      entry,
-      cache,
-      onwarn: (msg) => console.warn(msg),
-      external(dependency)
-      {
-        if (dependency === entry) {
-          return false
-        }
-
-        if (fileRelink.isExternal(dependency)) {
-          return true
-        }
-
-        if (isAbsolute(dependency)) {
-          var rel = relative(CWD, dependency)
-          return Boolean(/node_modules/.exec(rel))
-        }
-
-        return dependency.charAt(0) !== "."
-      },
-      plugins:
-      [
-        nodeResolve({
-          extensions: [ ".js", ".jsx", ".json" ],
-          jsnext: true,
-          module: true,
-          main: true
-        }),
-        jsonPlugin,
-        yamlPlugin,
-        currentTranspiler,
-        fileRelink
-      ]
-    }).then((bundle) =>
-        bundle.write({
-          format: format2Rollup[format],
-          moduleId,
-          moduleName,
-          banner,
-          sourceMap: true,
-          dest: destFile
-        })
-      )
-      .then(() =>
-        variantCallback(null)
-      )
-      .catch((err) =>
-      {
-        console.error(err)
-        variantCallback(`Error during bundling ${format}: ${err}`)
-      })
   }, formatCallback)
 })
+
+
+function bundleTo({ transpilerId, currentTranspiler, format, destFile, variantCallback }) {
+  console.log(`Bundling ${PKG.name} v${PKG.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
+  var fileRelink = relink({ outputFolder, entry, verbose })
+  rollup({
+    entry,
+    cache,
+    onwarn: (msg) => console.warn(msg),
+    external(dependency)
+    {
+      if (dependency === entry) {
+        return false
+      }
+
+      if (fileRelink.isExternal(dependency)) {
+        return true
+      }
+
+      if (isAbsolute(dependency)) {
+        var rel = relative(CWD, dependency)
+        return Boolean(/node_modules/.exec(rel))
+      }
+
+      return dependency.charAt(0) !== "."
+    },
+    plugins:
+    [
+      nodeResolve({
+        extensions: [ ".js", ".jsx", ".json" ],
+        jsnext: true,
+        module: true,
+        main: true
+      }),
+      jsonPlugin,
+      yamlPlugin,
+      currentTranspiler,
+      fileRelink
+    ]
+  })
+    .then((bundle) =>
+      bundle.write({
+        format: format2Rollup[format],
+        moduleId,
+        moduleName,
+        banner,
+        sourceMap: true,
+        dest: destFile
+      })
+    )
+    .then(() =>
+      variantCallback(null)
+    )
+    .catch((err) =>
+    {
+      console.error(err)
+      variantCallback(`Error during bundling ${format}: ${err}`)
+    })
+}

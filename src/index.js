@@ -101,13 +101,37 @@ const transpilers = getTranspilers("react", {
 if (cli.flags.entryNode) {
   envs.node = [ cli.flags.entryNode ]
 } else {
-  envs.node = [ "src/index.js", "module/index.js", "src/server/index.js" ]
+  envs.node = [
+    "src/server/public.js",
+    "src/server/export.js",
+
+    "src/node.js",
+    "src/server.js",
+
+    "src/public.js",
+    "src/export.js",
+    "src/index.js",
+
+    "module/public.js",
+    "module/export.js",
+    "module/index.js"
+  ]
 }
 
 if (cli.flags.entryBrowser) {
   envs.browser = [ cli.flags.entryBrowser ]
 } else {
-  envs.browser = [ "src/browser/index.js", "src/client/index.js", "src/browser.js", "src/client.js", "src/web.js" ]
+  envs.browser = [
+    "src/browser/public.js",
+    "src/browser/export.js",
+
+    "src/client/public.js",
+    "src/client/export.js",
+
+    "src/browser.js",
+    "src/client.js",
+    "src/web.js"
+  ]
 }
 
 eachOfSeries(envs, (envEntries, envId, envCallback) =>

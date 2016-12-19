@@ -58,7 +58,8 @@ const transpilers = getTranspilers("react")
 eachOfSeries(envs, (envEntries, envId, envCallback) =>
 {
   var entry = lookupBest(envEntries)
-  console.log("Valid entry: ", entry)
+  console.log("Valid entry:", entry)
+
   eachOfSeries(formats, (format, formatIndex, formatCallback) =>
   {
     eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>

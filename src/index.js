@@ -31,14 +31,21 @@ const cli = meow(`
 
     --output-folder   Configure the output folder
 
+    -x, --minified    Enabled minification of output files
+
     -v, --verbose     Verbose output mode
     -q, --quiet       Quiet output mode
 `, {
   default: {
-    verbose: false,
-    quiet: false,
+    entryNode: null,
+    entryBrowser: null,
 
-    outputFolder: null
+    outputFolder: null,
+
+    minified: false
+
+    verbose: false,
+    quiet: false
   }
 })
 
@@ -78,7 +85,9 @@ const moduleName = camelCase(moduleId)
 const banner = getBanner(PKG)
 const envs = {}
 const formats = [ "esmodule", "commonjs" ]
-const transpilers = getTranspilers("react")
+const transpilers = getTranspilers("react", {
+  minified: cli.flags.minified
+})
 
 if (cli.flags.entryNode) {
   envs.node = [ cli.flags.entryNode ]
@@ -97,7 +106,9 @@ eachOfSeries(envs, (envEntries, envId, envCallback) =>
   var entry = lookupBest(envEntries)
   if (entry)
   {
-    console.log(`Using entry ${entry} for environment ${envId}`)
+    if (!quiet) {
+      console.log(`Using entry ${entry} for environment ${envId}`)
+    }
 
     eachOfSeries(formats, (format, formatIndex, formatCallback) =>
     {
@@ -124,7 +135,9 @@ function lookupBest(candidates) {
 }
 
 function bundleTo({ entry, transpilerId, currentTranspiler, format, destFile, variantCallback }) {
-  console.log(`Bundling ${PKG.name} v${PKG.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
+  if (!quiet) {
+    console.log(`Bundling ${PKG.name} v${PKG.version} as ${transpilerId} defined as ${format} to ${destFile}...`)
+  }
 
   var variables = {
     "process.env.NAME": JSON.stringify(PKG.name),

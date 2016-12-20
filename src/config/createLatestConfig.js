@@ -28,10 +28,10 @@ const modernPreset = [ "babel-preset-env", {
 export function createHelper(modern, minified, presets = [], plugins = []) {
   if (minified) {
     presets = presets.concat([
-      [ "babili", {
+      [ "babili" /*, {
         booleans: false,
         infinity: false
-      }]
+      } */ ]
     ])
   }
 

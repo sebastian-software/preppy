@@ -43,10 +43,11 @@ export function createHelper(modern, minified, presets = [], plugins = []) {
     runtimeHelpers: true,
 
     // Remove comments - these are often positioned on the wrong positon after transpiling anyway
-    comments: false,
+    comments: minified === false,
 
-    // No need for preserve perfect formatting
-    compact: true,
+    // Do not include superfluous whitespace characters and line terminators.
+    // When set to "auto" compact is set to true on input sizes of >500KB.
+    compact: minified === true ? true : "auto",
 
     // Should the output be minified (not printing last semicolons in blocks, printing literal string
     // values instead of escaped ones, stripping () from new when safe)

@@ -447,10 +447,6 @@ babel-plugin-minify-guarded-expressions@^0.0.3:
   dependencies:
     babel-helper-flip-expressions "^0.0.1"
 
-babel-plugin-minify-infinity@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/babel-plugin-minify-infinity/-/babel-plugin-minify-infinity-0.0.3.tgz#4cc99b61d12b434ce80ad675103335c589cba9a1"
-
 babel-plugin-minify-mangle-names@^0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/babel-plugin-minify-mangle-names/-/babel-plugin-minify-mangle-names-0.0.5.tgz#53e4905de90a215622012cc003c3e0d5bdf18a8a"
@@ -458,10 +454,6 @@ babel-plugin-minify-mangle-names@^0.0.5:
 babel-plugin-minify-numeric-literals@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-minify-numeric-literals/-/babel-plugin-minify-numeric-literals-0.0.1.tgz#9597e6c31154d7daf3744d0bd417c144b275bd53"
-
-babel-plugin-minify-replace@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-minify-replace/-/babel-plugin-minify-replace-0.0.1.tgz#5d5aea7cb9899245248d1ee9ce7a2fe556a8facc"
 
 babel-plugin-minify-simplify@^0.0.5:
   version "0.0.5"
@@ -724,11 +716,9 @@ babel-plugin-transform-member-expression-literals@^6.8.0:
   dependencies:
     babel-runtime "^6.0.0"
 
-babel-plugin-transform-merge-sibling-variables@^6.8.0:
-  version "6.8.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-merge-sibling-variables/-/babel-plugin-transform-merge-sibling-variables-6.8.0.tgz#724074e4ef78b601fcf9a34165c972a1b6117e99"
-  dependencies:
-    babel-runtime "^6.0.0"
+babel-plugin-transform-merge-sibling-variables@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-merge-sibling-variables/-/babel-plugin-transform-merge-sibling-variables-0.0.2.tgz#43bb3952464b1b8e7016d803e9ea34976a6ab80f"
 
 babel-plugin-transform-minify-booleans@^6.8.0:
   version "6.8.0"
@@ -793,13 +783,13 @@ babel-plugin-transform-regenerator@^6.16.0, babel-plugin-transform-regenerator@^
   dependencies:
     regenerator-transform "0.9.8"
 
-babel-plugin-transform-regexp-constructors@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-regexp-constructors/-/babel-plugin-transform-regexp-constructors-0.0.3.tgz#463200d8371a06f077226b967858369211b5cfe3"
+babel-plugin-transform-regexp-constructors@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-regexp-constructors/-/babel-plugin-transform-regexp-constructors-0.0.4.tgz#31df9900ddc19a5d445f7d306495756411820152"
 
-babel-plugin-transform-remove-undefined@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-remove-undefined/-/babel-plugin-transform-remove-undefined-0.0.3.tgz#34baeb7bde4fc01d5235304ee891e7b6bff00432"
+babel-plugin-transform-remove-undefined@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-remove-undefined/-/babel-plugin-transform-remove-undefined-0.0.1.tgz#186c6a1365acb49f637d9025a10b6ddbbce02150"
 
 babel-plugin-transform-runtime@^6.15.0:
   version "6.15.0"
@@ -820,12 +810,6 @@ babel-plugin-transform-strict-mode@^6.18.0:
     babel-runtime "^6.0.0"
     babel-types "^6.18.0"
 
-babel-plugin-transform-undefined-to-void@^6.8.0:
-  version "6.8.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-undefined-to-void/-/babel-plugin-transform-undefined-to-void-6.8.0.tgz#bc5b6b4908d3b1262170e67cb3963903ddce167e"
-  dependencies:
-    babel-runtime "^6.0.0"
-
 babel-polyfill@^6.3.14:
   version "6.20.0"
   resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.20.0.tgz#de4a371006139e20990aac0be367d398331204e7"
@@ -833,29 +817,6 @@ babel-polyfill@^6.3.14:
     babel-runtime "^6.20.0"
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
-
-babel-preset-babili@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/babel-preset-babili/-/babel-preset-babili-0.0.9.tgz#699f08703ff1c84f4f6c229ffe5662c8f1861bf2"
-  dependencies:
-    babel-plugin-minify-constant-folding "^0.0.3"
-    babel-plugin-minify-dead-code-elimination "^0.1.1"
-    babel-plugin-minify-flip-comparisons "^0.0.1"
-    babel-plugin-minify-guarded-expressions "^0.0.3"
-    babel-plugin-minify-infinity "^0.0.3"
-    babel-plugin-minify-mangle-names "^0.0.5"
-    babel-plugin-minify-numeric-literals "^0.0.1"
-    babel-plugin-minify-replace "^0.0.1"
-    babel-plugin-minify-simplify "^0.0.5"
-    babel-plugin-minify-type-constructors "^0.0.2"
-    babel-plugin-transform-member-expression-literals "^6.8.0"
-    babel-plugin-transform-merge-sibling-variables "^6.8.0"
-    babel-plugin-transform-minify-booleans "^6.8.0"
-    babel-plugin-transform-property-literals "^6.8.0"
-    babel-plugin-transform-regexp-constructors "^0.0.3"
-    babel-plugin-transform-remove-undefined "^0.0.3"
-    babel-plugin-transform-simplify-comparison-operators "^6.8.0"
-    babel-plugin-transform-undefined-to-void "^6.8.0"
 
 babel-preset-env@^1.1.4:
   version "1.1.4"
@@ -1874,9 +1835,9 @@ eslint-plugin-jsx-a11y@^3.0.2:
     jsx-ast-utils "^1.0.0"
     object-assign "^4.0.1"
 
-eslint-plugin-lodash@^2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-lodash/-/eslint-plugin-lodash-2.2.4.tgz#2b14bc63bcf4e7f008302100bf53c84d8bf54966"
+eslint-plugin-lodash@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-lodash/-/eslint-plugin-lodash-2.2.5.tgz#0e8a1dc51b3766c7b016d7c0a6352066c98a03e5"
   dependencies:
     lodash "^4.0.0"
 
@@ -2169,9 +2130,9 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-flow-bin@^0.37.0:
-  version "0.37.1"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.37.1.tgz#ddc3314d18c268ef79efabf14c22870dce4595b3"
+flow-bin@^0.37.1:
+  version "0.37.3"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.37.3.tgz#68e5841606a2be6929793ec9c4ce08b2ea39d7c2"
 
 for-in@^0.1.5:
   version "0.1.6"
@@ -2451,7 +2412,7 @@ gulp-eslint@^3.0.1:
     eslint "^3.0.0"
     gulp-util "^3.0.6"
 
-gulp-stylelint@^3.6.1:
+gulp-stylelint@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/gulp-stylelint/-/gulp-stylelint-3.7.0.tgz#199bd968fbe6447088a584dc7d665543f9fa97b4"
   dependencies:
@@ -3048,7 +3009,7 @@ liftoff@^2.1.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-lint-staged@^3.2.3:
+lint-staged@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-3.2.4.tgz#c7601d80480850dc9ca29e76a1f8b49474f4c7a1"
   dependencies:
@@ -4384,9 +4345,9 @@ rxjs@^5.0.0-beta.11:
   dependencies:
     symbol-observable "^1.0.1"
 
-s15e-javascript@^0.7.8:
-  version "0.7.8"
-  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.7.8.tgz#d2cab7498842bd241808f932b2ac342977a4b5d6"
+s15e-javascript@^0.7.9:
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.7.9.tgz#305c8e0b518f37b794ef18557687993dbecd4c0a"
   dependencies:
     cross-spawn "^5.0.1"
     eslint "^3.12.2"
@@ -4397,20 +4358,20 @@ s15e-javascript@^0.7.8:
     eslint-plugin-flowtype-errors "^2.0.1"
     eslint-plugin-import "^2.2.0"
     eslint-plugin-jsx-a11y "^3.0.2"
-    eslint-plugin-lodash "^2.2.4"
+    eslint-plugin-lodash "^2.2.5"
     eslint-plugin-no-use-extend-native "^0.3.12"
     eslint-plugin-node "^3.0.5"
     eslint-plugin-promise "^3.4.0"
     eslint-plugin-react "^6.8.0"
     eslint-plugin-unicorn "^1.0.0"
-    flow-bin "^0.37.0"
+    flow-bin "^0.37.1"
     gulp "^3.9.1"
     gulp-eslint "^3.0.1"
-    gulp-stylelint "^3.6.1"
-    lint-staged "^3.2.3"
+    gulp-stylelint "^3.7.0"
+    lint-staged "^3.2.4"
     postcss "^5.2.6"
     stylefmt "^5.0.3"
-    stylelint "^7.6.0"
+    stylelint "^7.7.0"
 
 "semver@2 || 3 || 4 || 5", semver@5.3.0, semver@~5.3.0:
   version "5.3.0"
@@ -4686,7 +4647,7 @@ stylehacks@^2.3.0:
     text-table "^0.2.0"
     write-file-stdout "0.0.2"
 
-stylelint@^7.5.0, stylelint@^7.6.0, stylelint@^7.7.0:
+stylelint@^7.5.0, stylelint@^7.7.0:
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-7.7.0.tgz#bf222c2a202c0b02d7834ad321fe0883d33cfde0"
   dependencies:

@@ -26,13 +26,30 @@ const modernPreset = [ "babel-preset-env", {
 }]
 
 export function createHelper(modern, minified, presets = [], plugins = []) {
+  // This is effectively a split of "babel-preset-babili" where some plugins
+  // are regarded as being useful in "normal" publishing while others are
+  // too aggressive to lead to human readable code.
+  const additionalPlugins = plugins.concat([
+    "babel-plugin-minify-constant-folding",
+    "babel-plugin-minify-dead-code-elimination",
+    "babel-plugin-minify-flip-comparisons",
+    "babel-plugin-minify-guarded-expressions",
+    "babel-plugin-transform-member-expression-literals",
+    "babel-plugin-transform-merge-sibling-variables",
+    "babel-plugin-transform-property-literals",
+    "babel-plugin-transform-regexp-constructors",
+    "babel-plugin-transform-remove-undefined",
+    "babel-plugin-transform-simplify-comparison-operators"
+  ])
+
   if (minified) {
-    presets = presets.concat([
-      [ "babili" /*, {
-        booleans: false,
-        infinity: false
-      } */ ]
-    ])
+    additionalPlugins.push(
+      "babel-plugin-minify-mangle-names",
+      "babel-plugin-minify-simplify",
+      "babel-plugin-minify-type-constructors",
+      "babel-plugin-minify-numeric-literals",
+      "babel-plugin-transform-minify-booleans"
+    )
   }
 
   return babel({
@@ -62,15 +79,19 @@ export function createHelper(modern, minified, presets = [], plugins = []) {
     ],
 
     plugins: [
+      // Strip flow type annotations from your output code.
+      "transform-flow-strip-types",
+
       // Cherry-picks Lodash and recompose modules so you don’t have to.
       // https://www.npmjs.com/package/babel-plugin-lodash
       // https://github.com/acdlite/recompose#using-babel-lodash-plugin
       [ "lodash", { id: [ "lodash", "recompose" ] }],
 
-      // Improve some ES3 edge case to make code parseable by older clients
-      // e.g. when using reserved words as keys like "catch"
-      "transform-es3-property-literals",
-      "transform-es3-member-expression-literals",
+      // class { handleClick = () => { } }
+      "transform-class-properties",
+
+      // { ...todo, completed: true }
+      [ "transform-object-rest-spread", { useBuiltIns: true }],
 
       // Using centralized helpers but require generic Polyfills being loaded separately
       // e.g. via Babel-Runtime or via services like polyfill.io.
@@ -86,20 +107,13 @@ export function createHelper(modern, minified, presets = [], plugins = []) {
         polyfill: false
       }],
 
-      // class { handleClick = () => { } }
-      "transform-class-properties",
+      // All manually or minification related plugins
+      ...additionalPlugins,
 
-      // { ...todo, completed: true }
-      [ "transform-object-rest-spread", { useBuiltIns: true }],
-
-      // Eliminates unnecessary closures from your JavaScript in the name of performance
-      // https://github.com/codemix/babel-plugin-closure-elimination
-      "closure-elimination",
-
-      // Strip flow type annotations from your output code.
-      "transform-flow-strip-types",
-
-      ...plugins
+      // Improve some ES3 edge case to make code parseable by older clients
+      // e.g. when using reserved words as keys like "catch"
+      "transform-es3-property-literals",
+      "transform-es3-member-expression-literals"
     ]
   })
 }

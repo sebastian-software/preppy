@@ -59,7 +59,7 @@ const verbose = cli.flags.verbose
 const quiet = cli.flags.quiet
 
 if (verbose) {
-  console.log(cli.flags)
+  console.log("Flags:", cli.flags)
 }
 
 

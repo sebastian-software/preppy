@@ -3,6 +3,9 @@
 /* eslint-disable no-empty-function */
 /* eslint-disable lodash/prefer-noop */
 
+import { camelCase } from "lodash"
+console.log("CherryPick Import Lodash:", camelCase("hello world") === "helloWorld")
+
 import classes1 from "./index.css"
 console.log("Classes from CSS:", classes1)
 

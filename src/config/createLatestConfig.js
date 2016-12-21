@@ -14,9 +14,7 @@ const modernPreset = [ "babel-preset-env", {
       "iOS 10",
       "Edge 14",
       "Chrome 54",
-      "ChromeAndroid 54",
-      "Firefox 50",
-      "FirefoxAndroid 50"
+      "Firefox 50"
     ]
   },
 

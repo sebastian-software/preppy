@@ -2136,7 +2136,7 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-flow-bin@^0.37.1:
+flow-bin@^0.37.4:
   version "0.37.4"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.37.4.tgz#3d8da2ef746e80e730d166e09040f4198969b76b"
 
@@ -4351,9 +4351,9 @@ rxjs@^5.0.0-beta.11:
   dependencies:
     symbol-observable "^1.0.1"
 
-s15e-javascript@^0.7.9:
-  version "0.7.9"
-  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.7.9.tgz#305c8e0b518f37b794ef18557687993dbecd4c0a"
+s15e-javascript@^0.7.10:
+  version "0.7.10"
+  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.7.10.tgz#147bf4bcdc8f7f923acf861db294d9e442506ae4"
   dependencies:
     cross-spawn "^5.0.1"
     eslint "^3.12.2"
@@ -4370,7 +4370,7 @@ s15e-javascript@^0.7.9:
     eslint-plugin-promise "^3.4.0"
     eslint-plugin-react "^6.8.0"
     eslint-plugin-unicorn "^1.0.0"
-    flow-bin "^0.37.1"
+    flow-bin "^0.37.4"
     gulp "^3.9.1"
     gulp-eslint "^3.0.1"
     gulp-stylelint "^3.7.0"

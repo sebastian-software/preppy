@@ -6,7 +6,7 @@ import meow from "meow"
 import chalk from "chalk"
 
 import { rollup } from "rollup"
-import relink from "rollup-plugin-relink"
+import rebase from "rollup-plugin-rebase"
 import nodeResolve from "rollup-plugin-node-resolve"
 import jsonPlugin from "rollup-plugin-json"
 import yamlPlugin from "rollup-plugin-yaml"
@@ -180,7 +180,7 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
     [`${prefix}TARGET`]: JSON.stringify(targetId)
   }
 
-  var fileRelink = relink({ outputFolder: dirname(destFile), entry, verbose })
+  var fileRebase = rebase({ outputFolder: dirname(destFile), entry, verbose })
   rollup({
     entry,
     cache,
@@ -191,7 +191,7 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
         return false
       }
 
-      if (fileRelink.isExternal(dependency)) {
+      if (fileRebase.isExternal(dependency)) {
         return true
       }
 
@@ -214,7 +214,7 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
       yamlPlugin,
       replacePlugin(variables),
       currentTranspiler,
-      fileRelink
+      fileRebase
     ]
   })
     .then((bundle) =>

@@ -28,7 +28,7 @@ const cli = meow(`
 
   Options
     --entry-node      Entry file for NodeJS environment [default = auto]
-    --entry-browser   Entry file for Browser environment [default = auto]
+    --entry-web       Entry file for Browser environment [default = auto]
 
     --output-folder   Configure the output folder [default = auto]
 
@@ -41,7 +41,7 @@ const cli = meow(`
 `, {
   default: {
     entryNode: null,
-    entryBrowser: null,
+    entryWeb: null,
 
     outputFolder: null,
 
@@ -69,8 +69,8 @@ const outputFileMatrix = {
   "node-classic-esmodule": PKG["module"] || PKG["jsnext:main"] || null,
   "node-modern-commonjs": PKG["main:modern"] || null,
   "node-modern-esmodule": PKG["module:modern"] || null,
-  "browser-classic-esmodule": PKG["browser"] || PKG["web"] || PKG["browserify"] || null,
-  "browser-modern-esmodule": PKG["browser:modern"] || PKG["web:modern"] || PKG["browserify:modern"] || null
+  "web-classic-esmodule": PKG["web"] || PKG["browser"] || PKG["browserify"] || null,
+  "web-modern-esmodule": PKG["web:modern"] || PKG["browser:modern"] || PKG["browserify:modern"] || null
 }
 
 const outputFolder = cli.flags.outputFolder
@@ -79,8 +79,8 @@ if (outputFolder) {
   outputFileMatrix["node-classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
   outputFileMatrix["node-modern-commonjs"] = `${outputFolder}/node.modern.commonjs.js`
   outputFileMatrix["node-modern-esmodule"] = `${outputFolder}/node.modern.esmodule.js`
-  outputFileMatrix["browser-classic-esmodule"] = `${outputFolder}/browser.classic.esmodule.js`
-  outputFileMatrix["browser-modern-esmodule"] = `${outputFolder}/browser.modern.esmodule.js`
+  outputFileMatrix["web-classic-esmodule"] = `${outputFolder}/web.classic.esmodule.js`
+  outputFileMatrix["web-modern-esmodule"] = `${outputFolder}/web.modern.esmodule.js`
 }
 
 // Rollups support these formats: 'amd', 'cjs', 'es', 'iife', 'umd'
@@ -92,64 +92,65 @@ const format2Rollup = {
 const moduleId = PKG.name
 const moduleName = camelCase(moduleId)
 const banner = getBanner(PKG)
-const envs = {}
+const targets = {}
 const formats = [ "esmodule", "commonjs" ]
 const transpilers = getTranspilers("react", {
   minified: cli.flags.minified
 })
 
 if (cli.flags.entryNode) {
-  envs.node = [ cli.flags.entryNode ]
+  targets.node = [ cli.flags.entryNode ]
 } else {
-  envs.node = [
+  targets.node = [
+    "src/node/public.js",
+    "src/node/export.js",
+    "src/node.js",
+
     "src/server/public.js",
     "src/server/export.js",
-
-    "src/node.js",
     "src/server.js",
 
+    "src/server.js",
     "src/public.js",
     "src/export.js",
-    "src/index.js",
-
-    "module/public.js",
-    "module/export.js",
-    "module/index.js"
+    "src/index.js"
   ]
 }
 
-if (cli.flags.entryBrowser) {
-  envs.browser = [ cli.flags.entryBrowser ]
+if (cli.flags.entryWeb) {
+  targets.web = [ cli.flags.entryWeb ]
 } else {
-  envs.browser = [
+  targets.web = [
+    "src/web/public.js",
+    "src/web/export.js",
+    "src/web.js",
+
     "src/browser/public.js",
     "src/browser/export.js",
+    "src/browser.js",
 
     "src/client/public.js",
     "src/client/export.js",
-
-    "src/browser.js",
-    "src/client.js",
-    "src/web.js"
+    "src/client.js"
   ]
 }
 
-eachOfSeries(envs, (envEntries, envId, envCallback) =>
+eachOfSeries(targets, (envEntries, targetId, envCallback) =>
 {
   var entry = lookupBest(envEntries)
   if (entry)
   {
     if (!quiet) {
-      console.log(`Using entry ${chalk.blue(entry)} for environment ${chalk.blue(envId)}`)
+      console.log(`Using entry ${chalk.blue(entry)} for environment ${chalk.blue(targetId)}`)
     }
 
     eachOfSeries(formats, (format, formatIndex, formatCallback) =>
     {
       eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
       {
-        var destFile = outputFileMatrix[`${envId}-${transpilerId}-${format}`]
+        var destFile = outputFileMatrix[`${targetId}-${transpilerId}-${format}`]
         if (destFile) {
-          return bundleTo({ entry, envId, transpilerId, currentTranspiler, format, destFile, variantCallback })
+          return bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, destFile, variantCallback })
         } else {
           return variantCallback(null)
         }
@@ -167,7 +168,7 @@ function lookupBest(candidates) {
   return filtered[0]
 }
 
-function bundleTo({ entry, envId, transpilerId, currentTranspiler, format, destFile, variantCallback }) {
+function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, destFile, variantCallback }) {
   if (!quiet) {
     console.log(`${chalk.green(">>> Bundling")} ${chalk.magenta(PKG.name)}-${chalk.magenta(PKG.version)} as ${chalk.blue(transpilerId)} defined as ${chalk.blue(format)} to ${chalk.green(destFile)}...`)
   }
@@ -176,11 +177,10 @@ function bundleTo({ entry, envId, transpilerId, currentTranspiler, format, destF
   var variables = {
     [`${prefix}NAME`]: JSON.stringify(PKG.name),
     [`${prefix}VERSION`]: JSON.stringify(PKG.version),
-    [`${prefix}TARGET`]: JSON.stringify(envId)
+    [`${prefix}TARGET`]: JSON.stringify(targetId)
   }
 
-  var outputFolder = dirname(destFile)
-  var fileRelink = relink({ outputFolder, entry, verbose })
+  var fileRelink = relink({ outputFolder: dirname(destFile), entry, verbose })
   rollup({
     entry,
     cache,

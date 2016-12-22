@@ -5,7 +5,7 @@ const classicPreset = [ "latest", {
     modules: false
   }
 }]
-https://webpack.js.org/configuration/target/#target
+
 const modernPreset = [ "babel-preset-env", {
   targets: {
     node: 6.5,

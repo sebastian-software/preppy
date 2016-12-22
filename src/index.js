@@ -27,8 +27,8 @@ const cli = meow(`
     $ prepublish-lib
 
   Options
-    --entry-node      Entry file for NodeJS environment [default = auto]
-    --entry-web       Entry file for Browser environment [default = auto]
+    --entry-node      Entry file for NodeJS target [default = auto]
+    --entry-web       Entry file for Browser target [default = auto]
 
     --output-folder   Configure the output folder [default = auto]
 
@@ -141,7 +141,7 @@ eachOfSeries(targets, (envEntries, targetId, envCallback) =>
   if (entry)
   {
     if (!quiet) {
-      console.log(`Using entry ${chalk.blue(entry)} for environment ${chalk.blue(targetId)}`)
+      console.log(`Using entry ${chalk.blue(entry)} for target ${chalk.blue(targetId)}`)
     }
 
     eachOfSeries(formats, (format, formatIndex, formatCallback) =>

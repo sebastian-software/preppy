@@ -4,9 +4,15 @@ var path = require("path")
 
 module.exports = {
   context: path.resolve(__dirname, "lib"),
-  entry: "./node.classic.esmodule.js",
+  entry: "./node.modern.esmodule.js",
   target: "node",
-  devtool: "source-maps",
+  devtool: "source-map",
+  stats: "minimal",
+  profile: false,
+  bail: true,
+  performance: {
+    hints: false
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",

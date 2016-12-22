@@ -83,6 +83,6 @@
     "file-loader": "^0.9.0",
     "rimraf": "^2.5.4",
     "s15e-javascript": "^0.7.10",
-    "webpack": "^2.2.0-rc.1"
+    "webpack": "^2.2.0-rc.2"
   }
 }

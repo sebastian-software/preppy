@@ -1,11 +1,16 @@
 {
-  "name": "prepublish-lib",
+  "name": "prepublish",
   "version": "0.11.2",
-  "description": "A solution for simplifying pre-publishing typical JavaScript projects for publishing to NPM.",
+  "description": "A solution for simplifying prepublishing typical JavaScript projects for publishing to NPM.",
   "keywords": [
     "npm",
     "publish",
-    "library"
+    "prepublish",
+    "release",
+    "library",
+    "api",
+    "tooling",
+    "rollup"
   ],
   "engines": {
     "node": ">=6.0.0",
@@ -13,7 +18,7 @@
     "yarn": ">=0.17.0"
   },
   "bin": {
-    "prepublish-lib": "./bin/prepublish-lib.js"
+    "prepublish": "./bin/prepublish.js"
   },
   "author": {
     "name": "Sebastian Werner",
@@ -27,12 +32,12 @@
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",
-    "test": "rimraf test/lib test/dist && npm run prepublish && node bin/prepublish-lib --verbose --entry-node test/src/index.js --output-folder test/lib && webpack --config test/webpack.config.js && node test/dist/bundle.js",
+    "test": "rimraf test/lib test/dist && npm run prepublish && node bin/prepublish --verbose --entry-node test/src/index.js --output-folder test/lib && webpack --config test/webpack.config.js && node test/dist/bundle.js",
     "prepublish": "rimraf bin && rollup -c rollup.cfg"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sebastian-software/prepublish-lib.git"
+    "url": "git+https://github.com/sebastian-software/prepublish.git"
   },
   "dependencies": {
     "async": "^2.1.4",

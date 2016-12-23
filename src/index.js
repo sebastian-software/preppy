@@ -24,7 +24,7 @@ var cache
 
 const cli = meow(`
   Usage
-    $ prepublish-lib
+    $ prepublish
 
   Options
     --entry-node      Entry file for NodeJS target [default = auto]

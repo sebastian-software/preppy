@@ -1,23 +1,23 @@
-# *Pre Publish Lib* <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
+# *Prepublish* <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
 
-*Pre Publish Lib* is a solution for simplifying pre-publishing typical JavaScript projects for publishing to NPM.
+*Prepublish* is a solution for simplifying pre-publishing typical JavaScript projects for publishing to NPM.
 
 [sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
-[deps]: https://david-dm.org/sebastian-software/prepublish-lib
-[deps-img]: https://david-dm.org/sebastian-software/prepublish-lib.svg
-[npm]: https://www.npmjs.com/package/prepublish-lib
-[npm-downloads-img]: https://img.shields.io/npm/dm/prepublish-lib.svg
-[npm-version-img]: https://img.shields.io/npm/v/prepublish-lib.svg
-[travis-img]: https://img.shields.io/travis/sebastian-software/prepublish-lib/master.svg?branch=master&label=unix%20build
-[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/prepublish-lib/master.svg?label=windows%20build
-[travis]: https://travis-ci.org/sebastian-software/prepublish-lib
-[appveyor]: https://ci.appveyor.com/project/swernerx/prepublish-lib/branch/master
+[deps]: https://david-dm.org/sebastian-software/prepublish
+[deps-img]: https://david-dm.org/sebastian-software/prepublish.svg
+[npm]: https://www.npmjs.com/package/prepublish
+[npm-downloads-img]: https://img.shields.io/npm/dm/prepublish.svg
+[npm-version-img]: https://img.shields.io/npm/v/prepublish.svg
+[travis-img]: https://img.shields.io/travis/sebastian-software/prepublish/master.svg?branch=master&label=unix%20build
+[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/prepublish/master.svg?label=windows%20build
+[travis]: https://travis-ci.org/sebastian-software/prepublish
+[appveyor]: https://ci.appveyor.com/project/swernerx/prepublish/branch/master
 
 
 ## Transpilers
 
-*Pre Publish Lib* includes three transpiler configurations:
+*Prepublish* includes three transpiler configurations:
 
 - **[Buble](https://buble.surge.sh/guide/)**: Blazing fast ES2015+ transpiler where the goal is to have lightweight runtime code, too.
 - **[Babel Latest](https://babeljs.io/docs/plugins/preset-latest/)**: Latest configuration of Babel. Includes all of ES2015/ES2016/ES2017. Plus some ES3 helpers for maximum compatibility. Plus Support for [Object-Rest-Spread](https://babeljs.io/docs/plugins/transform-object-rest-spread/) and [Class Properties](https://babeljs.io/docs/plugins/transform-class-properties/). Uses [Transform-Runtime](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime) to externalize requirements to Polyfills. Resulting code needs all Polyfills for each library published with this tool. Typically by using services like [polyfill.io](https://qa.polyfill.io/v2/docs/) or [Babel Runtime](https://github.com/babel/babel/tree/master/packages/babel-runtime) aka [CoreJS](https://github.com/zloirock/core-js).
@@ -26,7 +26,7 @@
 
 ## Output Targets
 
-*Pre Publish Lib* produces builds depending on the entries of your packages `package.json`. It supports
+*Prepublish* produces builds depending on the entries of your packages `package.json`. It supports
 building for CommonJS and well as producing output with ES Modules. Just add the relevant entries to
 the configuration.
 
@@ -74,8 +74,8 @@ TODO
 
 ## Links
 
-- [GitHub](https://github.com/sebastian-software/prepublish-lib)
-- [NPM](https://www.npmjs.com/package/prepublish-lib)
+- [GitHub](https://github.com/sebastian-software/prepublish)
+- [NPM](https://www.npmjs.com/package/prepublish)
 
 
 ## Installation
@@ -83,26 +83,43 @@ TODO
 ### NPM
 
 ```console
-$ npm install --save-dev prepublish-lib
+$ npm install --save-dev prepublish
 ```
 
 ### Yarn
 
 ```console
-$ yarn add --dev prepublish-lib
+$ yarn add --dev prepublish
 ```
 
 
 
 ## Usage
 
-*Pre Publish Lib* comes with a binary which can be called from within your `scripts` section
+*Prepublish* comes with a binary which can be called from within your `scripts` section
 in the `package.json` file.
 
 ```json
 "scripts": {
-  "prepublish": "prepublish-lib"
+  "prepublish": "prepublish"
 }
+```
+
+There is also some amount of parameters you can use if the auto detection of your library does not work out correctly.
+
+```
+Options
+  --entry-node      Entry file for NodeJS target [default = auto]
+  --entry-web       Entry file for Browser target [default = auto]
+
+  --output-folder   Configure the output folder [default = auto]
+
+  -t, --transpiler  Chose the transpiler/config to use. Either "react", "latest" or "buble". [default = react]
+  -x, --minified    Enabled minification of output files
+  -m, --sourcemap   Create a source map file during processing
+
+  -v, --verbose     Verbose output mode [default = false]
+  -q, --quiet       Quiet output mode [default = false]
 ```
 
 

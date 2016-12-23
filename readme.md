@@ -55,10 +55,8 @@ Current *modern* set:
 - Safari 10
 - iOS 10
 - Edge 14
-- Chrome 54
-- Chrome for Android 54
+- Chrome 53
 - Firefox 50
-- Firefox for Android 50
 
 With this you should get almost everything of ES2015.
 

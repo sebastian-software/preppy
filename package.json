@@ -66,7 +66,7 @@
     "babel-plugin-transform-remove-undefined": "^0.0.1",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-plugin-transform-simplify-comparison-operators": "^6.8.0",
-    "babel-preset-env": "^1.1.4",
+    "babel-preset-env": "^1.1.6",
     "babel-preset-latest": "^6.16.0",
     "babel-preset-react": "^6.16.0",
     "babel-runtime": "^6.20.0",
@@ -76,19 +76,19 @@
     "loader-utils": "^0.2.16",
     "lodash": "^4.17.4",
     "meow": "^3.7.0",
-    "rollup": "^0.39.2",
+    "rollup": "^0.41.1",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-buble": "^0.15.0",
     "rollup-plugin-json": "^2.1.0",
     "rollup-plugin-node-resolve": "^2.0.0",
-    "rollup-plugin-rebase": "^0.4.4",
+    "rollup-plugin-rebase": "^0.4.6",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-yaml": "^1.0.0"
   },
   "devDependencies": {
     "file-loader": "^0.9.0",
     "rimraf": "^2.5.4",
-    "s15e-javascript": "^0.7.10",
+    "s15e-javascript": "^0.7.11",
     "webpack": "^2.2.0-rc.2"
   }
 }

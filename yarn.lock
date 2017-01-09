@@ -4328,9 +4328,9 @@ rollup-plugin-node-resolve@^2.0.0:
     builtin-modules "^1.1.0"
     resolve "^1.1.6"
 
-rollup-plugin-rebase@^0.4.8:
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-rebase/-/rollup-plugin-rebase-0.4.8.tgz#950eeb7778d072e9977c5787aa7fb295bb545f10"
+rollup-plugin-rebase@^0.4.9:
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-rebase/-/rollup-plugin-rebase-0.4.9.tgz#6176523ad56e5c48ab1203412d0e51ed3d1586e8"
   dependencies:
     babel-runtime "^6.20.0"
     denodeify "^1.2.1"

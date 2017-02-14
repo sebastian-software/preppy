@@ -8,6 +8,7 @@ import chalk from "chalk"
 import { rollup } from "rollup"
 import rebase from "rollup-plugin-rebase"
 import nodeResolve from "rollup-plugin-node-resolve"
+import commonjs from "rollup-plugin-commonjs"
 import jsonPlugin from "rollup-plugin-json"
 import yamlPlugin from "rollup-plugin-yaml"
 import replacePlugin from "rollup-plugin-replace"
@@ -211,6 +212,9 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
         jsnext: true,
         module: true,
         main: true
+      }),
+      commonjs({
+        include: "node_modules/**"
       }),
       jsonPlugin,
       yamlPlugin,

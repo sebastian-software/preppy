@@ -86,7 +86,8 @@ if (outputFolder) {
 // Rollups support these formats: 'amd', 'cjs', 'es', 'iife', 'umd'
 const format2Rollup = {
   commonjs: "cjs",
-  esmodule: "es"
+  esmodule: "es",
+  umd: "umd"
 }
 
 const moduleId = PKG_CONFIG.name
@@ -206,7 +207,7 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
     plugins:
     [
       nodeResolve({
-        extensions: [ ".js", ".jsx", ".ts", ".tsx", ".json" ],
+        extensions: [ ".mjs", ".js", ".jsx", ".ts", ".tsx", ".json" ],
         jsnext: true,
         module: true,
         main: true

@@ -86,9 +86,10 @@
     "rollup-plugin-yaml": "^1.0.0"
   },
   "devDependencies": {
+    "eslint": "^3.15.0",
     "file-loader": "^0.10.0",
+    "readable-code": "^0.9.4",
     "rimraf": "^2.5.4",
-    "s15e-javascript": "^0.8.13",
     "webpack": "^2.2.1"
   }
 }

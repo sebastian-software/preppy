@@ -7,12 +7,7 @@ module.exports = {
   entry: "./node.modern.esmodule.js",
   target: "node",
   devtool: "source-map",
-  stats: "minimal",
-  profile: false,
-  bail: true,
-  performance: {
-    hints: false
-  },
+  stats: "errors-only",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",

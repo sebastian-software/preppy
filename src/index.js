@@ -96,7 +96,7 @@ const format2Rollup = {
 }
 
 const moduleId = PKG_CONFIG.name
-const moduleName = camelCase(moduleId)
+const moduleName = PKG_CONFIG.moduleName || camelCase(moduleId)
 const banner = getBanner(PKG_CONFIG)
 const targets = {}
 const formats = [ "esmodule", "commonjs", "iife" ]
@@ -192,7 +192,6 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
   var fileRebase = rebase({ outputFolder: dirname(destFile), entry, verbose })
   rollup({
     entry,
-    moduleName: PKG_CONFIG.moduleName || camelCase(PKG_CONFIG.name),
     cache,
     onwarn: (message) => console.warn(message),
     external(dependency)

@@ -203,6 +203,17 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
         return true
       }
 
+      if (format === "iife")
+      {
+        // Exclude Babel-Runtime/Core-JS fron IIFE build.
+        // The user of the library is responsible for adding required ES polyfills
+        if (/node_modules\/babel-runtime\/core-js/.exec(dependency)) {
+          return true
+        }
+
+        return false
+      }
+
       if (isAbsolute(dependency)) {
         var relativePath = relative(CWD, dependency)
         return Boolean(/node_modules/.exec(relativePath))

@@ -68,8 +68,10 @@ if (verbose) {
 const outputFileMatrix = {
   "node-classic-commonjs": PKG_CONFIG["main"] || null,
   "node-classic-esmodule": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
+  "node-classic-iife": PKG_CONFIG["main:iife"] || PKG_CONFIG["main:bundle"] || null,
   "node-modern-commonjs": PKG_CONFIG["main:modern"] || null,
   "node-modern-esmodule": PKG_CONFIG["module:modern"] || null,
+  "node-modern-iife": PKG_CONFIG["main:modern:iife"] || PKG_CONFIG["main:modern:bundle"] || null,
   "web-classic-esmodule": PKG_CONFIG["web"] || PKG_CONFIG["browser"] || PKG_CONFIG["browserify"] || null,
   "web-modern-esmodule": PKG_CONFIG["web:modern"] || PKG_CONFIG["browser:modern"] || PKG_CONFIG["browserify:modern"] || null
 }
@@ -78,8 +80,10 @@ const outputFolder = command.flags.outputFolder
 if (outputFolder) {
   outputFileMatrix["node-classic-commonjs"] = `${outputFolder}/node.classic.commonjs.js`
   outputFileMatrix["node-classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
+  outputFileMatrix["node-classic-iife"] = `${outputFolder}/node.classic.iife.js`
   outputFileMatrix["node-modern-commonjs"] = `${outputFolder}/node.modern.commonjs.js`
   outputFileMatrix["node-modern-esmodule"] = `${outputFolder}/node.modern.esmodule.js`
+  outputFileMatrix["node-modern-iife"] = `${outputFolder}/node.modern.iife.js`
   outputFileMatrix["web-classic-esmodule"] = `${outputFolder}/web.classic.esmodule.js`
   outputFileMatrix["web-modern-esmodule"] = `${outputFolder}/web.modern.esmodule.js`
 }
@@ -88,14 +92,14 @@ if (outputFolder) {
 const format2Rollup = {
   commonjs: "cjs",
   esmodule: "es",
-  umd: "umd"
+  iife: "iife"
 }
 
 const moduleId = PKG_CONFIG.name
 const moduleName = camelCase(moduleId)
 const banner = getBanner(PKG_CONFIG)
 const targets = {}
-const formats = [ "esmodule", "commonjs" ]
+const formats = [ "esmodule", "commonjs", "iife" ]
 const transpilers = getTranspilers("react", {
   minified: command.flags.minified
 })
@@ -186,6 +190,7 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
   var fileRebase = rebase({ outputFolder: dirname(destFile), entry, verbose })
   rollup({
     entry,
+    moduleName: PKG_CONFIG.moduleName || camelCase(PKG_CONFIG.name),
     cache,
     onwarn: (message) => console.warn(message),
     external(dependency)

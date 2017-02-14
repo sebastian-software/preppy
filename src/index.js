@@ -100,9 +100,6 @@ const moduleName = camelCase(moduleId)
 const banner = getBanner(PKG_CONFIG)
 const targets = {}
 const formats = [ "esmodule", "commonjs", "iife" ]
-const transpilers = getTranspilers("react", {
-  minified: command.flags.minified
-})
 
 if (command.flags.entryNode) {
   targets.node = [ command.flags.entryNode ]
@@ -152,6 +149,11 @@ eachOfSeries(targets, (envEntries, targetId, envCallback) =>
 
     eachOfSeries(formats, (format, formatIndex, formatCallback) =>
     {
+      const transpilers = getTranspilers(command.flags.transpiler, {
+        minified: command.flags.minified,
+        runtime: format !== "iife"
+      })
+
       eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
       {
         var destFile = outputFileMatrix[`${targetId}-${transpilerId}-${format}`]

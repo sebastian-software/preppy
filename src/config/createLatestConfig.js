@@ -25,7 +25,7 @@ const modernPreset = [ "babel-preset-env", {
 }]
 
 /* eslint-disable max-params */
-export function createHelper(modern, minified, presets = [], plugins = []) {
+export function createHelper({ modern = false, minified = false, runtime = true, presets = [], plugins = [] }) {
   // This is effectively a split of "babel-preset-babili" where some plugins
   // are regarded as being useful in "normal" publishing while others are
   // too aggressive to lead to human readable code.
@@ -52,12 +52,28 @@ export function createHelper(modern, minified, presets = [], plugins = []) {
     )
   }
 
+  // Using centralized helpers but require generic Polyfills being loaded separately
+  // e.g. via Babel-Runtime or via services like polyfill.io.
+  // See also: https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime
+  if (runtime) {
+    additionalPlugins.push([ "transform-runtime", {
+      // default
+      helpers: true,
+
+      // default
+      regenerator: true,
+
+      // changed from default. More efficient to use real polyfills.
+      polyfill: false
+    }])
+  }
+
   return babel({
     // Don't try to find .babelrc because we want to force this configuration.
     babelrc: false,
 
-    // Allow usage of transform-runtime for referencing to a common library of polyfills
-    runtimeHelpers: true,
+    // Allow usage of transform-runtime for referencing to a common library of polyfills (Buble setting)
+    runtimeHelpers: runtime,
 
     // Remove comments - these are often positioned on the wrong positon after transpiling anyway
     comments: minified === false,
@@ -93,20 +109,6 @@ export function createHelper(modern, minified, presets = [], plugins = []) {
       // { ...todo, completed: true }
       [ "transform-object-rest-spread", { useBuiltIns: true }],
 
-      // Using centralized helpers but require generic Polyfills being loaded separately
-      // e.g. via Babel-Runtime or via services like polyfill.io.
-      // See also: https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime
-      [ "transform-runtime", {
-        // default
-        helpers: true,
-
-        // default
-        regenerator: true,
-
-        // changed from default. More efficient to use real polyfills.
-        polyfill: false
-      }],
-
       // All manually or minification related plugins
       ...additionalPlugins,
 
@@ -118,9 +120,9 @@ export function createHelper(modern, minified, presets = [], plugins = []) {
   })
 }
 
-export default function createLatestConfig(minified) {
+export default function createLatestConfig(options) {
   return {
-    classic: createHelper(false, minified),
-    modern: createHelper(true, minified)
+    classic: createHelper({ ...options, modern: false }),
+    modern: createHelper({ ...options, modern: true })
   }
 }

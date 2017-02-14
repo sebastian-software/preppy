@@ -15,7 +15,9 @@ export default {
   banner: "#!/usr/bin/env node\n",
   plugins: [
     json(),
-    buble(),
+    buble({
+      objectAssign: "Object.assign"
+    }),
     executable()
   ]
 }

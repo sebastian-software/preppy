@@ -28,7 +28,6 @@
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint --quiet src/ test/ || true",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",
@@ -86,7 +85,6 @@
     "rollup-plugin-yaml": "^1.0.0"
   },
   "devDependencies": {
-    "eslint": "^3.15.0",
     "file-loader": "^0.10.0",
     "readable-code": "^0.9.4",
     "rimraf": "^2.5.4",

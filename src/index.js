@@ -184,7 +184,7 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
   rollup({
     entry,
     cache,
-    onwarn: (msg) => console.warn(msg),
+    onwarn: (message) => console.warn(message),
     external(dependency)
     {
       if (dependency === entry) {
@@ -196,8 +196,8 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
       }
 
       if (isAbsolute(dependency)) {
-        var rel = relative(CWD, dependency)
-        return Boolean(/node_modules/.exec(rel))
+        var relativePath = relative(CWD, dependency)
+        return Boolean(/node_modules/.exec(relativePath))
       }
 
       return dependency.charAt(0) !== "."
@@ -230,9 +230,9 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
     .then(() =>
       variantCallback(null)
     )
-    .catch((err) =>
+    .catch((error) =>
     {
-      console.error(err)
-      variantCallback(`Error during bundling ${format}: ${err}`)
+      console.error(error)
+      variantCallback(`Error during bundling ${format}: ${error}`)
     })
 }

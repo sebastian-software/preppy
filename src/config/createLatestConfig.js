@@ -66,6 +66,8 @@ export function createHelper({ modern = false, minified = false, runtime = true,
       // changed from default. More efficient to use real polyfills.
       polyfill: false
     }])
+  } else {
+    additionalPlugins.push("external-helpers")
   }
 
   return babel({
@@ -73,7 +75,7 @@ export function createHelper({ modern = false, minified = false, runtime = true,
     babelrc: false,
 
     // Allow usage of transform-runtime for referencing to a common library of polyfills (Buble setting)
-    runtimeHelpers: runtime,
+    runtimeHelpers: true,
 
     // Remove comments - these are often positioned on the wrong positon after transpiling anyway
     comments: minified === false,

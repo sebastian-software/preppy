@@ -66,9 +66,9 @@ export function createHelper({ modern = false, minified = false, runtime = true,
       // changed from default. More efficient to use real polyfills.
       polyfill: false
     }])
-  } else {
+  } /* else {
     additionalPlugins.push("external-helpers")
-  }
+  } */
 
   return babel({
     // Don't try to find .babelrc because we want to force this configuration.

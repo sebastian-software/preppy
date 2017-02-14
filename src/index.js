@@ -164,7 +164,7 @@ eachOfSeries(targets, (envEntries, targetId, envCallback) =>
 })
 
 function lookupBest(candidates) {
-  var filtered = candidates.filter(fileExists)
+  var filtered = candidates.filter(fileExists.sync)
   return filtered[0]
 }
 

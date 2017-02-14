@@ -24,6 +24,7 @@ const modernPreset = [ "babel-preset-env", {
   useBuiltIns: true
 }]
 
+/* eslint-disable max-params */
 export function createHelper(modern, minified, presets = [], plugins = []) {
   // This is effectively a split of "babel-preset-babili" where some plugins
   // are regarded as being useful in "normal" publishing while others are

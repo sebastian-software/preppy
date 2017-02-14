@@ -19,5 +19,7 @@ export default function getTranspilers(mode, { minified })
     case "react":
       return createReactConfig(minified)
 
+    default:
+      return {}
   }
 }

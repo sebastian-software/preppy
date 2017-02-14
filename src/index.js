@@ -16,13 +16,13 @@ import getTranspilers from "./getTranspilers"
 import getBanner from "./getBanner"
 
 const CWD = process.cwd()
-const PKG = require(resolve(CWD, "package.json"))
+const PKG_CONFIG = require(resolve(CWD, "package.json"))
 
 var cache
 
 
 
-const cli = meow(`
+const command = meow(`
   Usage
     $ prepublish
 
@@ -55,25 +55,25 @@ const cli = meow(`
 })
 
 
-const verbose = cli.flags.verbose
-const quiet = cli.flags.quiet
+const verbose = command.flags.verbose
+const quiet = command.flags.quiet
 
 if (verbose) {
-  console.log("Flags:", cli.flags)
+  console.log("Flags:", command.flags)
 }
 
 
 /* eslint-disable dot-notation */
 const outputFileMatrix = {
-  "node-classic-commonjs": PKG["main"] || null,
-  "node-classic-esmodule": PKG["module"] || PKG["jsnext:main"] || null,
-  "node-modern-commonjs": PKG["main:modern"] || null,
-  "node-modern-esmodule": PKG["module:modern"] || null,
-  "web-classic-esmodule": PKG["web"] || PKG["browser"] || PKG["browserify"] || null,
-  "web-modern-esmodule": PKG["web:modern"] || PKG["browser:modern"] || PKG["browserify:modern"] || null
+  "node-classic-commonjs": PKG_CONFIG["main"] || null,
+  "node-classic-esmodule": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
+  "node-modern-commonjs": PKG_CONFIG["main:modern"] || null,
+  "node-modern-esmodule": PKG_CONFIG["module:modern"] || null,
+  "web-classic-esmodule": PKG_CONFIG["web"] || PKG_CONFIG["browser"] || PKG_CONFIG["browserify"] || null,
+  "web-modern-esmodule": PKG_CONFIG["web:modern"] || PKG_CONFIG["browser:modern"] || PKG_CONFIG["browserify:modern"] || null
 }
 
-const outputFolder = cli.flags.outputFolder
+const outputFolder = command.flags.outputFolder
 if (outputFolder) {
   outputFileMatrix["node-classic-commonjs"] = `${outputFolder}/node.classic.commonjs.js`
   outputFileMatrix["node-classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
@@ -89,17 +89,17 @@ const format2Rollup = {
   esmodule: "es"
 }
 
-const moduleId = PKG.name
+const moduleId = PKG_CONFIG.name
 const moduleName = camelCase(moduleId)
-const banner = getBanner(PKG)
+const banner = getBanner(PKG_CONFIG)
 const targets = {}
 const formats = [ "esmodule", "commonjs" ]
 const transpilers = getTranspilers("react", {
-  minified: cli.flags.minified
+  minified: command.flags.minified
 })
 
-if (cli.flags.entryNode) {
-  targets.node = [ cli.flags.entryNode ]
+if (command.flags.entryNode) {
+  targets.node = [ command.flags.entryNode ]
 } else {
   targets.node = [
     "src/node/public.js",
@@ -117,8 +117,8 @@ if (cli.flags.entryNode) {
   ]
 }
 
-if (cli.flags.entryWeb) {
-  targets.web = [ cli.flags.entryWeb ]
+if (command.flags.entryWeb) {
+  targets.web = [ command.flags.entryWeb ]
 } else {
   targets.web = [
     "src/web/public.js",
@@ -170,13 +170,14 @@ function lookupBest(candidates) {
 
 function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, destFile, variantCallback }) {
   if (!quiet) {
-    console.log(`${chalk.green(">>> Bundling")} ${chalk.magenta(PKG.name)}-${chalk.magenta(PKG.version)} as ${chalk.blue(transpilerId)} defined as ${chalk.blue(format)} to ${chalk.green(destFile)}...`)
+    console.log(`${chalk.green(">>> Bundling")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(PKG_CONFIG.version)}
+      as ${chalk.blue(transpilerId)} defined as ${chalk.blue(format)} to ${chalk.green(destFile)}...`)
   }
 
   var prefix = "process.env."
   var variables = {
-    [`${prefix}NAME`]: JSON.stringify(PKG.name),
-    [`${prefix}VERSION`]: JSON.stringify(PKG.version),
+    [`${prefix}NAME`]: JSON.stringify(PKG_CONFIG.name),
+    [`${prefix}VERSION`]: JSON.stringify(PKG_CONFIG.version),
     [`${prefix}TARGET`]: JSON.stringify(targetId)
   }
 
@@ -223,7 +224,7 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
         moduleId,
         moduleName,
         banner,
-        sourceMap: cli.flags.sourcemap,
+        sourceMap: command.flags.sourcemap,
         dest: destFile
       })
     )

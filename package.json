@@ -31,7 +31,7 @@
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",
-    "test": "rimraf test/lib test/dist && npm run prepublish && node bin/prepublish --verbose --entry-node test/src/index.js --output-folder test/lib && webpack --hide-modules --config test/webpack.config.js && node test/dist/bundle.js",
+    "test": "rimraf test/lib test/dist && npm run prepublish && node bin/prepublish --entry-node test/src/index.js --output-folder test/lib && webpack --hide-modules --config test/webpack.config.js && node test/dist/bundle.js",
     "prepublish": "rimraf bin && rollup -c rollup.config.js"
   },
   "repository": {

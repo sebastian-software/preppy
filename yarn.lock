@@ -4410,6 +4410,12 @@ rollup-plugin-commonjs@^7.0.0:
     resolve "^1.1.7"
     rollup-pluginutils "^1.5.1"
 
+rollup-plugin-executable@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-executable/-/rollup-plugin-executable-1.0.0.tgz#50f434a664de3c88d44d34ae7d3db57c6e7310c5"
+  dependencies:
+    babel-runtime "^6.20.0"
+
 rollup-plugin-json@^2.0.1, rollup-plugin-json@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-json/-/rollup-plugin-json-2.1.0.tgz#7f8e1b2b156932dd934b938dc5547e4118d4121f"

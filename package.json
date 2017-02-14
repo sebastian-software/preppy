@@ -18,7 +18,7 @@
     "yarn": ">=0.17.0"
   },
   "bin": {
-    "prepublish": "./bin/prepublish.js"
+    "prepublish": "./bin/prepublish"
   },
   "author": {
     "name": "Sebastian Werner",
@@ -32,7 +32,7 @@
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",
     "test": "rimraf test/lib test/dist && npm run prepublish && node bin/prepublish --verbose --entry-node test/src/index.js --output-folder test/lib && webpack --hide-modules --config test/webpack.config.js && node test/dist/bundle.js",
-    "prepublish": "rimraf bin && rollup -c rollup.cfg"
+    "prepublish": "rimraf bin && rollup -c rollup.config.js"
   },
   "repository": {
     "type": "git",
@@ -89,6 +89,7 @@
     "file-loader": "^0.10.0",
     "readable-code": "^0.9.4",
     "rimraf": "^2.5.4",
+    "rollup-plugin-executable": "^1.0.0",
     "webpack": "^2.2.1"
   }
 }

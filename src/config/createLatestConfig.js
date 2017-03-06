@@ -2,9 +2,8 @@ import babel from "rollup-plugin-babel"
 
 // Babel-Preset-Env without targets effectively works like Babel-Preset-Latest
 const classicPreset = [ "env", {
-  es2015: {
-    modules: false
-  }
+  modules: false,
+  exclude: [ "transform-regenerator" ]
 }]
 
 const modernPreset = [ "env", {
@@ -21,6 +20,7 @@ const modernPreset = [ "env", {
   },
 
   modules: false,
+  exclude: [ "transform-regenerator" ],
   debug: false,
   useBuiltIns: true
 }]
@@ -61,10 +61,11 @@ export function createHelper({ modern = false, minified = false, runtime = true,
       // default
       helpers: true,
 
-      // default
-      regenerator: true,
+      // Changed from default. Regenerator is a rework of the code to replace generators.
+      // These are pretty widely supported though.
+      regenerator: false,
 
-      // changed from default. More efficient to use real polyfills.
+      // Changed from default. More efficient to use real polyfills.
       polyfill: false
     }])
   }

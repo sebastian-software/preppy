@@ -1,12 +1,20 @@
 import babel from "rollup-plugin-babel"
 
+const commonEnvOptions = {
+  modules: false,
+  exclude: [ "transform-async-to-generator", "transform-regenerator" ],
+  debug: false,
+  useBuiltIns: true
+}
+
 // Babel-Preset-Env without targets effectively works like Babel-Preset-Latest
 const classicPreset = [ "env", {
-  modules: false,
-  exclude: [ "transform-regenerator" ]
+  ...commonEnvOptions
 }]
 
 const modernPreset = [ "env", {
+  ...commonEnvOptions,
+
   targets: {
     node: 6.5,
     electron: 1.4,
@@ -17,12 +25,7 @@ const modernPreset = [ "env", {
       "Chrome 53",
       "Firefox 50"
     ]
-  },
-
-  modules: false,
-  exclude: [ "transform-regenerator" ],
-  debug: false,
-  useBuiltIns: true
+  }
 }]
 
 /* eslint-disable max-params */
@@ -99,6 +102,10 @@ export function createHelper({ modern = false, minified = false, runtime = true,
     plugins: [
       // Allow parsing of import()
       "syntax-dynamic-import",
+
+      // fast-async/await transformer Babel plugin
+      // https://www.npmjs.com/package/fast-async
+      "fast-async",
 
       // Strip flow type annotations from your output code.
       "transform-flow-strip-types",

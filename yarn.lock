@@ -19,6 +19,10 @@ acorn-dynamic-import@^2.0.0:
   dependencies:
     acorn "^4.0.3"
 
+acorn-es7-plugin@>=1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/acorn-es7-plugin/-/acorn-es7-plugin-1.1.5.tgz#f31e1a618f439bfdde8851dd875a3a163ca8201f"
+
 acorn-jsx@^3.0.0, acorn-jsx@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-3.0.1.tgz#afdf9488fb1ecefc8348f6fb22f464e32a58b36b"
@@ -35,13 +39,13 @@ acorn@4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.4.tgz#17a8d6a7a6c4ef538b814ec9abac2779293bf30a"
 
+acorn@>=2.5.2, acorn@^4.0.1, acorn@^4.0.3, acorn@^4.0.4:
+  version "4.0.11"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.11.tgz#edcda3bd937e7556410d42ed5860f67399c794c0"
+
 acorn@^3.0.4, acorn@^3.1.0, acorn@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
-
-acorn@^4.0.1, acorn@^4.0.3, acorn@^4.0.4:
-  version "4.0.11"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.11.tgz#edcda3bd937e7556410d42ed5860f67399c794c0"
 
 ajv-keywords@^1.0.0, ajv-keywords@^1.1.1:
   version "1.5.1"
@@ -464,6 +468,12 @@ babel-plugin-external-helpers@^6.22.0:
   resolved "https://registry.yarnpkg.com/babel-plugin-external-helpers/-/babel-plugin-external-helpers-6.22.0.tgz#2285f48b02bd5dede85175caf8c62e86adccefa1"
   dependencies:
     babel-runtime "^6.22.0"
+
+babel-plugin-fast-async@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-fast-async/-/babel-plugin-fast-async-6.1.2.tgz#ac4921fa2b7f4e1f51963be45f3b1018fd03cd9d"
+  dependencies:
+    nodent ">=2.6.12"
 
 babel-plugin-lodash@^3.2.11:
   version "3.2.11"
@@ -3737,6 +3747,20 @@ node-pre-gyp@^0.6.29:
     semver "~5.3.0"
     tar "~2.2.1"
     tar-pack "~3.3.0"
+
+nodent-runtime@>=3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/nodent-runtime/-/nodent-runtime-3.0.4.tgz#a801ecb7bb0f6c39a69b24cc2fa370cfa8b492da"
+
+nodent@>=2.6.12:
+  version "3.0.13"
+  resolved "https://registry.yarnpkg.com/nodent/-/nodent-3.0.13.tgz#3a648672d4b61581ebdc19f6fb07af0fb9c3f8a8"
+  dependencies:
+    acorn ">=2.5.2"
+    acorn-es7-plugin ">=1.1.5"
+    nodent-runtime ">=3.0.4"
+    resolve "^1.2.0"
+    source-map "^0.5.6"
 
 nopt@~3.0.6:
   version "3.0.6"

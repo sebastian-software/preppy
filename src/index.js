@@ -21,6 +21,7 @@ const PKG_CONFIG = require(resolve(CWD, "package.json"))
 
 var cache
 
+/* eslint-disable no-console */
 
 
 const command = meow(`
@@ -67,13 +68,25 @@ if (verbose) {
 /* eslint-disable dot-notation */
 const outputFileMatrix = {
   "node-classic-commonjs": PKG_CONFIG["main"] || null,
-  "node-classic-esmodule": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
-  "node-classic-iife": PKG_CONFIG["main:iife"] || PKG_CONFIG["main:bundle"] || null,
+  "node-classic-esmodule": PKG_CONFIG["module"] ||
+    PKG_CONFIG["jsnext:main"] ||
+    null,
+  "node-classic-iife": PKG_CONFIG["main:iife"] ||
+    PKG_CONFIG["main:bundle"] ||
+    null,
   "node-modern-commonjs": PKG_CONFIG["main:modern"] || null,
   "node-modern-esmodule": PKG_CONFIG["module:modern"] || null,
-  "node-modern-iife": PKG_CONFIG["main:modern:iife"] || PKG_CONFIG["main:modern:bundle"] || null,
-  "web-classic-esmodule": PKG_CONFIG["web"] || PKG_CONFIG["browser"] || PKG_CONFIG["browserify"] || null,
-  "web-modern-esmodule": PKG_CONFIG["web:modern"] || PKG_CONFIG["browser:modern"] || PKG_CONFIG["browserify:modern"] || null
+  "node-modern-iife": PKG_CONFIG["main:modern:iife"] ||
+    PKG_CONFIG["main:modern:bundle"] ||
+    null,
+  "web-classic-esmodule": PKG_CONFIG["web"] ||
+    PKG_CONFIG["browser"] ||
+    PKG_CONFIG["browserify"] ||
+    null,
+  "web-modern-esmodule": PKG_CONFIG["web:modern"] ||
+    PKG_CONFIG["browser:modern"] ||
+    PKG_CONFIG["browserify:modern"] ||
+    null
 }
 
 const outputFolder = command.flags.outputFolder
@@ -178,8 +191,8 @@ function lookupBest(candidates) {
 
 function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, destFile, variantCallback }) {
   if (!quiet) {
-    console.log(`${chalk.green(">>> Bundling")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(PKG_CONFIG.version)}
-      as ${chalk.blue(transpilerId)} defined as ${chalk.blue(format)} to ${chalk.green(destFile)}...`)
+    /* eslint-disable max-len */
+    console.log(`${chalk.green(">>> Bundling")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(PKG_CONFIG.version)} as ${chalk.blue(transpilerId)} defined as ${chalk.blue(format)} to ${chalk.green(destFile)}...`)
   }
 
   var prefix = "process.env."

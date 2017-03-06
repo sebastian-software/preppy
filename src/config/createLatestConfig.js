@@ -1,12 +1,13 @@
 import babel from "rollup-plugin-babel"
 
-const classicPreset = [ "latest", {
+// Babel-Preset-Env without targets effectively works like Babel-Preset-Latest
+const classicPreset = [ "env", {
   es2015: {
     modules: false
   }
 }]
 
-const modernPreset = [ "babel-preset-env", {
+const modernPreset = [ "env", {
   targets: {
     node: 6.5,
     electron: 1.4,
@@ -95,6 +96,9 @@ export function createHelper({ modern = false, minified = false, runtime = true,
     ],
 
     plugins: [
+      // Allow parsing of import()
+      "syntax-dynamic-import",
+
       // Strip flow type annotations from your output code.
       "transform-flow-strip-types",
 

@@ -80,3 +80,9 @@ var React = {
 }
 
 console.log("React Enabled:", <ReactTest>Hello</ReactTest> instanceof ReactTest)
+
+// This is currently not supported by Rollup and throws a syntax error
+// https://github.com/rollup/rollup/issues/1325
+// It's currently stage3 not yet stage4. See also:
+// https://tc39.github.io/proposal-dynamic-import/
+// console.log("Dynamic Import returns Promise", import("./logo.svg"))

@@ -879,9 +879,9 @@ babel-polyfill@^6.3.14:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
-babel-preset-env@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.2.0.tgz#c33f12ddd9c5b822ee47f6316de539ae8dc98e08"
+babel-preset-env@^1.2.0, babel-preset-env@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.2.1.tgz#659178f54df74a74765f796be4d290b5beeb3f5f"
   dependencies:
     babel-plugin-check-es2015-constants "^6.3.13"
     babel-plugin-syntax-trailing-function-commas "^6.13.0"
@@ -1945,8 +1945,8 @@ eslint-plugin-flowtype-errors@^3.0.0:
     slash "^1.0.0"
 
 eslint-plugin-flowtype@^2.30.0:
-  version "2.30.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.30.0.tgz#3054a265f9c8afe3046c3d41b72d32a736f9b4ae"
+  version "2.30.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.30.2.tgz#110dce1903e34530bbe249f8071a7aab9612b5a7"
   dependencies:
     lodash "^4.15.0"
 
@@ -1992,8 +1992,8 @@ eslint-plugin-no-use-extend-native@^0.3.12:
     is-proto-prop "^1.0.0"
 
 eslint-plugin-node@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-4.1.0.tgz#87cb62a96109087bcb5827bd5ae15fd0c49685bb"
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-4.2.0.tgz#c63076eb1ef109b57fa54deefa519957de0c7952"
   dependencies:
     ignore "^3.0.11"
     minimatch "^3.0.2"
@@ -2020,8 +2020,8 @@ eslint-rule-documentation@^1.0.0:
   resolved "https://registry.yarnpkg.com/eslint-rule-documentation/-/eslint-rule-documentation-1.0.6.tgz#89319e712989e8b7c8ac653a3ba8be9b229d1e68"
 
 eslint@^3.0.0, eslint@^3.17.0:
-  version "3.17.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.17.0.tgz#e2704b09c5bae9fb49ee8bafeea3832c7257d498"
+  version "3.17.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.17.1.tgz#b80ae12d9c406d858406fccda627afce33ea10ea"
   dependencies:
     babel-code-frame "^6.16.0"
     chalk "^1.1.3"

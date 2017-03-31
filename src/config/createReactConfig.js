@@ -17,7 +17,8 @@ const additionalPlugins = [
 
 export default function createReactConfig(options) {
   return {
-    classic: createHelper({ ...options, modern: false, presets: additionalPresets, plugins: additionalPlugins }),
-    modern: createHelper({ ...options, modern: true, presets: additionalPresets, plugins: additionalPlugins })
+    classic: createHelper({ ...options, mode: "classic", presets: additionalPresets, plugins: additionalPlugins }),
+    modern: createHelper({ ...options, mode: "modern", presets: additionalPresets, plugins: additionalPlugins }),
+    es2015: createHelper({ ...options, mode: "es2015", presets: additionalPresets, plugins: additionalPlugins })
   }
 }

@@ -28,8 +28,17 @@ const modernPreset = [ "env", {
   }
 }]
 
+// Follow the idea of https://angularjs.blogspot.de/2017/03/angular-400-now-available.html to offer
+// kind of a standardized es2015 package which could be used in more modern browsers/clients. This
+// is an alternative to our "modern" approach which is more oriented on specific browser development
+// and requires some knowledge of the supported browser / nodejs range.
+// The "modern" mode effectively keeps source code with arrow functions, classes, etc. better.
+const es2015Preset = [ "es2015", {
+  ...commonEnvOptions
+}]
+
 /* eslint-disable max-params */
-export function createHelper({ modern = false, minified = false, runtime = true, presets = [], plugins = [] }) {
+export function createHelper({ mode = "classic", minified = false, runtime = true, presets = [], plugins = [] }) {
   // This is effectively a split of "babel-preset-babili" where some plugins
   // are regarded as being useful in "normal" publishing while others are
   // too aggressive to lead to human readable code.
@@ -94,7 +103,10 @@ export function createHelper({ modern = false, minified = false, runtime = true,
     exclude: "node_modules/**",
 
     presets: [
-      modern ? modernPreset : classicPreset,
+      /* eslint-disable no-nested-ternary */
+      mode === "modern" ? modernPreset :
+      mode === "es2015" ? es2015Preset :
+      classicPreset,
 
       ...presets
     ],
@@ -134,7 +146,8 @@ export function createHelper({ modern = false, minified = false, runtime = true,
 
 export default function createLatestConfig(options) {
   return {
-    classic: createHelper({ ...options, modern: false }),
-    modern: createHelper({ ...options, modern: true })
+    classic: createHelper({ ...options, mode: "classic" }),
+    modern: createHelper({ ...options, mode: "modern" }),
+    es2015: createHelper({ ...options, mode: "es2015" })
   }
 }

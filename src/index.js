@@ -67,6 +67,7 @@ if (verbose) {
 
 /* eslint-disable dot-notation */
 const outputFileMatrix = {
+  "node-es2015-esmodule": PKG_CONFIG["es2015"] || null,
   "node-classic-commonjs": PKG_CONFIG["main"] || null,
   "node-classic-esmodule": PKG_CONFIG["module"] ||
     PKG_CONFIG["jsnext:main"] ||
@@ -91,6 +92,7 @@ const outputFileMatrix = {
 
 const outputFolder = command.flags.outputFolder
 if (outputFolder) {
+  outputFileMatrix["node-es2015-esmodule"] = `${outputFolder}/node.es2015.esmodule.js`
   outputFileMatrix["node-classic-commonjs"] = `${outputFolder}/node.classic.commonjs.js`
   outputFileMatrix["node-classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
   outputFileMatrix["node-classic-iife"] = `${outputFolder}/node.classic.iife.js`

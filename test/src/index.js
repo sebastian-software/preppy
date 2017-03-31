@@ -85,4 +85,4 @@ console.log("React Enabled:", <ReactTest>Hello</ReactTest> instanceof ReactTest)
 // https://github.com/rollup/rollup/issues/1325
 // It's currently stage3 not yet stage4. See also:
 // https://tc39.github.io/proposal-dynamic-import/
-// console.log("Dynamic Import returns Promise", import("./logo.svg"))
+console.log("Dynamic Import returns Promise", import("lodash/isArray") instanceof Promise)

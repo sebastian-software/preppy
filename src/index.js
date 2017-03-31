@@ -151,38 +151,45 @@ if (command.flags.entryWeb) {
   ]
 }
 
-eachOfSeries(targets, (envEntries, targetId, envCallback) =>
-{
-  var entry = lookupBest(envEntries)
-  if (entry)
+try {
+  eachOfSeries(targets, (envEntries, targetId, envCallback) =>
   {
-    if (!quiet) {
-      console.log(`Using entry ${chalk.blue(entry)} for target ${chalk.blue(targetId)}`)
-    }
-
-    eachOfSeries(formats, (format, formatIndex, formatCallback) =>
+    var entry = lookupBest(envEntries)
+    if (entry)
     {
-      const transpilers = getTranspilers(command.flags.transpiler, {
-        minified: command.flags.minified,
-        runtime: format !== "iife"
-      })
+      if (!quiet) {
+        console.log(`Using entry ${chalk.blue(entry)} for target ${chalk.blue(targetId)}`)
+      }
 
-      eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
+      eachOfSeries(formats, (format, formatIndex, formatCallback) =>
       {
-        var destFile = outputFileMatrix[`${targetId}-${transpilerId}-${format}`]
-        if (destFile) {
-          return bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, destFile, variantCallback })
-        } else {
-          return variantCallback(null)
-        }
-      }, formatCallback)
-    }, envCallback)
-  }
-  else
-  {
-    envCallback(null)
-  }
-})
+        const transpilers = getTranspilers(command.flags.transpiler, {
+          minified: command.flags.minified,
+          runtime: format !== "iife"
+        })
+
+        eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
+        {
+          var destFile = outputFileMatrix[`${targetId}-${transpilerId}-${format}`]
+          if (destFile) {
+            return bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, destFile, variantCallback })
+          } else {
+            return variantCallback(null)
+          }
+        }, formatCallback)
+      }, envCallback)
+    }
+    else
+    {
+      envCallback(null)
+    }
+  })
+}
+catch (error)
+{
+  console.error(error)
+  process.exit(1)
+}
 
 function lookupBest(candidates) {
   var filtered = candidates.filter(fileExists.sync)

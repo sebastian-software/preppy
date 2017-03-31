@@ -203,7 +203,7 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
   }
 
   var fileRebase = rebase({ outputFolder: dirname(destFile), entry, verbose })
-  rollup({
+  return rollup({
     entry,
     cache,
     onwarn: (message) => console.warn(message),

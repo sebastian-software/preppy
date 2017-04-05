@@ -39,7 +39,7 @@
     "url": "git+https://github.com/sebastian-software/prepublish.git"
   },
   "dependencies": {
-    "async": "^2.2.0",
+    "async": "^2.3.0",
     "babel-plugin-closure-elimination": "^1.1.14",
     "babel-plugin-dynamic-import-webpack": "^1.0.1",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -84,16 +84,16 @@
     "rollup-plugin-buble": "^0.15.0",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-json": "^2.1.0",
-    "rollup-plugin-node-resolve": "^2.1.0",
-    "rollup-plugin-rebase": "^0.4.11",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-rebase": "^0.4.14",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-yaml": "^1.0.0"
   },
   "devDependencies": {
-    "file-loader": "^0.11.0",
-    "readable-code": "^1.5.3",
+    "file-loader": "^0.11.1",
+    "readable-code": "^1.6.0",
     "rimraf": "^2.6.1",
     "rollup-plugin-executable": "^1.0.0",
-    "webpack": "^2.3.2"
+    "webpack": "^2.3.3"
   }
 }

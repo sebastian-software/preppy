@@ -223,7 +223,7 @@ async-each@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.1.tgz#19d386a1d9edc6e7c1c85d388aedbcc56d33602d"
 
-async@^2.1.2, async@^2.2.0, async@^2.3.0:
+async@^2.1.2, async@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/async/-/async-2.3.0.tgz#1013d1051047dd320fe24e494d5c66ecaf6147d9"
   dependencies:
@@ -3094,8 +3094,8 @@ js-types@^1.0.0:
   resolved "https://registry.yarnpkg.com/js-types/-/js-types-1.0.0.tgz#d242e6494ed572ad3c92809fc8bed7f7687cbf03"
 
 js-yaml@^3.4.3, js-yaml@^3.5.1:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.8.2.tgz#02d3e2c0f6beab20248d412c352203827d786721"
+  version "3.8.3"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.8.3.tgz#33a05ec481c850c8875929166fe1beb61c728766"
   dependencies:
     argparse "^1.0.7"
     esprima "^3.1.1"
@@ -4183,10 +4183,10 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
 
 prepublish@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/prepublish/-/prepublish-0.15.0.tgz#a2ff9625a37c15a9d95650b83dddffbf503cdae4"
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/prepublish/-/prepublish-0.15.1.tgz#44045121b7047bfe47591addd78cbf8e8f621f75"
   dependencies:
-    async "^2.2.0"
+    async "^2.3.0"
     babel-plugin-closure-elimination "^1.1.14"
     babel-plugin-dynamic-import-webpack "^1.0.1"
     babel-plugin-external-helpers "^6.22.0"
@@ -4231,8 +4231,8 @@ prepublish@^0.15.0:
     rollup-plugin-buble "^0.15.0"
     rollup-plugin-commonjs "^8.0.2"
     rollup-plugin-json "^2.1.0"
-    rollup-plugin-node-resolve "^2.1.0"
-    rollup-plugin-rebase "^0.4.11"
+    rollup-plugin-node-resolve "^3.0.0"
+    rollup-plugin-rebase "^0.4.14"
     rollup-plugin-replace "^1.1.1"
     rollup-plugin-yaml "^1.0.0"
 
@@ -4395,9 +4395,9 @@ read-pkg@^1.0.0:
     normalize-package-data "^2.3.2"
     path-type "^1.0.0"
 
-readable-code@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/readable-code/-/readable-code-1.6.0.tgz#0268391d2bb56f00fcc2ff7fe32f068b93aedf50"
+readable-code@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/readable-code/-/readable-code-1.6.1.tgz#cef47a9a23c8a9c133293376e70ad78479c7edc9"
   dependencies:
     babel-core "^6.24.0"
     babel-eslint "^7.2.1"
@@ -4699,14 +4699,6 @@ rollup-plugin-json@^2.0.1, rollup-plugin-json@^2.1.0:
   dependencies:
     rollup-pluginutils "^1.5.2"
 
-rollup-plugin-node-resolve@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-2.1.1.tgz#cbb783b0d15b02794d58915350b2f0d902b8ddc8"
-  dependencies:
-    browser-resolve "^1.11.0"
-    builtin-modules "^1.1.0"
-    resolve "^1.1.6"
-
 rollup-plugin-node-resolve@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-3.0.0.tgz#8b897c4c3030d5001277b0514b25d2ca09683ee0"
@@ -4716,7 +4708,7 @@ rollup-plugin-node-resolve@^3.0.0:
     is-module "^1.0.0"
     resolve "^1.1.6"
 
-rollup-plugin-rebase@^0.4.11, rollup-plugin-rebase@^0.4.14:
+rollup-plugin-rebase@^0.4.14:
   version "0.4.14"
   resolved "https://registry.yarnpkg.com/rollup-plugin-rebase/-/rollup-plugin-rebase-0.4.14.tgz#c4c9cd7febefd41fd4e49a83d6ad3b3e74ae6208"
   dependencies:

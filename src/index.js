@@ -215,7 +215,9 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
   return rollup({
     entry,
     cache,
-    onwarn: (message) => console.warn(message),
+    onwarn: (error) => {
+      console.warn(chalk.red("  - " + error.message))
+    },
     external(dependency)
     {
       if (dependency === entry) {

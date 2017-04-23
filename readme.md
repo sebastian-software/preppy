@@ -63,6 +63,11 @@ With this you should get almost everything of ES2015.
 The modern builds [makes a lot of sense during development](https://medium.com/@gajus/dont-use-babel-transpilers-when-debugging-an-application-890ee528a5b3) as it results in shorter transpiler runtimes.
 
 
+## Articles
+
+- [Setting up multi-platform npm packages](http://2ality.com/2017/04/setting-up-multi-platform-packages.html)
+
+
 ## CSS and Assets
 
 TODO

@@ -1,6 +1,6 @@
 {
   "name": "prepublish",
-  "version": "0.15.4",
+  "version": "0.16.0",
   "description": "A solution for simplifying prepublishing typical JavaScript projects for publishing to NPM.",
   "keywords": [
     "npm",
@@ -85,13 +85,14 @@
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-json": "^2.1.1",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-rebase": "^0.4.15",
+    "rollup-plugin-rebase": "^0.5.3",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-yaml": "^1.0.0"
   },
   "devDependencies": {
     "file-loader": "^0.11.1",
     "readable-code": "^1.7.2",
+    "readable-code": "^2.0.0",
     "rimraf": "^2.6.1",
     "rollup-plugin-executable": "^1.0.0",
     "webpack": "^2.4.1"

@@ -12,6 +12,12 @@ console.log("Classes from CSS:", classes1)
 import classes2 from "./alternate.sss"
 console.log("Classes from SSS:", classes2)
 
+import classes3 from "./classic.sass"
+console.log("Classes from Sass:", classes3)
+
+import classes4 from "./classic.scss"
+console.log("Classes from SCSS:", classes4)
+
 import url from "./logo.svg"
 console.log("Logo URL:", url)
 

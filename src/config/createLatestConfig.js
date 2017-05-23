@@ -16,8 +16,8 @@ const modernPreset = [ "env", {
   ...commonEnvOptions,
 
   targets: {
-    node: 6.5,
-    electron: 1.4,
+    node: "6.5",
+    electron: "1.4",
     browsers: [
       "Safari 10",
       "iOS 10",

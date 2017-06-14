@@ -38,8 +38,8 @@ console.log("Constant:", CONSTANT)
 var myArray = [ 1, 2, 3 ]
 console.log("Supports Array.includes?:", myArray.includes && myArray.includes(2))
 
-var someArray = [ 4, 5 ]
-var mergedArray = [ 1, 2, 3, ...someArray, 6 ]
+var someArrayProducer = () => [ 4, 5 ]
+var mergedArray = [ 1, 2, 3, ...someArrayProducer(), 6 ]
 console.log("Supports Array merging:", mergedArray.length === 6)
 
 var mySet = new Set(myArray)

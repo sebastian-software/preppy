@@ -43,7 +43,6 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
   // are regarded as being useful in "normal" publishing while others are
   // too aggressive to lead to human readable code.
   const additionalPlugins = plugins.concat([
-    "babel-plugin-minify-constant-folding",
     "babel-plugin-minify-dead-code-elimination",
     "babel-plugin-minify-flip-comparisons",
     "babel-plugin-minify-guarded-expressions",

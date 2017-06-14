@@ -38,6 +38,9 @@ console.log("Constant:", CONSTANT)
 var myArray = [ 1, 2, 3 ]
 console.log("Supports Array.includes?:", myArray.includes && myArray.includes(2))
 
+var mergedArray = [ 1, 2, 3, ...[ 4, 5 ], 6 ]
+console.log("Supports Array merging:", mergedArray.length === 6)
+
 var mySet = new Set(myArray)
 console.log("Supports Set:", mySet.add(4));
 

@@ -45,10 +45,11 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
   if (minified) {
     additionalPresets.push("babili")
   } else {
+    // Apply some basic compression also for normal non-minified builds. After all
+    // it makes no sense to publish deadcode for example.
     additionalPresets.push([
       "babili", {
         booleans: false,
-        deadcode: false,
         infinity: false,
         mangle: false,
         flipComparisons: false,

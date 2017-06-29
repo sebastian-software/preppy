@@ -53,6 +53,14 @@ const command = meow(`
 
     verbose: false,
     quiet: false
+  },
+
+  alias: {
+    t: "transpiler",
+    x: "minified",
+    m: "sourcemap",
+    v: "verbose",
+    q: "quiet"
   }
 })
 

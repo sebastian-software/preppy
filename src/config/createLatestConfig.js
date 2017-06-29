@@ -39,26 +39,23 @@ const es2015Preset = [ "es2015", {
 
 /* eslint-disable max-params */
 export function createHelper({ mode = "classic", minified = false, runtime = true, presets = [], plugins = [] }) {
-  // This is effectively a split of "babel-preset-babili" where some plugins
-  // are regarded as being useful in "normal" publishing while others are
-  // too aggressive to lead to human readable code.
-  const additionalPlugins = plugins.concat([
-    "babel-plugin-minify-dead-code-elimination",
-    "babel-plugin-minify-flip-comparisons",
-    "babel-plugin-minify-guarded-expressions",
-    "babel-plugin-transform-member-expression-literals",
-    "babel-plugin-transform-merge-sibling-variables",
-    "babel-plugin-transform-regexp-constructors",
-    "babel-plugin-transform-remove-undefined",
-    "babel-plugin-transform-simplify-comparison-operators"
-  ])
-
-  const additionalPresets = presets.concat([
-    // fill later
-  ])
+  const additionalPlugins = plugins.concat()
+  const additionalPresets = presets.concat()
 
   if (minified) {
-    additionalPresets.push("babel-preset-babili")
+    additionalPresets.push("babili")
+  } else {
+    additionalPresets.push([
+      "babili", {
+        booleans: false,
+        deadcode: false,
+        infinity: false,
+        mangle: false,
+        flipComparisons: false,
+        replace: false,
+        simplify: false
+      }
+    ])
   }
 
   // Using centralized helpers but require generic Polyfills being loaded separately

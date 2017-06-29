@@ -48,20 +48,15 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
     "babel-plugin-minify-guarded-expressions",
     "babel-plugin-transform-member-expression-literals",
     "babel-plugin-transform-merge-sibling-variables",
-    "babel-plugin-transform-property-literals",
     "babel-plugin-transform-regexp-constructors",
     "babel-plugin-transform-remove-undefined",
     "babel-plugin-transform-simplify-comparison-operators"
   ])
 
+  const additionalPresets = [ ...presets ]
+
   if (minified) {
-    additionalPlugins.push(
-      "babel-plugin-minify-mangle-names",
-      "babel-plugin-minify-simplify",
-      "babel-plugin-minify-type-constructors",
-      "babel-plugin-minify-numeric-literals",
-      "babel-plugin-transform-minify-booleans"
-    )
+    additionalPresets.push("babili")
   }
 
   // Using centralized helpers but require generic Polyfills being loaded separately
@@ -107,7 +102,7 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
       mode === "es2015" ? es2015Preset :
       classicPreset,
 
-      ...presets
+      ...additionalPresets
     ],
 
     plugins: [

@@ -53,7 +53,9 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
     "babel-plugin-transform-simplify-comparison-operators"
   ])
 
-  const additionalPresets = [ ...presets ]
+  const additionalPresets = presets.concat([
+    // fill later
+  ])
 
   if (minified) {
     additionalPresets.push("babili")

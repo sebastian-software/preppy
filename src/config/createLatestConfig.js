@@ -58,7 +58,7 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
   ])
 
   if (minified) {
-    additionalPresets.push("babili")
+    additionalPresets.push("babel-preset-babili")
   }
 
   // Using centralized helpers but require generic Polyfills being loaded separately

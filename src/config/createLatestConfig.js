@@ -33,7 +33,7 @@ const modernPreset = [ "env", {
 // is an alternative to our "modern" approach which is more oriented on specific browser development
 // and requires some knowledge of the supported browser / nodejs range.
 // The "modern" mode effectively keeps source code with arrow functions, classes, etc. better.
-const es2015Preset = [ "es2015", {
+const esLatestPreset = [ "env", {
   ...commonEnvOptions
 }]
 
@@ -98,7 +98,7 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
     presets: [
       /* eslint-disable no-nested-ternary */
       mode === "modern" ? modernPreset :
-      mode === "es2015" ? es2015Preset :
+      mode === "es2015" ? esLatestPreset :
       classicPreset,
 
       ...additionalPresets

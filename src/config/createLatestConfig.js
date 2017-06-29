@@ -50,6 +50,7 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
     additionalPresets.push([
       "babili", {
         booleans: false,
+        deadcode: false,
         infinity: false,
         mangle: false,
         flipComparisons: false,

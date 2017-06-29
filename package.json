@@ -39,7 +39,7 @@
     "url": "git+https://github.com/sebastian-software/prepublish.git"
   },
   "dependencies": {
-    "async": "^2.4.1",
+    "async": "^2.5.0",
     "babel-plugin-closure-elimination": "^1.1.16",
     "babel-plugin-dynamic-import-webpack": "^1.0.1",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -90,9 +90,9 @@
   },
   "devDependencies": {
     "file-loader": "^0.11.2",
-    "readable-code": "^3.0.0",
+    "readable-code": "^3.2.0",
     "rimraf": "^2.6.1",
     "rollup-plugin-executable": "^1.0.0",
-    "webpack": "^2.6.1"
+    "webpack": "^3.0.0"
   }
 }

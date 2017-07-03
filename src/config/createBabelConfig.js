@@ -1,8 +1,11 @@
 import babel from "rollup-plugin-babel"
 
+const DEBUG_PRESETS = false
+
 // Produce a classic ES5 output
 const classicPreset = [ "babel-preset-edge", {
-  target: "library"
+  target: "library",
+  debug: DEBUG_PRESETS
 }]
 
 // Follow the idea of https://angularjs.blogspot.de/2017/03/angular-400-now-available.html to offer
@@ -11,13 +14,15 @@ const classicPreset = [ "babel-preset-edge", {
 // and requires some knowledge of the supported browser / nodejs range.
 // The "modern" mode effectively keeps source code with arrow functions, classes, etc. better.
 const es2015Preset = [ "babel-preset-edge", {
-  target: "es2015"
+  target: "es2015",
+  debug: DEBUG_PRESETS
 }]
 
 // This preset is more abstract than `es2015Preset` and selects from quite a modern range
 // of NodeJS and browser versions.
 const modernPreset = [ "babel-preset-edge", {
   modules: false,
+  debug: DEBUG_PRESETS,
   target: {
     node: "6.9.0",
     electron: "1.4",

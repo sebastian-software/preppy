@@ -43,7 +43,7 @@
     "babel-plugin-dynamic-import-webpack": "^1.0.1",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-babili": "^0.1.4",
-    "babel-preset-edge": "^0.7.2",
+    "babel-preset-edge": "^0.7.3",
     "babel-runtime": "^6.23.0",
     "chalk": "^2.0.1",
     "file-exists": "^4.0.0",

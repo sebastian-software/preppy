@@ -84,7 +84,7 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
 
   return babel({
     // Don't try to find .babelrc because we want to force this configuration.
-    babelrc: true,
+    babelrc: false,
 
     // Allow usage of transform-runtime for referencing to a common library of polyfills (Rollup setting)
     runtimeHelpers: true,

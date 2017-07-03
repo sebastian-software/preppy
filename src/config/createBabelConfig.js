@@ -106,6 +106,7 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
     presets: [
       selectedPreset,
 
+      // All manually or minification related presets
       ...additionalPresets
     ],
 

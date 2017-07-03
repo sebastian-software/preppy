@@ -1,6 +1,5 @@
 import createBubleConfig from "./config/createBubleConfig"
-import createLatestConfig from "./config/createLatestConfig"
-import createReactConfig from "./config/createReactConfig"
+import createBabelConfig from "./config/createBabelConfig"
 
 // We try to benefit from native features when possible and offer
 // additional builds containing es2015 code for modern clients (Node v6, Chrome 50+, etc.)
@@ -13,11 +12,8 @@ export default function getTranspilers(mode, options)
     case "buble":
       return createBubleConfig(options)
 
-    case "latest":
-      return createLatestConfig(options)
-
-    case "react":
-      return createReactConfig(options)
+    case "babel":
+      return createBabelConfig(options)
 
     default:
       return {}

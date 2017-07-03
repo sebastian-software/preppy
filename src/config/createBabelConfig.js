@@ -1,31 +1,9 @@
 import babel from "rollup-plugin-babel"
 
-const commonEnvOptions = {
-  modules: false,
-  exclude: [ "transform-async-to-generator", "transform-regenerator" ],
-  debug: false,
-  useBuiltIns: true
-}
-
-// Babel-Preset-Env without targets effectively works like Babel-Preset-Latest
-const classicPreset = [ "env", {
-  ...commonEnvOptions
-}]
-
-const modernPreset = [ "env", {
-  ...commonEnvOptions,
-
-  targets: {
-    node: "6.5",
-    electron: "1.4",
-    browsers: [
-      "Safari 10",
-      "iOS 10",
-      "Edge 14",
-      "Chrome 53",
-      "Firefox 50"
-    ]
-  }
+// Produce a classic ES5 output
+const classicPreset = [ "babel-preset-edge", {
+  target: "library",
+  modules: false
 }]
 
 // Follow the idea of https://angularjs.blogspot.de/2017/03/angular-400-now-available.html to offer
@@ -33,8 +11,26 @@ const modernPreset = [ "env", {
 // is an alternative to our "modern" approach which is more oriented on specific browser development
 // and requires some knowledge of the supported browser / nodejs range.
 // The "modern" mode effectively keeps source code with arrow functions, classes, etc. better.
-const esLatestPreset = [ "env", {
-  ...commonEnvOptions
+const es2015Preset = [ "babel-preset-edge", {
+  target: "es2015",
+  modules: false
+}]
+
+// This preset is more abstract than `es2015Preset` and selects from quite a modern range
+// of NodeJS and browser versions.
+const modernPreset = [ "babel-preset-edge", {
+  modules: false,
+  target: {
+    node: "6.9.0",
+    electron: "1.4",
+    browsers: [
+      "Safari >= 10",
+      "iOS >= 10",
+      "Edge >= 14",
+      "Chrome >= 53",
+      "Firefox >= 50"
+    ]
+  }
 }]
 
 /* eslint-disable max-params */
@@ -60,6 +56,15 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
     ])
   }
 
+  let selectedPreset
+  if (mode === "modern") {
+    selectedPreset = modernPreset
+  } else if (mode === "es2015") {
+    selectedPreset = es2015Preset
+  } else {
+    selectedPreset = classicPreset
+  }
+
   // Using centralized helpers but require generic Polyfills being loaded separately
   // e.g. via Babel-Runtime or via services like polyfill.io.
   // See also: https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime
@@ -79,7 +84,7 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
 
   return babel({
     // Don't try to find .babelrc because we want to force this configuration.
-    babelrc: false,
+    babelrc: true,
 
     // Allow usage of transform-runtime for referencing to a common library of polyfills (Rollup setting)
     runtimeHelpers: true,
@@ -95,13 +100,11 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
     // values instead of escaped ones, stripping () from new when safe)
     minified,
 
+    // Do not transpile external code
     exclude: "node_modules/**",
 
     presets: [
-      /* eslint-disable no-nested-ternary */
-      mode === "modern" ? modernPreset :
-      mode === "es2015" ? esLatestPreset :
-      classicPreset,
+      selectedPreset,
 
       ...additionalPresets
     ],
@@ -120,39 +123,16 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
       // https://github.com/airbnb/babel-plugin-dynamic-import-webpack
       "dynamic-import-webpack",
 
-      // fast-async/await transformer Babel plugin
-      // https://www.npmjs.com/package/fast-async
-      "fast-async",
-
-      // Strip flow type annotations from your output code.
-      "transform-flow-strip-types",
-
-      // Cherry-picks Lodash and recompose modules so you don’t have to.
-      // https://www.npmjs.com/package/babel-plugin-lodash
-      // https://github.com/acdlite/recompose#using-babel-lodash-plugin
-      [ "lodash", { id: [ "lodash", "recompose" ] }],
-
-      // class { handleClick = () => { } }
-      "transform-class-properties",
-
-      // { ...todo, completed: true }
-      [ "transform-object-rest-spread", { useBuiltIns: true }],
-
       // All manually or minification related plugins
-      ...additionalPlugins,
-
-      // Improve some ES3 edge case to make code parseable by older clients
-      // e.g. when using reserved words as keys like "catch"
-      "transform-es3-property-literals",
-      "transform-es3-member-expression-literals"
+      ...additionalPlugins
     ]
   })
 }
 
-export default function createLatestConfig(options) {
+export default function createBabelConfig(options) {
   return {
     classic: createHelper({ ...options, mode: "classic" }),
-    modern: createHelper({ ...options, mode: "modern" }),
-    es2015: createHelper({ ...options, mode: "es2015" })
+    es2015: createHelper({ ...options, mode: "es2015" }),
+    modern: createHelper({ ...options, mode: "modern" })
   }
 }

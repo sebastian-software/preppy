@@ -34,35 +34,36 @@ const command = meow(`
 
     --output-folder   Configure the output folder [default = auto]
 
-    -t, --transpiler  Chose the transpiler/config to use. Either "react", "latest" or "buble". [default = latest]
+    -t, --transpiler  Chose the transpiler to use. Either "babel" or "buble". [default = babel]
     -x, --minified    Enabled minification of output files
     -m, --sourcemap   Create a source map file during processing
 
     -v, --verbose     Verbose output mode [default = false]
     -q, --quiet       Quiet output mode [default = false]
 `, {
-  default: {
-    entryNode: null,
-    entryWeb: null,
+    default: {
+      entryNode: null,
+      entryWeb: null,
 
-    outputFolder: null,
+      outputFolder: null,
 
-    transpiler: "react",
-    minified: false,
-    sourcemap: true,
+      transpiler: "babel",
+      minified: false,
+      sourcemap: true,
 
-    verbose: false,
-    quiet: false
-  },
+      verbose: false,
+      quiet: false
+    },
 
-  alias: {
-    t: "transpiler",
-    x: "minified",
-    m: "sourcemap",
-    v: "verbose",
-    q: "quiet"
+    alias: {
+      t: "transpiler",
+      x: "minified",
+      m: "sourcemap",
+      v: "verbose",
+      q: "quiet"
+    }
   }
-})
+)
 
 
 const verbose = command.flags.verbose

@@ -110,19 +110,6 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
     ],
 
     plugins: [
-      // Allow parsing of import() - this would be a good fit once Acorn/Rollup supports
-      // processing import() correctly. It should be ignored for later processing in our opinion.
-      // Currently it throws during parse by Acorn. For tracking of the issue see also:
-      // - https://github.com/rollup/rollup/issues/1325
-      // - https://tc39.github.io/proposal-dynamic-import/
-      // "syntax-dynamic-import",
-      //
-      // This is our alternative appeoach for now which "protects" these imports from Rollup
-      // for usage in Webpack later on. In detail it transpiles `import()` to `require.ensure` before
-      // it reaches RollupJS.
-      // https://github.com/airbnb/babel-plugin-dynamic-import-webpack
-      "dynamic-import-webpack",
-
       // All manually or minification related plugins
       ...additionalPlugins
     ]

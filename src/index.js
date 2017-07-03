@@ -175,8 +175,7 @@ try {
       eachOfSeries(formats, (format, formatIndex, formatCallback) =>
       {
         const transpilers = getTranspilers(command.flags.transpiler, {
-          minified: command.flags.minified,
-          runtime: format !== "iife"
+          minified: command.flags.minified
         })
 
         eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>

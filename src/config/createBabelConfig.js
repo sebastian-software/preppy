@@ -32,7 +32,7 @@ const modernPreset = [ "babel-preset-edge", {
 }]
 
 /* eslint-disable max-params */
-export function createHelper({ mode = "classic", minified = false, runtime = true, presets = [], plugins = [] }) {
+export function createHelper({ mode = "classic", minified = false, presets = [], plugins = [] }) {
   const additionalPlugins = plugins.concat()
   const additionalPresets = presets.concat()
 
@@ -61,23 +61,6 @@ export function createHelper({ mode = "classic", minified = false, runtime = tru
     selectedPreset = es2015Preset
   } else {
     selectedPreset = classicPreset
-  }
-
-  // Using centralized helpers but require generic Polyfills being loaded separately
-  // e.g. via Babel-Runtime or via services like polyfill.io.
-  // See also: https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime
-  if (runtime) {
-    additionalPlugins.push([ "transform-runtime", {
-      // default
-      helpers: true,
-
-      // Changed from default. Regenerator is a rework of the code to replace generators.
-      // These are pretty widely supported though.
-      regenerator: false,
-
-      // Changed from default. More efficient to use real polyfills.
-      polyfill: false
-    }])
   }
 
   return babel({

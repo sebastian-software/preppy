@@ -84,14 +84,8 @@ const outputFileMatrix = {
   "node-classic-esmodule": PKG_CONFIG["module"] ||
     PKG_CONFIG["jsnext:main"] ||
     null,
-  "node-classic-iife": PKG_CONFIG["main:iife"] ||
-    PKG_CONFIG["main:bundle"] ||
-    null,
   "node-modern-commonjs": PKG_CONFIG["main:modern"] || null,
   "node-modern-esmodule": PKG_CONFIG["module:modern"] || null,
-  "node-modern-iife": PKG_CONFIG["main:modern:iife"] ||
-    PKG_CONFIG["main:modern:bundle"] ||
-    null,
   "web-classic-esmodule": PKG_CONFIG["web"] ||
     PKG_CONFIG["browser"] ||
     PKG_CONFIG["browserify"] ||
@@ -107,10 +101,8 @@ if (outputFolder) {
   outputFileMatrix["node-es2015-esmodule"] = `${outputFolder}/node.es2015.esmodule.js`
   outputFileMatrix["node-classic-commonjs"] = `${outputFolder}/node.classic.commonjs.js`
   outputFileMatrix["node-classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
-  outputFileMatrix["node-classic-iife"] = `${outputFolder}/node.classic.iife.js`
   outputFileMatrix["node-modern-commonjs"] = `${outputFolder}/node.modern.commonjs.js`
   outputFileMatrix["node-modern-esmodule"] = `${outputFolder}/node.modern.esmodule.js`
-  outputFileMatrix["node-modern-iife"] = `${outputFolder}/node.modern.iife.js`
   outputFileMatrix["web-classic-esmodule"] = `${outputFolder}/web.classic.esmodule.js`
   outputFileMatrix["web-modern-esmodule"] = `${outputFolder}/web.modern.esmodule.js`
 }
@@ -118,15 +110,14 @@ if (outputFolder) {
 // Rollups support these formats: 'amd', 'cjs', 'es', 'iife', 'umd'
 const format2Rollup = {
   commonjs: "cjs",
-  esmodule: "es",
-  iife: "iife"
+  esmodule: "es"
 }
 
 const moduleId = PKG_CONFIG.name
 const moduleName = PKG_CONFIG.moduleName || camelCase(moduleId)
 const banner = getBanner(PKG_CONFIG)
 const targets = {}
-const formats = [ "esmodule", "commonjs", "iife" ]
+const formats = [ "esmodule", "commonjs" ]
 
 if (command.flags.entryNode) {
   targets.node = [ command.flags.entryNode ]
@@ -240,12 +231,6 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
 
       if (fileRebase.isExternal(dependency)) {
         return true
-      }
-
-      // Inline all external features when building for IIFE
-      // There is no `require` or `import` available in that context.
-      if (format === "iife") {
-        return false
       }
 
       if (isAbsolute(dependency)) {

@@ -21,6 +21,12 @@ export function createHelper({ mode = "classic", minified = false, presets = [],
       compression: minified,
       debug: DEBUG_PRESETS
     }]
+  } else if (mode === "binary") {
+    selectedPreset = [ presetEdge, {
+      target: "binary",
+      compression: minified,
+      debug: DEBUG_PRESETS
+    }]
   } else {
     selectedPreset = [ presetEdge, {
       target: "library",
@@ -68,6 +74,7 @@ export default function createBabelConfig(options) {
   return {
     classic: createHelper({ ...options, mode: "classic" }),
     es2015: createHelper({ ...options, mode: "es2015" }),
-    modern: createHelper({ ...options, mode: "modern" })
+    modern: createHelper({ ...options, mode: "modern" }),
+    binary: createHelper({ ...options, mode: "binary" })
   }
 }

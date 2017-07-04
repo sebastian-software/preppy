@@ -76,6 +76,15 @@ if (verbose) {
   console.log("Flags:", command.flags)
 }
 
+// Handle special case to generate a binary file based on config in package.json
+const binaryConfig = PKG_CONFIG.bin
+let binaryOutput = null
+if (binaryConfig) {
+  for (let name in binaryConfig) {
+    binaryOutput = binaryConfig[name]
+    break
+  }
+}
 
 /* eslint-disable dot-notation */
 const outputFileMatrix = {
@@ -93,7 +102,8 @@ const outputFileMatrix = {
   "web-modern-esmodule": PKG_CONFIG["web:modern"] ||
     PKG_CONFIG["browser:modern"] ||
     PKG_CONFIG["browserify:modern"] ||
-    null
+    null,
+  "binary-binary-commonjs": binaryOutput || null
 }
 
 const outputFolder = command.flags.outputFolder
@@ -134,10 +144,7 @@ if (command.flags.entryNode) {
     "src/server.js",
     "src/public.js",
     "src/export.js",
-    "src/index.js",
-
-    "src/binary.js",
-    "src/script.js"
+    "src/index.js"
   ]
 }
 
@@ -156,6 +163,15 @@ if (command.flags.entryWeb) {
     "src/client/public.js",
     "src/client/export.js",
     "src/client.js"
+  ]
+}
+
+if (command.flags.entryBinary) {
+  targets.binary = [ command.flags.entryBinary ]
+} else {
+  targets.binary = [
+    "src/binary.js",
+    "src/script.js"
   ]
 }
 

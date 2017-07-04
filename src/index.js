@@ -13,6 +13,7 @@ import commonjs from "rollup-plugin-commonjs"
 import jsonPlugin from "rollup-plugin-json"
 import yamlPlugin from "rollup-plugin-yaml"
 import replacePlugin from "rollup-plugin-replace"
+import executablePlugin from "rollup-plugin-executable"
 
 import getTranspilers from "./getTranspilers"
 import getBanner from "./getBanner"
@@ -271,8 +272,9 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
       yamlPlugin,
       replacePlugin(variables),
       currentTranspiler,
-      fileRebase
-    ]
+      fileRebase,
+      transpilerId === "binary" ? executablePlugin() : null
+    ].filter(Boolean)
   })
     .then((bundle) =>
       bundle.write({

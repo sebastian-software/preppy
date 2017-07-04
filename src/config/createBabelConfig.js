@@ -1,62 +1,39 @@
 import babel from "rollup-plugin-babel"
+import presetEdge from "babel-preset-edge"
 
 const DEBUG_PRESETS = false
-
-// Produce a classic ES5 output
-const classicPreset = [ "babel-preset-edge", {
-  target: "library",
-  debug: DEBUG_PRESETS
-}]
-
-// Target ES2015 capable clients
-const es2015Preset = [ "babel-preset-edge", {
-  target: "es2015",
-  debug: DEBUG_PRESETS
-}]
-
-// Target only modern engines. Even more modern than es2015.
-const modernPreset = [ "babel-preset-edge", {
-  target: "modern",
-  debug: DEBUG_PRESETS
-}]
 
 /* eslint-disable max-params */
 export function createHelper({ mode = "classic", minified = false, presets = [], plugins = [] }) {
   const additionalPlugins = plugins.concat()
   const additionalPresets = presets.concat()
 
-  if (minified) {
-    additionalPresets.push("babili")
-  } else {
-    // Apply some basic compression also for normal non-minified builds. After all
-    // it makes no sense to publish deadcode for example.
-    additionalPresets.push([
-      "babili", {
-        booleans: false,
-        deadcode: false,
-        infinity: false,
-        mangle: false,
-        flipComparisons: false,
-        replace: false,
-        simplify: false
-      }
-    ])
-  }
-
   let selectedPreset
   if (mode === "modern") {
-    selectedPreset = modernPreset
+    selectedPreset = [ presetEdge, {
+      target: "modern",
+      compression: minified,
+      debug: DEBUG_PRESETS
+    }]
   } else if (mode === "es2015") {
-    selectedPreset = es2015Preset
+    selectedPreset = [ presetEdge, {
+      target: "es2015",
+      compression: minified,
+      debug: DEBUG_PRESETS
+    }]
   } else {
-    selectedPreset = classicPreset
+    selectedPreset = [ presetEdge, {
+      target: "library",
+      compression: minified,
+      debug: DEBUG_PRESETS
+    }]
   }
 
   return babel({
     // Don't try to find .babelrc because we want to force this configuration.
     babelrc: false,
 
-    // Allow usage of transform-runtime for referencing to a common library of polyfills (Rollup setting)
+    // Rollup Setting: Allow usage of transform-runtime for referencing to a common library of polyfills
     runtimeHelpers: true,
 
     // Remove comments - these are often positioned on the wrong positon after transpiling anyway

@@ -8,32 +8,16 @@ const classicPreset = [ "babel-preset-edge", {
   debug: DEBUG_PRESETS
 }]
 
-// Follow the idea of https://angularjs.blogspot.de/2017/03/angular-400-now-available.html to offer
-// kind of a standardized es2015 package which could be used in more modern browsers/clients. This
-// is an alternative to our "modern" approach which is more oriented on specific browser development
-// and requires some knowledge of the supported browser / nodejs range.
-// The "modern" mode effectively keeps source code with arrow functions, classes, etc. better.
+// Target ES2015 capable clients
 const es2015Preset = [ "babel-preset-edge", {
   target: "es2015",
   debug: DEBUG_PRESETS
 }]
 
-// This preset is more abstract than `es2015Preset` and selects from quite a modern range
-// of NodeJS and browser versions.
+// Target only modern engines. Even more modern than es2015.
 const modernPreset = [ "babel-preset-edge", {
-  modules: false,
-  debug: DEBUG_PRESETS,
-  target: {
-    node: "6.9.0",
-    electron: "1.4",
-    browsers: [
-      "Safari >= 10",
-      "iOS >= 10",
-      "Edge >= 14",
-      "Chrome >= 53",
-      "Firefox >= 50"
-    ]
-  }
+  target: "modern",
+  debug: DEBUG_PRESETS
 }]
 
 /* eslint-disable max-params */

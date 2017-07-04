@@ -32,6 +32,7 @@ const command = meow(`
   Options
     --entry-node      Entry file for NodeJS target [default = auto]
     --entry-web       Entry file for Browser target [default = auto]
+    --entry-binary    Entry file for Binary target [default = auto]
 
     --output-folder   Configure the output folder [default = auto]
 
@@ -45,6 +46,7 @@ const command = meow(`
     default: {
       entryNode: null,
       entryWeb: null,
+      entryBinary: null,
 
       outputFolder: null,
 
@@ -141,7 +143,10 @@ if (command.flags.entryNode) {
     "src/server.js",
     "src/public.js",
     "src/export.js",
-    "src/index.js"
+    "src/index.js",
+
+    "src/binary.js",
+    "src/script.js"
   ]
 }
 

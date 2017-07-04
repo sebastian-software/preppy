@@ -4,6 +4,7 @@ import { camelCase } from "lodash"
 import fileExists from "file-exists"
 import meow from "meow"
 import chalk from "chalk"
+import { get as getRoot } from "app-root-dir"
 
 import { rollup } from "rollup"
 import rebase from "rollup-plugin-rebase"
@@ -16,8 +17,8 @@ import replacePlugin from "rollup-plugin-replace"
 import getTranspilers from "./getTranspilers"
 import getBanner from "./getBanner"
 
-const CWD = process.cwd()
-const PKG_CONFIG = require(resolve(CWD, "package.json"))
+const ROOT = getRoot()
+const PKG_CONFIG = require(resolve(ROOT, "package.json"))
 
 var cache
 
@@ -243,7 +244,7 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
       }
 
       if (isAbsolute(dependency)) {
-        var relativePath = relative(CWD, dependency)
+        var relativePath = relative(ROOT, dependency)
         return Boolean(/node_modules/.exec(relativePath))
       }
 

@@ -281,7 +281,7 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
         format: format2Rollup[format],
         moduleId,
         moduleName,
-        banner,
+        banner: transpilerId === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
         sourceMap: command.flags.sourcemap,
         dest: destFile
       })

@@ -49,17 +49,6 @@ features.
 
 To make sense of all these new modules it would help to produce two different outputs. One for classic browsers and one for modern browsers. ES2015 enabled features are [rapidly catching up in performance](https://kpdecker.github.io/six-speed/). Some features are pretty hard to rework for older browsers like Generators, Async/Await, or even Block Scope. Therefor we think there is no need for sending modern clients the fully transpiled code down the wire. Keep in mind that you have to implement some basic client detection to send one or the other file to the matching client.
 
-Current *modern* set:
-
-- NodeJS >= 6.9.0 (Current LTS)
-- Safari >= 10
-- iOS >= 10
-- Edge >= 14
-- Chrome >= 53
-- Firefox >= 50
-
-With this you should get almost everything of ES2017.
-
 BTW: The modern builds [make a lot of sense during development](https://medium.com/@gajus/dont-use-babel-transpilers-when-debugging-an-application-890ee528a5b3) as it results in shorter transpiler runtimes.
 
 
@@ -102,6 +91,7 @@ There is also some amount of parameters you can use if the auto detection of you
 Options
   --entry-node      Entry file for NodeJS target [default = auto]
   --entry-web       Entry file for Browser target [default = auto]
+  --entry-binary    Entry file for Binary target [default = auto]
 
   --output-folder   Configure the output folder [default = auto]
 

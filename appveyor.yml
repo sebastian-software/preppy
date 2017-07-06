@@ -16,7 +16,7 @@ deploy: off
 
 install:
   - ps: Install-Product node $env:nodejs_version $env:platform
-  - yarn install
+  - npm install
 
 test_script:
   - npm test
@@ -24,6 +24,3 @@ test_script:
 cache:
   # global npm cache
   - '%APPDATA%\\npm-cache'
-
-  # global Yarn cache
-  - "%LOCALAPPDATA%\\Yarn"

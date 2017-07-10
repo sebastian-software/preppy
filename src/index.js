@@ -124,8 +124,7 @@ const format2Rollup = {
   esmodule: "es"
 }
 
-const moduleId = PKG_CONFIG.name
-const moduleName = PKG_CONFIG.moduleName || camelCase(moduleId)
+const moduleName = PKG_CONFIG.moduleName || camelCase(PKG_CONFIG.name)
 const banner = getBanner(PKG_CONFIG)
 const targets = {}
 const formats = [ "esmodule", "commonjs" ]
@@ -279,7 +278,6 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
     .then((bundle) =>
       bundle.write({
         format: format2Rollup[format],
-        moduleId,
         moduleName,
         banner: transpilerId === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
         sourceMap: command.flags.sourcemap,

@@ -55,7 +55,11 @@ export function createHelper({ mode = "classic", minified = false, presets = [],
     minified,
 
     // Do not transpile external code
-    exclude: "node_modules/**",
+    // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
+    exclude: [
+      "node_modules/**",
+      "*.json"
+    ],
 
     presets: [
       selectedPreset,

@@ -264,12 +264,12 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
         module: true,
         main: true
       }),
+      replacePlugin(variables),
       commonjs({
         include: "node_modules/**"
       }),
-      jsonPlugin,
-      yamlPlugin,
-      replacePlugin(variables),
+      yamlPlugin(),
+      jsonPlugin(),
       currentTranspiler,
       fileRebase,
       transpilerId === "binary" ? executablePlugin() : null

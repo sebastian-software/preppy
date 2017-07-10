@@ -25,6 +25,7 @@ export function createHelper({ mode = "classic", minified = false, presets = [],
     selectedPreset = [ presetEdge, {
       target: "binary",
       compression: minified,
+      modules: false,
       debug: DEBUG_PRESETS
     }]
   } else {

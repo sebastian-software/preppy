@@ -58,7 +58,7 @@ export function createHelper({ mode = "classic", minified = false, presets = [],
     // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
     exclude: [
       "node_modules/**",
-      "*.json"
+      "**/*.json"
     ],
 
     presets: [

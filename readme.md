@@ -146,6 +146,11 @@ Example Configuration:
 }
 ```
 
+### NodeJS v8 Binaries
+
+There is a new option to explicitely target Node v8 when generating binaries. This is controlled via a new command line argument:
+
+Use `prepublish --target-unstable` together with the "bin" entry seen before.
 
 
 
@@ -185,27 +190,24 @@ in the `package.json` file.
 There is also some amount of parameters you can use if the auto detection of your library does not work out correctly.
 
 ```
+Usage
+  $ prepublish
+
 Options
-  --entry-node      Entry file for NodeJS target [default = auto]
-  --entry-web       Entry file for Browser target [default = auto]
-  --entry-binary    Entry file for Binary target [default = auto]
+  --entry-node       Entry file for NodeJS target [default = auto]
+  --entry-web        Entry file for Browser target [default = auto]
+  --entry-binary     Entry file for Binary target [default = auto]
 
-  --output-folder   Configure the output folder [default = auto]
+  --output-folder    Configure the output folder [default = auto]
 
-  -t, --transpiler  Chose the transpiler/config to use. Either "babel" or "buble". [default = babel]
-  -x, --minified    Enabled minification of output files
-  -m, --sourcemap   Create a source map file during processing
+  -t, --transpiler   Chose the transpiler to use. Either "babel" or "buble". [default = babel]
+  -x, --minified     Enabled minification of output files
+  -m, --sourcemap    Create a source map file during processing
+  --target-unstable  Binaries should target the upcoming major version of NodeJS instead of LTS
 
-  -v, --verbose     Verbose output mode [default = false]
-  -q, --quiet       Quiet output mode [default = false]
+  -v, --verbose      Verbose output mode [default = false]
+  -q, --quiet        Quiet output mode [default = false]
 ```
-
-
-## Contributing
-
-* Pull requests and stars are always welcome.
-* For bugs and feature requests, please create an issue.
-* Pull requests must be accompanied by passing automated tests (`$ npm test`).
 
 
 ## License

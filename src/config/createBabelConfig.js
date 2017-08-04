@@ -4,7 +4,7 @@ import presetEdge from "babel-preset-edge"
 const DEBUG_PRESETS = false
 
 /* eslint-disable max-params */
-export function createHelper({ mode = "classic", minified = false, presets = [], plugins = [] }) {
+export function createHelper({ mode = "classic", minified = false, presets = [], plugins = [], targetUnstable = false }) {
   const additionalPlugins = plugins.concat()
   const additionalPresets = presets.concat()
 
@@ -23,7 +23,7 @@ export function createHelper({ mode = "classic", minified = false, presets = [],
     }]
   } else if (mode === "binary") {
     selectedPreset = [ presetEdge, {
-      target: "binary",
+      target: targetUnstable ? "node8" : "node",
       compression: minified,
       modules: false,
       debug: DEBUG_PRESETS

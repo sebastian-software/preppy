@@ -31,18 +31,19 @@ const command = meow(`
     $ prepublish
 
   Options
-    --entry-node      Entry file for NodeJS target [default = auto]
-    --entry-web       Entry file for Browser target [default = auto]
-    --entry-binary    Entry file for Binary target [default = auto]
+    --entry-node       Entry file for NodeJS target [default = auto]
+    --entry-web        Entry file for Browser target [default = auto]
+    --entry-binary     Entry file for Binary target [default = auto]
 
-    --output-folder   Configure the output folder [default = auto]
+    --output-folder    Configure the output folder [default = auto]
 
-    -t, --transpiler  Chose the transpiler to use. Either "babel" or "buble". [default = babel]
-    -x, --minified    Enabled minification of output files
-    -m, --sourcemap   Create a source map file during processing
+    -t, --transpiler   Chose the transpiler to use. Either "babel" or "buble". [default = babel]
+    -x, --minified     Enabled minification of output files
+    -m, --sourcemap    Create a source map file during processing
+    --target-unstable  Binaries should target the upcoming major version of NodeJS instead of LTS
 
-    -v, --verbose     Verbose output mode [default = false]
-    -q, --quiet       Quiet output mode [default = false]
+    -v, --verbose      Verbose output mode [default = false]
+    -q, --quiet        Quiet output mode [default = false]
 `, {
     default: {
       entryNode: null,
@@ -54,6 +55,7 @@ const command = meow(`
       transpiler: "babel",
       minified: false,
       sourcemap: true,
+      targetUnstable: false,
 
       verbose: false,
       quiet: false
@@ -72,6 +74,7 @@ const command = meow(`
 
 const verbose = command.flags.verbose
 const quiet = command.flags.quiet
+const targetUnstable = command.flags.targetUnstable
 
 if (verbose) {
   console.log("Flags:", command.flags)
@@ -188,7 +191,10 @@ try {
       eachOfSeries(formats, (format, formatIndex, formatCallback) =>
       {
         const transpilers = getTranspilers(command.flags.transpiler, {
-          minified: command.flags.minified
+          minified: command.flags.minified,
+          presets: [],
+          plugins: [],
+          targetUnstable
         })
 
         eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
@@ -210,6 +216,7 @@ try {
 }
 catch (error)
 {
+  /* eslint-disable no-process-exit */
   console.error(error)
   process.exit(1)
 }

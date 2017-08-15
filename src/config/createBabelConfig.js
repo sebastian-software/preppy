@@ -12,18 +12,21 @@ export function createHelper({ mode = "classic", minified = false, presets = [],
   if (mode === "modern") {
     selectedPreset = [ presetEdge, {
       target: "modern",
+      env: "production",
       compression: minified,
       debug: DEBUG_PRESETS
     }]
   } else if (mode === "es2015") {
     selectedPreset = [ presetEdge, {
       target: "es2015",
+      env: "production",
       compression: minified,
       debug: DEBUG_PRESETS
     }]
   } else if (mode === "binary") {
     selectedPreset = [ presetEdge, {
       target: targetUnstable ? "node8" : "node",
+      env: "production",
       compression: minified,
       modules: false,
       debug: DEBUG_PRESETS
@@ -31,6 +34,7 @@ export function createHelper({ mode = "classic", minified = false, presets = [],
   } else {
     selectedPreset = [ presetEdge, {
       target: "library",
+      env: "production",
       compression: minified,
       debug: DEBUG_PRESETS
     }]

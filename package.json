@@ -45,15 +45,15 @@
     "app-root-dir": "^1.0.2",
     "async": "^2.5.0",
     "babel-preset-edge": "^1.2.0",
-    "babel-runtime": "^6.25.0",
+    "babel-runtime": "^6.26.0",
     "chalk": "^2.1.0",
     "file-exists": "^4.0.0",
     "fs-extra": "^4.0.1",
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.4",
     "meow": "^3.7.0",
-    "rollup": "^0.47.4",
-    "rollup-plugin-babel": "^3.0.1",
+    "rollup": "^0.47.6",
+    "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-buble": "^0.15.0",
     "rollup-plugin-commonjs": "^8.1.0",
     "rollup-plugin-executable": "^1.0.0",
@@ -65,8 +65,8 @@
   },
   "devDependencies": {
     "file-loader": "^0.11.2",
-    "readable-code": "^3.4.11",
+    "readable-code": "^3.4.12",
     "rimraf": "^2.6.1",
-    "webpack": "^3.5.4"
+    "webpack": "^3.5.5"
   }
 }

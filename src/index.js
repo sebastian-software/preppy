@@ -261,11 +261,8 @@ function bundleTo({ input, targetId, transpilerId, currentTranspiler, format, ou
     },
     external(dependency)
     {
-      console.log("DEP:",dependency)
-      return []
-      console.log("XXX:", arguments)
-      if (dependency === input) {
-        //return false
+      if (dependency == input) {
+        return false
       }
 
       if (fileRebase.isExternal(dependency)) {

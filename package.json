@@ -1,6 +1,6 @@
 {
   "name": "prepublish",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Simplifies the prepare step (bundling, transpiling, rebasing) during publishing NPM packages.",
   "keywords": [
     "npm",

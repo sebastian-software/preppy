@@ -31,9 +31,9 @@ const command = meow(`
     $ prepublish
 
   Options
-    --entry-node       Entry file for NodeJS target [default = auto]
-    --entry-web        Entry file for Browser target [default = auto]
-    --entry-binary     Entry file for Binary target [default = auto]
+    --input-node       Input file for NodeJS target [default = auto]
+    --input-web        Input file for Browser target [default = auto]
+    --input-binary     Input file for Binary target [default = auto]
 
     --output-folder    Configure the output folder [default = auto]
 
@@ -46,9 +46,9 @@ const command = meow(`
     -q, --quiet        Quiet output mode [default = false]
 `, {
     default: {
-      entryNode: null,
-      entryWeb: null,
-      entryBinary: null,
+      inputNode: null,
+      inputWeb: null,
+      inputBinary: null,
 
       outputFolder: null,
 
@@ -139,13 +139,13 @@ const format2Rollup = {
   esmodule: "es"
 }
 
-const moduleName = PKG_CONFIG.moduleName || camelCase(PKG_CONFIG.name)
+const name = PKG_CONFIG.name || camelCase(PKG_CONFIG.name)
 const banner = getBanner(PKG_CONFIG)
 const targets = {}
 const formats = [ "esmodule", "commonjs" ]
 
-if (command.flags.entryNode) {
-  targets.node = [ command.flags.entryNode ]
+if (command.flags.inputNode) {
+  targets.node = [ command.flags.inputNode ]
 } else {
   targets.node = [
     "src/node/public.js",
@@ -163,8 +163,8 @@ if (command.flags.entryNode) {
   ]
 }
 
-if (command.flags.entryWeb) {
-  targets.web = [ command.flags.entryWeb ]
+if (command.flags.inputWeb) {
+  targets.web = [ command.flags.inputWeb ]
 } else {
   targets.web = [
     "src/web/public.js",
@@ -181,8 +181,8 @@ if (command.flags.entryWeb) {
   ]
 }
 
-if (command.flags.entryBinary) {
-  targets.binary = [ command.flags.entryBinary ]
+if (command.flags.inputBinary) {
+  targets.binary = [ command.flags.inputBinary ]
 } else {
   targets.binary = [
     "src/binary.js",
@@ -190,14 +190,15 @@ if (command.flags.entryBinary) {
   ]
 }
 
+/* eslint-disable max-params */
 try {
-  eachOfSeries(targets, (envEntries, targetId, envCallback) =>
+  eachOfSeries(targets, (envInputs, targetId, envCallback) =>
   {
-    var entry = lookupBest(envEntries)
-    if (entry)
+    var input = lookupBest(envInputs)
+    if (input)
     {
       if (!quiet) {
-        console.log(`Using entry ${chalk.blue(entry)} for target ${chalk.blue(targetId)}`)
+        console.log(`Using input ${chalk.blue(input)} for target ${chalk.blue(targetId)}`)
       }
 
       eachOfSeries(formats, (format, formatIndex, formatCallback) =>
@@ -211,9 +212,9 @@ try {
 
         eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
         {
-          var destFile = outputFileMatrix[`${targetId}-${transpilerId}-${format}`]
-          if (destFile) {
-            return bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, destFile, variantCallback })
+          var outputFile = outputFileMatrix[`${targetId}-${transpilerId}-${format}`]
+          if (outputFile) {
+            return bundleTo({ input, targetId, transpilerId, currentTranspiler, format, outputFile, variantCallback })
           } else {
             return variantCallback(null)
           }
@@ -238,10 +239,10 @@ function lookupBest(candidates) {
   return filtered[0]
 }
 
-function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, destFile, variantCallback }) {
+function bundleTo({ input, targetId, transpilerId, currentTranspiler, format, outputFile, variantCallback }) {
   if (!quiet) {
     /* eslint-disable max-len */
-    console.log(`${chalk.green(">>> Bundling")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(PKG_CONFIG.version)} as ${chalk.blue(transpilerId)} defined as ${chalk.blue(format)} to ${chalk.green(destFile)}...`)
+    console.log(`${chalk.green(">>> Bundling")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(PKG_CONFIG.version)} as ${chalk.blue(transpilerId)} defined as ${chalk.blue(format)} to ${chalk.green(outputFile)}...`)
   }
 
   var prefix = "process.env."
@@ -251,17 +252,20 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
     [`${prefix}TARGET`]: JSON.stringify(targetId)
   }
 
-  var fileRebase = rebase({ outputFolder: dirname(destFile), entry, verbose })
+  var fileRebase = rebase({ outputFolder: dirname(outputFile), input, verbose })
   return rollup({
-    entry,
+    input,
     cache,
     onwarn: (error) => {
       console.warn(chalk.red("  - " + error.message))
     },
     external(dependency)
     {
-      if (dependency === entry) {
-        return false
+      console.log("DEP:",dependency)
+      return []
+      console.log("XXX:", arguments)
+      if (dependency === input) {
+        //return false
       }
 
       if (fileRebase.isExternal(dependency)) {
@@ -297,10 +301,10 @@ function bundleTo({ entry, targetId, transpilerId, currentTranspiler, format, de
     .then((bundle) =>
       bundle.write({
         format: format2Rollup[format],
-        moduleName,
+        name,
         banner: transpilerId === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
-        sourceMap: command.flags.sourcemap,
-        dest: destFile
+        sourcemap: command.flags.sourcemap,
+        file: outputFile
       })
     )
     .then(() =>

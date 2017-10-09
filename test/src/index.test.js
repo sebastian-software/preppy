@@ -1,4 +1,4 @@
-import { promisify } from "util"
+import pify from "pify"
 import { exec } from "child_process"
 import { readFile } from "fs"
 import rimraf from "rimraf"
@@ -7,9 +7,9 @@ import pkg from "../../package.json"
 
 const versionString = "simplepublish v" + pkg.version
 
-const lazyExec = promisify(exec)
-const lazyRead = promisify(readFile)
-const lazyDelete = promisify(rimraf)
+const lazyExec = pify(exec)
+const lazyRead = pify(readFile)
+const lazyDelete = pify(rimraf)
 
 test("Publish Test File", async () => {
   await lazyDelete("./test/lib")

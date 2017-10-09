@@ -33,7 +33,7 @@
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
-    "test": "rimraf test/lib && npm run prepare && jest",
+    "test": "npm run prepare && jest",
     "prepare": "rimraf bin && rollup -c rollup.config.js"
   },
   "repository": {

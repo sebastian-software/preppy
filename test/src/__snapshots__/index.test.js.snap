@@ -11,7 +11,7 @@ var lodash = require('lodash');
 
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
 
-console.log(\\"Package\\", \\"simplepublish\\");
+console.log(\\"Package\\", \\"preppy\\");
 console.log(\\"Target\\", \\"node\\");
 
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
@@ -88,7 +88,7 @@ import { camelCase } from 'lodash';
 
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
 
-console.log(\\"Package\\", \\"simplepublish\\");
+console.log(\\"Package\\", \\"preppy\\");
 console.log(\\"Target\\", \\"node\\");
 
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);

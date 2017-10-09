@@ -25,7 +25,7 @@ var cache
 
 const command = meow(`
   Usage
-    $ simplepublish
+    $ preppy
 
   Options
     --input            Input file [default = auto]

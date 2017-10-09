@@ -5,7 +5,7 @@ import rimraf from "rimraf"
 
 import pkg from "../../package.json"
 
-const versionString = "simplepublish v" + pkg.version
+const versionString = "preppy v" + pkg.version
 
 const lazyExec = pify(exec)
 const lazyRead = pify(readFile)
@@ -15,7 +15,7 @@ test("Publish Test File", async () => {
   await lazyDelete("./test/lib")
 
   process.env.BABEL_ENV = "development"
-  const { stdout, stderr } = await lazyExec("node ./bin/simplepublish --input ./test/src/index.js --output-folder ./test/lib")
+  const { stdout, stderr } = await lazyExec("node ./bin/preppy --input ./test/src/index.js --output-folder ./test/lib")
 
   const cjs = await lazyRead("./test/lib/node.commonjs.js", "utf8")
   expect(cjs.replace(versionString, "VERSION_STRING")).toMatchSnapshot()

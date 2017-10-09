@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Publish Test File 1`] = `
-"/*! simplepublish v2.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
@@ -82,7 +82,7 @@ console.log(\\"Initialized class:\\", new MyClass());
 `;
 
 exports[`Publish Test File 2`] = `
-"/*! simplepublish v2.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
 import nodentRuntime from 'nodent-runtime';
 import { camelCase } from 'lodash';
 

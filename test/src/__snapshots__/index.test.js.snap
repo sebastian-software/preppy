@@ -52,13 +52,17 @@ console.log(\\"Destructed:\\", destructed);
 
 class MyClass {
   constructor() {
+    this.boundFunction = () => this.instanceProperty;
+
     console.log(\\"Called constructor\\");
     this.helper();
+    this.instanceProperty = 3;
   }
 
   helper() {
     console.log(\\"Called helper\\");
   }
+
 }
 
 function returnLate() {
@@ -125,13 +129,17 @@ console.log(\\"Destructed:\\", destructed);
 
 class MyClass {
   constructor() {
+    this.boundFunction = () => this.instanceProperty;
+
     console.log(\\"Called constructor\\");
     this.helper();
+    this.instanceProperty = 3;
   }
 
   helper() {
     console.log(\\"Called helper\\");
   }
+
 }
 
 function returnLate() {

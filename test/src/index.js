@@ -50,10 +50,15 @@ class MyClass {
   constructor() {
     console.log("Called constructor")
     this.helper()
+    this.instanceProperty = 3
   }
 
   helper() {
     console.log("Called helper")
+  }
+
+  boundFunction = () => {
+    return this.instanceProperty;
   }
 }
 

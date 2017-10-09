@@ -2,6 +2,7 @@ import babel from "rollup-plugin-babel"
 import envPreset from "babel-preset-env"
 import objRestSpreadPlugin from "babel-plugin-transform-object-rest-spread"
 import fastAsyncPlugin from "babel-plugin-fast-async"
+import transformRuntimePlugin from "babel-plugin-transform-runtime"
 
 const DEBUG_PRESETS = false
 
@@ -61,8 +62,19 @@ export function createHelper({ mode = "classic", presets = [], plugins = [] }) {
     [
       objRestSpreadPlugin,
       [
-        fastAsyncPlugin, {
+        fastAsyncPlugin,
+        {
           useRuntimeModule: true
+        }
+      ],
+      [
+        transformRuntimePlugin,
+        {
+          helpers: true,
+          regenerator: false,
+          polyfill: false,
+          useBuiltIns: true,
+          useESModules: true
         }
       ]
     ],

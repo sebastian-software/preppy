@@ -1,5 +1,5 @@
 {
-  "name": "prepublish",
+  "name": "simplepublish",
   "version": "1.4.3",
   "description": "Simple and lightweight (in dependencies) JavaScript-only prepublishing tool (bundling and transpiling) for publishing NPM packages.",
   "keywords": [
@@ -38,7 +38,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sebastian-software/prepublish.git"
+    "url": "git+https://github.com/sebastian-software/simplepublish.git"
   },
   "dependencies": {
     "app-root-dir": "^1.0.2",

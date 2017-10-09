@@ -2,11 +2,13 @@ node_modules/
 src/
 test/
 
+.babelrc
 .editorconfig
 .eslintrc.yml
+.flowconfig
 .gitattributes
 .gitignore
 .travis.yml
 
 appveyor.yml
-rollup.cfg
+rollup.config.cfg

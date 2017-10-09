@@ -25,7 +25,7 @@ var cache
 
 const command = meow(`
   Usage
-    $ prepublish
+    $ simplepublish
 
   Options
     --input            Input file [default = auto]
@@ -39,10 +39,7 @@ const command = meow(`
       input: null,
       outputFolder: null,
 
-      minified: false,
       sourcemap: true,
-      targetUnstable: false,
-
       verbose: false,
       quiet: false
     },

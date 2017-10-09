@@ -11,6 +11,7 @@
             "useBuiltIns": true
           }
         ],
+        "transform-class-properties",
         [
           "fast-async",
           {

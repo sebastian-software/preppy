@@ -6,7 +6,7 @@
 import { camelCase } from "lodash"
 console.log("CherryPick Import Lodash:", camelCase("hello world") === "helloWorld")
 
-console.log("Package", process.env.NAME, process.env.VERSION)
+console.log("Package", process.env.NAME)
 console.log("Target", process.env.TARGET)
 
 console.log("ES2016 Enabled:", 2 ** 2 === 4)

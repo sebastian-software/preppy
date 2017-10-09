@@ -2,7 +2,7 @@
 
 <a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/Nehv39FW5U4NHEn7axuGx4CE/sebastian-software/simplepublish'>  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/Nehv39FW5U4NHEn7axuGx4CE/sebastian-software/simplepublish.svg' /></a>
 
-*SimplePublish* - A Simple and lightweight tool for preparing the publish of NPM packages.
+> *SimplePublish* - A Simple and lightweight tool for preparing the publish of NPM packages.
 
 [sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
@@ -15,9 +15,6 @@
 [appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/simplepublish/master.svg?label=windows%20build
 [travis]: https://travis-ci.org/sebastian-software/simplepublish
 [appveyor]: https://ci.appveyor.com/project/swernerx/simplepublish/branch/master
-
-
-## Transpilers
 
 *SimplePublish* includes a Babel-based transpiler configuration which supports all of ES2015/ES2016/ES2017. Plus support for [Object-Rest-Spread](https://babeljs.io/docs/plugins/transform-object-rest-spread/) and [Class Properties](https://babeljs.io/docs/plugins/transform-class-properties/). The High-performance async engine with support for generators and async/await powered by [fast-async](https://github.com/MatAtBread/fast-async) is enabled by default. It requires [nodent-runtime](https://github.com/MatAtBread/nodent-runtime) to be installed when using modern async features. It uses [Transform-Runtime](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime) to externalize requirements to Polyfills. Resulting code needs all Polyfills for each library published with this tool. Typically by using services like [polyfill.io](https://qa.polyfill.io/v2/docs/) or [Babel Runtime](https://github.com/babel/babel/tree/master/packages/babel-runtime) aka [CoreJS](https://github.com/zloirock/core-js).
 

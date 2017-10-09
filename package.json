@@ -1,7 +1,7 @@
 {
   "name": "prepublish",
   "version": "1.4.3",
-  "description": "Simplifies the prepare step (bundling, transpiling, rebasing) during publishing NPM packages.",
+  "description": "Simple and lightweight (in dependencies) JavaScript-only prepublishing tool (bundling and transpiling) for publishing NPM packages.",
   "keywords": [
     "npm",
     "publish",
@@ -12,16 +12,15 @@
     "api",
     "tooling",
     "rollup",
-    "babel",
-    "rebase"
+    "babel"
   ],
   "engines": {
     "node": ">=6.0.0",
     "npm": ">=4.0.0",
-    "yarn": ">=0.21.3"
+    "yarn": ">=1.0.0"
   },
   "bin": {
-    "prepublish": "./bin/prepublish"
+    "prepublish": "./bin/simplepublish"
   },
   "author": {
     "name": "Sebastian Werner",

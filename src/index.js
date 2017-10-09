@@ -7,7 +7,6 @@ import chalk from "chalk"
 import { get as getRoot } from "app-root-dir"
 
 import { rollup } from "rollup"
-import rebase from "rollup-plugin-rebase"
 import nodeResolve from "rollup-plugin-node-resolve"
 import commonjs from "rollup-plugin-commonjs"
 import jsonPlugin from "rollup-plugin-json"
@@ -15,7 +14,7 @@ import yamlPlugin from "rollup-plugin-yaml"
 import replacePlugin from "rollup-plugin-replace"
 import executablePlugin from "rollup-plugin-executable"
 
-import getTranspilers from "./getTranspilers"
+import createBabelConfig from "./createBabelConfig"
 import getBanner from "./getBanner"
 
 const ROOT = getRoot()
@@ -24,7 +23,6 @@ const PKG_CONFIG = require(resolve(ROOT, "package.json"))
 var cache
 
 /* eslint-disable no-console */
-
 
 const command = meow(`
   Usage
@@ -52,7 +50,6 @@ const command = meow(`
 
       outputFolder: null,
 
-      transpiler: "babel",
       minified: false,
       sourcemap: true,
       targetUnstable: false,
@@ -62,7 +59,6 @@ const command = meow(`
     },
 
     alias: {
-      t: "transpiler",
       x: "minified",
       m: "sourcemap",
       v: "verbose",
@@ -203,7 +199,7 @@ try {
 
       eachOfSeries(formats, (format, formatIndex, formatCallback) =>
       {
-        const transpilers = getTranspilers(command.flags.transpiler, {
+        const transpilers = createBabelConfig({
           minified: command.flags.minified,
           presets: [],
           plugins: [],
@@ -252,7 +248,6 @@ function bundleTo({ input, targetId, transpilerId, currentTranspiler, format, ou
     [`${prefix}TARGET`]: JSON.stringify(targetId)
   }
 
-  var fileRebase = rebase({ outputFolder: dirname(outputFile), input, verbose })
   return rollup({
     input,
     cache,
@@ -263,10 +258,6 @@ function bundleTo({ input, targetId, transpilerId, currentTranspiler, format, ou
     {
       if (dependency == input) {
         return false
-      }
-
-      if (fileRebase.isExternal(dependency)) {
-        return true
       }
 
       if (isAbsolute(dependency)) {
@@ -290,16 +281,14 @@ function bundleTo({ input, targetId, transpilerId, currentTranspiler, format, ou
       }),
       yamlPlugin(),
       jsonPlugin(),
-      currentTranspiler,
-      fileRebase,
-      transpilerId === "binary" ? executablePlugin() : null
+      currentTranspiler
     ].filter(Boolean)
   })
     .then((bundle) =>
       bundle.write({
         format: format2Rollup[format],
         name,
-        banner: transpilerId === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
+        banner,
         sourcemap: command.flags.sourcemap,
         file: outputFile
       })

@@ -17,9 +17,9 @@ test("Publish Test File", async () => {
   process.env.BABEL_ENV = "development"
   const { stdout, stderr } = await lazyExec("node ./bin/simplepublish --input ./test/src/index.js --output-folder ./test/lib")
 
-  const cjs = await lazyRead("./test/lib/node.classic.commonjs.js", "utf8")
+  const cjs = await lazyRead("./test/lib/node.commonjs.js", "utf8")
   expect(cjs.replace(versionString, "VERSION_STRING")).toMatchSnapshot()
 
-  const esm = await lazyRead("./test/lib/node.classic.esmodule.js", "utf8")
+  const esm = await lazyRead("./test/lib/node.esmodule.js", "utf8")
   expect(esm.replace(versionString, "VERSION_STRING")).toMatchSnapshot()
 })

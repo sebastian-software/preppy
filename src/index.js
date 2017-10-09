@@ -64,15 +64,15 @@ if (verbose) {
 
 /* eslint-disable dot-notation */
 const outputFileMatrix = {
-  // NodeJS Classic Target
-  "node-classic-commonjs": PKG_CONFIG["main"] || null,
-  "node-classic-esmodule": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null
+  // NodeJS Target
+  "node-commonjs": PKG_CONFIG["main"] || null,
+  "node-esmodule": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null
 }
 
 const outputFolder = command.flags.outputFolder
 if (outputFolder) {
-  outputFileMatrix["node-classic-commonjs"] = `${outputFolder}/node.classic.commonjs.js`
-  outputFileMatrix["node-classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
+  outputFileMatrix["node-commonjs"] = `${outputFolder}/node.commonjs.js`
+  outputFileMatrix["node-esmodule"] = `${outputFolder}/node.esmodule.js`
 }
 
 // Rollups support these formats: 'amd', 'cjs', 'es', 'iife', 'umd'
@@ -109,9 +109,9 @@ try {
 
         eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
         {
-          var outputFile = outputFileMatrix[`${targetId}-${transpilerId}-${format}`]
+          var outputFile = outputFileMatrix[`${targetId}-${format}`]
           if (outputFile) {
-            return bundleTo({ input, targetId, transpilerId, currentTranspiler, format, outputFile, variantCallback })
+            return bundleTo({ input, targetId, currentTranspiler, format, outputFile, variantCallback })
           } else {
             return variantCallback(null)
           }
@@ -136,10 +136,10 @@ function lookupBest(candidates) {
   return filtered[0]
 }
 
-function bundleTo({ input, targetId, transpilerId, currentTranspiler, format, outputFile, variantCallback }) {
+function bundleTo({ input, targetId, currentTranspiler, format, outputFile, variantCallback }) {
   if (!quiet) {
     /* eslint-disable max-len */
-    console.log(`${chalk.green(">>> Bundling")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(PKG_CONFIG.version)} as ${chalk.blue(transpilerId)} defined as ${chalk.blue(format)} to ${chalk.green(outputFile)}...`)
+    console.log(`${chalk.green(">>> Bundling")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(PKG_CONFIG.version)} defined as ${chalk.blue(format)} to ${chalk.green(outputFile)}...`)
   }
 
   var prefix = "process.env."

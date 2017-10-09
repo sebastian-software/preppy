@@ -77,7 +77,7 @@ function returnLate() {
 console.log(\\"Test Async:\\", returnLate() instanceof Promise);
 
 console.log(\\"Initialized class:\\", new MyClass());
-//# sourceMappingURL=node.classic.commonjs.js.map
+//# sourceMappingURL=node.commonjs.js.map
 "
 `;
 
@@ -154,6 +154,6 @@ function returnLate() {
 console.log(\\"Test Async:\\", returnLate() instanceof Promise);
 
 console.log(\\"Initialized class:\\", new MyClass());
-//# sourceMappingURL=node.classic.esmodule.js.map
+//# sourceMappingURL=node.esmodule.js.map
 "
 `;

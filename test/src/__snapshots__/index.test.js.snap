@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Publish Test File 1`] = `
-"/*! simplepublish v1.4.3 by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! simplepublish v2.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
@@ -11,7 +11,7 @@ var lodash = require('lodash');
 
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
 
-console.log(\\"Package\\", \\"simplepublish\\", \\"1.4.3\\");
+console.log(\\"Package\\", \\"simplepublish\\", \\"2.0.0\\");
 console.log(\\"Target\\", \\"node\\");
 
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
@@ -82,13 +82,13 @@ console.log(\\"Initialized class:\\", new MyClass());
 `;
 
 exports[`Publish Test File 2`] = `
-"/*! simplepublish v1.4.3 by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! simplepublish v2.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 import nodentRuntime from 'nodent-runtime';
 import { camelCase } from 'lodash';
 
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
 
-console.log(\\"Package\\", \\"simplepublish\\", \\"1.4.3\\");
+console.log(\\"Package\\", \\"simplepublish\\", \\"2.0.0\\");
 console.log(\\"Target\\", \\"node\\");
 
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);

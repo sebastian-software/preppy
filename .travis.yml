@@ -1,17 +1,13 @@
 language: node_js
-
 node_js:
-  - 6
-  - 8
-
+- 6
+- 8
 matrix:
   fast_finish: true
-
 notifications:
   email: false
   slack:
-    secure: rbUUN+ID+aOWbUNcvo6dDvhV0Ka1pvFi9Cz8cB9SQcrtGDE+9Swd6DVPQmDAB5U4r1s1f9AUz5isDnC7b2K72r3vOlutlLBQ1Q2lP/6qzidrFLyNJvkcMSUziNX+Q8snvzF+lojq7jno0YhGfR4CLpoj5oJ0O4xc5gEbpfIfILcbs4svFcg9y5KqbDudRCMdWPz4YOfbZ2eVo2S4YNmooxNAotkbA6kaazArG6ClGwUE7QFoVdpLI6eKlGIn0m8pzwkzHArkauwkKak2prseWy4QKA2hVwMcuATX1slG9dtZ7NEFCUgXMS9zrz3GhcqwCBjOTKKX8FjM+gFkXM24E9QgEdRoNp8uAQTmssASGEBoM6foEq+x2nTkADwDCywz4ImTEpUqGv13oQRvLbLA0P57I5SREz2ONbBTA6mwAAeV0dmZiy1c5OmyzJ6nDw0qZBbPIWIvYoTwuIRcThCiltbhZ0+Bg389gfmJfJIY3hDo8KuCTPfbdlZznZh2I22sHOAj+PnktK8PY4az+MrAOMGMtd2QQO3i8WSrW3jfsYbAOLVG4DvWdjfL+noqrU5QHEIQ7wy93s0JICERzLc+ZJJ4rRgz3iM899aIMLmvu0RvGIVRfqtDYeLzpYqiQwFND+83HuswQKfBlLRhqOZSoUqBXgxJbHSy59VxrBhXfSc=
-
+    secure: BISm07WlmcRYxD4n+dAjmQ7RfDkV2iXpt7pTY/VfWVfMmbAMCaiqcQCTBngcw8ILvAnAOz4lS6fAyTsuMR/YESMZeslMZHHZjhYnqPZc/etk8zJHNpeV+ISaKrUEI2NSueKZ9A2UFdRlP3TJjAPOetbwY1A+iqy0FbCcLBEvyJ1zJRuYdqHXD08DCVF1cp1pinjZj94H7K/CkpZ2aNldkP/WTZVgchCTsw+3T60b8Yz/nCbrRqD77ckUdmyVk/wxFK7VpEjHO/uEqC1C7B+h/aGpVueQJ6vV53qmKJzESx5YJ7EdwS6YiAUB8CFc96qzYMNigAPLktzHHLWzp4SxJcinooGDKxOJ0bCGF6Ew+VOpy5JWLTDKi+kjF5Cm8NZaBOM9fEG0liPmmZz00S4usxDR9b6HRq+dBKy7+Z14JI/P+vlAE6JsMNB/ky9GpkYNhA6OibQ5kQK7Dnety0M9CjAiI12MbvqHo15SPMZvXNhdR0A5BssP9IUp3ABi94Exoy00pHdcQ2rx1I4xyw3PkoXX3/bd3bHfG/Ni+8OQkhGH5L8pAgp8Bd5Vwgbo413+hA9u+Kmmm1J+H8XMzzdCnMW6n/+6JVUuUX7bnh2UhxKjdnFo2A9mxOgW99a/Ao1qE1x/p4YTxcu7iO8WKXDU5PEbaCH/lvWiCdy5IaBMxwA=
 cache:
   directories:
-    - $HOME/.npm
+  - "$HOME/.npm"

@@ -9,7 +9,7 @@ var external = Object.keys(pkg.dependencies).concat(builtinModules)
 export default {
   input: "src/index.js",
   output: {
-    file: "bin/prepublish",
+    file: "bin/simplepublish",
     format: "cjs",
     sourcemap: true
   },

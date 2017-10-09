@@ -29,25 +29,15 @@ const command = meow(`
     $ prepublish
 
   Options
-    --input-node       Input file for NodeJS target [default = auto]
-    --input-web        Input file for Browser target [default = auto]
-    --input-binary     Input file for Binary target [default = auto]
-
+    --input            Input file [default = auto]
     --output-folder    Configure the output folder [default = auto]
 
-    -t, --transpiler   Chose the transpiler to use. Either "babel" or "buble". [default = babel]
-    -x, --minified     Enabled minification of output files
     -m, --sourcemap    Create a source map file during processing
-    --target-unstable  Binaries should target the upcoming major version of NodeJS instead of LTS
-
     -v, --verbose      Verbose output mode [default = false]
     -q, --quiet        Quiet output mode [default = false]
 `, {
     default: {
-      inputNode: null,
-      inputWeb: null,
-      inputBinary: null,
-
+      input: null,
       outputFolder: null,
 
       minified: false,
@@ -59,7 +49,6 @@ const command = meow(`
     },
 
     alias: {
-      x: "minified",
       m: "sourcemap",
       v: "verbose",
       q: "quiet"
@@ -76,57 +65,17 @@ if (verbose) {
   console.log("Flags:", command.flags)
 }
 
-// Handle special case to generate a binary file based on config in package.json
-const binaryConfig = PKG_CONFIG.bin
-let binaryOutput = null
-if (binaryConfig) {
-  for (let name in binaryConfig) {
-    binaryOutput = binaryConfig[name]
-    break
-  }
-}
-
 /* eslint-disable dot-notation */
 const outputFileMatrix = {
   // NodeJS Classic Target
   "node-classic-commonjs": PKG_CONFIG["main"] || null,
-  "node-classic-esmodule": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
-
-  // NodeJS ES2015 Target
-  "node-es2015-commonjs": PKG_CONFIG["main:es2015"] || null,
-  "node-es2015-esmodule": PKG_CONFIG["es2015"] || PKG_CONFIG["module:es2015"] || null,
-
-  // NodeJS Modern Target
-  "node-modern-commonjs": PKG_CONFIG["main:modern"] || null,
-  "node-modern-esmodule": PKG_CONFIG["module:modern"] || null,
-
-  // Browser Classic Target
-  "web-classic-esmodule": PKG_CONFIG["web"] || PKG_CONFIG["browser"] || null,
-
-  // Browser ES2015 Target
-  "web-es2015-esmodule": PKG_CONFIG["web:es2015"] || PKG_CONFIG["browser:es2015"] || null,
-
-  // Browser Modern Target
-  "web-modern-esmodule": PKG_CONFIG["web:modern"] || PKG_CONFIG["browser:modern"] || null,
-
-  // Binary Target
-  "binary-binary-commonjs": binaryOutput || null
+  "node-classic-esmodule": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null
 }
 
 const outputFolder = command.flags.outputFolder
 if (outputFolder) {
   outputFileMatrix["node-classic-commonjs"] = `${outputFolder}/node.classic.commonjs.js`
   outputFileMatrix["node-classic-esmodule"] = `${outputFolder}/node.classic.esmodule.js`
-
-  outputFileMatrix["node-es2015-commonjs"] = `${outputFolder}/node.es2015.commonjs.js`
-  outputFileMatrix["node-es2015-esmodule"] = `${outputFolder}/node.es2015.esmodule.js`
-
-  outputFileMatrix["node-modern-commonjs"] = `${outputFolder}/node.modern.commonjs.js`
-  outputFileMatrix["node-modern-esmodule"] = `${outputFolder}/node.modern.esmodule.js`
-
-  outputFileMatrix["web-classic-esmodule"] = `${outputFolder}/web.classic.esmodule.js`
-  outputFileMatrix["web-es2015-esmodule"] = `${outputFolder}/web.es2015.esmodule.js`
-  outputFileMatrix["web-modern-esmodule"] = `${outputFolder}/web.modern.esmodule.js`
 }
 
 // Rollups support these formats: 'amd', 'cjs', 'es', 'iife', 'umd'
@@ -140,49 +89,11 @@ const banner = getBanner(PKG_CONFIG)
 const targets = {}
 const formats = [ "esmodule", "commonjs" ]
 
-if (command.flags.inputNode) {
-  targets.node = [ command.flags.inputNode ]
+if (command.flags.input) {
+  targets.node = [ command.flags.input ]
 } else {
   targets.node = [
-    "src/node/public.js",
-    "src/node/export.js",
-    "src/node.js",
-
-    "src/server/public.js",
-    "src/server/export.js",
-    "src/server.js",
-
-    "src/server.js",
-    "src/public.js",
-    "src/export.js",
     "src/index.js"
-  ]
-}
-
-if (command.flags.inputWeb) {
-  targets.web = [ command.flags.inputWeb ]
-} else {
-  targets.web = [
-    "src/web/public.js",
-    "src/web/export.js",
-    "src/web.js",
-
-    "src/browser/public.js",
-    "src/browser/export.js",
-    "src/browser.js",
-
-    "src/client/public.js",
-    "src/client/export.js",
-    "src/client.js"
-  ]
-}
-
-if (command.flags.inputBinary) {
-  targets.binary = [ command.flags.inputBinary ]
-} else {
-  targets.binary = [
-    "src/binary.js",
-    "src/script.js"
   ]
 }
 
@@ -200,10 +111,8 @@ try {
       eachOfSeries(formats, (format, formatIndex, formatCallback) =>
       {
         const transpilers = createBabelConfig({
-          minified: command.flags.minified,
           presets: [],
-          plugins: [],
-          targetUnstable
+          plugins: []
         })
 
         eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>

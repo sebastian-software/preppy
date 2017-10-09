@@ -1,42 +1,72 @@
 import babel from "rollup-plugin-babel"
-import presetEdge from "babel-preset-edge"
+import envPreset from "babel-preset-env"
+import objRestSpreadPlugin from "babel-plugin-transform-object-rest-spread"
+import fastAsyncPlugin from "babel-plugin-fast-async"
 
 const DEBUG_PRESETS = false
 
 /* eslint-disable max-params */
-export function createHelper({ mode = "classic", minified = false, presets = [], plugins = [], targetUnstable = false }) {
-  const additionalPlugins = plugins.concat()
+export function createHelper({ mode = "classic", presets = [], plugins = [] }) {
+  const additionalPlugins = plugins.concat([
+    objRestSpreadPlugin,
+    [
+      fastAsyncPlugin, {
+        useRuntimeModule: true
+      }
+    ]
+  ])
   const additionalPresets = presets.concat()
+  const excludes = [
+    "transform-regenerator",
+    "transform-async-to-generator"
+  ]
 
   let selectedPreset
-  if (mode === "modern") {
-    selectedPreset = [ presetEdge, {
-      target: "modern",
-      env: "production",
-      compression: minified,
-      debug: DEBUG_PRESETS
-    }]
-  } else if (mode === "es2015") {
-    selectedPreset = [ presetEdge, {
-      target: "es2015",
-      env: "production",
-      compression: minified,
-      debug: DEBUG_PRESETS
-    }]
-  } else if (mode === "binary") {
-    selectedPreset = [ presetEdge, {
-      target: targetUnstable ? "node8" : "node",
-      env: "production",
-      compression: minified,
+  if (mode === "es2015") {
+    excludes.push(
+      "transform-es2015-template-literals",
+      "transform-es2015-literals",
+      "transform-es2015-function-name",
+      "transform-es2015-arrow-functions",
+      "transform-es2015-block-scoped-functions",
+      "transform-es2015-classes",
+      "transform-es2015-object-super",
+      "transform-es2015-shorthand-properties",
+      "transform-es2015-duplicate-keys",
+      "transform-es2015-computed-properties",
+      "transform-es2015-for-of",
+      "transform-es2015-sticky-regex",
+      "transform-es2015-unicode-regex",
+      "check-es2015-constants",
+      "transform-es2015-spread",
+      "transform-es2015-parameters",
+      "transform-es2015-destructuring",
+      "transform-es2015-block-scoping",
+      "transform-es2015-typeof-symbol",
+      "transform-es2015-modules-commonjs",
+      "transform-es2015-modules-systemjs",
+      "transform-es2015-modules-amd",
+      "transform-es2015-modules-umd"
+    )
+
+    selectedPreset = [ envPreset, {
+      excludes,
+      useBuiltIns: true,
+      loose: true,
       modules: false,
-      debug: DEBUG_PRESETS
+      targets: {
+        node: "6.9.0"
+      }
     }]
   } else {
-    selectedPreset = [ presetEdge, {
-      target: "library",
-      env: "production",
-      compression: minified,
-      debug: DEBUG_PRESETS
+    selectedPreset = [ envPreset, {
+      excludes,
+      useBuiltIns: true,
+      loose: true,
+      modules: false,
+      targets: {
+        node: "6.9.0"
+      }
     }]
   }
 
@@ -48,15 +78,7 @@ export function createHelper({ mode = "classic", minified = false, presets = [],
     runtimeHelpers: true,
 
     // Remove comments - these are often positioned on the wrong positon after transpiling anyway
-    comments: minified === false,
-
-    // Do not include superfluous whitespace characters and line terminators.
-    // When set to "auto" compact is set to true on input sizes of >500KB.
-    compact: minified === true ? true : "auto",
-
-    // Should the output be minified (not printing last semicolons in blocks, printing literal string
-    // values instead of escaped ones, stripping () from new when safe)
-    minified,
+    comments: false,
 
     // Do not transpile external code
     // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
@@ -82,8 +104,6 @@ export function createHelper({ mode = "classic", minified = false, presets = [],
 export default function createBabelConfig(options) {
   return {
     classic: createHelper({ ...options, mode: "classic" }),
-    es2015: createHelper({ ...options, mode: "es2015" }),
-    modern: createHelper({ ...options, mode: "modern" }),
-    binary: createHelper({ ...options, mode: "binary" })
+    es2015: createHelper({ ...options, mode: "es2015" })
   }
 }

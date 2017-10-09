@@ -32,7 +32,7 @@
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
     "test": "npm run prepare && jest",
-    "prepare": "rimraf bin && rollup -c rollup.config.js"
+    "prepare": "rimraf bin && BABEL_ENV=test babel-node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -62,6 +62,7 @@
     "rollup-plugin-yaml": "^1.1.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "jest": "^21.2.1",
     "pify": "^3.0.0",
     "rimraf": "^2.6.2"

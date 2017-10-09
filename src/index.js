@@ -52,6 +52,7 @@ const command = meow(`
   }
 )
 
+process.env.BABEL_ENV = "development"
 
 const verbose = command.flags.verbose
 const quiet = command.flags.quiet

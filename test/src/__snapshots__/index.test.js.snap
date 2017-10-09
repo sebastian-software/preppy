@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Publish Test File 1`] = `
+"/*! simplepublish v1.4.3 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var nodentRuntime = _interopDefault(require('nodent-runtime'));
+var lodash = require('lodash');
+
+console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
+
+console.log(\\"Package\\", \\"simplepublish\\", \\"1.4.3\\");
+console.log(\\"Target\\", \\"node\\");
+
+console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
+
+new Promise((resolve, reject) => {
+  resolve(\\"resolved\\");
+}).then(first => {
+  console.log(\\"Promise:\\", first);
+});
+
+const CONSTANT = 123;
+console.log(\\"Constant:\\", CONSTANT);
+
+var myArray = [1, 2, 3];
+console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+
+var someArrayProducer = () => [4, 5];
+var mergedArray = [1, 2, 3, ...someArrayProducer(), 6];
+console.log(\\"Supports Array merging:\\", mergedArray.length === 6);
+
+var mySet = new Set(myArray);
+console.log(\\"Supports Set:\\", mySet.add(4));
+
+(function (supportsDefault = true) {
+  console.log(\\"Supports default parameters:\\", supportsDefault);
+})();
+
+let testVariable = \\"outer\\";
+{
+  let testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", testVariable);
+}
+console.log(\\"X Value from outer scope:\\", testVariable);
+
+var source = { first: 1, second: 2 };
+var destructed = Object.assign({ third: 3 }, source);
+console.log(\\"Destructed:\\", destructed);
+
+class MyClass {
+  constructor() {
+    console.log(\\"Called constructor\\");
+    this.helper();
+  }
+
+  helper() {
+    console.log(\\"Called helper\\");
+  }
+}
+
+function returnLate() {
+  return new Promise(function ($return, $error) {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, 300);
+    }).then(function ($await_1) {
+      return $return();
+    }.$asyncbind(this, $error), $error);
+  }.$asyncbind(this));
+}
+console.log(\\"Test Async:\\", returnLate() instanceof Promise);
+
+console.log(\\"Initialized class:\\", new MyClass());
+//# sourceMappingURL=node.classic.commonjs.js.map
+"
+`;
+
+exports[`Publish Test File 2`] = `
+"/*! simplepublish v1.4.3 by Sebastian Werner <s.werner@sebastian-software.de> */
+import nodentRuntime from 'nodent-runtime';
+import { camelCase } from 'lodash';
+
+console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
+
+console.log(\\"Package\\", \\"simplepublish\\", \\"1.4.3\\");
+console.log(\\"Target\\", \\"node\\");
+
+console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
+
+new Promise((resolve, reject) => {
+  resolve(\\"resolved\\");
+}).then(first => {
+  console.log(\\"Promise:\\", first);
+});
+
+const CONSTANT = 123;
+console.log(\\"Constant:\\", CONSTANT);
+
+var myArray = [1, 2, 3];
+console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+
+var someArrayProducer = () => [4, 5];
+var mergedArray = [1, 2, 3, ...someArrayProducer(), 6];
+console.log(\\"Supports Array merging:\\", mergedArray.length === 6);
+
+var mySet = new Set(myArray);
+console.log(\\"Supports Set:\\", mySet.add(4));
+
+(function (supportsDefault = true) {
+  console.log(\\"Supports default parameters:\\", supportsDefault);
+})();
+
+let testVariable = \\"outer\\";
+{
+  let testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", testVariable);
+}
+console.log(\\"X Value from outer scope:\\", testVariable);
+
+var source = { first: 1, second: 2 };
+var destructed = Object.assign({ third: 3 }, source);
+console.log(\\"Destructed:\\", destructed);
+
+class MyClass {
+  constructor() {
+    console.log(\\"Called constructor\\");
+    this.helper();
+  }
+
+  helper() {
+    console.log(\\"Called helper\\");
+  }
+}
+
+function returnLate() {
+  return new Promise(function ($return, $error) {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, 300);
+    }).then(function ($await_1) {
+      return $return();
+    }.$asyncbind(this, $error), $error);
+  }.$asyncbind(this));
+}
+console.log(\\"Test Async:\\", returnLate() instanceof Promise);
+
+console.log(\\"Initialized class:\\", new MyClass());
+//# sourceMappingURL=node.classic.esmodule.js.map
+"
+`;

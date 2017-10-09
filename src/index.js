@@ -1,4 +1,4 @@
-import { resolve, relative, isAbsolute, dirname } from "path"
+import { resolve, relative, isAbsolute } from "path"
 import { eachOfSeries } from "async"
 import { camelCase } from "lodash"
 import fileExists from "file-exists"
@@ -12,7 +12,6 @@ import commonjs from "rollup-plugin-commonjs"
 import jsonPlugin from "rollup-plugin-json"
 import yamlPlugin from "rollup-plugin-yaml"
 import replacePlugin from "rollup-plugin-replace"
-import executablePlugin from "rollup-plugin-executable"
 
 import createBabelConfig from "./createBabelConfig"
 import getBanner from "./getBanner"

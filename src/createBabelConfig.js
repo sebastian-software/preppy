@@ -7,23 +7,13 @@ const DEBUG_PRESETS = false
 
 /* eslint-disable max-params */
 export function createHelper({ mode = "classic", presets = [], plugins = [] }) {
-  const additionalPlugins = plugins.concat([
-    objRestSpreadPlugin,
-    [
-      fastAsyncPlugin, {
-        useRuntimeModule: true
-      }
-    ]
-  ])
-  const additionalPresets = presets.concat()
-  const excludes = [
+  const excludePlugins = [
     "transform-regenerator",
     "transform-async-to-generator"
   ]
 
-  let selectedPreset
   if (mode === "es2015") {
-    excludes.push(
+    excludePlugins.push(
       "transform-es2015-template-literals",
       "transform-es2015-literals",
       "transform-es2015-function-name",
@@ -48,27 +38,36 @@ export function createHelper({ mode = "classic", presets = [], plugins = [] }) {
       "transform-es2015-modules-amd",
       "transform-es2015-modules-umd"
     )
-
-    selectedPreset = [ envPreset, {
-      excludes,
-      useBuiltIns: true,
-      loose: true,
-      modules: false,
-      targets: {
-        node: "6.9.0"
-      }
-    }]
-  } else {
-    selectedPreset = [ envPreset, {
-      excludes,
-      useBuiltIns: true,
-      loose: true,
-      modules: false,
-      targets: {
-        node: "6.9.0"
-      }
-    }]
   }
+
+  const envPresetWithConfig = [ envPreset, {
+    exclude: excludePlugins,
+    useBuiltIns: true,
+    loose: true,
+    modules: false,
+    targets: {
+      node: "6.9.0"
+    }
+  }]
+
+  const allPresets = [].concat(
+    [
+      envPresetWithConfig
+    ],
+    presets
+  )
+
+  const allPlugins = [].concat(
+    [
+      objRestSpreadPlugin,
+      [
+        fastAsyncPlugin, {
+          useRuntimeModule: true
+        }
+      ]
+    ],
+    plugins
+  )
 
   return babel({
     // Don't try to find .babelrc because we want to force this configuration.
@@ -77,7 +76,7 @@ export function createHelper({ mode = "classic", presets = [], plugins = [] }) {
     // Rollup Setting: Allow usage of transform-runtime for referencing to a common library of polyfills
     runtimeHelpers: true,
 
-    // Remove comments - these are often positioned on the wrong positon after transpiling anyway
+    // Remove comments - these are often positioned on the wrong position after transpiling anyway
     comments: false,
 
     // Do not transpile external code
@@ -87,17 +86,8 @@ export function createHelper({ mode = "classic", presets = [], plugins = [] }) {
       "**/*.json"
     ],
 
-    presets: [
-      selectedPreset,
-
-      // All manually or minification related presets
-      ...additionalPresets
-    ],
-
-    plugins: [
-      // All manually or minification related plugins
-      ...additionalPlugins
-    ]
+    presets: allPresets,
+    plugins: allPlugins
   })
 }
 

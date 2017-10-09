@@ -1,15 +1,13 @@
 {
   "name": "simplepublish",
   "version": "1.4.3",
-  "description": "Simple and lightweight (in dependencies) JavaScript-only prepublishing tool (bundling and transpiling) for publishing NPM packages.",
+  "description": "A Simple and lightweight tool for preparing the publish of NPM packages.",
   "keywords": [
     "npm",
     "publish",
-    "prepublish",
     "prepare",
     "release",
     "library",
-    "api",
     "tooling",
     "rollup",
     "babel"
@@ -20,7 +18,7 @@
     "yarn": ">=1.0.0"
   },
   "bin": {
-    "simplepublish": "lib/index.js"
+    "simplepublish": "bin/simplepublish"
   },
   "author": {
     "name": "Sebastian Werner",
@@ -28,7 +26,7 @@
     "url": "http://sebastian-software.de/werner"
   },
   "license": "Apache-2.0",
-  "main": "lib/index.js",
+  "main": "bin/simplepublish",
   "scripts": {
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",

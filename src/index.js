@@ -88,9 +88,7 @@ const formats = [ "esmodule", "commonjs" ]
 if (command.flags.input) {
   targets.node = [ command.flags.input ]
 } else {
-  targets.node = [
-    "src/index.js"
-  ]
+  targets.node = [ "src/index.js" ]
 }
 
 /* eslint-disable max-params */
@@ -106,10 +104,7 @@ try {
 
       eachOfSeries(formats, (format, formatIndex, formatCallback) =>
       {
-        const transpilers = createBabelConfig({
-          presets: [],
-          plugins: []
-        })
+        const transpilers = createBabelConfig()
 
         eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
         {

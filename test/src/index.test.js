@@ -6,7 +6,9 @@ const lazyExec = promisify(exec)
 const lazyRead = promisify(readFile)
 
 test("Publish Test File", async () => {
+  process.env.BABEL_ENV = "development"
   const { stdout, stderr } = await lazyExec("./bin/simplepublish --input test/src/index.js --output-folder test/lib")
+  console.log(stderr)
 
   const cjs = await lazyRead("./test/lib/node.classic.commonjs.js", "utf8")
   expect(cjs).toMatchSnapshot()

@@ -1,6 +1,6 @@
 {
   "name": "simplepublish",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A Simple and lightweight tool for preparing the publish of NPM packages.",
   "keywords": [
     "npm",

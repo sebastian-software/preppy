@@ -1,3 +1,44 @@
 {
-  "presets": [ "env" ]
+  "comments": false,
+  "sourceMaps": true,
+
+  "presets": [
+    [ "env", {
+      "exclude": [
+        "transform-regenerator",
+        "transform-async-to-generator"
+      ],
+      "useBuiltIns": true,
+      "loose": true,
+      "modules": false,
+      "targets": {
+        "node": "6.9.0"
+      }
+    }]
+  ],
+
+  "plugins": [
+    [
+      "transform-object-rest-spread",
+      {
+        "useBuiltIns": true
+      }
+    ],
+    [
+      "fast-async",
+      {
+        "useRuntimeModule": true
+      }
+    ],
+    [
+      "transform-runtime",
+      {
+        "helpers": true,
+        "regenerator": false,
+        "polyfill": false,
+        "useBuiltIns": true,
+        "useESModules": true
+      }
+    ]
+  ]
 }

@@ -1,4 +1,4 @@
-import buble from "rollup-plugin-buble"
+import babel from "rollup-plugin-babel"
 import json from "rollup-plugin-json"
 import executable from "rollup-plugin-executable"
 import builtinModules from "builtin-modules"
@@ -17,8 +17,7 @@ export default {
   banner: "#!/usr/bin/env node\n",
   plugins: [
     json(),
-    buble({
-      objectAssign: "Object.assign"
+    babel({
     }),
     executable()
   ]

@@ -20,7 +20,7 @@
     "yarn": ">=1.0.0"
   },
   "bin": {
-    "prepublish": "./bin/simplepublish"
+    "simplepublish": "lib/index.js"
   },
   "author": {
     "name": "Sebastian Werner",
@@ -33,7 +33,7 @@
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
-    "test": "rimraf test/lib && npm run prepare && ./bin/simplepublish --input test/src/index.js --output-folder test/lib && node test/lib/node.classic.commonjs.js",
+    "test": "rimraf test/lib && npm run prepare && jest",
     "prepare": "rimraf bin && rollup -c rollup.config.js"
   },
   "repository": {
@@ -63,10 +63,7 @@
     "rollup-plugin-yaml": "^1.1.0"
   },
   "devDependencies": {
-    "builtin-modules": "^1.1.1",
     "jest": "^21.2.1",
-    "rimraf": "^2.6.2",
-    "rollup-plugin-buble": "^0.16.0",
-    "rollup-plugin-executable": "^1.1.0"
+    "rimraf": "^2.6.2"
   }
 }

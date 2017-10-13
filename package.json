@@ -26,13 +26,12 @@
     "url": "http://sebastian-software.de/werner"
   },
   "license": "Apache-2.0",
-  "main": "bin/preppy",
   "scripts": {
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
     "test": "npm run prepare && jest",
-    "prepare": "rimraf bin && cross-env BABEL_ENV=test babel-node src/index.js"
+    "prepare": "rimraf bin && cross-env BABEL_ENV=test babel-node src/binary.js"
   },
   "repository": {
     "type": "git",

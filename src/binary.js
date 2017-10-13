@@ -28,7 +28,8 @@ const command = meow(`
     $ preppy
 
   Options
-    --input            Input file [default = auto]
+    --input-node       Input file for NodeJS target [default = auto]
+    --input-binary     Input file for Binary target [default = auto]
     --output-folder    Configure the output folder [default = auto]
 
     -m, --sourcemap    Create a source map file during processing
@@ -36,7 +37,8 @@ const command = meow(`
     -q, --quiet        Quiet output mode [default = false]
 `, {
     default: {
-      input: null,
+      inputNode: null,
+      inputBinary: null,
       outputFolder: null,
 
       sourcemap: true,
@@ -62,17 +64,31 @@ if (verbose) {
   console.log("Flags:", command.flags)
 }
 
+// Handle special case to generate a binary file based on config in package.json
+const binaryConfig = PKG_CONFIG.bin
+let binaryOutput = null
+if (binaryConfig) {
+  for (let name in binaryConfig) {
+    binaryOutput = binaryConfig[name]
+    break
+  }
+}
+
 /* eslint-disable dot-notation */
 const outputFileMatrix = {
   // NodeJS Target
   "node-commonjs": PKG_CONFIG["main"] || null,
-  "node-esmodule": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null
+  "node-esmodule": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
+
+  // Binary Target
+  "binary-commonjs": binaryOutput || null
 }
 
 const outputFolder = command.flags.outputFolder
 if (outputFolder) {
   outputFileMatrix["node-commonjs"] = `${outputFolder}/node.commonjs.js`
   outputFileMatrix["node-esmodule"] = `${outputFolder}/node.esmodule.js`
+  outputFileMatrix["binary-commonjs"] = `${outputFolder}/binary.js`
 }
 
 // Rollups support these formats: 'amd', 'cjs', 'es', 'iife', 'umd'
@@ -86,10 +102,22 @@ const banner = getBanner(PKG_CONFIG)
 const targets = {}
 const formats = [ "esmodule", "commonjs" ]
 
-if (command.flags.input) {
-  targets.node = [ command.flags.input ]
+if (command.flags.inputNode) {
+  targets.node = [ command.flags.inputNode ]
 } else {
-  targets.node = [ "src/index.js" ]
+  targets.node = [
+    "src/index.js",
+    "src/main.js"
+  ]
+}
+
+if (command.flags.inputBinary) {
+  targets.binary = [ command.flags.inputBinary ]
+} else {
+  targets.binary = [
+    "src/binary.js",
+    "src/script.js"
+  ]
 }
 
 /* eslint-disable max-params */
@@ -111,6 +139,7 @@ try {
         {
           var outputFile = outputFileMatrix[`${targetId}-${format}`]
           if (outputFile) {
+            console.log("XXX:",targetId)
             return bundleTo({ input, targetId, currentTranspiler, format, outputFile, variantCallback })
           } else {
             return variantCallback(null)
@@ -189,7 +218,7 @@ function bundleTo({ input, targetId, currentTranspiler, format, outputFile, vari
       bundle.write({
         format: format2Rollup[format],
         name,
-        banner,
+        banner: targetId === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
         sourcemap: command.flags.sourcemap,
         file: outputFile
       })

@@ -94,7 +94,8 @@ Usage
   $ preppy
 
 Options
-  --input            Input file [default = auto]
+  --input-node       Input file for NodeJS target [default = auto]
+  --input-binary     Input file for Binary target [default = auto]
   --output-folder    Configure the output folder [default = auto]
 
   -m, --sourcemap    Create a source map file during processing

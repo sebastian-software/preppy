@@ -139,7 +139,6 @@ try {
         {
           var outputFile = outputFileMatrix[`${targetId}-${format}`]
           if (outputFile) {
-            console.log("XXX:",targetId)
             return bundleTo({ input, targetId, currentTranspiler, format, outputFile, variantCallback })
           } else {
             return variantCallback(null)

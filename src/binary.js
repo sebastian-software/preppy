@@ -23,7 +23,8 @@ var cache
 
 /* eslint-disable no-console */
 
-const command = meow(`
+const command = meow(
+  `
   Usage
     $ preppy
 
@@ -35,21 +36,35 @@ const command = meow(`
     -m, --sourcemap    Create a source map file during processing
     -v, --verbose      Verbose output mode [default = false]
     -q, --quiet        Quiet output mode [default = false]
-`, {
-    default: {
-      inputNode: null,
-      inputBinary: null,
-      outputFolder: null,
+`,
+  {
+    flags: {
+      inputNode: {
+        default: null
+      },
 
-      sourcemap: true,
-      verbose: false,
-      quiet: false
-    },
+      inputBinary: {
+        default: null
+      },
 
-    alias: {
-      m: "sourcemap",
-      v: "verbose",
-      q: "quiet"
+      outputFolder: {
+        default: null
+      },
+
+      sourcemap: {
+        alias: "m",
+        default: true
+      },
+
+      verbose: {
+        alias: "v",
+        default: false
+      },
+
+      quiet: {
+        alias: "q",
+        default: false
+      }
     }
   }
 )
@@ -100,60 +115,63 @@ const format2Rollup = {
 const name = PKG_CONFIG.name || camelCase(PKG_CONFIG.name)
 const banner = getBanner(PKG_CONFIG)
 const targets = {}
-const formats = [ "esmodule", "commonjs" ]
+const formats = ["esmodule", "commonjs"]
 
 if (command.flags.inputNode) {
-  targets.node = [ command.flags.inputNode ]
+  targets.node = [command.flags.inputNode]
 } else {
-  targets.node = [
-    "src/index.js",
-    "src/main.js"
-  ]
+  targets.node = ["src/index.js", "src/main.js"]
 }
 
 if (command.flags.inputBinary) {
-  targets.binary = [ command.flags.inputBinary ]
+  targets.binary = [command.flags.inputBinary]
 } else {
-  targets.binary = [
-    "src/binary.js",
-    "src/script.js"
-  ]
+  targets.binary = ["src/binary.js", "src/script.js"]
 }
 
 /* eslint-disable max-params */
 try {
-  eachOfSeries(targets, (envInputs, targetId, envCallback) =>
-  {
+  eachOfSeries(targets, (envInputs, targetId, envCallback) => {
     var input = lookupBest(envInputs)
-    if (input)
-    {
+    if (input) {
       if (!quiet) {
-        console.log(`Using input ${chalk.blue(input)} for target ${chalk.blue(targetId)}`)
+        console.log(
+          `Using input ${chalk.blue(input)} for target ${chalk.blue(targetId)}`
+        )
       }
 
-      eachOfSeries(formats, (format, formatIndex, formatCallback) =>
-      {
-        const transpilers = createBabelConfig()
+      eachOfSeries(
+        formats,
+        (format, formatIndex, formatCallback) => {
+          const transpilers = createBabelConfig()
 
-        eachOfSeries(transpilers, (currentTranspiler, transpilerId, variantCallback) =>
-        {
-          var outputFile = outputFileMatrix[`${targetId}-${format}`]
-          if (outputFile) {
-            return bundleTo({ input, targetId, currentTranspiler, format, outputFile, variantCallback })
-          } else {
-            return variantCallback(null)
-          }
-        }, formatCallback)
-      }, envCallback)
-    }
-    else
-    {
+          eachOfSeries(
+            transpilers,
+            (currentTranspiler, transpilerId, variantCallback) => {
+              var outputFile = outputFileMatrix[`${targetId}-${format}`]
+              if (outputFile) {
+                return bundleTo({
+                  input,
+                  targetId,
+                  currentTranspiler,
+                  format,
+                  outputFile,
+                  variantCallback
+                })
+              } else {
+                return variantCallback(null)
+              }
+            },
+            formatCallback
+          )
+        },
+        envCallback
+      )
+    } else {
       envCallback(null)
     }
   })
-}
-catch (error)
-{
+} catch (error) {
   /* eslint-disable no-process-exit */
   console.error(error)
   process.exit(1)
@@ -164,10 +182,23 @@ function lookupBest(candidates) {
   return filtered[0]
 }
 
-function bundleTo({ input, targetId, currentTranspiler, format, outputFile, variantCallback }) {
+function bundleTo({
+  input,
+  targetId,
+  currentTranspiler,
+  format,
+  outputFile,
+  variantCallback
+}) {
   if (!quiet) {
     /* eslint-disable max-len */
-    console.log(`${chalk.green(">>> Bundling")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(PKG_CONFIG.version)} defined as ${chalk.blue(format)} to ${chalk.green(outputFile)}...`)
+    console.log(
+      `${chalk.green(">>> Bundling")} ${chalk.magenta(
+        PKG_CONFIG.name
+      )}-${chalk.magenta(PKG_CONFIG.version)} defined as ${chalk.blue(
+        format
+      )} to ${chalk.green(outputFile)}...`
+    )
   }
 
   var prefix = "process.env."
@@ -180,11 +211,10 @@ function bundleTo({ input, targetId, currentTranspiler, format, outputFile, vari
   return rollup({
     input,
     cache,
-    onwarn: (error) => {
+    onwarn: error => {
       console.warn(chalk.red("  - " + error.message))
     },
-    external(dependency)
-    {
+    external(dependency) {
       if (dependency == input) {
         return false
       }
@@ -196,10 +226,9 @@ function bundleTo({ input, targetId, currentTranspiler, format, outputFile, vari
 
       return dependency.charAt(0) !== "."
     },
-    plugins:
-    [
+    plugins: [
       nodeResolve({
-        extensions: [ ".mjs", ".js", ".jsx", ".ts", ".tsx", ".json" ],
+        extensions: [".mjs", ".js", ".jsx", ".ts", ".tsx", ".json"],
         jsnext: true,
         module: true,
         main: true
@@ -213,20 +242,18 @@ function bundleTo({ input, targetId, currentTranspiler, format, outputFile, vari
       currentTranspiler
     ].filter(Boolean)
   })
-    .then((bundle) =>
+    .then(bundle =>
       bundle.write({
         format: format2Rollup[format],
         name,
-        banner: targetId === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
+        banner:
+          targetId === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
         sourcemap: command.flags.sourcemap,
         file: outputFile
       })
     )
-    .then(() =>
-      variantCallback(null)
-    )
-    .catch((error) =>
-    {
+    .then(() => variantCallback(null))
+    .catch(error => {
       console.error(error)
       variantCallback(`Error during bundling ${format}: ${error}`)
     })

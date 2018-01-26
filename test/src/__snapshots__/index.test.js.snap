@@ -4,9 +4,7 @@ exports[`Publish Test File 1`] = `
 "/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var nodentRuntime = _interopDefault(require('nodent-runtime'));
+require('nodent-runtime');
 var lodash = require('lodash');
 
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
@@ -83,7 +81,7 @@ console.log(\\"Initialized class:\\", new MyClass());
 
 exports[`Publish Test File 2`] = `
 "/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
-import nodentRuntime from 'nodent-runtime';
+import 'nodent-runtime';
 import { camelCase } from 'lodash';
 
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");

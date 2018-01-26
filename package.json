@@ -31,7 +31,7 @@
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
     "test": "npm run prepare && jest",
-    "prepare": "rimraf bin && cross-env BABEL_ENV=test babel-node src/binary.js"
+    "prepare": "rimraf bin && cross-env BABEL_ENV=test babel-node src/cli.js"
   },
   "repository": {
     "type": "git",

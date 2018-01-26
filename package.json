@@ -20,6 +20,9 @@
   "bin": {
     "preppy": "bin/preppy"
   },
+  "files": [
+    "bin/"
+  ],
   "author": {
     "name": "Sebastian Werner",
     "email": "s.werner@sebastian-software.de",

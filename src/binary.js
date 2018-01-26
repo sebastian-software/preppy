@@ -126,7 +126,7 @@ if (command.flags.inputNode) {
 if (command.flags.inputBinary) {
   targets.binary = [command.flags.inputBinary]
 } else {
-  targets.binary = ["src/binary.js", "src/script.js"]
+  targets.binary = ["src/binary.js", "src/script.js", "src/cli.js"]
 }
 
 /* eslint-disable max-params */

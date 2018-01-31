@@ -137,9 +137,7 @@ try {
     const input = lookupBest(envInputs)
     if (input) {
       if (!quiet) {
-        console.log(
-          `Using input ${chalk.blue(input)} for target ${chalk.blue(targetId)}`
-        )
+        console.log(`Using input ${chalk.blue(input)} for target ${chalk.blue(targetId)}`)
       }
 
       eachOfSeries(
@@ -195,11 +193,9 @@ function bundleTo({
   if (!quiet) {
     /* eslint-disable max-len */
     console.log(
-      `${chalk.green(">>> Bundling")} ${chalk.magenta(
-        PKG_CONFIG.name
-      )}-${chalk.magenta(PKG_CONFIG.version)} defined as ${chalk.blue(
-        format
-      )} to ${chalk.green(outputFile)}...`
+      `${chalk.green(">>> Bundling")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(
+        PKG_CONFIG.version
+      )} defined as ${chalk.blue(format)} to ${chalk.green(outputFile)}...`
     )
   }
 
@@ -214,7 +210,7 @@ function bundleTo({
     input,
     cache,
     onwarn: (error) => {
-      console.warn(chalk.red(`  - ${  error.message}`))
+      console.warn(chalk.red(`  - ${error.message}`))
     },
     external(dependency) {
       if (dependency === input) {
@@ -248,8 +244,7 @@ function bundleTo({
       bundle.write({
         format: format2Rollup[format],
         name,
-        banner:
-          targetId === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
+        banner: targetId === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
         sourcemap: command.flags.sourcemap,
         file: outputFile
       })

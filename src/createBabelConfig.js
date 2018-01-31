@@ -8,10 +8,7 @@ export default function createBabelConfig() {
 
       // Do not transpile external code
       // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
-      exclude: [
-        "node_modules/**",
-        "**/*.json"
-      ]
+      exclude: [ "node_modules/**", "**/*.json" ]
     })
   }
 }

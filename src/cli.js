@@ -19,7 +19,7 @@ import getBanner from "./getBanner"
 const ROOT = getRoot()
 const PKG_CONFIG = require(resolve(ROOT, "package.json"))
 
-var cache
+let cache
 
 /* eslint-disable no-console */
 
@@ -83,7 +83,7 @@ if (verbose) {
 const binaryConfig = PKG_CONFIG.bin
 let binaryOutput = null
 if (binaryConfig) {
-  for (let name in binaryConfig) {
+  for (const name in binaryConfig) {
     binaryOutput = binaryConfig[name]
     break
   }
@@ -115,24 +115,24 @@ const format2Rollup = {
 const name = PKG_CONFIG.name || camelCase(PKG_CONFIG.name)
 const banner = getBanner(PKG_CONFIG)
 const targets = {}
-const formats = ["esmodule", "commonjs"]
+const formats = [ "esmodule", "commonjs" ]
 
 if (command.flags.inputNode) {
-  targets.node = [command.flags.inputNode]
+  targets.node = [ command.flags.inputNode ]
 } else {
-  targets.node = ["src/index.js", "src/main.js"]
+  targets.node = [ "src/index.js", "src/main.js" ]
 }
 
 if (command.flags.inputBinary) {
-  targets.binary = [command.flags.inputBinary]
+  targets.binary = [ command.flags.inputBinary ]
 } else {
-  targets.binary = ["src/binary.js", "src/script.js", "src/cli.js"]
+  targets.binary = [ "src/binary.js", "src/script.js", "src/cli.js" ]
 }
 
 /* eslint-disable max-params */
 try {
   eachOfSeries(targets, (envInputs, targetId, envCallback) => {
-    var input = lookupBest(envInputs)
+    const input = lookupBest(envInputs)
     if (input) {
       if (!quiet) {
         console.log(
@@ -148,7 +148,7 @@ try {
           eachOfSeries(
             transpilers,
             (currentTranspiler, transpilerId, variantCallback) => {
-              var outputFile = outputFileMatrix[`${targetId}-${format}`]
+              const outputFile = outputFileMatrix[`${targetId}-${format}`]
               if (outputFile) {
                 return bundleTo({
                   input,
@@ -178,7 +178,7 @@ try {
 }
 
 function lookupBest(candidates) {
-  var filtered = candidates.filter(fileExists.sync)
+  const filtered = candidates.filter(fileExists.sync)
   return filtered[0]
 }
 
@@ -201,8 +201,8 @@ function bundleTo({
     )
   }
 
-  var prefix = "process.env."
-  var variables = {
+  const prefix = "process.env."
+  const variables = {
     [`${prefix}NAME`]: JSON.stringify(PKG_CONFIG.name),
     [`${prefix}VERSION`]: JSON.stringify(PKG_CONFIG.version),
     [`${prefix}TARGET`]: JSON.stringify(targetId)
@@ -211,8 +211,8 @@ function bundleTo({
   return rollup({
     input,
     cache,
-    onwarn: error => {
-      console.warn(chalk.red("  - " + error.message))
+    onwarn: (error) => {
+      console.warn(chalk.red(`  - ${  error.message}`))
     },
     external(dependency) {
       if (dependency == input) {
@@ -220,7 +220,7 @@ function bundleTo({
       }
 
       if (isAbsolute(dependency)) {
-        var relativePath = relative(ROOT, dependency)
+        const relativePath = relative(ROOT, dependency)
         return Boolean(/node_modules/.exec(relativePath))
       }
 
@@ -228,7 +228,7 @@ function bundleTo({
     },
     plugins: [
       nodeResolve({
-        extensions: [".mjs", ".js", ".jsx", ".ts", ".tsx", ".json"],
+        extensions: [ ".mjs", ".js", ".jsx", ".ts", ".tsx", ".json" ],
         jsnext: true,
         module: true,
         main: true
@@ -242,7 +242,7 @@ function bundleTo({
       currentTranspiler
     ].filter(Boolean)
   })
-    .then(bundle =>
+    .then((bundle) =>
       bundle.write({
         format: format2Rollup[format],
         name,
@@ -253,7 +253,7 @@ function bundleTo({
       })
     )
     .then(() => variantCallback(null))
-    .catch(error => {
+    .catch((error) => {
       console.error(error)
       variantCallback(`Error during bundling ${format}: ${error}`)
     })

@@ -1,5 +1,5 @@
 export default function getBanner(pkg) {
-  var banner = `/*! ${pkg.name} v${pkg.version}`
+  let banner = `/*! ${pkg.name} v${pkg.version}`
 
   if (pkg.author) {
     if (typeof pkg.author === "object") {

@@ -2,9 +2,13 @@
 /* eslint-disable func-style */
 /* eslint-disable no-empty-function */
 /* eslint-disable lodash/prefer-noop */
+/* eslint-disable tree-shaking/no-side-effects-in-initialization */
 
 import { camelCase } from "lodash"
-console.log("CherryPick Import Lodash:", camelCase("hello world") === "helloWorld")
+console.log(
+  "CherryPick Import Lodash:",
+  camelCase("hello world") === "helloWorld"
+)
 
 console.log("Package", process.env.NAME)
 console.log("Target", process.env.TARGET)
@@ -20,18 +24,21 @@ new Promise((resolve, reject) => {
 const CONSTANT = 123
 console.log("Constant:", CONSTANT)
 
-var myArray = [ 1, 2, 3 ]
-console.log("Supports Array.includes?:", myArray.includes && myArray.includes(2))
+var myArray = [1, 2, 3]
+console.log(
+  "Supports Array.includes?:",
+  myArray.includes && myArray.includes(2)
+)
 
-var someArrayProducer = () => [ 4, 5 ]
-var mergedArray = [ 1, 2, 3, ...someArrayProducer(), 6 ]
+var someArrayProducer = () => [4, 5]
+var mergedArray = [1, 2, 3, ...someArrayProducer(), 6]
 console.log("Supports Array merging:", mergedArray.length === 6)
 
 var mySet = new Set(myArray)
-console.log("Supports Set:", mySet.add(4));
+console.log("Supports Set:", mySet.add(4))
 
-(function(supportsDefault = true) {
-console.log("Supports default parameters:", supportsDefault)
+;(function(supportsDefault = true) {
+  console.log("Supports default parameters:", supportsDefault)
 })()
 
 /* eslint-disable no-shadow */
@@ -58,7 +65,7 @@ class MyClass {
   }
 
   boundFunction = () => {
-    return this.instanceProperty;
+    return this.instanceProperty
   }
 }
 

@@ -31,9 +31,7 @@ var mergedArray = [1, 2, 3, ...someArrayProducer(), 6];
 console.log(\\"Supports Array merging:\\", mergedArray.length === 6);
 
 var mySet = new Set(myArray);
-console.log(\\"Supports Set:\\", mySet.add(4));
-
-(function (supportsDefault = true) {
+console.log(\\"Supports Set:\\", mySet.add(4));(function (supportsDefault = true) {
   console.log(\\"Supports default parameters:\\", supportsDefault);
 })();
 
@@ -108,9 +106,7 @@ var mergedArray = [1, 2, 3, ...someArrayProducer(), 6];
 console.log(\\"Supports Array merging:\\", mergedArray.length === 6);
 
 var mySet = new Set(myArray);
-console.log(\\"Supports Set:\\", mySet.add(4));
-
-(function (supportsDefault = true) {
+console.log(\\"Supports Set:\\", mySet.add(4));(function (supportsDefault = true) {
   console.log(\\"Supports default parameters:\\", supportsDefault);
 })();
 

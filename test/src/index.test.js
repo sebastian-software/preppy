@@ -15,7 +15,7 @@ test("Publish Test File", async() => {
   await lazyDelete("./test/lib")
 
   process.env.BABEL_ENV = "development"
-  const { stdout, stderr } = await lazyExec(
+  await lazyExec(
     "node ./bin/preppy --input-node ./test/src/index.js --output-folder ./test/lib"
   )
 

@@ -1,3 +1,6 @@
+/* eslint-disable immutable/no-mutation */
+/* eslint-disable tree-shaking/no-side-effects-in-initialization */
+
 import { resolve, relative, isAbsolute } from "path"
 import { eachOfSeries } from "async"
 import { camelCase } from "lodash"
@@ -73,7 +76,6 @@ process.env.BABEL_ENV = "development"
 
 const verbose = command.flags.verbose
 const quiet = command.flags.quiet
-const targetUnstable = command.flags.targetUnstable
 
 if (verbose) {
   console.log("Flags:", command.flags)
@@ -215,7 +217,7 @@ function bundleTo({
       console.warn(chalk.red(`  - ${  error.message}`))
     },
     external(dependency) {
-      if (dependency == input) {
+      if (dependency === input) {
         return false
       }
 

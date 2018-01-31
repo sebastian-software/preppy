@@ -30,6 +30,9 @@
   },
   "license": "Apache-2.0",
   "scripts": {
+    "lint:js": "eslint --ignore-path .gitignore .",
+    "fix:js": "eslint --ignore-path .gitignore --fix .",
+    "format:js": "prettier --ignore-path .gitignore --write '**/*.{js,mjs}' && npm run fix:js",
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",

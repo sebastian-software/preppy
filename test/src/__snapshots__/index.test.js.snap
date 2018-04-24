@@ -68,7 +68,7 @@ function returnLate() {
     }).then(function ($await_1) {
       return $return();
     }.$asyncbind(this, $error), $error);
-  }.$asyncbind(this));
+  });
 }
 console.log(\\"Test Async:\\", returnLate() instanceof Promise);
 
@@ -143,7 +143,7 @@ function returnLate() {
     }).then(function ($await_1) {
       return $return();
     }.$asyncbind(this, $error), $error);
-  }.$asyncbind(this));
+  });
 }
 console.log(\\"Test Async:\\", returnLate() instanceof Promise);
 

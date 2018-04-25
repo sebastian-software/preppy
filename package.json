@@ -46,9 +46,6 @@
   "dependencies": {
     "app-root-dir": "^1.0.2",
     "async": "^2.6.0",
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-runtime": "^6.26.0",
     "chalk": "^2.4.0",
     "file-exists": "^5.0.1",
     "lodash": "^4.17.5",
@@ -62,6 +59,9 @@
     "rollup-plugin-yaml": "^1.1.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-runtime": "^6.26.0",
     "babel-cli": "^6.26.0",
     "babel-jest": "^22.4.3",
     "babel-plugin-transform-class-properties": "^6.24.1",

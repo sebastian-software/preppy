@@ -14,7 +14,9 @@
 [travis]: https://travis-ci.org/sebastian-software/preppy
 [appveyor]: https://ci.appveyor.com/project/swernerx/preppy/branch/master
 
-*Preppy* uses your local Babel configuration to transpile code into libraries for external usage.
+To keep things simple and reduce to number of dependencies, *Preppy* uses your local Babel configuration to transpile your code. You have to make sure that all required babel mechanic, presets and loaders are installed locally to your project.
+
+Note: Pretty v4 is based on Babel v7 which is still in Beta. We need to move the ecosystem forward, that's the reason why Preppy is already been built on that version.
 
 
 ## Output Targets
@@ -37,7 +39,7 @@ Basic Example:
 
 ## Binary Output
 
-Additionally `prepublish` is capable in generating for binary targets.
+Additionally `preppy` is capable in generating for binary targets.
 
 This generates a `mypackage` binary which is generated from the matching source file.
 

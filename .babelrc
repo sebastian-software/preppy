@@ -1,25 +1,24 @@
 {
   "comments": false,
   "sourceMaps": true,
-
   "env": {
     "development": {
       "plugins": [
         [
-          "transform-object-rest-spread",
+          "@babel/plugin-proposal-object-rest-spread",
           {
             "useBuiltIns": true
           }
         ],
-        "transform-class-properties",
+        "@babel/plugin-proposal-class-properties",
         [
-          "fast-async",
+          "module:fast-async",
           {
             "useRuntimeModule": true
           }
         ],
         [
-          "transform-runtime",
+          "@babel/plugin-transform-runtime",
           {
             "helpers": true,
             "regenerator": false,
@@ -29,51 +28,55 @@
           }
         ]
       ],
-
       "presets": [
-        [ "env", {
-          "exclude": [
-            "transform-regenerator",
-            "transform-async-to-generator"
-          ],
-          "useBuiltIns": true,
-          "loose": true,
-          "modules": false,
-          "targets": {
-            "node": "6.9.0"
+        [
+          "@babel/env",
+          {
+            "exclude": [
+              "transform-regenerator",
+              "transform-async-to-generator"
+            ],
+            "useBuiltIns": "usage",
+            "loose": true,
+            "modules": false,
+            "targets": {
+              "node": "6.9.0"
+            }
           }
-        }]
+        ]
       ]
     },
     "test": {
       "plugins": [
         [
-          "transform-object-rest-spread",
+          "@babel/plugin-proposal-object-rest-spread",
           {
             "useBuiltIns": true
           }
         ],
         [
-          "fast-async",
+          "module:fast-async",
           {
             "useRuntimeModule": true
           }
         ]
       ],
-
       "presets": [
-        [ "env", {
-          "exclude": [
-            "transform-regenerator",
-            "transform-async-to-generator"
-          ],
-          "useBuiltIns": true,
-          "loose": true,
-          "modules": "commonjs",
-          "targets": {
-            "node": "current"
+        [
+          "@babel/env",
+          {
+            "exclude": [
+              "transform-regenerator",
+              "transform-async-to-generator"
+            ],
+            "useBuiltIns": "usage",
+            "loose": true,
+            "modules": "commonjs",
+            "targets": {
+              "node": "current"
+            }
           }
-        }]
+        ]
       ]
     }
   }

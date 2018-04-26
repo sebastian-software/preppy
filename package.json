@@ -1,7 +1,7 @@
 {
   "name": "preppy",
   "version": "3.4.2",
-  "description": "A Simple and lightweight tool for preparing the publish of NPM packages.",
+  "description": "A simple and lightweight tool for preparing the publish of NPM packages.",
   "keywords": [
     "npm",
     "publish",

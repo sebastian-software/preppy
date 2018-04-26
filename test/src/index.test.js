@@ -11,7 +11,7 @@ const lazyExec = pify(exec)
 const lazyRead = pify(readFile)
 const lazyDelete = pify(rimraf)
 
-test("Publish Test File", async() => {
+test("Publish Test File", async () => {
   await lazyDelete("./test/lib")
 
   process.env.BABEL_ENV = "development"

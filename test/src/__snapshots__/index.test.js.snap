@@ -6,6 +6,7 @@ exports[`Publish Test File 1`] = `
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var _defineProperty = _interopDefault(require('@babel/runtime/helpers/builtin/es6/defineProperty'));
 var _objectSpread = _interopDefault(require('@babel/runtime/helpers/builtin/es6/objectSpread'));
 var lodash = require('lodash');
 
@@ -53,12 +54,8 @@ console.log(\\"Destructed:\\", destructed);
 
 class MyClass {
   constructor() {
-    Object.defineProperty(this, \\"boundFunction\\", {
-      configurable: true,
-      enumerable: true,
-      writable: true,
-      value: () => this.instanceProperty
-    });
+    _defineProperty(this, \\"boundFunction\\", () => this.instanceProperty);
+
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;
@@ -92,6 +89,7 @@ console.log(\\"Initialized class:\\", new MyClass());
 
 exports[`Publish Test File 2`] = `
 "/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
+import _defineProperty from '@babel/runtime/helpers/builtin/es6/defineProperty';
 import _objectSpread from '@babel/runtime/helpers/builtin/es6/objectSpread';
 import { camelCase } from 'lodash';
 
@@ -139,12 +137,8 @@ console.log(\\"Destructed:\\", destructed);
 
 class MyClass {
   constructor() {
-    Object.defineProperty(this, \\"boundFunction\\", {
-      configurable: true,
-      enumerable: true,
-      writable: true,
-      value: () => this.instanceProperty
-    });
+    _defineProperty(this, \\"boundFunction\\", () => this.instanceProperty);
+
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;

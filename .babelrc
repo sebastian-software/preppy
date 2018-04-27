@@ -5,19 +5,6 @@
     "development": {
       "plugins": [
         [
-          "@babel/plugin-proposal-object-rest-spread",
-          {
-            "useBuiltIns": true
-          }
-        ],
-        "@babel/plugin-proposal-class-properties",
-        [
-          "module:fast-async",
-          {
-            "useRuntimeModule": true
-          }
-        ],
-        [
           "@babel/plugin-transform-runtime",
           {
             "helpers": true,
@@ -47,20 +34,6 @@
       ]
     },
     "test": {
-      "plugins": [
-        [
-          "@babel/plugin-proposal-object-rest-spread",
-          {
-            "useBuiltIns": true
-          }
-        ],
-        [
-          "module:fast-async",
-          {
-            "useRuntimeModule": true
-          }
-        ]
-      ],
       "presets": [
         [
           "@babel/env",

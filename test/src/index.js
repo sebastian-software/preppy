@@ -26,10 +26,6 @@ console.log("Constant:", CONSTANT)
 var myArray = [ 1, 2, 3 ]
 console.log("Supports Array.includes?:", myArray.includes && myArray.includes(2))
 
-var someArrayProducer = () => [ 4, 5 ]
-var mergedArray = [ 1, 2, 3, ...someArrayProducer(), 6 ]
-console.log("Supports Array merging:", mergedArray.length === 6)
-
 var mySet = new Set(myArray)
 console.log("Supports Set:", mySet.add(4))
 ;(function(supportsDefault = true) {
@@ -58,17 +54,6 @@ class MyClass {
   helper() {
     console.log("Called helper")
   }
-
-  boundFunction = () => {
-    return this.instanceProperty
-  }
 }
-
-async function returnLate() {
-  await new Promise((resolve, reject) => {
-    setTimeout(resolve, 300)
-  })
-}
-console.log("Test Async:", returnLate() instanceof Promise)
 
 console.log("Initialized class:", new MyClass())

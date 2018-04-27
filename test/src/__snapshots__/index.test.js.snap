@@ -4,10 +4,6 @@ exports[`Publish Test File 1`] = `
 "/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var _defineProperty = _interopDefault(require('@babel/runtime/helpers/builtin/es6/defineProperty'));
-var _objectSpread = _interopDefault(require('@babel/runtime/helpers/builtin/es6/objectSpread'));
 var lodash = require('lodash');
 
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
@@ -23,11 +19,6 @@ const CONSTANT = 123;
 console.log(\\"Constant:\\", CONSTANT);
 var myArray = [1, 2, 3];
 console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
-
-var someArrayProducer = () => [4, 5];
-
-var mergedArray = [1, 2, 3, ...someArrayProducer(), 6];
-console.log(\\"Supports Array merging:\\", mergedArray.length === 6);
 var mySet = new Set(myArray);
 console.log(\\"Supports Set:\\", mySet.add(4));
 
@@ -45,17 +36,13 @@ var source = {
   first: 1,
   second: 2
 };
-
-var destructed = _objectSpread({
+var destructed = Object.assign({
   third: 3
 }, source);
-
 console.log(\\"Destructed:\\", destructed);
 
 class MyClass {
   constructor() {
-    _defineProperty(this, \\"boundFunction\\", () => this.instanceProperty);
-
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;
@@ -67,21 +54,6 @@ class MyClass {
 
 }
 
-function returnLate() {
-  return new Promise(function ($return, $error) {
-    return Promise.resolve(new Promise((resolve, reject) => {
-      setTimeout(resolve, 300);
-    })).then(function ($await_1) {
-      try {
-        return $return();
-      } catch ($boundEx) {
-        return $error($boundEx);
-      }
-    }, $error);
-  });
-}
-
-console.log(\\"Test Async:\\", returnLate() instanceof Promise);
 console.log(\\"Initialized class:\\", new MyClass());
 //# sourceMappingURL=node.commonjs.js.map
 "
@@ -89,8 +61,6 @@ console.log(\\"Initialized class:\\", new MyClass());
 
 exports[`Publish Test File 2`] = `
 "/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
-import _defineProperty from '@babel/runtime/helpers/builtin/es6/defineProperty';
-import _objectSpread from '@babel/runtime/helpers/builtin/es6/objectSpread';
 import { camelCase } from 'lodash';
 
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
@@ -106,11 +76,6 @@ const CONSTANT = 123;
 console.log(\\"Constant:\\", CONSTANT);
 var myArray = [1, 2, 3];
 console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
-
-var someArrayProducer = () => [4, 5];
-
-var mergedArray = [1, 2, 3, ...someArrayProducer(), 6];
-console.log(\\"Supports Array merging:\\", mergedArray.length === 6);
 var mySet = new Set(myArray);
 console.log(\\"Supports Set:\\", mySet.add(4));
 
@@ -128,17 +93,13 @@ var source = {
   first: 1,
   second: 2
 };
-
-var destructed = _objectSpread({
+var destructed = Object.assign({
   third: 3
 }, source);
-
 console.log(\\"Destructed:\\", destructed);
 
 class MyClass {
   constructor() {
-    _defineProperty(this, \\"boundFunction\\", () => this.instanceProperty);
-
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;
@@ -150,21 +111,6 @@ class MyClass {
 
 }
 
-function returnLate() {
-  return new Promise(function ($return, $error) {
-    return Promise.resolve(new Promise((resolve, reject) => {
-      setTimeout(resolve, 300);
-    })).then(function ($await_1) {
-      try {
-        return $return();
-      } catch ($boundEx) {
-        return $error($boundEx);
-      }
-    }, $error);
-  });
-}
-
-console.log(\\"Test Async:\\", returnLate() instanceof Promise);
 console.log(\\"Initialized class:\\", new MyClass());
 //# sourceMappingURL=node.esmodule.js.map
 "

@@ -73,7 +73,7 @@
     "cross-env": "^5.1.4",
     "eslint-config-readable": "^1.11.1",
     "fast-async": "^7.0.5",
-    "flow-bin": "^0.70.0",
+    "flow-bin": "^0.71.0",
     "jest": "^22.4.3",
     "nodent-runtime": "^3.2.1",
     "pify": "^3.0.0",

@@ -10,8 +10,7 @@
             "helpers": true,
             "regenerator": false,
             "polyfill": false,
-            "useBuiltIns": true,
-            "useESModules": true
+            "useBuiltIns": true
           }
         ]
       ],

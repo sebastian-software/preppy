@@ -4,32 +4,43 @@ exports[`Publish Test File 1`] = `
 "/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var _inheritsLoose = _interopDefault(require('@babel/runtime/helpers/builtin/es6/inheritsLoose'));
+require('core-js/modules/es6.object.assign');
+require('core-js/modules/es6.set');
+require('core-js/modules/es7.array.includes');
+require('core-js/modules/es6.promise');
 var lodash = require('lodash');
 
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Package\\", \\"preppy\\");
 console.log(\\"Target\\", \\"node\\");
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
-new Promise((resolve, reject) => {
+new Promise(function (resolve, reject) {
   resolve(\\"resolved\\");
-}).then(first => {
+}).then(function (first) {
   console.log(\\"Promise:\\", first);
 });
-const CONSTANT = 123;
+var CONSTANT = 123;
 console.log(\\"Constant:\\", CONSTANT);
 var myArray = [1, 2, 3];
 console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
 var mySet = new Set(myArray);
 console.log(\\"Supports Set:\\", mySet.add(4));
 
-(function (supportsDefault = true) {
+(function (supportsDefault) {
+  if (supportsDefault === void 0) {
+    supportsDefault = true;
+  }
+
   console.log(\\"Supports default parameters:\\", supportsDefault);
 })();
 
-let testVariable = \\"outer\\";
+var testVariable = \\"outer\\";
 {
-  let testVariable = \\"inner\\";
-  console.log(\\"X Value from inner scope:\\", testVariable);
+  var _testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", _testVariable);
 }
 console.log(\\"X Value from outer scope:\\", testVariable);
 var source = {
@@ -41,18 +52,31 @@ var destructed = Object.assign({
 }, source);
 console.log(\\"Destructed:\\", destructed);
 
-class MyClass {
-  constructor() {
+var MyClass = function () {
+  function MyClass() {
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;
   }
 
-  helper() {
+  var _proto = MyClass.prototype;
+
+  _proto.helper = function helper() {
     console.log(\\"Called helper\\");
+  };
+
+  return MyClass;
+}();
+
+var SecondClass = function (_MyClass) {
+  function SecondClass() {
+    return _MyClass.call(this, 100) || this;
   }
 
-}
+  _inheritsLoose(SecondClass, _MyClass);
+
+  return SecondClass;
+}(MyClass());
 
 console.log(\\"Initialized class:\\", new MyClass());
 //# sourceMappingURL=node.commonjs.js.map
@@ -61,32 +85,41 @@ console.log(\\"Initialized class:\\", new MyClass());
 
 exports[`Publish Test File 2`] = `
 "/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
+import _inheritsLoose from '@babel/runtime/helpers/builtin/es6/inheritsLoose';
+import 'core-js/modules/es6.object.assign';
+import 'core-js/modules/es6.set';
+import 'core-js/modules/es7.array.includes';
+import 'core-js/modules/es6.promise';
 import { camelCase } from 'lodash';
 
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Package\\", \\"preppy\\");
 console.log(\\"Target\\", \\"node\\");
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
-new Promise((resolve, reject) => {
+new Promise(function (resolve, reject) {
   resolve(\\"resolved\\");
-}).then(first => {
+}).then(function (first) {
   console.log(\\"Promise:\\", first);
 });
-const CONSTANT = 123;
+var CONSTANT = 123;
 console.log(\\"Constant:\\", CONSTANT);
 var myArray = [1, 2, 3];
 console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
 var mySet = new Set(myArray);
 console.log(\\"Supports Set:\\", mySet.add(4));
 
-(function (supportsDefault = true) {
+(function (supportsDefault) {
+  if (supportsDefault === void 0) {
+    supportsDefault = true;
+  }
+
   console.log(\\"Supports default parameters:\\", supportsDefault);
 })();
 
-let testVariable = \\"outer\\";
+var testVariable = \\"outer\\";
 {
-  let testVariable = \\"inner\\";
-  console.log(\\"X Value from inner scope:\\", testVariable);
+  var _testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", _testVariable);
 }
 console.log(\\"X Value from outer scope:\\", testVariable);
 var source = {
@@ -98,18 +131,31 @@ var destructed = Object.assign({
 }, source);
 console.log(\\"Destructed:\\", destructed);
 
-class MyClass {
-  constructor() {
+var MyClass = function () {
+  function MyClass() {
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;
   }
 
-  helper() {
+  var _proto = MyClass.prototype;
+
+  _proto.helper = function helper() {
     console.log(\\"Called helper\\");
+  };
+
+  return MyClass;
+}();
+
+var SecondClass = function (_MyClass) {
+  function SecondClass() {
+    return _MyClass.call(this, 100) || this;
   }
 
-}
+  _inheritsLoose(SecondClass, _MyClass);
+
+  return SecondClass;
+}(MyClass());
 
 console.log(\\"Initialized class:\\", new MyClass());
 //# sourceMappingURL=node.esmodule.js.map

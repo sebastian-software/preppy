@@ -56,4 +56,10 @@ class MyClass {
   }
 }
 
+class SecondClass extends MyClass() {
+  constructor() {
+    super(100)
+  }
+}
+
 console.log("Initialized class:", new MyClass())

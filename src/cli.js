@@ -213,6 +213,12 @@ function bundleTo({
       console.warn(chalk.red(`  - ${error.message}`))
     },
     external(dependency) {
+      // Special handling for zero marker as mentioned in Babel Plugin
+      // https://github.com/rollup/rollup-plugin-node-resolve/blob/313a3e32f432f9eb18cc4c231cc7aac6df317a51/src/index.js#L74
+      if (/\0/.test(dependency)) {
+        return false
+      }
+
       if (dependency === input) {
         return false
       }

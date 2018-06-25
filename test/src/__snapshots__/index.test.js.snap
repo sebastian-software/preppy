@@ -8,6 +8,8 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var _inheritsLoose = _interopDefault(require('@babel/runtime/helpers/builtin/inheritsLoose'));
 require('core-js/modules/es6.object.assign');
+require('core-js/modules/web.dom.iterable');
+require('core-js/modules/es6.array.iterator');
 require('core-js/modules/es6.set');
 require('core-js/modules/es7.array.includes');
 require('core-js/modules/es6.promise');
@@ -69,11 +71,11 @@ var MyClass = function () {
 }();
 
 var SecondClass = function (_MyClass) {
+  _inheritsLoose(SecondClass, _MyClass);
+
   function SecondClass() {
     return _MyClass.call(this, 100) || this;
   }
-
-  _inheritsLoose(SecondClass, _MyClass);
 
   return SecondClass;
 }(MyClass());
@@ -87,6 +89,8 @@ exports[`Publish Test File 2`] = `
 "/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
 import _inheritsLoose from '@babel/runtime/helpers/builtin/inheritsLoose';
 import 'core-js/modules/es6.object.assign';
+import 'core-js/modules/web.dom.iterable';
+import 'core-js/modules/es6.array.iterator';
 import 'core-js/modules/es6.set';
 import 'core-js/modules/es7.array.includes';
 import 'core-js/modules/es6.promise';
@@ -148,11 +152,11 @@ var MyClass = function () {
 }();
 
 var SecondClass = function (_MyClass) {
+  _inheritsLoose(SecondClass, _MyClass);
+
   function SecondClass() {
     return _MyClass.call(this, 100) || this;
   }
-
-  _inheritsLoose(SecondClass, _MyClass);
 
   return SecondClass;
 }(MyClass());

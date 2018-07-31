@@ -1,19 +1,19 @@
 /* eslint-disable immutable/no-mutation */
 /* eslint-disable tree-shaking/no-side-effects-in-initialization */
 
-import { resolve, isAbsolute } from "path"
-import { eachOfSeries } from "async"
-import { camelCase } from "lodash"
+import { isAbsolute, resolve } from "path"
+import chalk from "chalk"
 import fileExists from "file-exists"
 import meow from "meow"
-import chalk from "chalk"
+import { camelCase } from "lodash"
+import { eachOfSeries } from "async"
 import { get as getRoot } from "app-root-dir"
-
 import { rollup } from "rollup"
-import commonjs from "rollup-plugin-commonjs"
+
+import cjsPlugin from "rollup-plugin-commonjs"
 import jsonPlugin from "rollup-plugin-json"
-import yamlPlugin from "rollup-plugin-yaml"
 import replacePlugin from "rollup-plugin-replace"
+import yamlPlugin from "rollup-plugin-yaml"
 
 import createBabelConfig from "./createBabelConfig"
 import getBanner from "./getBanner"
@@ -225,7 +225,7 @@ function bundleTo({
     },
     plugins: [
       replacePlugin(variables),
-      commonjs({
+      cjsPlugin({
         include: "node_modules/**"
       }),
       yamlPlugin(),

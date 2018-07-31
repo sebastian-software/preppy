@@ -1,7 +1,7 @@
 /* eslint-disable immutable/no-mutation */
 /* eslint-disable tree-shaking/no-side-effects-in-initialization */
 
-import { resolve, relative, isAbsolute } from "path"
+import { resolve, isAbsolute } from "path"
 import { eachOfSeries } from "async"
 import { camelCase } from "lodash"
 import fileExists from "file-exists"
@@ -10,7 +10,6 @@ import chalk from "chalk"
 import { get as getRoot } from "app-root-dir"
 
 import { rollup } from "rollup"
-import nodeResolve from "rollup-plugin-node-resolve"
 import commonjs from "rollup-plugin-commonjs"
 import jsonPlugin from "rollup-plugin-json"
 import yamlPlugin from "rollup-plugin-yaml"
@@ -182,6 +181,10 @@ function lookupBest(candidates) {
   return filtered[0]
 }
 
+function isRelative(dependency) {
+  return (/^\./).exec(dependency)
+}
+
 function bundleTo({
   input,
   targetId,
@@ -213,30 +216,14 @@ function bundleTo({
       console.warn(chalk.red(`  - ${error.message}`))
     },
     external(dependency) {
-      // Special handling for zero marker as mentioned in Babel Plugin
-      // https://github.com/rollup/rollup-plugin-node-resolve/blob/313a3e32f432f9eb18cc4c231cc7aac6df317a51/src/index.js#L74
-      if (/\0/.test(dependency)) {
-        return false
-      }
-
-      if (dependency === input) {
-        return false
-      }
-
-      if (isAbsolute(dependency)) {
-        const relativePath = relative(ROOT, dependency)
-        return Boolean(/node_modules/.exec(relativePath))
-      }
-
-      return dependency.charAt(0) !== "."
+      // Very simple externalization:
+      // We exclude all files from NodeJS resolve basically which are not relative to current file.
+      // We also bundle absolute paths, these are just an intermediate step in rollup resolving files and
+      // as we do not support resolving from node_modules (we never bundle these) we only hit this code
+      // path for originally local dependencies.
+      return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
     },
     plugins: [
-      nodeResolve({
-        extensions: [ ".mjs", ".js", ".jsx", ".ts", ".tsx", ".json" ],
-        jsnext: true,
-        module: true,
-        main: true
-      }),
       replacePlugin(variables),
       commonjs({
         include: "node_modules/**"

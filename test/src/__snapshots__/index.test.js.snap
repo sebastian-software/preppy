@@ -6,7 +6,7 @@ exports[`Publish Test File 1`] = `
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var _inheritsLoose = _interopDefault(require('@babel/runtime/helpers/builtin/inheritsLoose'));
+var _inheritsLoose = _interopDefault(require('@babel/runtime/helpers/inheritsLoose'));
 require('core-js/modules/es6.object.assign');
 require('core-js/modules/web.dom.iterable');
 require('core-js/modules/es6.array.iterator');
@@ -87,7 +87,7 @@ console.log(\\"Initialized class:\\", new MyClass());
 
 exports[`Publish Test File 2`] = `
 "/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
-import _inheritsLoose from '@babel/runtime/helpers/builtin/inheritsLoose';
+import _inheritsLoose from '@babel/runtime/helpers/inheritsLoose';
 import 'core-js/modules/es6.object.assign';
 import 'core-js/modules/web.dom.iterable';
 import 'core-js/modules/es6.array.iterator';

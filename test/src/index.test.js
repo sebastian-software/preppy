@@ -14,9 +14,6 @@ const lazyDelete = pify(rimraf)
 test("Publish Test File", async () => {
   await lazyDelete("./test/lib")
 
-  process.env.BABEL_ENV = "development"
-  process.env.BROWSERSLIST_ENV = "test"
-
   await lazyExec(
     "node ./bin/preppy --input-node ./test/src/index.js --output-folder ./test/lib"
   )

@@ -23,9 +23,7 @@
             "useBuiltIns": "usage",
             "loose": true,
             "modules": false,
-            "targets": {
-              "node": "6.9.0"
-            }
+            "debug": true
           }
         ]
       ]
@@ -44,10 +42,7 @@
             ],
             "useBuiltIns": "usage",
             "loose": true,
-            "modules": "commonjs",
-            "targets": {
-              "node": "current"
-            }
+            "modules": "commonjs"
           }
         ]
       ]

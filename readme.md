@@ -112,6 +112,6 @@ Options
 
 ## Copyright
 
-<img src="https://cdn.rawgit.com/sebastian-software/sebastian-software-brand/3d93746f/sebastiansoftware-en.svg" alt="Sebastian Software GmbH Logo" width="250" height="200"/>
+<img src="https://cdn.rawgit.com/sebastian-software/sebastian-software-brand/1c32115c/sebastiansoftware-en.svg" alt="Logo of Sebastian Software GmbH, Mainz, Germany" width="460" height="160"/>
 
 Copyright 2016-2018<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)

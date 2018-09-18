@@ -2,3 +2,6 @@
 ie 11
 firefox 40
 safari 10
+
+[production]
+node 6.0

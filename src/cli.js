@@ -12,6 +12,7 @@ import cjsPlugin from "rollup-plugin-commonjs"
 import jsonPlugin from "rollup-plugin-json"
 import replacePlugin from "rollup-plugin-replace"
 import yamlPlugin from "rollup-plugin-yaml"
+import { terser as terserPlugin } from "rollup-plugin-terser"
 
 import parseCommandline from "./parseCommandline"
 import extractTypes from "./extractTypes"
@@ -153,8 +154,9 @@ function bundleTo({
         // Do not transpile external code
         // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
         exclude: [ "node_modules/**", "**/*.json" ]
-      })
-    ]
+      }),
+      format === "umd" ? terserPlugin() : null
+    ].filter(Boolean)
   })
     .then((bundle) =>
       bundle.write({

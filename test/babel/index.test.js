@@ -25,4 +25,7 @@ test("Publish Test File via Babel", async () => {
 
   const esm = await lazyRead("./dist/index.esm.js", "utf8")
   expect(esm.replace(versionString, "VERSION_STRING")).toMatchSnapshot()
+
+  const umd = await lazyRead("./dist/index.umd.js", "utf8")
+  expect(umd.replace(versionString, "VERSION_STRING")).toMatchSnapshot()
 })

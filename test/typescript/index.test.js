@@ -18,9 +18,9 @@ process.chdir(__dirname)
 test("Publish Test File via Typescript", async () => {
   await lazyDelete("./dist")
 
-  await lazyExec(
+  console.log(await lazyExec(
     "node ../../bin/preppy --input-lib ./index.tsx --output-folder ./dist"
-  )
+  ))
 
   const cjs = await lazyRead("./dist/index.cjs.js", "utf8")
   expect(cjs.replace(versionString, "VERSION_STRING")).toMatchSnapshot()

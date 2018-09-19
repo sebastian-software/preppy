@@ -16,9 +16,9 @@ process.chdir(__dirname)
 test("Publish Test File via Babel", async () => {
   await lazyDelete("./dist")
 
-  await lazyExec(
+  console.log(await lazyExec(
     "node ../../bin/preppy --input-lib ./index.js --output-folder ./dist"
-  )
+  ))
 
   const cjs = await lazyRead("./dist/index.cjs.js", "utf8")
   expect(cjs.replace(versionString, "VERSION_STRING")).toMatchSnapshot()

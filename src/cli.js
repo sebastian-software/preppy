@@ -1,7 +1,7 @@
 /* eslint-disable immutable/no-mutation */
 /* eslint-disable tree-shaking/no-side-effects-in-initialization */
 
-import { isAbsolute, resolve } from "path"
+import { extname, dirname, isAbsolute, resolve } from "path"
 import { existsSync } from "fs"
 import chalk from "chalk"
 import fileExists from "file-exists"
@@ -18,7 +18,7 @@ import jsonPlugin from "rollup-plugin-json"
 import replacePlugin from "rollup-plugin-replace"
 import yamlPlugin from "rollup-plugin-yaml"
 
-import createBabelConfig from "./createBabelConfig"
+import extractTypes from "./extractTypes"
 import getBanner from "./getBanner"
 
 const ROOT = getRoot()
@@ -195,6 +195,10 @@ function bundleTo({
     [`${prefix}NAME`]: JSON.stringify(PKG_CONFIG.name),
     [`${prefix}VERSION`]: JSON.stringify(PKG_CONFIG.version),
     [`${prefix}TARGET`]: JSON.stringify(target)
+  }
+
+  if ([".ts", ".tsx"].includes(extname(input))) {
+    extractTypes(input, dirname(output))
   }
 
   return rollup({

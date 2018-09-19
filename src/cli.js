@@ -2,6 +2,7 @@
 /* eslint-disable tree-shaking/no-side-effects-in-initialization */
 
 import { isAbsolute, resolve } from "path"
+import { existsSync } from "fs"
 import chalk from "chalk"
 import fileExists from "file-exists"
 import meow from "meow"
@@ -10,6 +11,7 @@ import { eachOfSeries } from "async"
 import { get as getRoot } from "app-root-dir"
 import { rollup } from "rollup"
 
+import babelPlugin from "rollup-plugin-babel"
 import cjsPlugin from "rollup-plugin-commonjs"
 import jsonPlugin from "rollup-plugin-json"
 import replacePlugin from "rollup-plugin-replace"
@@ -31,8 +33,8 @@ const command = meow(
     $ preppy
 
   Options
-    --input-node       Input file for NodeJS target [default = auto]
-    --input-binary     Input file for Binary target [default = auto]
+    --input-lib        Input file for library target [default = auto]
+    --input-cli        Input file for cli target [default = auto]
     --output-folder    Configure the output folder [default = auto]
 
     -m, --sourcemap    Create a source map file during processing
@@ -41,11 +43,11 @@ const command = meow(
 `,
   {
     flags: {
-      inputNode: {
+      inputLib: {
         default: null
       },
 
-      inputBinary: {
+      inputCli: {
         default: null
       },
 
@@ -92,93 +94,89 @@ if (binaryConfig) {
 
 /* eslint-disable dot-notation */
 const outputFileMatrix = {
-  // NodeJS Target
-  "node-commonjs": PKG_CONFIG["main"] || null,
-  "node-esmodule": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
+  // Library Target
+  "main": PKG_CONFIG["main"] || null,
+  "module": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
 
   // Binary Target
-  "cli-commonjs": binaryOutput || null
+  "bin": binaryOutput || null,
+
+  // Types Target (TypeScript)
+  "types": PKG_CONFIG["types"] || null
 }
 
 const outputFolder = command.flags.outputFolder
 if (outputFolder) {
-  outputFileMatrix["node-commonjs"] = `${outputFolder}/node.cjs.js`
-  outputFileMatrix["node-esmodule"] = `${outputFolder}/node.esm.js`
-  outputFileMatrix["cli-commonjs"] = `${outputFolder}/cli.js`
-}
-
-// Rollups support these formats: 'amd', 'cjs', 'es', 'iife', 'umd'
-const format2Rollup = {
-  commonjs: "cjs",
-  esmodule: "es"
+  outputFileMatrix["main"] = `${outputFolder}/index.cjs.js`
+  outputFileMatrix["module"] = `${outputFolder}/index.esm.js`
+  outputFileMatrix["bin"] = `${outputFolder}/cli.js`
+  outputFileMatrix["types"] = `${outputFolder}/index.d.js`
 }
 
 const name = PKG_CONFIG.name || camelCase(PKG_CONFIG.name)
 const banner = getBanner(PKG_CONFIG)
 const targets = {}
-const formats = [ "esmodule", "commonjs" ]
 
-if (command.flags.inputNode) {
-  targets.node = [ command.flags.inputNode ]
+const transpilerPlugin = babelPlugin({
+  // Rollup Setting: Prefer usage of a common library of helpers
+  runtimeHelpers: true,
+
+  // Do not transpile external code
+  // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
+  exclude: [ "node_modules/**", "**/*.json" ]
+})
+
+if (command.flags.inputLib) {
+  if (!existsSync(command.flags.inputLib)) {
+    throw new Error(`Library entry point specified does not exist: ${command.flags.inputLib}!`)
+  }
+  targets.library = command.flags.inputLib
 } else {
-  targets.node = [ "src/index.js", "src/main.js" ]
+  targets.library = [ "src/index.js", "src/index.jsx", "src/index.ts", "src/index.tsx" ].filter(existsSync)[0]
 }
 
-if (command.flags.inputBinary) {
-  targets.binary = [ command.flags.inputBinary ]
+if (command.flags.inputCli) {
+  if (!existsSync(command.flags.inputCli)) {
+    throw new Error(`CLI entry point specified does not exist: ${command.flags.inputCli}!`)
+  }
+  targets.binary = command.flags.inputCli
 } else {
-  targets.binary = [ "src/binary.js", "src/script.js", "src/cli.js" ]
+  targets.binary = [ "src/cli.js", "src/cli.jsx", "src/cli.ts", "src/cli.tsx" ].filter(existsSync)[0]
 }
 
-/* eslint-disable max-params */
-try {
-  eachOfSeries(targets, (envInputs, targetId, envCallback) => {
-    const input = lookupBest(envInputs)
-    if (input) {
-      if (!quiet) {
-        console.log(`Using input ${chalk.blue(input)} for target ${chalk.blue(targetId)}`)
-      }
-
-      eachOfSeries(
-        formats,
-        (format, formatIndex, formatCallback) => {
-          const transpilers = createBabelConfig()
-
-          eachOfSeries(
-            transpilers,
-            (currentTranspiler, transpilerId, variantCallback) => {
-              const outputFile = outputFileMatrix[`${targetId}-${format}`]
-              if (outputFile) {
-                return bundleTo({
-                  input,
-                  targetId,
-                  currentTranspiler,
-                  format,
-                  outputFile,
-                  variantCallback
-                })
-              } else {
-                return variantCallback(null)
-              }
-            },
-            formatCallback
-          )
-        },
-        envCallback
-      )
-    } else {
-      envCallback(null)
-    }
-  })
-} catch (error) {
-  /* eslint-disable no-process-exit */
-  console.error(error)
-  process.exit(1)
+if (targets.library == null && targets.binary == null) {
+  throw new Error("No entry points found!")
 }
 
-function lookupBest(candidates) {
-  const filtered = candidates.filter(fileExists.sync)
-  return filtered[0]
+async function bundleAll() {
+  if (targets.library) {
+    console.log("Lib Entry:", targets.library)
+    await bundleTo({
+      input: targets.library,
+      target: "lib",
+      format: "esm",
+      output: outputFileMatrix["module"]
+    })
+
+    await bundleTo({
+      input: targets.library,
+      target: "lib",
+      format: "cjs",
+      output: outputFileMatrix["main"]
+    })
+  }
+
+  if (targets.binary) {
+    console.log("Binary Entry:", targets.binary)
+    await bundleTo({
+      input: targets.binary,
+      target: "cli",
+      format: "cjs",
+      output: outputFileMatrix["bin"]
+    })
+  }
+
+  console.log("All built!")
 }
 
 function isRelative(dependency) {
@@ -187,18 +185,16 @@ function isRelative(dependency) {
 
 function bundleTo({
   input,
-  targetId,
-  currentTranspiler,
+  target,
   format,
-  outputFile,
-  variantCallback
+  output
 }) {
   if (!quiet) {
     /* eslint-disable max-len */
     console.log(
       `${chalk.green(">>> Bundling")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(
         PKG_CONFIG.version
-      )} defined as ${chalk.blue(format)} to ${chalk.green(outputFile)}...`
+      )} defined as ${chalk.blue(format)} to ${chalk.green(output)}...`
     )
   }
 
@@ -206,7 +202,7 @@ function bundleTo({
   const variables = {
     [`${prefix}NAME`]: JSON.stringify(PKG_CONFIG.name),
     [`${prefix}VERSION`]: JSON.stringify(PKG_CONFIG.version),
-    [`${prefix}TARGET`]: JSON.stringify(targetId)
+    [`${prefix}TARGET`]: JSON.stringify(target)
   }
 
   return rollup({
@@ -218,7 +214,7 @@ function bundleTo({
     external(dependency) {
       // Very simple externalization:
       // We exclude all files from NodeJS resolve basically which are not relative to current file.
-      // We also bundle absolute paths, these are just an intermediate step in rollup resolving files and
+      // We also bundle absolute paths, these are just an intermediate step in Rollup resolving files and
       // as we do not support resolving from node_modules (we never bundle these) we only hit this code
       // path for originally local dependencies.
       return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
@@ -230,21 +226,18 @@ function bundleTo({
       }),
       yamlPlugin(),
       jsonPlugin(),
-      currentTranspiler
+      transpilerPlugin
     ].filter(Boolean)
   })
     .then((bundle) =>
       bundle.write({
-        format: format2Rollup[format],
+        format,
         name,
-        banner: targetId === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
+        banner: target === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
         sourcemap: command.flags.sourcemap,
-        file: outputFile
+        file: output
       })
     )
-    .then(() => variantCallback(null))
-    .catch((error) => {
-      console.error(error)
-      variantCallback(`Error during bundling ${format}: ${error}`)
-    })
 }
+
+bundleAll()

@@ -56,13 +56,6 @@
       ],
       "presets": [
         [
-          "@babel/typescript",
-          {
-            "allExtensions": true,
-            "isTSX": true
-          }
-        ],
-        [
           "@babel/env",
           {
             "exclude": [

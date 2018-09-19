@@ -5,6 +5,8 @@ import rimraf from "rimraf"
 
 import pkg from "../../package.json"
 
+jest.setTimeout(10000)
+
 const versionString = `preppy v${pkg.version}`
 
 const lazyExec = pify(exec)

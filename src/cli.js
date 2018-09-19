@@ -197,7 +197,7 @@ function bundleTo({
     [`${prefix}TARGET`]: JSON.stringify(target)
   }
 
-  if ([".ts", ".tsx"].includes(extname(input))) {
+  if ([ ".ts", ".tsx" ].includes(extname(input))) {
     extractTypes(input, dirname(output))
   }
 

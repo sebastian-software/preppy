@@ -63,3 +63,14 @@ class SecondClass extends MyClass() {
 }
 
 console.log("Initialized class:", new MyClass())
+
+/**
+ * Values of fields in the form
+ */
+export interface FormValues {
+  [field: string]: any
+}
+
+const setValues = (values: FormValues) => {
+  this.setState({ values }, () => true)
+}

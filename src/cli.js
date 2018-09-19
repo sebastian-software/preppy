@@ -48,26 +48,32 @@ const outputFileMatrix = getOutputMatrix(command, PKG_CONFIG)
 async function bundleAll() {
   if (targets.library) {
     console.log(">>> Library Entry:", targets.library)
-    await bundleTo({
-      input: targets.library,
-      target: "lib",
-      format: "esm",
-      output: outputFileMatrix.module
-    })
+    if (outputFileMatrix.module) {
+      await bundleTo({
+        input: targets.library,
+        target: "lib",
+        format: "esm",
+        output: outputFileMatrix.module
+      })
+    }
 
-    await bundleTo({
-      input: targets.library,
-      target: "lib",
-      format: "cjs",
-      output: outputFileMatrix.main
-    })
+    if (outputFileMatrix.main) {
+      await bundleTo({
+        input: targets.library,
+        target: "lib",
+        format: "cjs",
+        output: outputFileMatrix.main
+      })
+    }
 
-    await bundleTo({
-      input: targets.library,
-      target: "lib",
-      format: "umd",
-      output: outputFileMatrix.umd
-    })
+    if (outputFileMatrix.umd) {
+      await bundleTo({
+        input: targets.library,
+        target: "lib",
+        format: "umd",
+        output: outputFileMatrix.umd
+      })
+    }
 
     if ([ ".ts", ".tsx" ].includes(extname(targets.library))) {
       const definitionOutputFolder = dirname(outputFileMatrix.types)

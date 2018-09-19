@@ -15,8 +15,7 @@ function formatSize(size, filename, type, raw) {
 }
 
 export default async function printSizeInfo(code, filename, useBytes) {
-  const raw = useBytes || code.length < 5000
-  const gzip = formatSize(await gzipSize(code), filename, "gz", raw)
-  const brotli = formatSize(await brotliSize(code), filename, "br", raw)
+  const gzip = formatSize(await gzipSize(code), filename, "gz", useBytes)
+  const brotli = formatSize(await brotliSize(code), filename, "br", useBytes)
   console.log(`${gzip}\n${brotli}`)
 }

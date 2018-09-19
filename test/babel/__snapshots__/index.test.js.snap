@@ -41,10 +41,8 @@ console.log(\\"Supports Set:\\", mySet.add(4));
 })();
 
 var testVariable = \\"outer\\";
-{
-  var _testVariable = \\"inner\\";
-  console.log(\\"X Value from inner scope:\\", _testVariable);
-}
+var _testVariable = \\"inner\\";
+console.log(\\"X Value from inner scope:\\", _testVariable);
 console.log(\\"X Value from outer scope:\\", testVariable);
 var source = {
   first: 1,
@@ -83,9 +81,16 @@ var SecondClass = function (_MyClass) {
 
 console.log(\\"Initialized class:\\", new MyClass());
 
-async function helper() {
-  await PromiseHelper();
-  return 42;
+function helper() {
+  return new Promise(function ($return, $error) {
+    return Promise.resolve(PromiseHelper()).then(function ($await_1) {
+      try {
+        return $return(42);
+      } catch ($boundEx) {
+        return $error($boundEx);
+      }
+    }, $error);
+  });
 }
 
 helper();
@@ -130,10 +135,8 @@ console.log(\\"Supports Set:\\", mySet.add(4));
 })();
 
 var testVariable = \\"outer\\";
-{
-  var _testVariable = \\"inner\\";
-  console.log(\\"X Value from inner scope:\\", _testVariable);
-}
+var _testVariable = \\"inner\\";
+console.log(\\"X Value from inner scope:\\", _testVariable);
 console.log(\\"X Value from outer scope:\\", testVariable);
 var source = {
   first: 1,
@@ -172,9 +175,16 @@ var SecondClass = function (_MyClass) {
 
 console.log(\\"Initialized class:\\", new MyClass());
 
-async function helper() {
-  await PromiseHelper();
-  return 42;
+function helper() {
+  return new Promise(function ($return, $error) {
+    return Promise.resolve(PromiseHelper()).then(function ($await_1) {
+      try {
+        return $return(42);
+      } catch ($boundEx) {
+        return $error($boundEx);
+      }
+    }, $error);
+  });
 }
 
 helper();

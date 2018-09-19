@@ -227,7 +227,7 @@ function bundleTo({
         // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
         exclude: [ "node_modules/**", "**/*.json" ]
       })
-    ].filter(Boolean)
+    ]
   })
     .then((bundle) =>
       bundle.write({

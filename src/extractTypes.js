@@ -21,10 +21,6 @@ function compile(fileNames, options) {
       console.log(`${ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")}`)
     }
   })
-
-  const exitCode = emitResult.emitSkipped ? 1 : 0
-  console.log(`Process exiting with code '${exitCode}'.`)
-  process.exit(exitCode)
 }
 
 export default function extractTypes(fileName, outputFolder) {

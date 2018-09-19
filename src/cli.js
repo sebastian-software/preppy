@@ -156,6 +156,17 @@ async function bundleAll() {
       format: "cjs",
       output: outputFileMatrix["main"]
     })
+
+    if ([ ".ts", ".tsx" ].includes(extname(targets.library))) {
+      const definitionOutputFolder = dirname(outputFileMatrix.types)
+      console.log(
+        `${chalk.green(">>> Extracting types from")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(
+          PKG_CONFIG.version
+        )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(definitionOutputFolder)}...`
+      )
+
+      extractTypes(targets.library, definitionOutputFolder)
+    }
   }
 
   if (targets.binary) {
@@ -195,10 +206,6 @@ function bundleTo({
     [`${prefix}NAME`]: JSON.stringify(PKG_CONFIG.name),
     [`${prefix}VERSION`]: JSON.stringify(PKG_CONFIG.version),
     [`${prefix}TARGET`]: JSON.stringify(target)
-  }
-
-  if ([ ".ts", ".tsx" ].includes(extname(input))) {
-    extractTypes(input, dirname(output))
   }
 
   return rollup({

@@ -24,7 +24,6 @@ function compile(fileNames, options) {
 }
 
 export default function extractTypes(fileName, outputFolder) {
-  console.log("Extract types:", fileName, "=>", outputFolder)
   return compile([fileName], {
     declarationDir: outputFolder,
     declaration: true,

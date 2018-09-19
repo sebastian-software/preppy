@@ -1,4 +1,4 @@
-import { ScriptTarget, createProgram, getPreEmitDiagnostics, flattenDiagnosticMessageText } from "typescript";
+import { ScriptTarget, ModuleResolutionKind, createProgram, getPreEmitDiagnostics, flattenDiagnosticMessageText } from "typescript";
 
 // Compiler based on code shown in the official docs:
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
@@ -30,7 +30,7 @@ export default function extractTypes(fileName, outputFolder) {
     emitDeclarationOnly: true,
     allowSyntheticDefaultImports: true,
     esModuleInterop: true,
-    moduleResolution: "Node",
+    moduleResolution: ModuleResolutionKind.NodeJs,
     target: ScriptTarget.ES2017
   })
 }

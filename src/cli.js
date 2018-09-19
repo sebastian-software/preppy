@@ -83,14 +83,13 @@ async function bundleAll() {
 
     if ([ ".ts", ".tsx" ].includes(extname(targets.library))) {
       if (outputFileMatrix.types) {
-        const definitionOutputFolder = dirname(outputFileMatrix.types)
         console.log(
           `${chalk.green(">>> Extracting types from")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(
             PKG_CONFIG.version
-          )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(definitionOutputFolder)}...`
+          )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(dirname(outputFileMatrix.types))}...`
         )
 
-        extractTypes(targets.library, definitionOutputFolder)
+        extractTypes(targets.library, dirname(outputFileMatrix.types))
       } else {
         console.warn(chalk.red.bold("Missing `types` entry in `package.json`!"))
       }

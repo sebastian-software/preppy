@@ -18,7 +18,7 @@ var lodash = require('lodash');
 
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Package\\", \\"preppy\\");
-console.log(\\"Target\\", \\"node\\");
+console.log(\\"Target\\", \\"lib\\");
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
 new Promise(function (resolve, reject) {
   resolve(\\"resolved\\");
@@ -82,7 +82,7 @@ var SecondClass = function (_MyClass) {
 }(MyClass());
 
 console.log(\\"Initialized class:\\", new MyClass());
-//# sourceMappingURL=node.commonjs.js.map
+//# sourceMappingURL=index.cjs.js.map
 "
 `;
 
@@ -100,7 +100,7 @@ import { camelCase } from 'lodash';
 
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Package\\", \\"preppy\\");
-console.log(\\"Target\\", \\"node\\");
+console.log(\\"Target\\", \\"lib\\");
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
 new Promise(function (resolve, reject) {
   resolve(\\"resolved\\");
@@ -164,6 +164,6 @@ var SecondClass = function (_MyClass) {
 }(MyClass());
 
 console.log(\\"Initialized class:\\", new MyClass());
-//# sourceMappingURL=node.esmodule.js.map
+//# sourceMappingURL=index.esm.js.map
 "
 `;

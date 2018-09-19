@@ -15,12 +15,12 @@ test("Publish Test File", async () => {
   await lazyDelete("./test/lib")
 
   await lazyExec(
-    "node ./bin/preppy --input-node ./test/src/index.js --output-folder ./test/lib"
+    "node ./bin/preppy --input-lib ./test/src/index.js --output-folder ./test/lib"
   )
 
-  const cjs = await lazyRead("./test/lib/node.cjs.js", "utf8")
+  const cjs = await lazyRead("./test/lib/index.cjs.js", "utf8")
   expect(cjs.replace(versionString, "VERSION_STRING")).toMatchSnapshot()
 
-  const esm = await lazyRead("./test/lib/node.esm.js", "utf8")
+  const esm = await lazyRead("./test/lib/index.esm.js", "utf8")
   expect(esm.replace(versionString, "VERSION_STRING")).toMatchSnapshot()
 })

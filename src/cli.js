@@ -11,6 +11,7 @@ import { eachOfSeries } from "async"
 import { get as getRoot } from "app-root-dir"
 import { rollup } from "rollup"
 
+import typescriptPlugin from "rollup-plugin-typescript"
 import babelPlugin from "rollup-plugin-babel"
 import cjsPlugin from "rollup-plugin-commonjs"
 import jsonPlugin from "rollup-plugin-json"
@@ -117,21 +118,12 @@ const name = PKG_CONFIG.name || camelCase(PKG_CONFIG.name)
 const banner = getBanner(PKG_CONFIG)
 const targets = {}
 
-const transpilerPlugin = babelPlugin({
-  // Rollup Setting: Prefer usage of a common library of helpers
-  runtimeHelpers: true,
-
-  // Do not transpile external code
-  // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
-  exclude: [ "node_modules/**", "**/*.json" ]
-})
-
 if (command.flags.inputLib) {
   if (!existsSync(command.flags.inputLib)) {
     throw new Error(`Library entry point specified does not exist: ${command.flags.inputLib}!`)
   }
   targets.library = command.flags.inputLib
-} else {
+} else if (!command.flags.inputCli) {
   targets.library = [ "src/index.js", "src/index.jsx", "src/index.ts", "src/index.tsx" ].filter(existsSync)[0]
 }
 
@@ -140,7 +132,7 @@ if (command.flags.inputCli) {
     throw new Error(`CLI entry point specified does not exist: ${command.flags.inputCli}!`)
   }
   targets.binary = command.flags.inputCli
-} else {
+} else if (!command.flags.inputLib) {
   targets.binary = [ "src/cli.js", "src/cli.jsx", "src/cli.ts", "src/cli.tsx" ].filter(existsSync)[0]
 }
 
@@ -150,7 +142,7 @@ if (targets.library == null && targets.binary == null) {
 
 async function bundleAll() {
   if (targets.library) {
-    console.log("Lib Entry:", targets.library)
+    console.log(">>> Library Entry:", targets.library)
     await bundleTo({
       input: targets.library,
       target: "lib",
@@ -167,7 +159,7 @@ async function bundleAll() {
   }
 
   if (targets.binary) {
-    console.log("Binary Entry:", targets.binary)
+    console.log(">>> Binary Entry:", targets.binary)
     await bundleTo({
       input: targets.binary,
       target: "cli",
@@ -176,7 +168,7 @@ async function bundleAll() {
     })
   }
 
-  console.log("All built!")
+  console.log(chalk.green.bold("Done!"))
 }
 
 function isRelative(dependency) {
@@ -194,7 +186,7 @@ function bundleTo({
     console.log(
       `${chalk.green(">>> Bundling")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(
         PKG_CONFIG.version
-      )} defined as ${chalk.blue(format)} to ${chalk.green(output)}...`
+      )} as ${chalk.blue(format.toUpperCase())} to ${chalk.green(output)}...`
     )
   }
 
@@ -226,7 +218,15 @@ function bundleTo({
       }),
       yamlPlugin(),
       jsonPlugin(),
-      transpilerPlugin
+      typescriptPlugin(),
+      babelPlugin({
+        // Rollup Setting: Prefer usage of a common library of helpers
+        runtimeHelpers: true,
+
+        // Do not transpile external code
+        // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
+        exclude: [ "node_modules/**", "**/*.json" ]
+      })
     ].filter(Boolean)
   })
     .then((bundle) =>

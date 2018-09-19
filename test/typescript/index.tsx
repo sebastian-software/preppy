@@ -7,6 +7,8 @@
 /* eslint-disable prefer-const */
 
 import { camelCase } from "lodash"
+import { FormValues } from "./types"
+
 console.log("CherryPick Import Lodash:", camelCase("hello world") === "helloWorld")
 
 console.log("Package", process.env.NAME)
@@ -75,13 +77,6 @@ async function helper() {
 }
 
 helper()
-
-/**
- * Values of fields in the form
- */
-export interface FormValues {
-  [field: string]: any
-}
 
 export const setValues = (values: FormValues) => {
   setState({ values }, () => true)

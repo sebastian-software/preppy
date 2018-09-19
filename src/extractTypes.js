@@ -28,6 +28,9 @@ export default function extractTypes(fileName, outputFolder) {
     declarationDir: outputFolder,
     declaration: true,
     emitDeclarationOnly: true,
+    allowSyntheticDefaultImports: true,
+    esModuleInterop: true,
+    moduleResolution: "Node",
     target: ScriptTarget.ES2017
   })
 }

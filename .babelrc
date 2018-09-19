@@ -6,6 +6,19 @@
       "plugins": [
         "module:fast-async",
         [
+          "@babel/proposal-class-properties",
+          {
+            "loose": true
+          }
+        ],
+        [
+          "@babel/proposal-object-rest-spread",
+          {
+            "useBuiltIns": true,
+            "loose": true
+          }
+        ],
+        [
           "@babel/plugin-transform-runtime",
           {
             "helpers": true,

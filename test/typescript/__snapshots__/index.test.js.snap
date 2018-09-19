@@ -6,61 +6,106 @@ exports[`Publish Test File via Typescript 1`] = `
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var _inheritsLoose = _interopDefault(require('@babel/runtime/helpers/inheritsLoose'));
+require('core-js/modules/es6.object.assign');
+require('core-js/modules/web.dom.iterable');
+require('core-js/modules/es6.array.iterator');
+require('core-js/modules/es6.string.iterator');
+require('core-js/modules/es6.set');
+require('core-js/modules/es7.array.includes');
+require('core-js/modules/es6.promise');
 var lodash = require('lodash');
 
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Package\\", \\"preppy\\");
 console.log(\\"Target\\", \\"lib\\");
-console.log(\\"ES2016 Enabled:\\", 2 ** 2 === 4);
-new Promise((resolve, reject) => {
-    resolve(\\"resolved\\");
-}).then((first) => {
-    console.log(\\"Promise:\\", first);
+console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
+new Promise(function (resolve, reject) {
+  resolve(\\"resolved\\");
+}).then(function (first) {
+  console.log(\\"Promise:\\", first);
 });
-const CONSTANT = 123;
+var CONSTANT = 123;
 console.log(\\"Constant:\\", CONSTANT);
 var myArray = [1, 2, 3];
 console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
 var mySet = new Set(myArray);
 console.log(\\"Supports Set:\\", mySet.add(4));
-(function (supportsDefault = true) {
-    console.log(\\"Supports default parameters:\\", supportsDefault);
+
+(function (supportsDefault) {
+  if (supportsDefault === void 0) {
+    supportsDefault = true;
+  }
+
+  console.log(\\"Supports default parameters:\\", supportsDefault);
 })();
-let testVariable = \\"outer\\";
-{
-    let testVariable = \\"inner\\";
-    console.log(\\"X Value from inner scope:\\", testVariable);
-}
+
+var testVariable = \\"outer\\";
+var _testVariable = \\"inner\\";
+console.log(\\"X Value from inner scope:\\", _testVariable);
 console.log(\\"X Value from outer scope:\\", testVariable);
-var source = { first: 1, second: 2 };
-var destructed = Object.assign({ third: 3 }, source);
+var source = {
+  first: 1,
+  second: 2
+};
+var destructed = Object.assign({
+  third: 3
+}, source);
 console.log(\\"Destructed:\\", destructed);
-class MyClass {
-    constructor() {
-        this.onClick = () => {
-            console.log(\\"Clickedx\\");
-        };
-        console.log(\\"Called constructor\\");
-        this.helper();
-        this.instanceProperty = 3;
-    }
-    helper() {
-        console.log(\\"Called helper\\");
-    }
-}
-class SecondClass extends MyClass() {
-    constructor() {
-        super(100);
-    }
-}
+
+var MyClass = function () {
+  function MyClass() {
+    this.onClick = function () {
+      console.log(\\"Clickedx\\");
+    };
+
+    console.log(\\"Called constructor\\");
+    this.helper();
+    this.instanceProperty = 3;
+  }
+
+  var _proto = MyClass.prototype;
+
+  _proto.helper = function helper() {
+    console.log(\\"Called helper\\");
+  };
+
+  return MyClass;
+}();
+
+var SecondClass = function (_MyClass) {
+  _inheritsLoose(SecondClass, _MyClass);
+
+  function SecondClass() {
+    return _MyClass.call(this, 100) || this;
+  }
+
+  return SecondClass;
+}(MyClass());
+
 console.log(\\"Initialized class:\\", new MyClass());
-async function helper() {
-    await PromiseHelper();
-    return 42;
+
+function helper() {
+  return new Promise(function ($return, $error) {
+    return Promise.resolve(PromiseHelper()).then(function ($await_1) {
+      try {
+        return $return(42);
+      } catch ($boundEx) {
+        return $error($boundEx);
+      }
+    }, $error);
+  });
 }
+
 helper();
-const setValues = (values) => {
-    setState({ values }, () => true);
+var setValues = function setValues(values) {
+  setState({
+    values: values
+  }, function () {
+    return true;
+  });
 };
 
 exports.setValues = setValues;
@@ -70,61 +115,104 @@ exports.setValues = setValues;
 
 exports[`Publish Test File via Typescript 2`] = `
 "/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
+import _inheritsLoose from '@babel/runtime/helpers/inheritsLoose';
+import 'core-js/modules/es6.object.assign';
+import 'core-js/modules/web.dom.iterable';
+import 'core-js/modules/es6.array.iterator';
+import 'core-js/modules/es6.string.iterator';
+import 'core-js/modules/es6.set';
+import 'core-js/modules/es7.array.includes';
+import 'core-js/modules/es6.promise';
 import { camelCase } from 'lodash';
 
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Package\\", \\"preppy\\");
 console.log(\\"Target\\", \\"lib\\");
-console.log(\\"ES2016 Enabled:\\", 2 ** 2 === 4);
-new Promise((resolve, reject) => {
-    resolve(\\"resolved\\");
-}).then((first) => {
-    console.log(\\"Promise:\\", first);
+console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
+new Promise(function (resolve, reject) {
+  resolve(\\"resolved\\");
+}).then(function (first) {
+  console.log(\\"Promise:\\", first);
 });
-const CONSTANT = 123;
+var CONSTANT = 123;
 console.log(\\"Constant:\\", CONSTANT);
 var myArray = [1, 2, 3];
 console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
 var mySet = new Set(myArray);
 console.log(\\"Supports Set:\\", mySet.add(4));
-(function (supportsDefault = true) {
-    console.log(\\"Supports default parameters:\\", supportsDefault);
+
+(function (supportsDefault) {
+  if (supportsDefault === void 0) {
+    supportsDefault = true;
+  }
+
+  console.log(\\"Supports default parameters:\\", supportsDefault);
 })();
-let testVariable = \\"outer\\";
-{
-    let testVariable = \\"inner\\";
-    console.log(\\"X Value from inner scope:\\", testVariable);
-}
+
+var testVariable = \\"outer\\";
+var _testVariable = \\"inner\\";
+console.log(\\"X Value from inner scope:\\", _testVariable);
 console.log(\\"X Value from outer scope:\\", testVariable);
-var source = { first: 1, second: 2 };
-var destructed = Object.assign({ third: 3 }, source);
+var source = {
+  first: 1,
+  second: 2
+};
+var destructed = Object.assign({
+  third: 3
+}, source);
 console.log(\\"Destructed:\\", destructed);
-class MyClass {
-    constructor() {
-        this.onClick = () => {
-            console.log(\\"Clickedx\\");
-        };
-        console.log(\\"Called constructor\\");
-        this.helper();
-        this.instanceProperty = 3;
-    }
-    helper() {
-        console.log(\\"Called helper\\");
-    }
-}
-class SecondClass extends MyClass() {
-    constructor() {
-        super(100);
-    }
-}
+
+var MyClass = function () {
+  function MyClass() {
+    this.onClick = function () {
+      console.log(\\"Clickedx\\");
+    };
+
+    console.log(\\"Called constructor\\");
+    this.helper();
+    this.instanceProperty = 3;
+  }
+
+  var _proto = MyClass.prototype;
+
+  _proto.helper = function helper() {
+    console.log(\\"Called helper\\");
+  };
+
+  return MyClass;
+}();
+
+var SecondClass = function (_MyClass) {
+  _inheritsLoose(SecondClass, _MyClass);
+
+  function SecondClass() {
+    return _MyClass.call(this, 100) || this;
+  }
+
+  return SecondClass;
+}(MyClass());
+
 console.log(\\"Initialized class:\\", new MyClass());
-async function helper() {
-    await PromiseHelper();
-    return 42;
+
+function helper() {
+  return new Promise(function ($return, $error) {
+    return Promise.resolve(PromiseHelper()).then(function ($await_1) {
+      try {
+        return $return(42);
+      } catch ($boundEx) {
+        return $error($boundEx);
+      }
+    }, $error);
+  });
 }
+
 helper();
-const setValues = (values) => {
-    setState({ values }, () => true);
+var setValues = function setValues(values) {
+  setState({
+    values: values
+  }, function () {
+    return true;
+  });
 };
 
 export { setValues };

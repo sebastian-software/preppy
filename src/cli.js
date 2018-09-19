@@ -218,7 +218,7 @@ function bundleTo({
       }),
       yamlPlugin(),
       jsonPlugin(),
-      typescriptPlugin(),    // Default Include: [ '*.ts+(|x)', '**/*.ts+(|x)' ]
+      //typescriptPlugin(),    // Default Include: [ '*.ts+(|x)', '**/*.ts+(|x)' ]
       babelPlugin({
         // Rollup Setting: Prefer usage of a common library of helpers
         runtimeHelpers: true,

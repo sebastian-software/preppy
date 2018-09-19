@@ -54,7 +54,6 @@ var destructed = Object.assign({
   third: 3
 }, source);
 console.log(\\"Destructed:\\", destructed);
-
 var MyClass = function () {
   function MyClass() {
     this.onClick = function () {
@@ -68,8 +67,8 @@ var MyClass = function () {
 
   var _proto = MyClass.prototype;
 
-  _proto.helper = function helper() {
-    console.log(\\"Called helper\\");
+  _proto.helper = function helper(x) {
+    console.log(\\"Called helper: \\" + x);
   };
 
   return MyClass;
@@ -108,6 +107,7 @@ var setValues = function setValues(values) {
   });
 };
 
+exports.MyClass = MyClass;
 exports.setValues = setValues;
 //# sourceMappingURL=index.cjs.js.map
 "
@@ -161,7 +161,6 @@ var destructed = Object.assign({
   third: 3
 }, source);
 console.log(\\"Destructed:\\", destructed);
-
 var MyClass = function () {
   function MyClass() {
     this.onClick = function () {
@@ -175,8 +174,8 @@ var MyClass = function () {
 
   var _proto = MyClass.prototype;
 
-  _proto.helper = function helper() {
-    console.log(\\"Called helper\\");
+  _proto.helper = function helper(x) {
+    console.log(\\"Called helper: \\" + x);
   };
 
   return MyClass;
@@ -215,13 +214,18 @@ var setValues = function setValues(values) {
   });
 };
 
-export { setValues };
+export { MyClass, setValues };
 //# sourceMappingURL=index.esm.js.map
 "
 `;
 
 exports[`Publish Test File via Typescript 3`] = `
 "import { FormValues } from \\"./types\\";
+export declare class MyClass {
+    constructor();
+    onClick: () => void;
+    helper(x: string): void;
+}
 export declare const setValues: (values: FormValues) => void;
 "
 `;

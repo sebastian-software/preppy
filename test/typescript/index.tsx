@@ -22,7 +22,7 @@ new Promise((resolve, reject) => {
   console.log("Promise:", first)
 })
 
-const CONSTANT = 123
+const CONSTANT: number = 123
 console.log("Constant:", CONSTANT)
 
 var myArray = [ 1, 2, 3 ]
@@ -46,7 +46,7 @@ var source = { first: 1, second: 2 }
 var destructed = { third: 3, ...source }
 console.log("Destructed:", destructed)
 
-class MyClass {
+export class MyClass {
   constructor() {
     console.log("Called constructor")
     this.helper()
@@ -57,8 +57,8 @@ class MyClass {
     console.log("Clickedx")
   }
 
-  helper() {
-    console.log("Called helper")
+  helper(x: string) {
+    console.log("Called helper: " + x)
   }
 }
 

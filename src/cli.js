@@ -218,10 +218,18 @@ function bundleTo({
       }),
       yamlPlugin(),
       jsonPlugin(),
-      typescriptPlugin(),
+      typescriptPlugin(),    // Default Include: [ '*.ts+(|x)', '**/*.ts+(|x)' ]
       babelPlugin({
         // Rollup Setting: Prefer usage of a common library of helpers
         runtimeHelpers: true,
+
+        // The Babel-Plugin is not using a pre-defined include, but builds up
+        // its include list from the default extensions of Babel-Core.
+        // Default Extensions: [".js", ".jsx", ".es6", ".es", ".mjs"]
+        // We add TypeScript extensions here as well to be able to post-process
+        // any TypeScript sources with Babel. This allows us for using presets
+        // like "react" and plugins like "fast-async" with TypeScript as well.
+        extensions: [ ".js", ".jsx", ".es6", ".es", ".mjs", ".ts", ".tsx" ],
 
         // Do not transpile external code
         // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960

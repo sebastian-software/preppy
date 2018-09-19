@@ -71,6 +71,6 @@ export interface FormValues {
   [field: string]: any
 }
 
-const setValues = (values: FormValues) => {
-  this.setState({ values }, () => true)
+export const setValues = (values: FormValues) => {
+  setState({ values }, () => true)
 }

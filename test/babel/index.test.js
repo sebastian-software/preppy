@@ -13,6 +13,8 @@ const lazyDelete = pify(rimraf)
 
 process.chdir(__dirname)
 
+jest.setTimeout(20000)
+
 test("Publish Test File via Babel", async () => {
   await lazyDelete("./dist")
 

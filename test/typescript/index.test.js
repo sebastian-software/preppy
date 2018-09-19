@@ -5,8 +5,6 @@ import rimraf from "rimraf"
 
 import pkg from "../../package.json"
 
-jest.setTimeout(20000)
-
 const versionString = `preppy v${pkg.version}`
 
 const lazyExec = pify(exec)
@@ -14,6 +12,8 @@ const lazyRead = pify(readFile)
 const lazyDelete = pify(rimraf)
 
 process.chdir(__dirname)
+
+jest.setTimeout(20000)
 
 test("Publish Test File via Typescript", async () => {
   await lazyDelete("./dist")

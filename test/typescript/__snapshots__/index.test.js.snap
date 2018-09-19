@@ -219,3 +219,19 @@ export { setValues };
 //# sourceMappingURL=index.esm.js.map
 "
 `;
+
+exports[`Publish Test File via Typescript 3`] = `
+"import { FormValues } from \\"./types\\";
+export declare const setValues: (values: FormValues) => void;
+"
+`;
+
+exports[`Publish Test File via Typescript 4`] = `
+"/**
+ * Values of fields in the form
+ */
+export interface FormValues {
+    [field: string]: any;
+}
+"
+`;

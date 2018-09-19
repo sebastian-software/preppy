@@ -27,4 +27,10 @@ test("Publish Test File via Typescript", async () => {
 
   const esm = await lazyRead("./dist/index.esm.js", "utf8")
   expect(esm.replace(versionString, "VERSION_STRING")).toMatchSnapshot()
+
+  const indexDef = await lazyRead("./dist/index.d.ts", "utf8")
+  expect(indexDef).toMatchSnapshot()
+
+  const typesDef = await lazyRead("./dist/types.d.ts", "utf8")
+  expect(typesDef).toMatchSnapshot()
 })

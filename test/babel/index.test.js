@@ -11,16 +11,18 @@ const lazyExec = pify(exec)
 const lazyRead = pify(readFile)
 const lazyDelete = pify(rimraf)
 
-test("Publish Test File", async () => {
-  await lazyDelete("./test/lib")
+process.chdir(__dirname)
+
+test("Publish Test File via Babel", async () => {
+  await lazyDelete("./dist")
 
   await lazyExec(
-    "node ./bin/preppy --input-lib ./test/src/index.js --output-folder ./test/lib"
+    "node ../../bin/preppy --input-lib ./index.js --output-folder ./dist"
   )
 
-  const cjs = await lazyRead("./test/lib/index.cjs.js", "utf8")
+  const cjs = await lazyRead("./dist/index.cjs.js", "utf8")
   expect(cjs.replace(versionString, "VERSION_STRING")).toMatchSnapshot()
 
-  const esm = await lazyRead("./test/lib/index.esm.js", "utf8")
+  const esm = await lazyRead("./dist/index.esm.js", "utf8")
   expect(esm.replace(versionString, "VERSION_STRING")).toMatchSnapshot()
 })

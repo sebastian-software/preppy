@@ -1,5 +1,4 @@
 node_modules/
 bin/
 lib/
-test/lib/
-test/dist/
+test/*/dist/

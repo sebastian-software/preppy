@@ -97,14 +97,14 @@ const outputFileMatrix = {
   "node-esmodule": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
 
   // Binary Target
-  "binary-commonjs": binaryOutput || null
+  "cli-commonjs": binaryOutput || null
 }
 
 const outputFolder = command.flags.outputFolder
 if (outputFolder) {
-  outputFileMatrix["node-commonjs"] = `${outputFolder}/node.commonjs.js`
-  outputFileMatrix["node-esmodule"] = `${outputFolder}/node.esmodule.js`
-  outputFileMatrix["binary-commonjs"] = `${outputFolder}/binary.js`
+  outputFileMatrix["node-commonjs"] = `${outputFolder}/node.cjs.js`
+  outputFileMatrix["node-esmodule"] = `${outputFolder}/node.esm.js`
+  outputFileMatrix["cli-commonjs"] = `${outputFolder}/cli.js`
 }
 
 // Rollups support these formats: 'amd', 'cjs', 'es', 'iife', 'umd'

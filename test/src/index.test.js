@@ -18,9 +18,9 @@ test("Publish Test File", async () => {
     "node ./bin/preppy --input-node ./test/src/index.js --output-folder ./test/lib"
   )
 
-  const cjs = await lazyRead("./test/lib/node.commonjs.js", "utf8")
+  const cjs = await lazyRead("./test/lib/node.cjs.js", "utf8")
   expect(cjs.replace(versionString, "VERSION_STRING")).toMatchSnapshot()
 
-  const esm = await lazyRead("./test/lib/node.esmodule.js", "utf8")
+  const esm = await lazyRead("./test/lib/node.esm.js", "utf8")
   expect(esm.replace(versionString, "VERSION_STRING")).toMatchSnapshot()
 })

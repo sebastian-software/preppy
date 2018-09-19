@@ -63,3 +63,11 @@ class SecondClass extends MyClass() {
 }
 
 console.log("Initialized class:", new MyClass())
+
+async function helper() {
+  await PromiseHelper()
+
+  return 42
+}
+
+helper()

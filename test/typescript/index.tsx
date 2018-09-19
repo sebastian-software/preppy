@@ -51,6 +51,10 @@ class MyClass {
     this.instanceProperty = 3
   }
 
+  onClick = () => {
+    console.log("Clickedx")
+  }
+
   helper() {
     console.log("Called helper")
   }
@@ -63,6 +67,14 @@ class SecondClass extends MyClass() {
 }
 
 console.log("Initialized class:", new MyClass())
+
+async function helper() {
+  await PromiseHelper()
+
+  return 42
+}
+
+helper()
 
 /**
  * Values of fields in the form

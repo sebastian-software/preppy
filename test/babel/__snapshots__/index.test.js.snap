@@ -82,6 +82,13 @@ var SecondClass = function (_MyClass) {
 }(MyClass());
 
 console.log(\\"Initialized class:\\", new MyClass());
+
+async function helper() {
+  await PromiseHelper();
+  return 42;
+}
+
+helper();
 //# sourceMappingURL=index.cjs.js.map
 "
 `;
@@ -164,6 +171,13 @@ var SecondClass = function (_MyClass) {
 }(MyClass());
 
 console.log(\\"Initialized class:\\", new MyClass());
+
+async function helper() {
+  await PromiseHelper();
+  return 42;
+}
+
+helper();
 //# sourceMappingURL=index.esm.js.map
 "
 `;

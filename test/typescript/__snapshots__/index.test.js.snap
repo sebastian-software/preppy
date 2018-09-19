@@ -11,7 +11,7 @@ var lodash = require('lodash');
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Package\\", \\"preppy\\");
 console.log(\\"Target\\", \\"lib\\");
-console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
+console.log(\\"ES2016 Enabled:\\", 2 ** 2 === 4);
 new Promise((resolve, reject) => {
     resolve(\\"resolved\\");
 }).then((first) => {
@@ -37,6 +37,9 @@ var destructed = Object.assign({ third: 3 }, source);
 console.log(\\"Destructed:\\", destructed);
 class MyClass {
     constructor() {
+        this.onClick = () => {
+            console.log(\\"Clickedx\\");
+        };
         console.log(\\"Called constructor\\");
         this.helper();
         this.instanceProperty = 3;
@@ -51,6 +54,11 @@ class SecondClass extends MyClass() {
     }
 }
 console.log(\\"Initialized class:\\", new MyClass());
+async function helper() {
+    await PromiseHelper();
+    return 42;
+}
+helper();
 const setValues = (values) => {
     setState({ values }, () => true);
 };
@@ -67,7 +75,7 @@ import { camelCase } from 'lodash';
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Package\\", \\"preppy\\");
 console.log(\\"Target\\", \\"lib\\");
-console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
+console.log(\\"ES2016 Enabled:\\", 2 ** 2 === 4);
 new Promise((resolve, reject) => {
     resolve(\\"resolved\\");
 }).then((first) => {
@@ -93,6 +101,9 @@ var destructed = Object.assign({ third: 3 }, source);
 console.log(\\"Destructed:\\", destructed);
 class MyClass {
     constructor() {
+        this.onClick = () => {
+            console.log(\\"Clickedx\\");
+        };
         console.log(\\"Called constructor\\");
         this.helper();
         this.instanceProperty = 3;
@@ -107,6 +118,11 @@ class SecondClass extends MyClass() {
     }
 }
 console.log(\\"Initialized class:\\", new MyClass());
+async function helper() {
+    await PromiseHelper();
+    return 42;
+}
+helper();
 const setValues = (values) => {
     setState({ values }, () => true);
 };

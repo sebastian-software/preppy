@@ -2,12 +2,8 @@
 /* eslint-disable tree-shaking/no-side-effects-in-initialization */
 
 import { extname, dirname, isAbsolute, resolve } from "path"
-import { existsSync } from "fs"
 import chalk from "chalk"
-import fileExists from "file-exists"
-import meow from "meow"
 import { camelCase } from "lodash"
-import { eachOfSeries } from "async"
 import { get as getRoot } from "app-root-dir"
 import { rollup } from "rollup"
 
@@ -17,8 +13,10 @@ import jsonPlugin from "rollup-plugin-json"
 import replacePlugin from "rollup-plugin-replace"
 import yamlPlugin from "rollup-plugin-yaml"
 
+import parseCommandline from "./parseCommandline"
 import extractTypes from "./extractTypes"
 import getBanner from "./getBanner"
+import getTargets from "./getTargets"
 
 const ROOT = getRoot()
 const PKG_CONFIG = require(resolve(ROOT, "package.json"))
@@ -27,51 +25,7 @@ let cache
 
 /* eslint-disable no-console */
 
-const command = meow(
-  `
-  Usage
-    $ preppy
-
-  Options
-    --input-lib        Input file for library target [default = auto]
-    --input-cli        Input file for cli target [default = auto]
-    --output-folder    Configure the output folder [default = auto]
-
-    -m, --sourcemap    Create a source map file during processing
-    -v, --verbose      Verbose output mode [default = false]
-    -q, --quiet        Quiet output mode [default = false]
-`,
-  {
-    flags: {
-      inputLib: {
-        default: null
-      },
-
-      inputCli: {
-        default: null
-      },
-
-      outputFolder: {
-        default: null
-      },
-
-      sourcemap: {
-        alias: "m",
-        default: true
-      },
-
-      verbose: {
-        alias: "v",
-        default: false
-      },
-
-      quiet: {
-        alias: "q",
-        default: false
-      }
-    }
-  }
-)
+const command = parseCommandline()
 
 process.env.BABEL_ENV = "development"
 
@@ -82,62 +36,10 @@ if (verbose) {
   console.log("Flags:", command.flags)
 }
 
-// Handle special case to generate a binary file based on config in package.json
-const binaryConfig = PKG_CONFIG.bin
-let binaryOutput = null
-if (binaryConfig) {
-  for (const name in binaryConfig) {
-    binaryOutput = binaryConfig[name]
-    break
-  }
-}
-
-/* eslint-disable dot-notation */
-const outputFileMatrix = {
-  // Library Target
-  "main": PKG_CONFIG["main"] || null,
-  "module": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
-
-  // Binary Target
-  "bin": binaryOutput || null,
-
-  // Types Target (TypeScript)
-  "types": PKG_CONFIG["types"] || null
-}
-
-const outputFolder = command.flags.outputFolder
-if (outputFolder) {
-  outputFileMatrix["main"] = `${outputFolder}/index.cjs.js`
-  outputFileMatrix["module"] = `${outputFolder}/index.esm.js`
-  outputFileMatrix["bin"] = `${outputFolder}/cli.js`
-  outputFileMatrix["types"] = `${outputFolder}/index.d.js`
-}
-
 const name = PKG_CONFIG.name || camelCase(PKG_CONFIG.name)
 const banner = getBanner(PKG_CONFIG)
-const targets = {}
-
-if (command.flags.inputLib) {
-  if (!existsSync(command.flags.inputLib)) {
-    throw new Error(`Library entry point specified does not exist: ${command.flags.inputLib}!`)
-  }
-  targets.library = command.flags.inputLib
-} else if (!command.flags.inputCli) {
-  targets.library = [ "src/index.js", "src/index.jsx", "src/index.ts", "src/index.tsx" ].filter(existsSync)[0]
-}
-
-if (command.flags.inputCli) {
-  if (!existsSync(command.flags.inputCli)) {
-    throw new Error(`CLI entry point specified does not exist: ${command.flags.inputCli}!`)
-  }
-  targets.binary = command.flags.inputCli
-} else if (!command.flags.inputLib) {
-  targets.binary = [ "src/cli.js", "src/cli.jsx", "src/cli.ts", "src/cli.tsx" ].filter(existsSync)[0]
-}
-
-if (targets.library == null && targets.binary == null) {
-  throw new Error("No entry points found!")
-}
+const targets = getTargets(command)
+const outputFileMatrix = getOutputMatrix(command, PKG_CONFIG)
 
 async function bundleAll() {
   if (targets.library) {

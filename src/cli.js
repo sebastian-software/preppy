@@ -11,7 +11,6 @@ import { eachOfSeries } from "async"
 import { get as getRoot } from "app-root-dir"
 import { rollup } from "rollup"
 
-import typescriptPlugin from "rollup-plugin-typescript"
 import babelPlugin from "rollup-plugin-babel"
 import cjsPlugin from "rollup-plugin-commonjs"
 import jsonPlugin from "rollup-plugin-json"
@@ -229,7 +228,6 @@ function bundleTo({
       }),
       yamlPlugin(),
       jsonPlugin(),
-      //typescriptPlugin(),    // Default Include: [ '*.ts+(|x)', '**/*.ts+(|x)' ]
       babelPlugin({
         // Rollup Setting: Prefer usage of a common library of helpers
         runtimeHelpers: true,

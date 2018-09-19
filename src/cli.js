@@ -55,6 +55,8 @@ async function bundleAll() {
         format: "esm",
         output: outputFileMatrix.module
       })
+    } else {
+      console.warn(chalk.red.bold("Missing `module` entry in `package.json`!"))
     }
 
     if (outputFileMatrix.main) {
@@ -64,6 +66,8 @@ async function bundleAll() {
         format: "cjs",
         output: outputFileMatrix.main
       })
+    } else {
+      console.warn(chalk.red.bold("Missing `main` entry in `package.json`!"))
     }
 
     if (outputFileMatrix.umd) {
@@ -73,17 +77,23 @@ async function bundleAll() {
         format: "umd",
         output: outputFileMatrix.umd
       })
+    } else {
+      // No warning for missing UMD. Not required for a lot of packages.
     }
 
     if ([ ".ts", ".tsx" ].includes(extname(targets.library))) {
-      const definitionOutputFolder = dirname(outputFileMatrix.types)
-      console.log(
-        `${chalk.green(">>> Extracting types from")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(
-          PKG_CONFIG.version
-        )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(definitionOutputFolder)}...`
-      )
+      if (outputFileMatrix.types) {
+        const definitionOutputFolder = dirname(outputFileMatrix.types)
+        console.log(
+          `${chalk.green(">>> Extracting types from")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(
+            PKG_CONFIG.version
+          )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(definitionOutputFolder)}...`
+        )
 
-      extractTypes(targets.library, definitionOutputFolder)
+        extractTypes(targets.library, definitionOutputFolder)
+      } else {
+        console.warn(chalk.red.bold("Missing `types` entry in `package.json`!"))
+      }
     }
   }
 

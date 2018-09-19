@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Publish Test File via Typescript 1`] = `
+"/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+var lodash = require('lodash');
+
+/* eslint-disable no-magic-numbers */
+console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
+
+console.log(\\"Package\\", \\"preppy\\");
+console.log(\\"Target\\", \\"lib\\");
+
+console.log(\\"ES2016 Enabled:\\", 2 ** 2 === 4);
+
+new Promise((resolve, reject) => {
+  resolve(\\"resolved\\");
+}).then((first) => {
+  console.log(\\"Promise:\\", first);
+});
+
+const CONSTANT = 123;
+console.log(\\"Constant:\\", CONSTANT);
+
+var myArray = [ 1, 2, 3 ];
+console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+
+var mySet = new Set(myArray);
+console.log(\\"Supports Set:\\", mySet.add(4))
+;(function(supportsDefault = true) {
+console.log(\\"Supports default parameters:\\", supportsDefault);
+})();
+
+/* eslint-disable no-shadow */
+let testVariable = \\"outer\\";
+{
+  let testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", testVariable);
+}
+console.log(\\"X Value from outer scope:\\", testVariable);
+
+var source = { first: 1, second: 2 };
+var destructed = { third: 3, ...source };
+console.log(\\"Destructed:\\", destructed);
+
+class MyClass {
+  constructor() {
+    console.log(\\"Called constructor\\");
+    this.helper();
+    this.instanceProperty = 3;
+  }
+
+  helper() {
+    console.log(\\"Called helper\\");
+  }
+}
+
+class SecondClass extends MyClass() {
+  constructor() {
+    super(100);
+  }
+}
+
+console.log(\\"Initialized class:\\", new MyClass());
+//# sourceMappingURL=index.cjs.js.map
+"
+`;
+
+exports[`Publish Test File via Typescript 2`] = `
+"/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
+import { camelCase } from 'lodash';
+
+/* eslint-disable no-magic-numbers */
+console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
+
+console.log(\\"Package\\", \\"preppy\\");
+console.log(\\"Target\\", \\"lib\\");
+
+console.log(\\"ES2016 Enabled:\\", 2 ** 2 === 4);
+
+new Promise((resolve, reject) => {
+  resolve(\\"resolved\\");
+}).then((first) => {
+  console.log(\\"Promise:\\", first);
+});
+
+const CONSTANT = 123;
+console.log(\\"Constant:\\", CONSTANT);
+
+var myArray = [ 1, 2, 3 ];
+console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+
+var mySet = new Set(myArray);
+console.log(\\"Supports Set:\\", mySet.add(4))
+;(function(supportsDefault = true) {
+console.log(\\"Supports default parameters:\\", supportsDefault);
+})();
+
+/* eslint-disable no-shadow */
+let testVariable = \\"outer\\";
+{
+  let testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", testVariable);
+}
+console.log(\\"X Value from outer scope:\\", testVariable);
+
+var source = { first: 1, second: 2 };
+var destructed = { third: 3, ...source };
+console.log(\\"Destructed:\\", destructed);
+
+class MyClass {
+  constructor() {
+    console.log(\\"Called constructor\\");
+    this.helper();
+    this.instanceProperty = 3;
+  }
+
+  helper() {
+    console.log(\\"Called helper\\");
+  }
+}
+
+class SecondClass extends MyClass() {
+  constructor() {
+    super(100);
+  }
+}
+
+console.log(\\"Initialized class:\\", new MyClass());
+//# sourceMappingURL=index.esm.js.map
+"
+`;

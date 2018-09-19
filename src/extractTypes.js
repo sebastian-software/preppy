@@ -27,10 +27,8 @@ export default function extractTypes(fileName, outputFolder) {
   console.log("Extract types:", fileName, "=>", outputFolder)
   return compile([fileName], {
     declarationDir: outputFolder,
-    maxNodeModuleJsDepth: 0,
-    noEmitOnError: false,
     declaration: true,
     emitDeclarationOnly: true,
-    target: ScriptTarget.ES5
+    target: ScriptTarget.ES2017
   })
 }

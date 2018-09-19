@@ -5,7 +5,7 @@ import rimraf from "rimraf"
 
 import pkg from "../../package.json"
 
-jest.setTimeout(10000)
+jest.setTimeout(20000)
 
 const versionString = `preppy v${pkg.version}`
 

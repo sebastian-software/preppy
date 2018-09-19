@@ -1,4 +1,4 @@
-import { createProgram, getPreEmitDiagnostics, flattenDiagnosticMessageText } from "typescript";
+import { ScriptTarget, createProgram, getPreEmitDiagnostics, flattenDiagnosticMessageText } from "typescript";
 
 // Compiler based on code shown in the official docs:
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
@@ -31,6 +31,6 @@ export default function extractTypes(fileName, outputFolder) {
     noEmitOnError: false,
     declaration: true,
     emitDeclarationOnly: true,
-    target: ts.ScriptTarget.ES5
+    target: ScriptTarget.ES5
   })
 }

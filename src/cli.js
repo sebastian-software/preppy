@@ -13,6 +13,8 @@ import jsonPlugin from "rollup-plugin-json"
 import replacePlugin from "rollup-plugin-replace"
 import yamlPlugin from "rollup-plugin-yaml"
 import { terser as terserPlugin } from "rollup-plugin-terser"
+import shebangPlugin from "rollup-plugin-preserve-shebang"
+import executablePlugin from "rollup-plugin-executable"
 
 import parseCommandline from "./parseCommandline"
 import extractTypes from "./extractTypes"
@@ -85,7 +87,7 @@ async function bundleAll() {
       input: targets.binary,
       target: "cli",
       format: "cjs",
-      output: outputFileMatrix["bin"]
+      output: outputFileMatrix.bin
     })
   }
 
@@ -117,6 +119,8 @@ function bundleTo({
     [`${prefix}VERSION`]: JSON.stringify(PKG_CONFIG.version),
     [`${prefix}TARGET`]: JSON.stringify(target)
   }
+
+  const shebang = "#!/usr/bin/env node"
 
   return rollup({
     input,
@@ -155,14 +159,15 @@ function bundleTo({
         // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
         exclude: [ "node_modules/**", "**/*.json" ]
       }),
-      format === "umd" ? terserPlugin() : null
+      format === "umd" ? terserPlugin() : null,
+      target === "cli" ? executablePlugin() : null
     ].filter(Boolean)
   })
     .then((bundle) =>
       bundle.write({
         format,
         name,
-        banner: target === "binary" ? `#!/usr/bin/env node\n\n${banner}` : banner,
+        banner: target === "cli" ? shebang + "\n\n" + banner : banner,
         sourcemap: command.flags.sourcemap,
         file: output
       })

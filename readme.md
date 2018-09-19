@@ -14,9 +14,9 @@
 [travis]: https://travis-ci.org/sebastian-software/preppy
 [appveyor]: https://ci.appveyor.com/project/swernerx/preppy/branch/master
 
-To keep things simple and reduce to number of dependencies, *Preppy* uses your local Babel configuration to transpile your code. You have to make sure that all required babel mechanic, presets and loaders are installed locally to your project.
+To keep things simple and reduce to number of dependencies, *Preppy* uses your local Babel configuration to transpile your code. You have to make sure that all required Babel mechanics, presets and plugins are installed locally to your project.
 
-Note: Pretty v4 is based on Babel v7 which is still in Beta. We need to move the ecosystem forward, that's the reason why Preppy is already been built on that version.
+Preppy also support extracting *TypeScript* types into `.d.ts` files to make them usable by users of your libraries. The generated code is still transpiled by Babel. The standard `typescript` CLI is used for extracting the types.
 
 
 ## Output Targets
@@ -24,22 +24,24 @@ Note: Pretty v4 is based on Babel v7 which is still in Beta. We need to move the
 *Preppy* produces exports of your sources depending on the entries of your packages `package.json`. It supports building for *CommonJS* and well as with ES Modules (ESM). Just add the relevant entries to the configuration.
 
 - CommonJS Output: `main`
-- ES Module Output: `module`
+- ESM Output: `module`
+- UMD Output: `umd`
 
 Basic Example:
 
 ```json
 {
   "name": "mypackage",
-  "main": "lib/main-cjs.js",
-  "module": "lib/main-esm.js"
+  "main": "lib/main.cjs.js",
+  "module": "lib/main.esm.js",
+  "umd": "lib/main.umd.js"
 }
 ```
 
 
 ## Binary Output
 
-Additionally `preppy` is capable in generating for binary targets.
+Additionally *Preppy is capable in generating for binary targets e.g. CLI tools.
 
 This generates a `mypackage` binary which is generated from the matching source file.
 
@@ -95,8 +97,8 @@ Usage
   $ preppy
 
 Options
-  --input-node       Input file for NodeJS target [default = auto]
-  --input-binary     Input file for Binary target [default = auto]
+  --input-lib        Input file for NodeJS target [default = auto]
+  --input-cli        Input file for Binary target [default = auto]
   --output-folder    Configure the output folder [default = auto]
 
   -m, --sourcemap    Create a source map file during processing

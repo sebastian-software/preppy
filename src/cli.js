@@ -17,6 +17,7 @@ import parseCommandline from "./parseCommandline"
 import extractTypes from "./extractTypes"
 import getBanner from "./getBanner"
 import getTargets from "./getTargets"
+import getOutputMatrix from "./getOutputMatrix"
 
 const ROOT = getRoot()
 const PKG_CONFIG = require(resolve(ROOT, "package.json"))

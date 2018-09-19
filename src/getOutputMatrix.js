@@ -11,23 +11,25 @@ export default function getOutputMatrix(command, PKG_CONFIG) {
 
   /* eslint-disable dot-notation */
   const matrix = {
-    // Library Target
-    "main": PKG_CONFIG["main"] || null,
-    "module": PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
+    // Library Targets
+    main: PKG_CONFIG["main"] || null,
+    module: PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
+    umd: PKG_CONFIG["umd"] || PKG_CONFIG["unpkg"] || null,
 
     // Binary Target
-    "bin": binaryOutput || null,
+    bin: binaryOutput || null,
 
     // Types Target (TypeScript)
-    "types": PKG_CONFIG["types"] || null
+    types: PKG_CONFIG["types"] || null
   }
 
   const outputFolder = command.flags.outputFolder
   if (outputFolder) {
-    matrix["main"] = `${outputFolder}/index.cjs.js`
-    matrix["module"] = `${outputFolder}/index.esm.js`
-    matrix["bin"] = `${outputFolder}/cli.js`
-    matrix["types"] = `${outputFolder}/index.d.js`
+    matrix.main = `${outputFolder}/index.cjs.js`
+    matrix.module = `${outputFolder}/index.esm.js`
+    matrix.umd = `${outputFolder}/index.umd.js`
+    matrix.bin = `${outputFolder}/cli.js`
+    matrix.types = `${outputFolder}/index.d.js`
   }
 
   return matrix

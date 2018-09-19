@@ -49,14 +49,21 @@ async function bundleAll() {
       input: targets.library,
       target: "lib",
       format: "esm",
-      output: outputFileMatrix["module"]
+      output: outputFileMatrix.module
     })
 
     await bundleTo({
       input: targets.library,
       target: "lib",
       format: "cjs",
-      output: outputFileMatrix["main"]
+      output: outputFileMatrix.main
+    })
+
+    await bundleTo({
+      input: targets.library,
+      target: "lib",
+      format: "umd",
+      output: outputFileMatrix.umd
     })
 
     if ([ ".ts", ".tsx" ].includes(extname(targets.library))) {

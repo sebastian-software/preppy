@@ -13,7 +13,6 @@ import jsonPlugin from "rollup-plugin-json"
 import replacePlugin from "rollup-plugin-replace"
 import yamlPlugin from "rollup-plugin-yaml"
 import { terser as terserPlugin } from "rollup-plugin-terser"
-import shebangPlugin from "rollup-plugin-preserve-shebang"
 import executablePlugin from "rollup-plugin-executable"
 
 import parseCommandline from "./parseCommandline"
@@ -21,6 +20,7 @@ import extractTypes from "./extractTypes"
 import getBanner from "./getBanner"
 import getTargets from "./getTargets"
 import getOutputMatrix from "./getOutputMatrix"
+import printSizeInfo from "./printSizeInfo"
 
 const ROOT = getRoot()
 const PKG_CONFIG = require(resolve(ROOT, "package.json"))
@@ -98,7 +98,7 @@ function isRelative(dependency) {
   return (/^\./).exec(dependency)
 }
 
-function bundleTo({
+async function bundleTo({
   input,
   target,
   format,
@@ -122,7 +122,7 @@ function bundleTo({
 
   const shebang = "#!/usr/bin/env node"
 
-  return rollup({
+  const bundle = await rollup({
     input,
     cache,
     onwarn: (error) => {
@@ -159,19 +159,29 @@ function bundleTo({
         // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
         exclude: [ "node_modules/**", "**/*.json" ]
       }),
-      format === "umd" ? terserPlugin() : null,
+      format === "umd" ? terserPlugin({
+        toplevel: format === "esm" || format === "cjs",
+        keep_classnames: true,
+        keep_fnames: true,
+        safari10: true,
+        output: {
+          ascii_only: true,
+          semicolons: false
+        }
+      }) : null,
       target === "cli" ? executablePlugin() : null
     ].filter(Boolean)
   })
-    .then((bundle) =>
-      bundle.write({
-        format,
-        name,
-        banner: target === "cli" ? shebang + "\n\n" + banner : banner,
-        sourcemap: command.flags.sourcemap,
-        file: output
-      })
-    )
+
+  const { code } = await bundle.write({
+    format,
+    name,
+    banner: target === "cli" ? shebang + "\n\n" + banner : banner,
+    sourcemap: command.flags.sourcemap,
+    file: output
+  })
+
+  await printSizeInfo(code, output)
 }
 
 bundleAll()

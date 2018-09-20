@@ -87,7 +87,7 @@ async function bundleAll() {
           )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(dirname(outputFileMatrix.types))}...`
         )
 
-        extractTypes(targets.library, dirname(outputFileMatrix.types))
+        extractTypes(targets.library, dirname(outputFileMatrix.types), verbose)
       } else {
         console.warn(chalk.red.bold("Missing `types` entry in `package.json`!"))
       }
@@ -194,7 +194,7 @@ async function bundleTo({
     file: output
   })
 
-  await printSizeInfo(code, output)
+  await printSizeInfo(code, output, target !== "cli")
 }
 
 bundleAll()

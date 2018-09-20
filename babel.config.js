@@ -10,7 +10,6 @@ module.exports = (api) => {
   console.log(`>>> Babel: Env="${env}" Caller="${caller}" Modules="${modules}"`)
 
   return {
-    comments: false,
     sourceMaps: true,
     plugins: [
       "module:fast-async",

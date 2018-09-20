@@ -45,7 +45,6 @@ Basic Example:
   "name": "mypackage",
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
-  "umd": "lib/index.umd.js",
   "unpkg": "lib/index.umd.min.js",
 }
 ```
@@ -57,7 +56,6 @@ For exporting types with TypeScript you should add a `types` entry to your `pack
   "name": "mypackage",
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
-  "umd": "lib/index.umd.js",
   "unpkg": "lib/index.umd.min.js",
   "types": "lib/index.d.ts"
 }

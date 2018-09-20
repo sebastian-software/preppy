@@ -41,6 +41,8 @@ console.log(\\"Supports Set:\\", mySet.add(4));
 
   console.log(\\"Supports default parameters:\\", supportsDefault);
 })();
+/* eslint-disable no-shadow */
+
 
 var testVariable = \\"outer\\";
 var _testVariable = \\"inner\\";
@@ -54,7 +56,9 @@ var destructed = Object.assign({
   third: 3
 }, source);
 console.log(\\"Destructed:\\", destructed);
-var MyClass = function () {
+var MyClass =
+/*#__PURE__*/
+function () {
   function MyClass() {
     this.onClick = function () {
       console.log(\\"Clickedx\\");
@@ -74,7 +78,9 @@ var MyClass = function () {
   return MyClass;
 }();
 
-var SecondClass = function (_MyClass) {
+var SecondClass =
+/*#__PURE__*/
+function (_MyClass) {
   _inheritsLoose(SecondClass, _MyClass);
 
   function SecondClass() {
@@ -148,6 +154,8 @@ console.log(\\"Supports Set:\\", mySet.add(4));
 
   console.log(\\"Supports default parameters:\\", supportsDefault);
 })();
+/* eslint-disable no-shadow */
+
 
 var testVariable = \\"outer\\";
 var _testVariable = \\"inner\\";
@@ -161,7 +169,9 @@ var destructed = Object.assign({
   third: 3
 }, source);
 console.log(\\"Destructed:\\", destructed);
-var MyClass = function () {
+var MyClass =
+/*#__PURE__*/
+function () {
   function MyClass() {
     this.onClick = function () {
       console.log(\\"Clickedx\\");
@@ -181,7 +191,9 @@ var MyClass = function () {
   return MyClass;
 }();
 
-var SecondClass = function (_MyClass) {
+var SecondClass =
+/*#__PURE__*/
+function (_MyClass) {
   _inheritsLoose(SecondClass, _MyClass);
 
   function SecondClass() {
@@ -231,7 +243,7 @@ console.log(\\"X Value from inner scope:\\",\\"inner\\"),console.log(\\"X Value 
 var m=Object.assign({third:3},{first:1,second:2})
 console.log(\\"Destructed:\\",m)
 var f=function(){function MyClass(){this.onClick=function(){console.log(\\"Clickedx\\")},console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return MyClass.prototype.helper=function helper(e){console.log(\\"Called helper: \\"+e)},MyClass}()
-!function(e){function SecondClass(){return e.call(this,100)||this}o(SecondClass,e)}(f())
+f()
 console.log(\\"Initialized class:\\",new f),function helper(){return new Promise(function(e,o){return Promise.resolve(PromiseHelper()).then(function(s){try{return e(42)}catch(e){return o(e)}},o)})}()
 e.MyClass=f,e.setValues=function setValues(e){setState({values:e},function(){return!0})},Object.defineProperty(e,\\"__esModule\\",{value:!0})})
 //# sourceMappingURL=index.umd.js.map

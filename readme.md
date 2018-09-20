@@ -34,9 +34,9 @@ We made the experience that this works pretty fine for most projects. If you hav
 
 *Preppy* produces exports of your sources depending on the entries of your packages `package.json`. It supports building for *ESM*, *CommonJS* and *UMD*. Just add the relevant entries to the package configuration.
 
-- CommonJS: `main`
-- EcmaScript Modules (ESM): `module`
-- Universal Module Definition (UMD): `umd`
+- *CommonJS*: `main`
+- *EcmaScript Modules (ESM)*: `module`: New module standard for optimal tree shaking of bundlers.
+- *Universal Module Definition (UMD)*: `umd` + `unpkg` for delivering a minified bundle to the CDN.
 
 Basic Example:
 
@@ -45,7 +45,8 @@ Basic Example:
   "name": "mypackage",
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
-  "umd": "lib/index.umd.js"
+  "umd": "lib/index.umd.js",
+  "unpkg": "lib/index.umd.min.js",
 }
 ```
 
@@ -57,6 +58,7 @@ For exporting types with TypeScript you should add a `types` entry to your `pack
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
   "umd": "lib/index.umd.js",
+  "unpkg": "lib/index.umd.min.js",
   "types": "lib/index.d.ts"
 }
 ```
@@ -107,8 +109,6 @@ module.exports = (api) => {
   const isBundler = caller === "rollup-plugin-babel"
   const isCli = caller === "@babel/node"
   const modules = (env === "test" && !isBundler) || isCli ? "commonjs" : false
-
-  console.log(`>>> Babel: Env="${env}" Caller="${caller}" Modules="${modules}"`)
 
   return {
     sourceMaps: true,
@@ -166,7 +166,7 @@ Usage
   $ preppy
 
 Options
-  --input-lib        Input file for NodeJS target [default = auto]
+  --input-lib        Input file for Library target [default = auto]
   --input-cli        Input file for Binary target [default = auto]
   --output-folder    Configure the output folder [default = auto]
 

@@ -18,23 +18,46 @@ To keep things simple and reduce to number of dependencies, *Preppy* uses your l
 
 Preppy also support extracting *TypeScript* types into `.d.ts` files to make them usable by users of your libraries. The generated code is still transpiled by Babel. The standard `typescript` CLI is used for extracting the types.
 
+## Input Files
+
+These are the typical entry points looked up for by *Preppy*:
+
+- `src/index.js`
+- `src/index.jsx`
+- `src/index.ts`
+- `src/index.tsx`
+
+We made the experience that this works pretty fine for most projects. If you have the need for more input files, please report back to us.
+
 
 ## Output Targets
 
-*Preppy* produces exports of your sources depending on the entries of your packages `package.json`. It supports building for *CommonJS* and well as with ES Modules (ESM). Just add the relevant entries to the configuration.
+*Preppy* produces exports of your sources depending on the entries of your packages `package.json`. It supports building for *ESM*, *CommonJS* and *UMD*. Just add the relevant entries to the package configuration.
 
-- CommonJS Output: `main`
-- ESM Output: `module`
-- UMD Output: `umd`
+- CommonJS: `main`
+- EcmaScript Modules (ESM): `module`
+- Universal Module Definition (UMD): `umd`
 
 Basic Example:
 
 ```json
 {
   "name": "mypackage",
-  "main": "lib/main.cjs.js",
-  "module": "lib/main.esm.js",
-  "umd": "lib/main.umd.js"
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.esm.js",
+  "umd": "lib/index.umd.js"
+}
+```
+
+For exporting types with TypeScript you should add a `types` entry to your `package.json` as well:
+
+```json
+{
+  "name": "mypackage",
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.esm.js",
+  "umd": "lib/index.umd.js",
+  "types": "lib/index.d.ts"
 }
 ```
 
@@ -55,9 +78,9 @@ Example Configuration:
 
 ```json
 {
-  "name": "mypackage",
+  "name": "mycli",
   "bin": {
-    "mypackage": "bin/mypackage"
+    "mycli": "bin/mycli"
   }
 }
 ```
@@ -65,18 +88,64 @@ Example Configuration:
 
 ## Installation
 
-### NPM
-
 ```console
 $ npm install --save-dev preppy
 ```
 
-### Yarn
 
-```console
-$ yarn add --dev preppy
+## Configure Babel
+
+As transpiling happens via Babel you have to install the *Babel* Core, Plugins and Presets on your own. You also need to use a standard Babel Configuration inside your package.
+
+Example `babel.config.js` (has to be CommonJS unfortunately):
+
+```js
+module.exports = (api) => {
+  const env = api.env()
+  const caller = api.caller((inst) => (inst && inst.name) || "any")
+
+  const isBundler = caller === "rollup-plugin-babel"
+  const isCli = caller === "@babel/node"
+  const modules = (env === "test" && !isBundler) || isCli ? "commonjs" : false
+
+  console.log(`>>> Babel: Env="${env}" Caller="${caller}" Modules="${modules}"`)
+
+  return {
+    sourceMaps: true,
+    plugins: [
+      [
+        "@babel/transform-runtime"
+      ]
+    ],
+    presets: [
+      [
+        "@babel/env",
+        {
+          useBuiltIns: "usage",
+          loose: true,
+          modules
+        }
+      ],
+      [
+        "@babel/typescript",
+        {
+          allExtensions: true,
+          isTSX: true
+        }
+      ]
+    ]
+  }
+}
 ```
 
+Note: Leave out the `"@babel/typescript"` when you do not need TypeScript transpiling.
+
+### Installing Babel Dependencies
+
+```console
+$ npm install --save-dev @babel/plugin-transform-runtime @babel/preset-env @babel/preset-typescript @babel/core
+$ npm install --save @babel/runtime corejs
+```
 
 
 ## Usage

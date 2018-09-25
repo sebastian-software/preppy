@@ -112,7 +112,7 @@ async function bundleAll() {
   }
 
   if (entries.browser) {
-    console.log(">>> Browser Entry:", entries.node)
+    console.log(">>> Browser Entry:", entries.browser)
 
     if (outputFileMatrix.browser) {
       await bundleTo({

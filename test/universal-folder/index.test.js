@@ -17,9 +17,13 @@ test("Publish Test File via Babel as Universal", async () => {
   process.chdir(__dirname)
 
   await lazyDelete("./dist")
+  await lazyDelete("./bin")
 
   console.log(await lazyExec(`node ../../bin/preppy`))
 
+  expect(
+    await lazyRead(resolve(__dirname, "bin/mycli.js"), "utf8")
+  ).toMatchSnapshot()
   expect(
     await lazyRead(resolve(__dirname, "dist/node.cjs.js"), "utf8")
   ).toMatchSnapshot()

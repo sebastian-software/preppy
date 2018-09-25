@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "bin": {
-    "mycli": "./bin/mycli"
+    "mycli": "./bin/mycli.js"
   },
   "main": "dist/node.cjs.js",
   "module": "dist/node.esm.js",

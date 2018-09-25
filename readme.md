@@ -214,9 +214,11 @@ Usage
   $ preppy
 
 Options
-  --input-lib        Input file for Library target [default = auto]
-  --input-browser    Input file for browser target [default = auto]
-  --input-cli        Input file for Binary target [default = auto]
+  --entry-lib        Entry file for Library (universal) target [default = auto]
+  --entry-browser    Entry file for Browser target [default = auto]
+  --entry-node       Entry file for NodeJS target [default = auto]
+  --entry-cli        Entry file for CLI target [default = auto]
+
   --output-folder    Configure the output folder [default = auto]
 
   -m, --sourcemap    Create a source map file during processing

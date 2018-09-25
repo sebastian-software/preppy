@@ -1,18 +1,17 @@
 import { existsSync } from "fs"
 
-export default function getEntries(command) {
+export default function getEntries(opts) {
   const entries = {}
 
-  const flags = command.flags
-  const hasInputs = flags.entryLib || flags.entryNode || flags.entryBrowser || flags.entryCli
+  const hasInputs = opts.entryLib || opts.entryNode || opts.entryBrowser || opts.entryCli
 
-  if (flags.entryLib) {
-    if (!existsSync(flags.entryLib)) {
+  if (opts.entryLib) {
+    if (!existsSync(opts.entryLib)) {
       throw new Error(
-        `Library entry point specified does not exist: ${flags.entryLib}!`
+        `Library entry point specified does not exist: ${opts.entryLib}!`
       )
     }
-    entries.library = flags.entryLib
+    entries.library = opts.entryLib
   } else if (!hasInputs) {
     entries.library = [
       "src/index.js",
@@ -22,13 +21,13 @@ export default function getEntries(command) {
     ].filter(existsSync)[0]
   }
 
-  if (flags.entryNode) {
-    if (!existsSync(flags.entryNode)) {
+  if (opts.entryNode) {
+    if (!existsSync(opts.entryNode)) {
       throw new Error(
-        `NodeJS entry point specified does not exist: ${flags.entryNode}!`
+        `NodeJS entry point specified does not exist: ${opts.entryNode}!`
       )
     }
-    entries.node = flags.entryNode
+    entries.node = opts.entryNode
   } else if (!hasInputs) {
     entries.node = [
       "src/node.js",
@@ -50,13 +49,13 @@ export default function getEntries(command) {
     ].filter(existsSync)[0]
   }
 
-  if (flags.entryBrowser) {
-    if (!existsSync(flags.entryBrowser)) {
+  if (opts.entryBrowser) {
+    if (!existsSync(opts.entryBrowser)) {
       throw new Error(
-        `Browser entry point specified does not exist: ${flags.entryBrowser}!`
+        `Browser entry point specified does not exist: ${opts.entryBrowser}!`
       )
     }
-    entries.browser = flags.entryBrowser
+    entries.browser = opts.entryBrowser
   } else if (!hasInputs) {
     entries.browser = [
       "src/client.js",
@@ -78,13 +77,13 @@ export default function getEntries(command) {
     ].filter(existsSync)[0]
   }
 
-  if (flags.entryCli) {
-    if (!existsSync(flags.entryCli)) {
+  if (opts.entryCli) {
+    if (!existsSync(opts.entryCli)) {
       throw new Error(
-        `CLI entry point specified does not exist: ${flags.entryCli}!`
+        `CLI entry point specified does not exist: ${opts.entryCli}!`
       )
     }
-    entries.binary = flags.entryCli
+    entries.binary = opts.entryCli
   } else if (!hasInputs) {
     entries.binary = [
       "src/cli.js",

@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
-export default function getOutputMatrix(command, PKG_CONFIG) {
+export default function getOutputMatrix(opts, pkg) {
   // Handle special case to generate a binary file based on config in package.json
-  const binaryConfig = PKG_CONFIG.bin
+  const binaryConfig = pkg.bin
   let binaryOutput = null
   if (binaryConfig) {
     for (const name in binaryConfig) {
@@ -13,26 +13,26 @@ export default function getOutputMatrix(command, PKG_CONFIG) {
   /* eslint-disable dot-notation */
   const matrix = {
     // Library Targets
-    main: PKG_CONFIG["main"] || null,
-    module: PKG_CONFIG["module"] || PKG_CONFIG["jsnext:main"] || null,
+    main: pkg["main"] || null,
+    module: pkg["module"] || pkg["jsnext:main"] || null,
 
     // Browser Targets
-    umd: PKG_CONFIG["umd"] || PKG_CONFIG["unpkg"] || null,
-    browser: PKG_CONFIG["browser"] || null,
+    umd: pkg["umd"] || pkg["unpkg"] || null,
+    browser: pkg["browser"] || null,
 
     // Binary Target
     binary: binaryOutput || null,
 
     // Types Target (TypeScript)
-    types: PKG_CONFIG["types"] || null
+    types: pkg["types"] || null
   }
 
-  const outputFolder = command.flags.outputFolder
+  const outputFolder = opts.outputFolder
   if (outputFolder) {
     matrix.main = `${outputFolder}/index.cjs.js`
     matrix.module = `${outputFolder}/index.esm.js`
-    matrix.browser = `${outputFolder}/index.browser.esm.js`
-    matrix.umd = `${outputFolder}/index.browser.umd.js`
+    matrix.browser = `${outputFolder}/browser.esm.js`
+    matrix.umd = `${outputFolder}/browser.umd.js`
     matrix.bin = `${outputFolder}/cli.js`
     matrix.types = `${outputFolder}/index.d.js`
   }

@@ -7,8 +7,11 @@ export default function parseCommandline() {
     $ preppy
 
   Options
-    --input-lib        Input file for library target [default = auto]
-    --input-cli        Input file for cli target [default = auto]
+    --entry-lib        Entry file for Library target [default = auto]
+    --entry-browser    Entry file for Browser target [default = auto]
+    --entry-node       Entry file for NodeJS target [default = auto]
+    --entry-cli        Entry file for CLI target [default = auto]
+
     --output-folder    Configure the output folder [default = auto]
 
     -m, --sourcemap    Create a source map file during processing
@@ -17,11 +20,19 @@ export default function parseCommandline() {
 `,
     {
       flags: {
-        inputLib: {
+        entryLib: {
           default: null
         },
 
-        inputCli: {
+        entryBrowser: {
+          default: null
+        },
+
+        entryNode: {
+          default: null
+        },
+
+        entryCli: {
           default: null
         },
 

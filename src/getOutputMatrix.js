@@ -21,7 +21,7 @@ export default function getOutputMatrix(command, PKG_CONFIG) {
     browser: PKG_CONFIG["browser"] || null,
 
     // Binary Target
-    bin: binaryOutput || null,
+    binary: binaryOutput || null,
 
     // Types Target (TypeScript)
     types: PKG_CONFIG["types"] || null

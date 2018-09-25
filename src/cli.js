@@ -45,7 +45,27 @@ const entries = getEntries(command)
 const outputFileMatrix = getOutputMatrix(command, PKG_CONFIG)
 
 async function bundleAll() {
-  if (entries.library) {
+  if (!outputFileMatrix.main) {
+    console.warn(chalk.red.bold("Missing `main` entry in `package.json`!"))
+  }
+
+  if (entries.node) {
+    console.log(">>> NodeJS Entry:", entries.node)
+
+    await bundleTo({
+      input: entries.node,
+      target: "node",
+      format: "cjs",
+      output: outputFileMatrix.main
+    })
+
+    await bundleTo({
+      input: entries.node,
+      target: "node",
+      format: "esm",
+      output: outputFileMatrix.module
+    })
+  } else if (entries.library) {
     console.log(">>> Library Entry:", entries.library)
     if (outputFileMatrix.module) {
       await bundleTo({
@@ -54,8 +74,6 @@ async function bundleAll() {
         format: "esm",
         output: outputFileMatrix.module
       })
-    } else {
-      console.warn(chalk.red.bold("Missing `module` entry in `package.json`!"))
     }
 
     if (outputFileMatrix.main) {
@@ -65,19 +83,17 @@ async function bundleAll() {
         format: "cjs",
         output: outputFileMatrix.main
       })
-    } else {
-      console.warn(chalk.red.bold("Missing `main` entry in `package.json`!"))
     }
 
-    if (outputFileMatrix.umd) {
-      await bundleTo({
-        input: entries.library,
-        target: "lib",
-        format: "umd",
-        output: outputFileMatrix.umd
-      })
-    } else {
-      // No warning for missing UMD. Not required for a lot of packages.
+    if (!entries.browser) {
+      if (outputFileMatrix.umd) {
+        await bundleTo({
+          input: entries.library,
+          target: "lib",
+          format: "umd",
+          output: outputFileMatrix.umd
+        })
+      }
     }
 
     if ([ ".ts", ".tsx" ].includes(extname(entries.library))) {
@@ -95,13 +111,35 @@ async function bundleAll() {
     }
   }
 
+  if (entries.browser) {
+    console.log(">>> Browser Entry:", entries.node)
+
+    if (outputFileMatrix.browser) {
+      await bundleTo({
+        input: entries.browser,
+        target: "browser",
+        format: "esm",
+        output: outputFileMatrix.browser
+      })
+    }
+
+    if (outputFileMatrix.umd) {
+      await bundleTo({
+        input: entries.browser,
+        target: "lib",
+        format: "umd",
+        output: outputFileMatrix.umd
+      })
+    }
+  }
+
   if (entries.binary) {
     console.log(">>> Binary Entry:", entries.binary)
     await bundleTo({
       input: entries.binary,
       target: "cli",
       format: "cjs",
-      output: outputFileMatrix.bin
+      output: outputFileMatrix.binary
     })
   }
 

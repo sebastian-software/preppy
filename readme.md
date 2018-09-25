@@ -103,13 +103,31 @@ the input fields differ from the one of the normal libraries or binaries:
 - `src/browser/index.jsx`
 - `src/browser/index.ts`
 - `src/browser/index.tsx`
+- `src/web/index.js`
+- `src/web/index.jsx`
+- `src/web/index.ts`
+- `src/web/index.tsx`
+
+For the NodeJS part you can use any of the following entries:
+
+- `src/node/index.js`
+- `src/node/index.jsx`
+- `src/node/index.ts`
+- `src/node/index.tsx`
+- `src/server/index.js`
+- `src/server/index.jsx`
+- `src/server/index.ts`
+- `src/server/index.tsx`
 
 Example Configuration:
 
 ```json
 {
-  "name": "mycli",
-  "browser": "browser.esm.js"
+  "name": "mylib",
+  "browser": "lib/browser.esm.js",
+  "unpkg": "lib/browser.umd.js",
+  "main": "lib/node.cjs.js",
+  "module": "lib/node.esm.js"
 }
 ```
 

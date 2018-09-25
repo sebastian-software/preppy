@@ -45,8 +45,8 @@ const entries = getEntries(command)
 const outputFileMatrix = getOutputMatrix(command, PKG_CONFIG)
 
 async function bundleAll() {
-  if (!outputFileMatrix.main) {
-    console.warn(chalk.red.bold("Missing `main` entry in `package.json`!"))
+  if (!outputFileMatrix.main && !entries.binary) {
+    console.warn(chalk.red.bold("Missing `main` or `bin` entry in `package.json`!"))
   }
 
   if (entries.node) {

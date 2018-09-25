@@ -1,0 +1,15 @@
+{
+  "name": "universal-basic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/node.cjs.js",
+  "module": "dist/node.esm.js",
+  "browser": "dist/browser.esm.js",
+  "unpkg": "dist/browser.umd.js",
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [],
+  "author": "Sebastian Werner <s.werner@sebastian-software.de>",
+  "license": "MIT"
+}

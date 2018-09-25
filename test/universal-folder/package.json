@@ -1,7 +1,10 @@
 {
-  "name": "babel-universal",
+  "name": "universal-folder",
   "version": "1.0.0",
   "description": "",
+  "bin": {
+    "mycli": "./bin/mycli"
+  },
   "main": "dist/node.cjs.js",
   "module": "dist/node.esm.js",
   "browser": "dist/browser.esm.js",

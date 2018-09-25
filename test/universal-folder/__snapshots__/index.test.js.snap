@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Publish Test File via Babel as Universal 1`] = `
+"/*! universal-folder v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+function index () {
+  console.log(\\"I'm on NodeJS\\");
+}
+
+module.exports = index;
+//# sourceMappingURL=node.cjs.js.map
+"
+`;
+
+exports[`Publish Test File via Babel as Universal 2`] = `
+"/*! universal-folder v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+function index () {
+  console.log(\\"I'm on NodeJS\\");
+}
+
+export default index;
+//# sourceMappingURL=node.esm.js.map
+"
+`;
+
+exports[`Publish Test File via Babel as Universal 3`] = `
+"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e[\\"babel-universal\\"]=n()}(this,function(){\\"use strict\\"
+return function browser(){console.log(\\"I'm in the Browser\\")}})
+//# sourceMappingURL=browser.umd.js.map
+"
+`;

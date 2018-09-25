@@ -27,6 +27,9 @@ test("Publish Test File via Babel as Universal", async () => {
     await lazyRead(resolve(__dirname, "dist/node.esm.js"), "utf8")
   ).toMatchSnapshot()
   expect(
+    await lazyRead(resolve(__dirname, "dist/browser.esm.js"), "utf8")
+  ).toMatchSnapshot()
+  expect(
     await lazyRead(resolve(__dirname, "dist/browser.umd.js"), "utf8")
   ).toMatchSnapshot()
 })

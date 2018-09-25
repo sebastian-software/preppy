@@ -29,7 +29,6 @@ These are the typical entry points looked up for by *Preppy*:
 
 We made the experience that this works pretty fine for most projects. If you have the need for more input files, please report back to us.
 
-
 ## Output Targets
 
 *Preppy* produces exports of your sources depending on the entries of your packages `package.json`. It supports building for *ESM*, *CommonJS* and *UMD*. Just add the relevant entries to the package configuration.
@@ -64,7 +63,7 @@ For exporting types with TypeScript you should add a `types` entry to your `pack
 
 ## Binary Output
 
-Additionally *Preppy is capable in generating for binary targets e.g. CLI tools.
+Additionally *Preppy* is capable in generating for binary targets e.g. CLI tools.
 
 This generates a `mypackage` binary which is generated from the matching source file.
 
@@ -85,6 +84,38 @@ Example Configuration:
   }
 }
 ```
+
+
+## Universal Output
+
+*Preppy* also has some support for building universal libraries. While for most projects it's completely feasible
+to have one library for both NodeJS and browsers (or only for one of these), others might want (slightly) different
+packages to browsers and NodeJS.
+
+The only difference here is that you have to define a new `browser` definition inside your `package.json`. Also
+the input fields differ from the one of the normal libraries or binaries:
+
+- `src/client/index.js`
+- `src/client/index.jsx`
+- `src/client/index.ts`
+- `src/client/index.tsx`
+- `src/browser/index.js`
+- `src/browser/index.jsx`
+- `src/browser/index.ts`
+- `src/browser/index.tsx`
+
+Example Configuration:
+
+```json
+{
+  "name": "mycli",
+  "browser": "browser.esm.js"
+}
+```
+
+Note: The bundle under `browser` is a ESM bundle which is ideally used by bundlers like *Webpack* or *Parcel*.
+
+Note: When any of these files exists, we use prefer it over the normal library for the `unpkg` entry in `package.json` as well.
 
 
 ## Installation
@@ -166,6 +197,7 @@ Usage
 
 Options
   --input-lib        Input file for Library target [default = auto]
+  --input-browser    Input file for browser target [default = auto]
   --input-cli        Input file for Binary target [default = auto]
   --output-folder    Configure the output folder [default = auto]
 

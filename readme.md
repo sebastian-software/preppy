@@ -22,10 +22,7 @@ Preppy also support extracting *TypeScript* types into `.d.ts` files to make the
 
 These are the typical entry points looked up for by *Preppy*:
 
-- `src/index.js`
-- `src/index.jsx`
-- `src/index.ts`
-- `src/index.tsx`
+- `src/index.{js|jsx|ts|tsx}`
 
 We made the experience that this works pretty fine for most projects. If you have the need for more input files, please report back to us.
 
@@ -69,10 +66,8 @@ This generates a `mypackage` binary which is generated from the matching source 
 
 Binaries are generally generated from one of these source files:
 
-- `src/cli.js`
-- `src/cli.ts`
-- `src/cli/index.js`
-- `src/cli/index.ts`
+- `src/cli.{js|ts}`
+- `src/cli/index.{js|ts}`
 
 Example Configuration:
 
@@ -95,29 +90,17 @@ packages to browsers and NodeJS.
 The only difference here is that you have to define a new `browser` definition inside your `package.json`. Also
 the input fields differ from the one of the normal libraries or binaries:
 
-- `src/client/index.js`
-- `src/client/index.jsx`
-- `src/client/index.ts`
-- `src/client/index.tsx`
-- `src/browser/index.js`
-- `src/browser/index.jsx`
-- `src/browser/index.ts`
-- `src/browser/index.tsx`
-- `src/web/index.js`
-- `src/web/index.jsx`
-- `src/web/index.ts`
-- `src/web/index.tsx`
+- `src/client.{js|jsx|ts|tsx}`
+- `src/browser.{js|jsx|ts|tsx}`
+- `src/client/index.{js|jsx|ts|tsx}`
+- `src/browser/index.{js|jsx|ts|tsx}`
 
 For the NodeJS part you can use any of the following entries:
 
-- `src/node/index.js`
-- `src/node/index.jsx`
-- `src/node/index.ts`
-- `src/node/index.tsx`
-- `src/server/index.js`
-- `src/server/index.jsx`
-- `src/server/index.ts`
-- `src/server/index.tsx`
+- `src/node.{js|jsx|ts|tsx}`
+- `src/server.{js|jsx|ts|tsx}`
+- `src/node/index.{js|jsx|ts|tsx}`
+- `src/server/index.{js|jsx|ts|tsx}`
 
 Example Configuration:
 

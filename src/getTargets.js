@@ -29,13 +29,9 @@ export default function getTargets(command) {
   } else if (!command.flags.inputLib) {
     targets.binary = [
       "src/cli.js",
-      "src/cli.jsx",
       "src/cli.ts",
-      "src/cli.tsx",
       "src/cli/index.js",
-      "src/cli/index.jsx",
-      "src/cli/index.ts",
-      "src/cli/index.tsx"
+      "src/cli/index.ts"
     ].filter(existsSync)[0]
   }
 

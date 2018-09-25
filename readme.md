@@ -71,8 +71,9 @@ This generates a `mypackage` binary which is generated from the matching source 
 Binaries are generally generated from one of these source files:
 
 - `src/cli.js`
-- `src/binary.js`
-- `src/script.js`
+- `src/cli.ts`
+- `src/cli/index.js`
+- `src/cli/index.ts`
 
 Example Configuration:
 

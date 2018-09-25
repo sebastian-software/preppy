@@ -2,3 +2,5 @@ node_modules/
 bin/
 lib/
 test/*/dist/
+test/*/bin/
+coverage/

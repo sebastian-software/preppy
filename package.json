@@ -41,6 +41,9 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "testMatch": [
+      "**/index.test.js"
+    ],
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
     }

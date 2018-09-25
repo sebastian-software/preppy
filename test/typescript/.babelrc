@@ -1,0 +1,45 @@
+{
+  "plugins": [
+    "module:fast-async",
+    [
+      "@babel/proposal-class-properties",
+      {
+        "loose": true
+      }
+    ],
+    [
+      "@babel/proposal-object-rest-spread",
+      {
+        "useBuiltIns": true,
+        "loose": true
+      }
+    ],
+    [
+      "@babel/transform-runtime",
+      {
+        "helpers": true,
+        "regenerator": false
+      }
+    ]
+  ],
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "exclude": ["transform-regenerator", "transform-async-to-generator"],
+        "useBuiltIns": "usage",
+        "loose": true,
+        "modules": false
+      }
+    ],
+    [
+      "@babel/typescript",
+      {
+        // We like JSX everywhere. No reason why we have to deal with
+        // legacy type assertion supported in earlier versions.
+        "allExtensions": true,
+        "isTSX": true
+      }
+    ]
+  ]
+}

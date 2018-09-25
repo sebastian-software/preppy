@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Publish Test File via Typescript 1`] = `
-"/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! typescript v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -19,7 +19,7 @@ require('core-js/modules/es6.promise');
 var lodash = require('lodash');
 
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
-console.log(\\"Package\\", \\"preppy\\");
+console.log(\\"Package\\", \\"typescript\\");
 console.log(\\"Target\\", \\"lib\\");
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
 new Promise(function (resolve, reject) {
@@ -120,7 +120,7 @@ exports.setValues = setValues;
 `;
 
 exports[`Publish Test File via Typescript 2`] = `
-"/*! VERSION_STRING by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! typescript v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 import _inheritsLoose from '@babel/runtime/helpers/inheritsLoose';
 import 'core-js/modules/es6.object.assign';
 import 'core-js/modules/web.dom.iterable';
@@ -132,7 +132,7 @@ import 'core-js/modules/es6.promise';
 import { camelCase } from 'lodash';
 
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
-console.log(\\"Package\\", \\"preppy\\");
+console.log(\\"Package\\", \\"typescript\\");
 console.log(\\"Target\\", \\"lib\\");
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
 new Promise(function (resolve, reject) {
@@ -232,8 +232,8 @@ export { MyClass, setValues };
 `;
 
 exports[`Publish Test File via Typescript 3`] = `
-"!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(exports,require(\\"@babel/runtime/helpers/inheritsLoose\\"),require(\\"core-js/modules/es6.object.assign\\"),require(\\"core-js/modules/web.dom.iterable\\"),require(\\"core-js/modules/es6.array.iterator\\"),require(\\"core-js/modules/es6.string.iterator\\"),require(\\"core-js/modules/es6.set\\"),require(\\"core-js/modules/es7.array.includes\\"),require(\\"core-js/modules/es6.promise\\"),require(\\"lodash\\")):\\"function\\"==typeof define&&define.amd?define([\\"exports\\",\\"@babel/runtime/helpers/inheritsLoose\\",\\"core-js/modules/es6.object.assign\\",\\"core-js/modules/web.dom.iterable\\",\\"core-js/modules/es6.array.iterator\\",\\"core-js/modules/es6.string.iterator\\",\\"core-js/modules/es6.set\\",\\"core-js/modules/es7.array.includes\\",\\"core-js/modules/es6.promise\\",\\"lodash\\"],o):o(e.preppy={},e._inheritsLoose,null,null,null,null,null,null,null,e.lodash)}(this,function(e,o,s,r,l,n,t,i,u,c){\\"use strict\\"
-o=o&&o.hasOwnProperty(\\"default\\")?o.default:o,console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===c.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"preppy\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(e,o){e(\\"resolved\\")}).then(function(e){console.log(\\"Promise:\\",e)})
+"!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(exports,require(\\"@babel/runtime/helpers/inheritsLoose\\"),require(\\"core-js/modules/es6.object.assign\\"),require(\\"core-js/modules/web.dom.iterable\\"),require(\\"core-js/modules/es6.array.iterator\\"),require(\\"core-js/modules/es6.string.iterator\\"),require(\\"core-js/modules/es6.set\\"),require(\\"core-js/modules/es7.array.includes\\"),require(\\"core-js/modules/es6.promise\\"),require(\\"lodash\\")):\\"function\\"==typeof define&&define.amd?define([\\"exports\\",\\"@babel/runtime/helpers/inheritsLoose\\",\\"core-js/modules/es6.object.assign\\",\\"core-js/modules/web.dom.iterable\\",\\"core-js/modules/es6.array.iterator\\",\\"core-js/modules/es6.string.iterator\\",\\"core-js/modules/es6.set\\",\\"core-js/modules/es7.array.includes\\",\\"core-js/modules/es6.promise\\",\\"lodash\\"],o):o(e.typescript={},e._inheritsLoose,null,null,null,null,null,null,null,e.lodash)}(this,function(e,o,s,r,l,n,t,i,u,c){\\"use strict\\"
+o=o&&o.hasOwnProperty(\\"default\\")?o.default:o,console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===c.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"typescript\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(e,o){e(\\"resolved\\")}).then(function(e){console.log(\\"Promise:\\",e)})
 console.log(\\"Constant:\\",123)
 var a=[1,2,3]
 console.log(\\"Supports Array.includes?:\\",a.includes&&a.includes(2))

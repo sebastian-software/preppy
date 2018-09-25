@@ -15,6 +15,7 @@ import yamlPlugin from "rollup-plugin-yaml"
 import { terser as terserPlugin } from "rollup-plugin-terser"
 import executablePlugin from "rollup-plugin-executable"
 
+import typescriptResolvePlugin from "./typescriptResolvePlugin"
 import parseCommandline from "./parseCommandline"
 import extractTypes from "./extractTypes"
 import getBanner from "./getBanner"
@@ -154,6 +155,7 @@ async function bundleTo({
       cjsPlugin({
         include: "node_modules/**"
       }),
+      typescriptResolvePlugin(),
       yamlPlugin(),
       jsonPlugin(),
       babelPlugin({

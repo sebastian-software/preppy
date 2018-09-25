@@ -19,7 +19,7 @@ import typescriptResolvePlugin from "./typescriptResolvePlugin"
 import parseCommandline from "./parseCommandline"
 import extractTypes from "./extractTypes"
 import getBanner from "./getBanner"
-import getTargets from "./getTargets"
+import getEntries from "./getEntries"
 import getOutputMatrix from "./getOutputMatrix"
 import printSizeInfo from "./printSizeInfo"
 
@@ -41,7 +41,7 @@ if (verbose) {
 
 const name = PKG_CONFIG.name || camelCase(PKG_CONFIG.name)
 const banner = getBanner(PKG_CONFIG)
-const targets = getTargets(command)
+const targets = getEntries(command)
 const outputFileMatrix = getOutputMatrix(command, PKG_CONFIG)
 
 async function bundleAll() {

@@ -19,6 +19,26 @@ export default function getTargets(command) {
     ].filter(existsSync)[0]
   }
 
+  if (command.flags.inputBrowser) {
+    if (!existsSync(command.flags.inputBrowser)) {
+      throw new Error(
+        `Browser entry point specified does not exist: ${command.flags.inputBrowser}!`
+      )
+    }
+    targets.browser = command.flags.inputBrowser
+  } else if (!command.flags.inputBrowser) {
+    targets.browser = [
+      "src/client/index.js",
+      "src/client/index.jsx",
+      "src/client/index.ts",
+      "src/client/index.tsx",
+      "src/browser/index.js",
+      "src/browser/index.jsx",
+      "src/browser/index.ts",
+      "src/browser/index.tsx"
+    ].filter(existsSync)[0]
+  }
+
   if (command.flags.inputCli) {
     if (!existsSync(command.flags.inputCli)) {
       throw new Error(

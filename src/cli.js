@@ -41,15 +41,15 @@ if (verbose) {
 
 const name = PKG_CONFIG.name || camelCase(PKG_CONFIG.name)
 const banner = getBanner(PKG_CONFIG)
-const targets = getEntries(command)
+const entries = getEntries(command)
 const outputFileMatrix = getOutputMatrix(command, PKG_CONFIG)
 
 async function bundleAll() {
-  if (targets.library) {
-    console.log(">>> Library Entry:", targets.library)
+  if (entries.library) {
+    console.log(">>> Library Entry:", entries.library)
     if (outputFileMatrix.module) {
       await bundleTo({
-        input: targets.library,
+        input: entries.library,
         target: "lib",
         format: "esm",
         output: outputFileMatrix.module
@@ -60,7 +60,7 @@ async function bundleAll() {
 
     if (outputFileMatrix.main) {
       await bundleTo({
-        input: targets.library,
+        input: entries.library,
         target: "lib",
         format: "cjs",
         output: outputFileMatrix.main
@@ -71,7 +71,7 @@ async function bundleAll() {
 
     if (outputFileMatrix.umd) {
       await bundleTo({
-        input: targets.library,
+        input: entries.library,
         target: "lib",
         format: "umd",
         output: outputFileMatrix.umd
@@ -80,7 +80,7 @@ async function bundleAll() {
       // No warning for missing UMD. Not required for a lot of packages.
     }
 
-    if ([ ".ts", ".tsx" ].includes(extname(targets.library))) {
+    if ([ ".ts", ".tsx" ].includes(extname(entries.library))) {
       if (outputFileMatrix.types) {
         console.log(
           `${chalk.green(">>> Extracting types from")} ${chalk.magenta(PKG_CONFIG.name)}-${chalk.magenta(
@@ -88,17 +88,17 @@ async function bundleAll() {
           )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(dirname(outputFileMatrix.types))}...`
         )
 
-        extractTypes(targets.library, dirname(outputFileMatrix.types), verbose)
+        extractTypes(entries.library, dirname(outputFileMatrix.types), verbose)
       } else {
         console.warn(chalk.red.bold("Missing `types` entry in `package.json`!"))
       }
     }
   }
 
-  if (targets.binary) {
-    console.log(">>> Binary Entry:", targets.binary)
+  if (entries.binary) {
+    console.log(">>> Binary Entry:", entries.binary)
     await bundleTo({
-      input: targets.binary,
+      input: entries.binary,
       target: "cli",
       format: "cjs",
       output: outputFileMatrix.bin

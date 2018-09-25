@@ -14,12 +14,10 @@ const lazyDelete = pify(rimraf)
 jest.setTimeout(20000)
 
 test("Publish Test File via Babel as Universal", async () => {
-  process.chdir(__dirname)
+  await lazyDelete(resolve(__dirname, "./dist"))
+  await lazyDelete(resolve(__dirname, "./bin"))
 
-  await lazyDelete("./dist")
-  await lazyDelete("./bin")
-
-  console.log(await lazyExec(`node ../../bin/preppy`))
+  console.log(await lazyExec(`node ../../bin/preppy`, { cwd: __dirname }))
 
   expect(
     await lazyRead(resolve(__dirname, "bin/mycli.js"), "utf8")

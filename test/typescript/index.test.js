@@ -12,11 +12,9 @@ const lazyDelete = pify(rimraf)
 jest.setTimeout(20000)
 
 test("Publish Test File via Typescript", async () => {
-  process.chdir(__dirname)
+  await lazyDelete(resolve(__dirname, "./dist"))
 
-  await lazyDelete("./dist")
-
-  console.log(await lazyExec(`node ../../bin/preppy`))
+  console.log(await lazyExec(`node ../../bin/preppy`, { cwd: __dirname }))
 
   expect(
     await lazyRead(resolve(__dirname, "dist/index.cjs.js"), "utf8")

@@ -31,6 +31,14 @@ export default function getEntries(command) {
     entries.node = flags.entryNode
   } else if (!hasInputs) {
     entries.node = [
+      "src/node.js",
+      "src/node.jsx",
+      "src/node.ts",
+      "src/node.tsx",
+      "src/server.js",
+      "src/server.jsx",
+      "src/server.ts",
+      "src/server.tsx",
       "src/node/index.js",
       "src/node/index.jsx",
       "src/node/index.ts",
@@ -51,6 +59,14 @@ export default function getEntries(command) {
     entries.browser = flags.entryBrowser
   } else if (!hasInputs) {
     entries.browser = [
+      "src/client.js",
+      "src/client.jsx",
+      "src/client.ts",
+      "src/client.tsx",
+      "src/browser.js",
+      "src/browser.jsx",
+      "src/browser.ts",
+      "src/browser.tsx",
       "src/client/index.js",
       "src/client/index.jsx",
       "src/client/index.ts",
@@ -58,11 +74,7 @@ export default function getEntries(command) {
       "src/browser/index.js",
       "src/browser/index.jsx",
       "src/browser/index.ts",
-      "src/browser/index.tsx",
-      "src/web/index.js",
-      "src/web/index.jsx",
-      "src/web/index.ts",
-      "src/web/index.tsx"
+      "src/browser/index.tsx"
     ].filter(existsSync)[0]
   }
 

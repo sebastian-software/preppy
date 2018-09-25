@@ -1,6 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Publish Test File via Babel as Universal 1`] = `
+"#!/usr/bin/env node
+\\"use strict\\"
+module.exports=function index(){console.log(\\"I'm in the CLI\\")}
+//# sourceMappingURL=mycli.js.map
+"
+`;
+
+exports[`Publish Test File via Babel as Universal 2`] = `
 "/*! universal-folder v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
@@ -13,7 +21,7 @@ module.exports = index;
 "
 `;
 
-exports[`Publish Test File via Babel as Universal 2`] = `
+exports[`Publish Test File via Babel as Universal 3`] = `
 "/*! universal-folder v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 function index () {
   console.log(\\"I'm on NodeJS\\");
@@ -24,9 +32,20 @@ export default index;
 "
 `;
 
-exports[`Publish Test File via Babel as Universal 3`] = `
-"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e[\\"babel-universal\\"]=n()}(this,function(){\\"use strict\\"
-return function browser(){console.log(\\"I'm in the Browser\\")}})
+exports[`Publish Test File via Babel as Universal 4`] = `
+"/*! universal-folder v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+function index () {
+  console.log(\\"I'm in the Browser\\");
+}
+
+export default index;
+//# sourceMappingURL=browser.esm.js.map
+"
+`;
+
+exports[`Publish Test File via Babel as Universal 5`] = `
+"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e[\\"universal-folder\\"]=n()}(this,function(){\\"use strict\\"
+return function index(){console.log(\\"I'm in the Browser\\")}})
 //# sourceMappingURL=browser.umd.js.map
 "
 `;

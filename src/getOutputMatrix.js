@@ -1,3 +1,5 @@
+import { join } from "path"
+
 /* eslint-disable complexity */
 export default function getOutputMatrix(opts, pkg) {
   // Handle special case to generate a binary file based on config in package.json
@@ -27,14 +29,16 @@ export default function getOutputMatrix(opts, pkg) {
     types: pkg["types"] || null
   }
 
-  const outputFolder = opts.outputFolder
-  if (outputFolder) {
-    matrix.main = `${outputFolder}/index.cjs.js`
-    matrix.module = `${outputFolder}/index.esm.js`
-    matrix.browser = `${outputFolder}/browser.esm.js`
-    matrix.umd = `${outputFolder}/browser.umd.js`
-    matrix.bin = `${outputFolder}/cli.js`
-    matrix.types = `${outputFolder}/index.d.js`
+  const output = opts.output
+  const appRoot = opts.root
+
+  if (output) {
+    matrix.main = join(appRoot, output, "index.cjs.js")
+    matrix.module = join(appRoot, output, "index.esm.js")
+    matrix.browser = join(appRoot, output, "browser.esm.js")
+    matrix.umd = join(appRoot, output, "browser.umd.js")
+    matrix.bin = join(appRoot, output, "cli.js")
+    matrix.types = join(appRoot, output, "index.d.ts")
   }
 
   return matrix

@@ -1,4 +1,4 @@
-/* eslint-disable complexity, max-statements */
+/* eslint-disable complexity, max-statements, max-depth */
 import { extname, dirname, isAbsolute, resolve, join } from "path"
 import chalk from "chalk"
 import { rollup } from "rollup"
@@ -137,11 +137,13 @@ async function bundleAll({
 
     if ([ ".ts", ".tsx" ].includes(extname(entries.library))) {
       if (output.types) {
-        console.log(
-          `${chalk.green("  - Extracting types from")} ${chalk.magenta(name)}-${chalk.magenta(
-            version
-          )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(dirname(output.types))}...`
-        )
+        if (!quiet) {
+          console.log(
+            `${chalk.green("  - Extracting types from")} ${chalk.magenta(name)}-${chalk.magenta(
+              version
+            )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(dirname(output.types))}...`
+          )
+        }
 
         extractTypes({
           entry: entries.library,

@@ -1,3 +1,4 @@
+import { join } from "path"
 import { ScriptTarget, ModuleResolutionKind, createProgram, getPreEmitDiagnostics, flattenDiagnosticMessageText } from "typescript";
 
 // Compiler based on code shown in the official docs:
@@ -25,9 +26,9 @@ function compile(fileNames, options, verbose) {
   }
 }
 
-export default function extractTypes(fileName, outputFolder, verbose) {
-  return compile([fileName], {
-    declarationDir: outputFolder,
+export default function extractTypes({ entry, root, output, verbose }) {
+  return compile([entry], {
+    declarationDir: join(root, output),
     declaration: true,
     emitDeclarationOnly: true,
     allowSyntheticDefaultImports: true,

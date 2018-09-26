@@ -1,4 +1,4 @@
-import { extname, dirname, isAbsolute, resolve } from "path"
+import { extname, dirname, isAbsolute, resolve, join } from "path"
 import chalk from "chalk"
 import { rollup } from "rollup"
 import { camelCase } from "lodash"
@@ -21,17 +21,25 @@ import typescriptResolvePlugin from "./typescriptResolvePlugin"
 
 let cache
 
-export default function index(opts) {
-  const pkg = require(resolve(opts.root, "package.json"))
-  const name = pkg.name || camelCase(pkg.name)
-  const version = pkg.version || "1.0.0"
+export default async function index(opts) {
+  const { verbose, quiet, root } = opts
+  const pkg = require(resolve(root, "package.json"))
+  const name = pkg.name || dirname(root)
+  const version = pkg.version || "0.0.0"
   const banner = getBanner(pkg)
   const entries = getEntries(opts)
   const output = getOutputMatrix(opts, pkg)
 
-  bundleAll({
+  if (flags.verbose) {
+    console.log("Flags:", flags)
+  }
+
+  await bundleAll({
+    verbose,
+    quiet,
     name,
     version,
+    root,
     banner,
     entries,
     output
@@ -43,6 +51,7 @@ async function bundleAll({
   quiet,
   name,
   version,
+  root,
   banner,
   entries,
   output
@@ -54,6 +63,7 @@ async function bundleAll({
   const base = {
     verbose,
     quiet,
+    root,
     name,
     version,
     banner
@@ -102,9 +112,7 @@ async function bundleAll({
     if (!entries.browser) {
       if (output.umd) {
         await bundleTo({
-          name,
-          version,
-          banner,
+          ...base,
           input: entries.library,
           target: "lib",
           format: "umd",
@@ -121,7 +129,13 @@ async function bundleAll({
           )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(dirname(output.types))}...`
         )
 
-        extractTypes(entries.library, dirname(output.types), verbose)
+        extractTypes({
+          entry: entries.library,
+          output: dirname(output.types),
+          root,
+          verbose,
+          quiet
+        })
       } else {
         console.warn(chalk.red.bold("Missing `types` entry in `package.json`!"))
       }
@@ -155,8 +169,6 @@ async function bundleAll({
   if (entries.binary) {
     console.log(">>> Binary Entry:", entries.binary)
     await bundleTo({
-      verbose,
-      quiet,
       ...base,
       input: entries.binary,
       target: "cli",
@@ -175,6 +187,7 @@ function isRelative(dependency) {
 async function bundleTo({
   verbose,
   quiet,
+  root,
   name,
   version,
   banner,
@@ -258,7 +271,7 @@ async function bundleTo({
     name,
     banner: target === "cli" ? shebang + "\n\n" + banner : banner,
     sourcemap: true,
-    file: output
+    file: join(root, output)
   })
 
   await printSizeInfo(code, output, target !== "cli")

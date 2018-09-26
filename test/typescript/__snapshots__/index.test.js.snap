@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Publish Test File via Typescript 1`] = `
+exports[`Publish Test File via Typescript: cjs 1`] = `
 "/*! typescript v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
@@ -119,7 +119,7 @@ exports.setValues = setValues;
 "
 `;
 
-exports[`Publish Test File via Typescript 2`] = `
+exports[`Publish Test File via Typescript: esm 1`] = `
 "/*! typescript v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 import _inheritsLoose from '@babel/runtime/helpers/inheritsLoose';
 import 'core-js/modules/es6.object.assign';
@@ -231,7 +231,28 @@ export { MyClass, setValues };
 "
 `;
 
-exports[`Publish Test File via Typescript 3`] = `
+exports[`Publish Test File via Typescript: types-main 1`] = `
+"import { FormValues } from \\"./types\\";
+export declare class MyClass {
+    constructor();
+    onClick: () => void;
+    helper(x: string): void;
+}
+export declare const setValues: (values: FormValues) => void;
+"
+`;
+
+exports[`Publish Test File via Typescript: types-sub 1`] = `
+"/**
+ * Values of fields in the form
+ */
+export interface FormValues {
+    [field: string]: any;
+}
+"
+`;
+
+exports[`Publish Test File via Typescript: umd 1`] = `
 "/*! typescript v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es6.object.assign'), require('core-js/modules/web.dom.iterable'), require('core-js/modules/es6.array.iterator'), require('core-js/modules/es6.string.iterator'), require('core-js/modules/es6.set'), require('core-js/modules/es7.array.includes'), require('core-js/modules/es6.promise'), require('lodash')) :
@@ -347,26 +368,5 @@ exports[`Publish Test File via Typescript 3`] = `
 
 })));
 //# sourceMappingURL=index.umd.js.map
-"
-`;
-
-exports[`Publish Test File via Typescript 4`] = `
-"import { FormValues } from \\"./types\\";
-export declare class MyClass {
-    constructor();
-    onClick: () => void;
-    helper(x: string): void;
-}
-export declare const setValues: (values: FormValues) => void;
-"
-`;
-
-exports[`Publish Test File via Typescript 5`] = `
-"/**
- * Values of fields in the form
- */
-export interface FormValues {
-    [field: string]: any;
-}
 "
 `;

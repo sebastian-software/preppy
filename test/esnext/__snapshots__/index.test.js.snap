@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Publish Test File via Babel 1`] = `
+exports[`Publish Test File via Babel: cjs 1`] = `
 "/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
@@ -104,7 +104,7 @@ helper();
 "
 `;
 
-exports[`Publish Test File via Babel 2`] = `
+exports[`Publish Test File via Babel: esm 1`] = `
 "/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 import _inheritsLoose from '@babel/runtime/helpers/inheritsLoose';
 import 'core-js/modules/es6.object.assign';
@@ -204,7 +204,7 @@ helper();
 "
 `;
 
-exports[`Publish Test File via Babel 3`] = `
+exports[`Publish Test File via Babel: umd 1`] = `
 "/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('core-js/modules/es6.object.assign'), require('core-js/modules/web.dom.iterable'), require('core-js/modules/es6.array.iterator'), require('core-js/modules/es6.string.iterator'), require('core-js/modules/es6.set'), require('core-js/modules/es7.array.includes'), require('core-js/modules/es6.promise'), require('lodash')) :

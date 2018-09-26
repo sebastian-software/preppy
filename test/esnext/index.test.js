@@ -21,11 +21,11 @@ test("Publish Test File via Babel", async () => {
 
   expect(
     await lazyRead(resolve(__dirname, "dist/index.cjs.js"), "utf8")
-  ).toMatchSnapshot()
+  ).toMatchSnapshot("cjs")
   expect(
     await lazyRead(resolve(__dirname, "dist/index.esm.js"), "utf8")
-  ).toMatchSnapshot()
+  ).toMatchSnapshot("esm")
   expect(
     await lazyRead(resolve(__dirname, "dist/index.umd.js"), "utf8")
-  ).toMatchSnapshot()
+  ).toMatchSnapshot("umd")
 })

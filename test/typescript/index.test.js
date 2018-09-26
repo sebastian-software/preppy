@@ -21,17 +21,17 @@ test("Publish Test File via Typescript", async () => {
 
   expect(
     await lazyRead(resolve(__dirname, "dist/index.cjs.js"), "utf8")
-  ).toMatchSnapshot()
+  ).toMatchSnapshot("cjs")
   expect(
     await lazyRead(resolve(__dirname, "dist/index.esm.js"), "utf8")
-  ).toMatchSnapshot()
+  ).toMatchSnapshot("esm")
   expect(
     await lazyRead(resolve(__dirname, "dist/index.umd.js"), "utf8")
-  ).toMatchSnapshot()
+  ).toMatchSnapshot("umd")
   expect(
     await lazyRead(resolve(__dirname, "dist/index.d.ts"), "utf8")
-  ).toMatchSnapshot()
+  ).toMatchSnapshot("types-main")
   expect(
     await lazyRead(resolve(__dirname, "dist/types.d.ts"), "utf8")
-  ).toMatchSnapshot()
+  ).toMatchSnapshot("types-sub")
 })

@@ -82,6 +82,7 @@
     "@babel/runtime": "7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
+    "codecov": "^3.1.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.6.0",
     "eslint-config-readable": "^2.2.0",

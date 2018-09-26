@@ -1,4 +1,4 @@
-# *Preppy* <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
+# *Preppy* <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Code Coverage][codecov-img]][codecov] [![Dependencies][deps-img]][deps]
 
 > *Preppy* - A Simple and lightweight tool for preparing the publish of NPM packages.
 
@@ -13,6 +13,8 @@
 [appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/preppy/master.svg?label=windows%20build
 [travis]: https://travis-ci.org/sebastian-software/preppy
 [appveyor]: https://ci.appveyor.com/project/swernerx/preppy/branch/master
+[codecov-img]: https://img.shields.io/codecov/c/github/codecov/example-python.svg
+[codecov]: https://codecov.io/gh/sebastian-software/preppy
 
 To keep things simple and reduce to number of dependencies, *Preppy* uses your local Babel configuration to transpile your code. You have to make sure that all required Babel mechanics, presets and plugins are installed locally to your project.
 

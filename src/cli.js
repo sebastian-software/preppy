@@ -1,24 +1,25 @@
-/* eslint-disable immutable/no-mutation */
 /* eslint-disable no-console */
 
-import { get as getRoot } from "app-root-dir"
+import root from "app-root-path"
+import { resolve } from "path"
 
 import parseCommandline from "./parseCommandline"
-import bundleAll from "./index"
+import main from "./index"
 
 const command = parseCommandline()
+const flags = command.flags
 
-const verbose = command.flags.verbose
-if (verbose) {
-  console.log("Flags:", command.flags)
+// Store app root inside flags
+if (flags.root) {
+  flags.root = resolve(flags.root)
+} else {
+  flags.root = root.toString()
 }
 
-bundleAll({
-  root: getRoot(),
-  ...command.flags
-})
 // Cleanup shorthands from flags
 delete flags.v
 delete flags.q
 delete flags.m
 
+// Call main method
+main(flags)

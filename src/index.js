@@ -248,7 +248,7 @@ async function bundleTo({
     variables[`${prefix}NODE_ENV`] = JSON.stringify(env)
   }
 
-  if (opts.verbose) {
+  if (verbose) {
     console.log("Variables:", formatJSON(variables))
   }
 

@@ -281,8 +281,6 @@ async function bundleTo({
       }),
       (env === "production" && (format === "umd" || target === "cli")) || (/\.min\./).exec(output) ? terserPlugin({
         toplevel: format === "esm" || format === "cjs",
-        keep_classnames: true,
-        keep_fnames: true,
         safari10: true,
         output: {
           ascii_only: true,

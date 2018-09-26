@@ -17,3 +17,8 @@ bundleAll({
   root: getRoot(),
   ...command.flags
 })
+// Cleanup shorthands from flags
+delete flags.v
+delete flags.q
+delete flags.m
+

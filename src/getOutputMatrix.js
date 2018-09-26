@@ -36,9 +36,9 @@ export default function getOutputMatrix(opts, pkg) {
     matrix.module = join(output, "index.esm.js")
     // We do not create browser and umd bundles in this mode.
     // Reason: Most libraries do not work correctly using these variants.
-    // matrix.browser = join(output, "browser.esm.js")
-    // matrix.umd = join(output, "browser.umd.js")
-    matrix.bin = join(output, "cli.js")
+    matrix.browser = null
+    matrix.umd = null
+    matrix.binary = join(output, "cli.js")
     matrix.types = join(output, "index.d.ts")
   }
 

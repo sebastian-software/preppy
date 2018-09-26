@@ -139,15 +139,15 @@ module.exports = (api) => {
 
   const isBundler = caller === "rollup-plugin-babel"
   const isCli = caller === "@babel/node"
-  const modules = (env === "test" && !isBundler) || isCli ? "commonjs" : false
+  const isTest = (/\b(test)\b/).exec(env)
+  const modules = (isTest && !isBundler) || isCli ? "commonjs" : false
+  const isUmd = (/\b(umd)\b/).exec(env)
 
   return {
     sourceMaps: true,
     plugins: [
-      [
-        "@babel/transform-runtime"
-      ]
-    ],
+      isUmd ? null : "@babel/transform-runtime"
+    ].filter(Boolean),
     presets: [
       [
         "@babel/env",
@@ -169,7 +169,11 @@ module.exports = (api) => {
 }
 ```
 
+Note: `env` gets a lot more depth when working with *Preppy*. It's actually set to this: `${env}-${target}-${format}` e.g. `"development-browser-esm"`. This gives you more control e.g. more setting up targets for *Browserslist*.
+
 Note: Leave out the `"@babel/typescript"` when you do not need TypeScript transpiling.
+
+Note: Please disable `transform-runtime` for all UMD builds as UMD is better working when only clean named imports are kept external.
 
 ### Installing Babel Dependencies
 

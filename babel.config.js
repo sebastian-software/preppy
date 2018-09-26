@@ -5,7 +5,9 @@ module.exports = (api) => {
 
   const isBundler = caller === "rollup-plugin-babel"
   const isCli = caller === "@babel/node"
-  const modules = (env === "test" && !isBundler) || isCli ? "commonjs" : false
+  const isTest = (/\b(test)\b/).exec(env)
+  const modules = (isTest && !isBundler) || isCli ? "commonjs" : false
+  const isUmd = (/\b(umd)\b/).exec(env)
 
   // console.log(`>>> Babel: Env="${env}" Caller="${caller}" Modules="${modules}"`)
 
@@ -26,14 +28,14 @@ module.exports = (api) => {
           loose: true
         }
       ],
-      [
+      isUmd ? null : [
         "@babel/transform-runtime",
         {
           helpers: true,
           regenerator: false
         }
       ]
-    ],
+    ].filter(Boolean),
     presets: [
       [
         "@babel/env",

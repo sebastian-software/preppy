@@ -233,6 +233,7 @@ async function bundleTo({
   }
 
   const shebang = "#!/usr/bin/env node"
+  const env = process.env.NODE_ENV || "development"
 
   const bundle = await rollup({
     input,
@@ -258,7 +259,10 @@ async function bundleTo({
       jsonPlugin(),
       babelPlugin({
         // Rollup Setting: Prefer usage of a common library of helpers
-        runtimeHelpers: true,
+        runtimeHelpers: format !== "umd",
+
+        // We use envName to pass information about the build target and format to Babel
+        envName: `${env}-${target}-${format}`,
 
         // The Babel-Plugin is not using a pre-defined include, but builds up
         // its include list from the default extensions of Babel-Core.

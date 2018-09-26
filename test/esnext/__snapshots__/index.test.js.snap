@@ -205,19 +205,19 @@ helper();
 `;
 
 exports[`Publish Test File via Babel 3`] = `
-"!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"@babel/runtime/helpers/inheritsLoose\\"),require(\\"core-js/modules/es6.object.assign\\"),require(\\"core-js/modules/web.dom.iterable\\"),require(\\"core-js/modules/es6.array.iterator\\"),require(\\"core-js/modules/es6.string.iterator\\"),require(\\"core-js/modules/es6.set\\"),require(\\"core-js/modules/es7.array.includes\\"),require(\\"core-js/modules/es6.promise\\"),require(\\"lodash\\")):\\"function\\"==typeof define&&define.amd?define([\\"@babel/runtime/helpers/inheritsLoose\\",\\"core-js/modules/es6.object.assign\\",\\"core-js/modules/web.dom.iterable\\",\\"core-js/modules/es6.array.iterator\\",\\"core-js/modules/es6.string.iterator\\",\\"core-js/modules/es6.set\\",\\"core-js/modules/es7.array.includes\\",\\"core-js/modules/es6.promise\\",\\"lodash\\"],o):o(e._inheritsLoose,null,null,null,null,null,null,null,e.lodash)}(this,function(e,o,r,s,l,n,t,i,u){\\"use strict\\"
-e=e&&e.hasOwnProperty(\\"default\\")?e.default:e,console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===u.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"esnext\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(e,o){e(\\"resolved\\")}).then(function(e){console.log(\\"Promise:\\",e)})
+"!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"core-js/modules/es6.object.assign\\"),require(\\"core-js/modules/web.dom.iterable\\"),require(\\"core-js/modules/es6.array.iterator\\"),require(\\"core-js/modules/es6.string.iterator\\"),require(\\"core-js/modules/es6.set\\"),require(\\"core-js/modules/es7.array.includes\\"),require(\\"core-js/modules/es6.promise\\"),require(\\"lodash\\")):\\"function\\"==typeof define&&define.amd?define([\\"core-js/modules/es6.object.assign\\",\\"core-js/modules/web.dom.iterable\\",\\"core-js/modules/es6.array.iterator\\",\\"core-js/modules/es6.string.iterator\\",\\"core-js/modules/es6.set\\",\\"core-js/modules/es7.array.includes\\",\\"core-js/modules/es6.promise\\",\\"lodash\\"],o):o(null,null,null,null,null,null,null,e.lodash)}(this,function(e,o,s,r,l,n,t,c){\\"use strict\\"
+console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===c.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"esnext\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(e,o){e(\\"resolved\\")}).then(function(e){console.log(\\"Promise:\\",e)})
 console.log(\\"Constant:\\",123)
-var c=[1,2,3]
-console.log(\\"Supports Array.includes?:\\",c.includes&&c.includes(2))
-var a,d=new Set(c)
-console.log(\\"Supports Set:\\",d.add(4)),void 0===a&&(a=!0),console.log(\\"Supports default parameters:\\",a)
+var u=[1,2,3]
+console.log(\\"Supports Array.includes?:\\",u.includes&&u.includes(2))
+var i,a=new Set(u)
+console.log(\\"Supports Set:\\",a.add(4)),void 0===i&&(i=!0),console.log(\\"Supports default parameters:\\",i)
 console.log(\\"X Value from inner scope:\\",\\"inner\\"),console.log(\\"X Value from outer scope:\\",\\"outer\\")
-var m=Object.assign({third:3},{first:1,second:2})
-console.log(\\"Destructed:\\",m)
-var p=function(){function MyClass(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return MyClass.prototype.helper=function helper(){console.log(\\"Called helper\\")},MyClass}()
-p()
-console.log(\\"Initialized class:\\",new p),function helper(){return new Promise(function(e,o){return Promise.resolve(PromiseHelper()).then(function(r){try{return e(42)}catch(e){return o(e)}},o)})}()})
+var d=Object.assign({third:3},{first:1,second:2})
+console.log(\\"Destructed:\\",d)
+var m=function(){function MyClass(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return MyClass.prototype.helper=function helper(){console.log(\\"Called helper\\")},MyClass}()
+m()
+console.log(\\"Initialized class:\\",new m),function helper(){return new Promise(function(e,o){return Promise.resolve(PromiseHelper()).then(function(s){try{return e(42)}catch(e){return o(e)}},o)})}()})
 //# sourceMappingURL=index.umd.js.map
 "
 `;

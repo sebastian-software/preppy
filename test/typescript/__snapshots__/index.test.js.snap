@@ -232,20 +232,120 @@ export { MyClass, setValues };
 `;
 
 exports[`Publish Test File via Typescript 3`] = `
-"!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(exports,require(\\"core-js/modules/es6.object.assign\\"),require(\\"core-js/modules/web.dom.iterable\\"),require(\\"core-js/modules/es6.array.iterator\\"),require(\\"core-js/modules/es6.string.iterator\\"),require(\\"core-js/modules/es6.set\\"),require(\\"core-js/modules/es7.array.includes\\"),require(\\"core-js/modules/es6.promise\\"),require(\\"lodash\\")):\\"function\\"==typeof define&&define.amd?define([\\"exports\\",\\"core-js/modules/es6.object.assign\\",\\"core-js/modules/web.dom.iterable\\",\\"core-js/modules/es6.array.iterator\\",\\"core-js/modules/es6.string.iterator\\",\\"core-js/modules/es6.set\\",\\"core-js/modules/es7.array.includes\\",\\"core-js/modules/es6.promise\\",\\"lodash\\"],o):o(e.typescript={},null,null,null,null,null,null,null,e.lodash)}(this,function(e,o,s,r,l,n,t,c,u){\\"use strict\\"
-console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===u.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"typescript\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(e,o){e(\\"resolved\\")}).then(function(e){console.log(\\"Promise:\\",e)})
-console.log(\\"Constant:\\",123)
-var i=[1,2,3]
-console.log(\\"Supports Array.includes?:\\",i.includes&&i.includes(2))
-var a,d=new Set(i)
-console.log(\\"Supports Set:\\",d.add(4)),void 0===a&&(a=!0),console.log(\\"Supports default parameters:\\",a)
-console.log(\\"X Value from inner scope:\\",\\"inner\\"),console.log(\\"X Value from outer scope:\\",\\"outer\\")
-var p=Object.assign({third:3},{first:1,second:2})
-console.log(\\"Destructed:\\",p)
-var m=function(){function MyClass(){this.onClick=function(){console.log(\\"Clickedx\\")},console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return MyClass.prototype.helper=function helper(e){console.log(\\"Called helper: \\"+e)},MyClass}()
-m()
-console.log(\\"Initialized class:\\",new m),function helper(){return new Promise(function(e,o){return Promise.resolve(PromiseHelper()).then(function(s){try{return e(42)}catch(e){return o(e)}},o)})}()
-e.MyClass=m,e.setValues=function setValues(e){setState({values:e},function(){return!0})},Object.defineProperty(e,\\"__esModule\\",{value:!0})})
+"/*! typescript v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es6.object.assign'), require('core-js/modules/web.dom.iterable'), require('core-js/modules/es6.array.iterator'), require('core-js/modules/es6.string.iterator'), require('core-js/modules/es6.set'), require('core-js/modules/es7.array.includes'), require('core-js/modules/es6.promise'), require('lodash')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es6.object.assign', 'core-js/modules/web.dom.iterable', 'core-js/modules/es6.array.iterator', 'core-js/modules/es6.string.iterator', 'core-js/modules/es6.set', 'core-js/modules/es7.array.includes', 'core-js/modules/es6.promise', 'lodash'], factory) :
+  (factory((global.typescript = {}),null,null,null,null,null,null,null,global.lodash));
+}(this, (function (exports,es6_object_assign,web_dom_iterable,es6_array_iterator,es6_string_iterator,es6_set,es7_array_includes,es6_promise,lodash) { 'use strict';
+
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+    subClass.__proto__ = superClass;
+  }
+
+  console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
+  console.log(\\"Package\\", \\"typescript\\");
+  console.log(\\"Target\\", \\"lib\\");
+  console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
+  new Promise(function (resolve, reject) {
+    resolve(\\"resolved\\");
+  }).then(function (first) {
+    console.log(\\"Promise:\\", first);
+  });
+  var CONSTANT = 123;
+  console.log(\\"Constant:\\", CONSTANT);
+  var myArray = [1, 2, 3];
+  console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+  var mySet = new Set(myArray);
+  console.log(\\"Supports Set:\\", mySet.add(4));
+
+  (function (supportsDefault) {
+    if (supportsDefault === void 0) {
+      supportsDefault = true;
+    }
+
+    console.log(\\"Supports default parameters:\\", supportsDefault);
+  })();
+  /* eslint-disable no-shadow */
+
+
+  var testVariable = \\"outer\\";
+  var _testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", _testVariable);
+  console.log(\\"X Value from outer scope:\\", testVariable);
+  var source = {
+    first: 1,
+    second: 2
+  };
+  var destructed = Object.assign({
+    third: 3
+  }, source);
+  console.log(\\"Destructed:\\", destructed);
+  var MyClass =
+  /*#__PURE__*/
+  function () {
+    function MyClass() {
+      this.onClick = function () {
+        console.log(\\"Clickedx\\");
+      };
+
+      console.log(\\"Called constructor\\");
+      this.helper();
+      this.instanceProperty = 3;
+    }
+
+    var _proto = MyClass.prototype;
+
+    _proto.helper = function helper(x) {
+      console.log(\\"Called helper: \\" + x);
+    };
+
+    return MyClass;
+  }();
+
+  var SecondClass =
+  /*#__PURE__*/
+  function (_MyClass) {
+    _inheritsLoose(SecondClass, _MyClass);
+
+    function SecondClass() {
+      return _MyClass.call(this, 100) || this;
+    }
+
+    return SecondClass;
+  }(MyClass());
+
+  console.log(\\"Initialized class:\\", new MyClass());
+
+  function helper() {
+    return new Promise(function ($return, $error) {
+      return Promise.resolve(PromiseHelper()).then(function ($await_1) {
+        try {
+          return $return(42);
+        } catch ($boundEx) {
+          return $error($boundEx);
+        }
+      }, $error);
+    });
+  }
+
+  helper();
+  var setValues = function setValues(values) {
+    setState({
+      values: values
+    }, function () {
+      return true;
+    });
+  };
+
+  exports.MyClass = MyClass;
+  exports.setValues = setValues;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
 //# sourceMappingURL=index.umd.js.map
 "
 `;

@@ -205,19 +205,105 @@ helper();
 `;
 
 exports[`Publish Test File via Babel 3`] = `
-"!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"core-js/modules/es6.object.assign\\"),require(\\"core-js/modules/web.dom.iterable\\"),require(\\"core-js/modules/es6.array.iterator\\"),require(\\"core-js/modules/es6.string.iterator\\"),require(\\"core-js/modules/es6.set\\"),require(\\"core-js/modules/es7.array.includes\\"),require(\\"core-js/modules/es6.promise\\"),require(\\"lodash\\")):\\"function\\"==typeof define&&define.amd?define([\\"core-js/modules/es6.object.assign\\",\\"core-js/modules/web.dom.iterable\\",\\"core-js/modules/es6.array.iterator\\",\\"core-js/modules/es6.string.iterator\\",\\"core-js/modules/es6.set\\",\\"core-js/modules/es7.array.includes\\",\\"core-js/modules/es6.promise\\",\\"lodash\\"],o):o(null,null,null,null,null,null,null,e.lodash)}(this,function(e,o,s,r,l,n,t,c){\\"use strict\\"
-console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===c.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"esnext\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(e,o){e(\\"resolved\\")}).then(function(e){console.log(\\"Promise:\\",e)})
-console.log(\\"Constant:\\",123)
-var u=[1,2,3]
-console.log(\\"Supports Array.includes?:\\",u.includes&&u.includes(2))
-var i,a=new Set(u)
-console.log(\\"Supports Set:\\",a.add(4)),void 0===i&&(i=!0),console.log(\\"Supports default parameters:\\",i)
-console.log(\\"X Value from inner scope:\\",\\"inner\\"),console.log(\\"X Value from outer scope:\\",\\"outer\\")
-var d=Object.assign({third:3},{first:1,second:2})
-console.log(\\"Destructed:\\",d)
-var m=function(){function MyClass(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return MyClass.prototype.helper=function helper(){console.log(\\"Called helper\\")},MyClass}()
-m()
-console.log(\\"Initialized class:\\",new m),function helper(){return new Promise(function(e,o){return Promise.resolve(PromiseHelper()).then(function(s){try{return e(42)}catch(e){return o(e)}},o)})}()})
+"/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('core-js/modules/es6.object.assign'), require('core-js/modules/web.dom.iterable'), require('core-js/modules/es6.array.iterator'), require('core-js/modules/es6.string.iterator'), require('core-js/modules/es6.set'), require('core-js/modules/es7.array.includes'), require('core-js/modules/es6.promise'), require('lodash')) :
+  typeof define === 'function' && define.amd ? define(['core-js/modules/es6.object.assign', 'core-js/modules/web.dom.iterable', 'core-js/modules/es6.array.iterator', 'core-js/modules/es6.string.iterator', 'core-js/modules/es6.set', 'core-js/modules/es7.array.includes', 'core-js/modules/es6.promise', 'lodash'], factory) :
+  (factory(null,null,null,null,null,null,null,global.lodash));
+}(this, (function (es6_object_assign,web_dom_iterable,es6_array_iterator,es6_string_iterator,es6_set,es7_array_includes,es6_promise,lodash) { 'use strict';
+
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+    subClass.__proto__ = superClass;
+  }
+
+  console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
+  console.log(\\"Package\\", \\"esnext\\");
+  console.log(\\"Target\\", \\"lib\\");
+  console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
+  new Promise(function (resolve, reject) {
+    resolve(\\"resolved\\");
+  }).then(function (first) {
+    console.log(\\"Promise:\\", first);
+  });
+  var CONSTANT = 123;
+  console.log(\\"Constant:\\", CONSTANT);
+  var myArray = [1, 2, 3];
+  console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+  var mySet = new Set(myArray);
+  console.log(\\"Supports Set:\\", mySet.add(4));
+
+  (function (supportsDefault) {
+    if (supportsDefault === void 0) {
+      supportsDefault = true;
+    }
+
+    console.log(\\"Supports default parameters:\\", supportsDefault);
+  })();
+  /* eslint-disable no-shadow */
+
+
+  var testVariable = \\"outer\\";
+  var _testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", _testVariable);
+  console.log(\\"X Value from outer scope:\\", testVariable);
+  var source = {
+    first: 1,
+    second: 2
+  };
+  var destructed = Object.assign({
+    third: 3
+  }, source);
+  console.log(\\"Destructed:\\", destructed);
+
+  var MyClass =
+  /*#__PURE__*/
+  function () {
+    function MyClass() {
+      console.log(\\"Called constructor\\");
+      this.helper();
+      this.instanceProperty = 3;
+    }
+
+    var _proto = MyClass.prototype;
+
+    _proto.helper = function helper() {
+      console.log(\\"Called helper\\");
+    };
+
+    return MyClass;
+  }();
+
+  var SecondClass =
+  /*#__PURE__*/
+  function (_MyClass) {
+    _inheritsLoose(SecondClass, _MyClass);
+
+    function SecondClass() {
+      return _MyClass.call(this, 100) || this;
+    }
+
+    return SecondClass;
+  }(MyClass());
+
+  console.log(\\"Initialized class:\\", new MyClass());
+
+  function helper() {
+    return new Promise(function ($return, $error) {
+      return Promise.resolve(PromiseHelper()).then(function ($await_1) {
+        try {
+          return $return(42);
+        } catch ($boundEx) {
+          return $error($boundEx);
+        }
+      }, $error);
+    });
+  }
+
+  helper();
+
+})));
 //# sourceMappingURL=index.umd.js.map
 "
 `;

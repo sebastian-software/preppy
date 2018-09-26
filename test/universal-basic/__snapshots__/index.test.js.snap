@@ -36,8 +36,20 @@ export default browser;
 `;
 
 exports[`Publish Test File via Babel as Universal 4`] = `
-"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e[\\"universal-basic\\"]=n()}(this,function(){\\"use strict\\"
-return function browser(){console.log(\\"I'm in the Browser\\")}})
+"/*! universal-basic v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global['universal-basic'] = factory());
+}(this, (function () { 'use strict';
+
+  function browser () {
+    console.log(\\"I'm in the Browser\\");
+  }
+
+  return browser;
+
+})));
 //# sourceMappingURL=browser.umd.js.map
 "
 `;

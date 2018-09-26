@@ -2,8 +2,15 @@
 
 exports[`Publish Test File via Babel as Universal 1`] = `
 "#!/usr/bin/env node
-\\"use strict\\"
-module.exports=function index(){console.log(\\"I'm in the CLI\\")}
+
+/*! universal-folder v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+function index () {
+  console.log(\\"I'm in the CLI\\");
+}
+
+module.exports = index;
 //# sourceMappingURL=mycli.js.map
 "
 `;
@@ -44,8 +51,20 @@ export default index;
 `;
 
 exports[`Publish Test File via Babel as Universal 5`] = `
-"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e[\\"universal-folder\\"]=n()}(this,function(){\\"use strict\\"
-return function index(){console.log(\\"I'm in the Browser\\")}})
+"/*! universal-folder v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global['universal-folder'] = factory());
+}(this, (function () { 'use strict';
+
+  function index () {
+    console.log(\\"I'm in the Browser\\");
+  }
+
+  return index;
+
+})));
 //# sourceMappingURL=browser.umd.js.map
 "
 `;

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import { resolve } from "path"
-import root from "app-root-path"
+import findRoot from "find-root"
 
 import parseCommandline from "./parseCommandline"
 import main from "./index"
@@ -13,7 +13,7 @@ const flags = command.flags
 if (flags.root) {
   flags.root = resolve(flags.root)
 } else {
-  flags.root = root.toString()
+  flags.root = findRoot(process.cwd())
 }
 
 // Cleanup shorthands from flags

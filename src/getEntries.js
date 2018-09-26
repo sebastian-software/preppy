@@ -1,9 +1,12 @@
 import { existsSync } from "fs"
+import { join } from "path"
 
 export default function getEntries(opts) {
   const entries = {}
 
   const hasInputs = opts.entryLib || opts.entryNode || opts.entryBrowser || opts.entryCli
+
+  const addRoot = (fileName) => join(opts.root, fileName)
 
   if (opts.entryLib) {
     if (!existsSync(opts.entryLib)) {
@@ -18,7 +21,7 @@ export default function getEntries(opts) {
       "src/index.jsx",
       "src/index.ts",
       "src/index.tsx"
-    ].filter(existsSync)[0]
+    ].map(addRoot).filter(existsSync)[0]
   }
 
   if (opts.entryNode) {
@@ -46,7 +49,7 @@ export default function getEntries(opts) {
       "src/server/index.jsx",
       "src/server/index.ts",
       "src/server/index.tsx"
-    ].filter(existsSync)[0]
+    ].map(addRoot).filter(existsSync)[0]
   }
 
   if (opts.entryBrowser) {
@@ -74,7 +77,7 @@ export default function getEntries(opts) {
       "src/browser/index.jsx",
       "src/browser/index.ts",
       "src/browser/index.tsx"
-    ].filter(existsSync)[0]
+    ].map(addRoot).filter(existsSync)[0]
   }
 
   if (opts.entryCli) {
@@ -90,7 +93,7 @@ export default function getEntries(opts) {
       "src/cli.ts",
       "src/cli/index.js",
       "src/cli/index.ts"
-    ].filter(existsSync)[0]
+    ].map(addRoot).filter(existsSync)[0]
   }
 
   if (entries.library == null && entries.binary == null) {

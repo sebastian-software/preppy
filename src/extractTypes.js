@@ -7,6 +7,7 @@ function compile(fileNames, options, verbose) {
   const program = createProgram(fileNames, options)
   const emitResult = program.emit()
 
+   /* istanbul ignore next */
   if (verbose) {
     const allDiagnostics = getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
 

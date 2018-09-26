@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import gzipSize from "gzip-size"
 import prettyBytes from "pretty-bytes"
 import chalk from "chalk"

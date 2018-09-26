@@ -277,7 +277,7 @@ async function bundleTo({
         // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
         exclude: [ "node_modules/**", "**/*.json" ]
       }),
-      format === "umd" || target === "cli" || (/\.min\./).exec(output) ? terserPlugin({
+      (env === "production" && (format === "umd" || target === "cli")) || (/\.min\./).exec(output) ? terserPlugin({
         toplevel: format === "esm" || format === "cjs",
         keep_classnames: true,
         keep_fnames: true,

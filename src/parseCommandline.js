@@ -7,16 +7,17 @@ export default function parseCommandline() {
     $ preppy
 
   Options
-    --entry-lib        Entry file for Library target [default = auto]
-    --entry-browser    Entry file for Browser target [default = auto]
-    --entry-node       Entry file for NodeJS target [default = auto]
-    --entry-cli        Entry file for CLI target [default = auto]
+    --entry-lib        Entry file for Library target [auto]
+    --entry-browser    Entry file for Browser target [auto]
+    --entry-node       Entry file for NodeJS target [auto]
+    --entry-cli        Entry file for CLI target [auto]
 
-    --output-folder    Configure the output folder [default = auto]
+    --root             The root folder of your project [auto]
+    --output           Override output folder (and package.json entries) [auto]
 
-    -m, --sourcemap    Create a source map file during processing
-    -v, --verbose      Verbose output mode [default = false]
-    -q, --quiet        Quiet output mode [default = false]
+    -m, --sourcemap    Create a source map file during processing [true]
+    -v, --verbose      Verbose output mode [false]
+    -q, --quiet        Quiet output mode [false]
 `,
     {
       flags: {
@@ -36,7 +37,11 @@ export default function parseCommandline() {
           default: null
         },
 
-        outputFolder: {
+        root: {
+          default: null
+        },
+
+        output: {
           default: null
         },
 

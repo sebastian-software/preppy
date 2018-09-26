@@ -69,7 +69,8 @@
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-terser": "^3.0.0",
     "rollup-plugin-yaml": "^1.1.0",
-    "typescript": "^3.0.3"
+    "typescript": "^3.0.3",
+    "update-notifier": "^2.5.0"
   },
   "devDependencies": {
     "@babel/cli": "7.1.0",

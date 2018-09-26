@@ -2,6 +2,8 @@
 
 import { resolve } from "path"
 import findRoot from "find-root"
+import updateNotifier from "update-notifier"
+import { name, version } from "../package.json"
 
 import parseCommandline from "./parseCommandline"
 import main from "./index"
@@ -20,6 +22,9 @@ if (flags.root) {
 delete flags.v
 delete flags.q
 delete flags.m
+
+// Check whether there is something new available
+updateNotifier({ pkg: { name, version } }).notify();
 
 // Call main method
 main(flags)

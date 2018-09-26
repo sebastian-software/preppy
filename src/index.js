@@ -30,8 +30,8 @@ export default async function index(opts) {
   const entries = getEntries(opts)
   const output = getOutputMatrix(opts, pkg)
 
-  if (flags.verbose) {
-    console.log("Flags:", flags)
+  if (opts.verbose) {
+    console.log("Options:", opts)
   }
 
   await bundleAll({

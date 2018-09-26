@@ -120,6 +120,21 @@ Note: The bundle under `browser` is a ESM bundle which is ideally used by bundle
 
 Note: When any of these files exists, we use prefer it over the normal library for the `unpkg` entry in `package.json` as well.
 
+## Environment Settings
+
+*Preppy* injects these environment values into your code base:
+
+- `process.env.BUNDLE_NAME`: Extracted `name` field from `package.json`.
+- `process.env.BUNDLE_VERSION`: Extracted `version` field from `package.json`.
+- `process.env.BUNDLE_TARGET`: One of the supported targets. Either
+- `process.env.NODE_ENV`: Injects environment config e.g. via `NODE_ENV="production" preppy` (optional)
+
+These values are injected into your code base by replacing the original instance.
+
+Note: It only works correctly when you use the whole identifier.
+
+Note: In verbose mode we are logging the environment settings configured.
+
 
 ## Installation
 

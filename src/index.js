@@ -209,6 +209,10 @@ function isRelative(dependency) {
   return (/^\./).exec(dependency)
 }
 
+function formatJSON(json) {
+  return JSON.stringify(json, null, 2).replace(/\\"/g, "")
+}
+
 async function bundleTo({
   verbose,
   quiet,
@@ -228,15 +232,25 @@ async function bundleTo({
     )
   }
 
+  const shebang = "#!/usr/bin/env node"
+
   const prefix = "process.env."
   const variables = {
-    [`${prefix}NAME`]: JSON.stringify(name),
-    [`${prefix}VERSION`]: JSON.stringify(version),
-    [`${prefix}TARGET`]: JSON.stringify(target)
+    [`${prefix}BUNDLE_NAME`]: JSON.stringify(name),
+    [`${prefix}BUNDLE_VERSION`]: JSON.stringify(version),
+    [`${prefix}BUNDLE_TARGET`]: JSON.stringify(target)
   }
 
-  const shebang = "#!/usr/bin/env node"
-  const env = process.env.NODE_ENV || "development"
+  // This protected helper is required to make Preppy not optimizing itself here.
+  const protectedEnv = process.env
+  const env = protectedEnv.NODE_ENV
+  if (env) {
+    variables[`${prefix}NODE_ENV`] = JSON.stringify(env)
+  }
+
+  if (opts.verbose) {
+    console.log("Variables:", formatJSON(variables))
+  }
 
   const bundle = await rollup({
     input,
@@ -265,7 +279,7 @@ async function bundleTo({
         runtimeHelpers: format !== "umd",
 
         // We use envName to pass information about the build target and format to Babel
-        envName: `${env}-${target}-${format}`,
+        envName: env ? `${env}-${target}-${format}` : `${target}-${format}`,
 
         // The Babel-Plugin is not using a pre-defined include, but builds up
         // its include list from the default extensions of Babel-Core.

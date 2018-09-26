@@ -7,7 +7,7 @@ module.exports = (api) => {
   const isCli = caller === "@babel/node"
   const modules = (env === "test" && !isBundler) || isCli ? "commonjs" : false
 
-  console.log(`>>> Babel: Env="${env}" Caller="${caller}" Modules="${modules}"`)
+  // console.log(`>>> Babel: Env="${env}" Caller="${caller}" Modules="${modules}"`)
 
   return {
     sourceMaps: true,

@@ -221,7 +221,7 @@ async function bundleTo({
   if (!quiet) {
     /* eslint-disable max-len */
     console.log(
-      `${chalk.yellow(">>> Bundling")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue(target.toUpperCase())}] ‣ ${chalk.green(output)} [${chalk.blue(format.toUpperCase())}] ...`
+      `${chalk.yellow(">>> Bundling")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue(target.toUpperCase())}] ▶ ${chalk.green(output)} [${chalk.blue(format.toUpperCase())}] ...`
     )
   }
 
@@ -294,5 +294,7 @@ async function bundleTo({
     file: join(root, output)
   })
 
-  await printSizeInfo(code, output, target !== "cli")
+  if (!quiet) {
+    await printSizeInfo(code, output, target !== "cli")
+  }
 }

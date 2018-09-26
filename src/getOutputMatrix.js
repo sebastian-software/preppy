@@ -30,15 +30,16 @@ export default function getOutputMatrix(opts, pkg) {
   }
 
   const output = opts.output
-  const appRoot = opts.root
 
   if (output) {
-    matrix.main = join(appRoot, output, "index.cjs.js")
-    matrix.module = join(appRoot, output, "index.esm.js")
-    matrix.browser = join(appRoot, output, "browser.esm.js")
-    matrix.umd = join(appRoot, output, "browser.umd.js")
-    matrix.bin = join(appRoot, output, "cli.js")
-    matrix.types = join(appRoot, output, "index.d.ts")
+    matrix.main = join(output, "index.cjs.js")
+    matrix.module = join(output, "index.esm.js")
+    // We do not create browser and umd bundles in this mode.
+    // Reason: Most libraries do not work correctly using these variants.
+    // matrix.browser = join(output, "browser.esm.js")
+    // matrix.umd = join(output, "browser.umd.js")
+    matrix.bin = join(output, "cli.js")
+    matrix.types = join(output, "index.d.ts")
   }
 
   return matrix

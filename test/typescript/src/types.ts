@@ -4,3 +4,5 @@
 export interface FormValues {
   [field: string]: any
 }
+
+export const something = 42

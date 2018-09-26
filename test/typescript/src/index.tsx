@@ -7,10 +7,11 @@
 /* eslint-disable prefer-const */
 
 import { camelCase } from "lodash"
-import { FormValues } from "./types"
+import { FormValues, something } from "./types"
 
 console.log("CherryPick Import Lodash:", camelCase("hello world") === "helloWorld")
 
+console.log("Imported JS from other file:", something)
 console.log("Package", process.env.NAME)
 console.log("Target", process.env.TARGET)
 

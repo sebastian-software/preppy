@@ -18,7 +18,13 @@ require('core-js/modules/es7.array.includes');
 require('core-js/modules/es6.promise');
 var lodash = require('lodash');
 
+/**
+ * Values of fields in the form
+ */
+var something = 42;
+
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
+console.log(\\"Imported JS from other file:\\", something);
 console.log(\\"Package\\", \\"typescript\\");
 console.log(\\"Target\\", \\"lib\\");
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
@@ -131,7 +137,13 @@ import 'core-js/modules/es7.array.includes';
 import 'core-js/modules/es6.promise';
 import { camelCase } from 'lodash';
 
+/**
+ * Values of fields in the form
+ */
+var something = 42;
+
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
+console.log(\\"Imported JS from other file:\\", something);
 console.log(\\"Package\\", \\"typescript\\");
 console.log(\\"Target\\", \\"lib\\");
 console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
@@ -249,6 +261,7 @@ exports[`Publish Test File via Typescript: types-sub 1`] = `
 export interface FormValues {
     [field: string]: any;
 }
+export declare const something = 42;
 "
 `;
 
@@ -266,7 +279,13 @@ exports[`Publish Test File via Typescript: umd 1`] = `
     subClass.__proto__ = superClass;
   }
 
+  /**
+   * Values of fields in the form
+   */
+  var something = 42;
+
   console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
+  console.log(\\"Imported JS from other file:\\", something);
   console.log(\\"Package\\", \\"typescript\\");
   console.log(\\"Target\\", \\"lib\\");
   console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);

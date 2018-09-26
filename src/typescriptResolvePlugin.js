@@ -7,6 +7,7 @@ const resolveHost = {
     try {
       return statSync(dirPath).isDirectory()
     } catch (err) {
+      /* istanbul ignore next */
       return false
     }
   },
@@ -15,6 +16,7 @@ const resolveHost = {
     try {
       return statSync(filePath).isFile()
     } catch (err) {
+      /* istanbul ignore next */
       return false
     }
   }
@@ -34,6 +36,7 @@ export default () => {
 
       // Only help resolving requests from inside TypeScript sources
       if (!extensions.includes(extname(importer))) {
+        /* istanbul ignore next */
         return null
       }
 
@@ -48,12 +51,14 @@ export default () => {
 
       if (result.resolvedModule && result.resolvedModule.resolvedFileName) {
         if (result.resolvedModule.resolvedFileName.endsWith(".d.ts")) {
+          /* istanbul ignore next */
           return null
         }
 
         return result.resolvedModule.resolvedFileName
       }
 
+      /* istanbul ignore next */
       return null
     }
   }

@@ -1,3 +1,4 @@
+/* eslint-disable complexity, max-statements */
 import { extname, dirname, isAbsolute, resolve, join } from "path"
 import chalk from "chalk"
 import { rollup } from "rollup"

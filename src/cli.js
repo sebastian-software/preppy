@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import root from "app-root-path"
 import { resolve } from "path"
+import root from "app-root-path"
 
 import parseCommandline from "./parseCommandline"
 import main from "./index"

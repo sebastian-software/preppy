@@ -57,7 +57,7 @@ async function bundleAll({
   output
 }) {
   if (!output.main && !entries.binary) {
-    console.warn(chalk.red.bold("Missing `main` or `bin` entry in `package.json`!"))
+    console.warn(chalk.red.bold("  - Missing `main` or `bin` entry in `package.json`!"))
   }
 
   const base = {
@@ -70,25 +70,38 @@ async function bundleAll({
   }
 
   if (entries.node) {
-    console.log(">>> NodeJS Entry:", entries.node)
+    if (verbose) {
+      if (output.main || output.module) {
+        console.log(">>> Node Entry:", entries.node)
+      }
+    }
 
-    await bundleTo({
-      ...base,
-      input: entries.node,
-      target: "node",
-      format: "cjs",
-      output: output.main
-    })
+    if (output.main) {
+      await bundleTo({
+        ...base,
+        input: entries.node,
+        target: "node",
+        format: "cjs",
+        output: output.main
+      })
+    }
 
-    await bundleTo({
-      ...base,
-      input: entries.node,
-      target: "node",
-      format: "esm",
-      output: output.module
-    })
+    if (output.module) {
+      await bundleTo({
+        ...base,
+        input: entries.node,
+        target: "node",
+        format: "esm",
+        output: output.module
+      })
+    }
   } else if (entries.library) {
-    console.log(">>> Library Entry:", entries.library)
+    if (verbose) {
+      if (output.main || output.module || output.umd || output.types) {
+        console.log(">>> Library Entry:", entries.library)
+      }
+    }
+
     if (output.module) {
       await bundleTo({
         ...base,
@@ -124,7 +137,7 @@ async function bundleAll({
     if ([ ".ts", ".tsx" ].includes(extname(entries.library))) {
       if (output.types) {
         console.log(
-          `${chalk.green(">>> Extracting types from")} ${chalk.magenta(name)}-${chalk.magenta(
+          `${chalk.green("  - Extracting types from")} ${chalk.magenta(name)}-${chalk.magenta(
             version
           )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(dirname(output.types))}...`
         )
@@ -137,13 +150,17 @@ async function bundleAll({
           quiet
         })
       } else {
-        console.warn(chalk.red.bold("Missing `types` entry in `package.json`!"))
+        console.warn(chalk.red.bold("  - Missing `types` entry in `package.json`!"))
       }
     }
   }
 
   if (entries.browser) {
-    console.log(">>> Browser Entry:", entries.browser)
+    if (verbose) {
+      if (output.browser || output.umd) {
+        console.log(">>> Browser Entry:", entries.browser)
+      }
+    }
 
     if (output.browser) {
       await bundleTo({
@@ -167,17 +184,22 @@ async function bundleAll({
   }
 
   if (entries.binary) {
-    console.log(">>> Binary Entry:", entries.binary)
-    await bundleTo({
-      ...base,
-      input: entries.binary,
-      target: "cli",
-      format: "cjs",
-      output: output.binary
-    })
-  }
+    if (verbose) {
+      if (output.binary) {
+        console.log(">>> CLI Entry:", entries.binary)
+      }
+    }
 
-  console.log(chalk.green.bold("🎉 Done!"))
+    if (output.binary) {
+      await bundleTo({
+        ...base,
+        input: entries.binary,
+        target: "cli",
+        format: "cjs",
+        output: output.binary
+      })
+    }
+  }
 }
 
 function isRelative(dependency) {
@@ -199,9 +221,7 @@ async function bundleTo({
   if (!quiet) {
     /* eslint-disable max-len */
     console.log(
-      `${chalk.green(">>> Bundling")} ${chalk.magenta(name)}-${chalk.magenta(
-        version
-      )} as ${chalk.blue(format.toUpperCase())} to ${chalk.green(output)}...`
+      `${chalk.yellow(">>> Bundling")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue(target.toUpperCase())}] ‣ ${chalk.green(output)} [${chalk.blue(format.toUpperCase())}] ...`
     )
   }
 

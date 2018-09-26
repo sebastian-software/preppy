@@ -3,6 +3,7 @@ import { extname, dirname, isAbsolute, resolve, join } from "path"
 import chalk from "chalk"
 import { rollup } from "rollup"
 import { camelCase } from "lodash"
+import ora from "ora"
 
 import babelPlugin from "rollup-plugin-babel"
 import cjsPlugin from "rollup-plugin-commonjs"
@@ -13,7 +14,7 @@ import { terser as terserPlugin } from "rollup-plugin-terser"
 import executablePlugin from "rollup-plugin-executable"
 
 import extractTypes from "./extractTypes"
-import printSizeInfo from "./printSizeInfo"
+import getFormattedSize from "./getFormattedSize"
 import getBanner from "./getBanner"
 import getEntries from "./getEntries"
 import getOutputMatrix from "./getOutputMatrix"
@@ -225,11 +226,12 @@ async function bundleTo({
   format,
   output
 }) {
+  let progress = null
+  let message = `${chalk.yellow("Bundling")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue(target.toUpperCase())}] ▶ ${chalk.green(output)} [${chalk.blue(format.toUpperCase())}]`
+
   if (!quiet) {
     /* eslint-disable max-len */
-    console.log(
-      `${chalk.yellow(">>> Bundling")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue(target.toUpperCase())}] ▶ ${chalk.green(output)} [${chalk.blue(format.toUpperCase())}] ...`
-    )
+    progress = ora(`${message} ...`).start()
   }
 
   const shebang = "#!/usr/bin/env node"
@@ -314,6 +316,6 @@ async function bundleTo({
   })
 
   if (!quiet) {
-    await printSizeInfo(code, output, target !== "cli")
+    progress.succeed(`${message} ${await getFormattedSize(code, output, target !== "cli")}`)
   }
 }

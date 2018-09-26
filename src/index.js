@@ -142,7 +142,10 @@ async function bundleAll({
         let progress = null
 
         if (!quiet) {
-          progress = ora(`${message}...`).start()
+          progress = ora({
+            interval: 30,
+            text: `${message}...`
+          }).start()
         }
 
         extractTypes({
@@ -232,7 +235,10 @@ async function bundleTo({
 
   if (!quiet) {
     /* eslint-disable max-len */
-    progress = ora(`${message} ...`).start()
+    progress = ora({
+      text: `${message} ...`,
+      interval: 30
+    }).start()
   }
 
   const shebang = "#!/usr/bin/env node"

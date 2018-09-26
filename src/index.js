@@ -138,12 +138,11 @@ async function bundleAll({
 
     if ([ ".ts", ".tsx" ].includes(extname(entries.library))) {
       if (output.types) {
+        let message = `${chalk.yellow("Extracting types")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue("tsdef".toUpperCase())}] ▶ ${chalk.green(dirname(output.types))}`
+        let progress = null
+
         if (!quiet) {
-          console.log(
-            `${chalk.green("  - Extracting types from")} ${chalk.magenta(name)}-${chalk.magenta(
-              version
-            )} as ${chalk.blue("tsdef".toUpperCase())} to ${chalk.green(dirname(output.types))}...`
-          )
+          progress = ora(`${message}...`).start()
         }
 
         extractTypes({
@@ -153,6 +152,8 @@ async function bundleAll({
           verbose,
           quiet
         })
+
+        progress.succeed(`${message}`)
       } else {
         console.warn(chalk.red.bold("  - Missing `types` entry in `package.json`!"))
       }

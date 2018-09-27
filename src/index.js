@@ -156,7 +156,9 @@ async function bundleAll({
           quiet
         })
 
-        progress.succeed(`${message}`)
+        if (!quiet) {
+          progress.succeed(`${message}`)
+        }
       } else {
         console.warn(chalk.red.bold("  - Missing `types` entry in `package.json`!"))
       }

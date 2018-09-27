@@ -139,7 +139,7 @@ async function bundleAll({
 
     if ([ ".ts", ".tsx" ].includes(extname(entries.library))) {
       if (output.types) {
-        const message = `${chalk.yellow("Extracting types")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue("tsdef".toUpperCase())}] ▶ ${chalk.green(dirname(output.types))}`
+        let message = `${chalk.yellow("Extracting types")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue("tsdef".toUpperCase())}] ▶ ${chalk.green(dirname(output.types))}`
         let progress = null
 
         if (!quiet) {

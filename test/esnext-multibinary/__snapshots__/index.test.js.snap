@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Multi Binary from ESNext: first 1`] = `
+"#!/usr/bin/env node
+
+/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+var lodash = require('lodash');
+
+var realWords = \\"Eine dicke Kuh lacht\\";
+
+console.log(\\"Magic:\\", lodash.snakeCase(realWords));
+//# sourceMappingURL=first-cli.js.map
+"
+`;
+
+exports[`Multi Binary from ESNext: second 1`] = `
+"#!/usr/bin/env node
+
+/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+var lodash = require('lodash');
+
+var realWords = \\"Eine dicke Kuh lacht\\";
+
+console.log(\\"Magic:\\", lodash.camelCase(realWords));
+//# sourceMappingURL=second-cli.js.map
+"
+`;

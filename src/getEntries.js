@@ -99,7 +99,7 @@ export default function getEntries(opts, output) {
     }
 
     entries.binaries.index = opts.entryCli
-  } else if (!hasInputs) {
+  } else if (!hasInputs && output.binaries) {
     const binaryNames = Object.keys(output.binaries)
 
     binaryNames.forEach((name) => {
@@ -116,7 +116,7 @@ export default function getEntries(opts, output) {
         "src/cli/index.ts"
       ].map(addRoot).filter(existsSync)[0]
 
-      if (entries.binaries[name] == null) {
+      if (binaryEntry == null) {
         console.warn(`Did not found any matching entry for binary: ${name}!`)
       } else {
         entries.binaries[name] = binaryEntry

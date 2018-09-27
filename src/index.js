@@ -59,7 +59,7 @@ async function bundleAll({
   entries,
   output
 }) {
-  if (!output.main && !entries.binary) {
+  if (!output.main && !entries.binaries) {
     console.warn(chalk.red.bold("  - Missing `main` or `bin` entry in `package.json`!"))
   }
 
@@ -194,21 +194,23 @@ async function bundleAll({
     }
   }
 
-  if (entries.binary) {
+  if (entries.binaries) {
     if (verbose) {
-      if (output.binary) {
-        console.log(">>> CLI Entry:", entries.binary)
+      if (output.binaries) {
+        console.log(">>> CLI Entry:", entries.binaries)
       }
     }
 
-    if (output.binary) {
-      await bundleTo({
-        ...base,
-        input: entries.binary,
-        target: "cli",
-        format: "cjs",
-        output: output.binary
-      })
+    if (output.binaries) {
+      for (const binaryName in output.binaries) {
+        await bundleTo({
+          ...base,
+          input: entries.binaries[binaryName],
+          target: "cli",
+          format: "cjs",
+          output: output.binaries[binaryName]
+        })
+      }
     }
   }
 }

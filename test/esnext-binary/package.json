@@ -1,0 +1,14 @@
+{
+  "name": "esnext",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "mycli": "bin/mycli.js"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [],
+  "author": "Sebastian Werner <s.werner@sebastian-software.de>",
+  "license": "MIT"
+}

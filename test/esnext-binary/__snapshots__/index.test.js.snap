@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Binary from ESNext: cli 1`] = `
+"#!/usr/bin/env node
+
+/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+var lodash = require('lodash');
+
+var realWords = \\"Eine dicke Kuh lacht\\";
+
+console.log(\\"Magic:\\", lodash.snakeCase(realWords));
+//# sourceMappingURL=mycli.js.map
+"
+`;

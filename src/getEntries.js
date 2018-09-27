@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { existsSync } from "fs"
 import { join } from "path"
 

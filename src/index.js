@@ -28,9 +28,10 @@ export default async function index(opts) {
   const pkg = require(resolve(root, "package.json"))
   const name = pkg.name || dirname(root)
   const version = pkg.version || "0.0.0"
+
   const banner = getBanner(pkg)
-  const entries = getEntries(opts)
   const output = getOutputMatrix(opts, pkg)
+  const entries = getEntries(opts, output)
 
   if (opts.verbose) {
     console.log("Options:", opts)
@@ -138,7 +139,7 @@ async function bundleAll({
 
     if ([ ".ts", ".tsx" ].includes(extname(entries.library))) {
       if (output.types) {
-        let message = `${chalk.yellow("Extracting types")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue("tsdef".toUpperCase())}] ▶ ${chalk.green(dirname(output.types))}`
+        const message = `${chalk.yellow("Extracting types")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue("tsdef".toUpperCase())}] ▶ ${chalk.green(dirname(output.types))}`
         let progress = null
 
         if (!quiet) {

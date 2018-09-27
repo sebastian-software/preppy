@@ -2,7 +2,15 @@
 import { existsSync } from "fs"
 import { join } from "path"
 
-export default function getEntries(opts) {
+function isEmpty(obj) {
+  for (const key in obj) {
+    return false
+  }
+
+  return true
+}
+
+export default function getEntries(opts, output) {
   const entries = {}
 
   const hasInputs = opts.entryLib || opts.entryNode || opts.entryBrowser || opts.entryCli
@@ -81,23 +89,47 @@ export default function getEntries(opts) {
     ].map(addRoot).filter(existsSync)[0]
   }
 
+  entries.binaries = {}
+
   if (opts.entryCli) {
     if (!existsSync(opts.entryCli)) {
       throw new Error(
         `CLI entry point specified does not exist: ${opts.entryCli}!`
       )
     }
-    entries.binary = opts.entryCli
+
+    entries.binaries.index = opts.entryCli
   } else if (!hasInputs) {
-    entries.binary = [
-      "src/cli.js",
-      "src/cli.ts",
-      "src/cli/index.js",
-      "src/cli/index.ts"
-    ].map(addRoot).filter(existsSync)[0]
+    const binaryNames = Object.keys(output.binaries)
+
+    binaryNames.forEach((name) => {
+      // Check existance of all these files in priority of there order here.
+      // The first existing file wins.
+      const binaryEntry = [
+        `src/${name}.js`,
+        `src/${name}.ts`,
+        `src/cli/${name}.js`,
+        `src/cli/${name}.ts`,
+        "src/cli.js",
+        "src/cli.ts",
+        "src/cli/index.js",
+        "src/cli/index.ts"
+      ].map(addRoot).filter(existsSync)[0]
+
+      if (entries.binaries[name] == null) {
+        console.warn(`Did not found any matching entry for binary: ${name}!`)
+      } else {
+        entries.binaries[name] = binaryEntry
+      }
+    })
   }
 
-  if (entries.library == null && entries.binary == null) {
+  // Cleanup binaries if nothing is listed.
+  if (isEmpty(entries.binaries)) {
+    entries.binaries = null
+  }
+
+  if (entries.library == null && entries.binaries == null) {
     throw new Error("No entry points found!")
   }
 

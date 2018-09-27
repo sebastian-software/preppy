@@ -2,16 +2,6 @@ import { join } from "path"
 
 /* eslint-disable complexity */
 export default function getOutputMatrix(opts, pkg) {
-  // Handle special case to generate a binary file based on config in package.json
-  const binaryConfig = pkg.bin
-  let binaryOutput = null
-  if (binaryConfig) {
-    for (const name in binaryConfig) {
-      binaryOutput = binaryConfig[name]
-      break
-    }
-  }
-
   const matrix = {}
 
   const output = opts.output
@@ -27,7 +17,9 @@ export default function getOutputMatrix(opts, pkg) {
     matrix.umd = null
 
     // Binary Target
-    matrix.binary = join(output, "cli.js")
+    matrix.binaries = {
+      index: join(output, "index.js")
+    }
 
     // Types Target (TypeScript)
     matrix.types = join(output, "index.d.ts")
@@ -42,8 +34,8 @@ export default function getOutputMatrix(opts, pkg) {
     matrix.umd = pkg["umd"] || pkg["unpkg"] || null
     matrix.browser = pkg["browser"] || null
 
-    // Binary Target
-    matrix.binary = binaryOutput || null
+    // Binary Target (supports multiple binaries)
+    matrix.binaries = pkg.bin || null
 
     // Types Target (TypeScript)
     matrix.types = pkg["types"] || null

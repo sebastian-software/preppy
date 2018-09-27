@@ -1,0 +1,15 @@
+{
+  "name": "esnext",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "first": "bin/first-cli.js",
+    "second": "bin/second-cli.js"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [],
+  "author": "Sebastian Werner <s.werner@sebastian-software.de>",
+  "license": "MIT"
+}

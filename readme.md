@@ -60,14 +60,16 @@ For exporting types with TypeScript you should add a `types` entry to your `pack
 ```
 
 
-## Binary Output
+## Binary Output(s)
 
-Additionally *Preppy* is capable in generating for binary targets e.g. CLI tools.
+Additionally *Preppy* is capable in generating for binary targets e.g. CLI tools. Not just one, but each of the one listed in the `bin` section of your `package.json`.
 
-This generates a `mypackage` binary which is generated from the matching source file.
+The following example generates a `mycli` binary which is generated from the matching source file.
 
 Binaries are generally generated from one of these source files:
 
+- `src/{name}.{js|ts}`
+- `src/cli/{name}.{js|ts}`
 - `src/cli.{js|ts}`
 - `src/cli/index.{js|ts}`
 

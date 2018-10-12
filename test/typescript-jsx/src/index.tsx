@@ -7,7 +7,7 @@
 /* eslint-disable prefer-const */
 
 import { camelCase } from "lodash"
-import { FormValues, something } from "./types"
+import { FormValues, something, Item } from "./types"
 
 console.log("CherryPick Import Lodash:", camelCase("hello world") === "helloWorld")
 
@@ -83,6 +83,4 @@ export const setValues = (values: FormValues) => {
   setState({ values }, () => true)
 }
 
-export function Item() {
-  return <b>Bold</b>
-}
+export { Item }

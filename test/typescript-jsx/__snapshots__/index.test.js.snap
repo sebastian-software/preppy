@@ -22,6 +22,9 @@ var lodash = require('lodash');
  * Values of fields in the form
  */
 var something = 42;
+function Item() {
+  return React.createElement(\\"b\\", null, \\"Bold\\");
+}
 
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Imported JS from other file:\\", something);
@@ -118,9 +121,6 @@ var setValues = function setValues(values) {
     return true;
   });
 };
-function Item() {
-  return React.createElement(\\"b\\", null, \\"Bold\\");
-}
 
 exports.MyClass = MyClass;
 exports.setValues = setValues;
@@ -145,6 +145,9 @@ import { camelCase } from 'lodash';
  * Values of fields in the form
  */
 var something = 42;
+function Item() {
+  return React.createElement(\\"b\\", null, \\"Bold\\");
+}
 
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Imported JS from other file:\\", something);
@@ -241,9 +244,6 @@ var setValues = function setValues(values) {
     return true;
   });
 };
-function Item() {
-  return React.createElement(\\"b\\", null, \\"Bold\\");
-}
 
 export { MyClass, setValues, Item };
 //# sourceMappingURL=index.esm.js.map
@@ -251,14 +251,14 @@ export { MyClass, setValues, Item };
 `;
 
 exports[`Publish Test File via Typescript: types-main 1`] = `
-"import { FormValues } from \\"./types\\";
+"import { FormValues, Item } from \\"./types\\";
 export declare class MyClass {
     constructor();
     onClick: () => void;
     helper(x: string): void;
 }
 export declare const setValues: (values: FormValues) => void;
-export declare function Item(): any;
+export { Item };
 "
 `;
 
@@ -270,6 +270,7 @@ export interface FormValues {
     [field: string]: any;
 }
 export declare const something = 42;
+export declare function Item(): any;
 "
 `;
 
@@ -291,6 +292,9 @@ exports[`Publish Test File via Typescript: umd 1`] = `
    * Values of fields in the form
    */
   var something = 42;
+  function Item() {
+    return React.createElement(\\"b\\", null, \\"Bold\\");
+  }
 
   console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
   console.log(\\"Imported JS from other file:\\", something);
@@ -387,9 +391,6 @@ exports[`Publish Test File via Typescript: umd 1`] = `
       return true;
     });
   };
-  function Item() {
-    return React.createElement(\\"b\\", null, \\"Bold\\");
-  }
 
   exports.MyClass = MyClass;
   exports.setValues = setValues;

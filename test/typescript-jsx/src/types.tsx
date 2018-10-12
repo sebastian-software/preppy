@@ -6,3 +6,7 @@ export interface FormValues {
 }
 
 export const something = 42
+
+export function Item() {
+  return <b>Bold</b>
+}

@@ -35,6 +35,7 @@ export default function extractTypes({ entry, root, output, verbose }) {
     allowSyntheticDefaultImports: true,
     esModuleInterop: true,
     moduleResolution: ModuleResolutionKind.NodeJs,
-    target: ScriptTarget.ES2017
+    target: ScriptTarget.ES2017,
+    jsx: "preserve"
   }, verbose)
 }

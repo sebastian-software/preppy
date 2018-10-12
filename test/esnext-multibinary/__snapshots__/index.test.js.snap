@@ -3,7 +3,7 @@
 exports[`Multi Binary from ESNext: first 1`] = `
 "#!/usr/bin/env node
 
-/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+/*! esnext-multibinary v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
 var lodash = require('lodash');
@@ -18,7 +18,7 @@ console.log(\\"Magic:\\", lodash.snakeCase(realWords));
 exports[`Multi Binary from ESNext: second 1`] = `
 "#!/usr/bin/env node
 
-/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+/*! esnext-multibinary v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
 var lodash = require('lodash');

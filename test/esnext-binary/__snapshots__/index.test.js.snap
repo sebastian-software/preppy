@@ -3,7 +3,7 @@
 exports[`Binary from ESNext: cli 1`] = `
 "#!/usr/bin/env node
 
-/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+/*! esnext-binary v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
 var lodash = require('lodash');

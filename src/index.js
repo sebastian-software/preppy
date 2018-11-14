@@ -10,7 +10,7 @@ import ora from "ora"
 import replacePlugin from "rollup-plugin-replace"
 import yamlPlugin from "rollup-plugin-yaml"
 import { camelCase } from "lodash"
-import { rollup } from "rollup"
+import { rollup, watch } from "rollup"
 import { terser as terserPlugin } from "rollup-plugin-terser"
 
 import extractTypes from "./extractTypes"
@@ -141,9 +141,10 @@ async function bundleAll({
       }
     }
 
+    let message = null
     if ([ ".ts", ".tsx" ].includes(extname(entries.library))) {
       if (output.types) {
-        let message = `${chalk.yellow("Extracting types")} ${chalk.magenta(
+        message = `${chalk.yellow("Extracting types")} ${chalk.magenta(
           name
         )}-${chalk.magenta(version)} [${chalk.blue(
           "tsdef".toUpperCase()
@@ -303,18 +304,20 @@ function getRollupInputOptions({ input, variables, format, env, target, output }
   }
 }
 
-async function bundleTo({
-  verbose,
-  quiet,
-  root,
-  name,
-  version,
-  banner,
-  input,
-  target,
-  format,
-  output
-}) {
+function getRollupOutputOptions({ banner, format, name, target, root, output }) {
+  const shebang = "#!/usr/bin/env node"
+
+  return {
+    format,
+    name,
+    banner: target === "cli" ? `${shebang}\n\n${banner}` : banner,
+    sourcemap: true,
+    file: join(root, output)
+  }
+}
+
+async function bundleTo(options) {
+  const { verbose, quiet, name, version, target, format, output } = options
   let progress = null
   const bundleMessage = `${chalk.yellow("Bundling")} ${chalk.magenta(
     name
@@ -328,8 +331,6 @@ async function bundleTo({
       interval: 30
     }).start()
   }
-
-  const shebang = "#!/usr/bin/env node"
 
   const prefix = "process.env."
   const variables = {
@@ -351,9 +352,7 @@ async function bundleTo({
 
   let bundle = null
   try {
-    bundle = await rollup(
-      getRollupInputOptions({ input, variables, format, env, target, output })
-    )
+    bundle = await rollup(getRollupInputOptions(options))
   } catch (bundleError) {
     if (!quiet) {
       progress.fail(bundleError.message)
@@ -370,13 +369,7 @@ async function bundleTo({
 
   let result = null
   try {
-    result = await bundle.write({
-      format,
-      name,
-      banner: target === "cli" ? `${shebang}\n\n${banner}` : banner,
-      sourcemap: true,
-      file: join(root, output)
-    })
+    result = await bundle.write(getRollupOutputOptions(options))
   } catch (writeError) {
     if (!quiet) {
       progress.fail(writeError.message)

@@ -153,13 +153,27 @@ async function bundleAll({
           }).start()
         }
 
-        extractTypes({
-          entry: entries.library,
-          output: dirname(output.types),
-          root,
-          verbose,
-          quiet
-        })
+        try {
+          extractTypes({
+            entry: entries.library,
+            output: dirname(output.types),
+            root,
+            verbose,
+            quiet
+          })
+        } catch(typeError) {
+          if (!quiet) {
+            progress.fail(typeError.message)
+          } else if (process.env.NODE_ENV === "test") {
+            throw new Error(typeError.message)
+          } else {
+            console.error(typeError.message)
+          }
+
+          if (process.env.NODE_ENV !== "test") {
+            process.exit(1)
+          }
+        }
 
         if (!quiet) {
           progress.succeed(`${message}`)

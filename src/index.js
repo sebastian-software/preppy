@@ -246,7 +246,25 @@ function formatJSON(json) {
   return JSON.stringify(json, null, 2).replace(/\\"/g, "")
 }
 
-function getRollupInputOptions({ input, variables, format, env, target, output }) {
+function getRollupInputOptions({ name, verbose, version, input, format, target, output }) {
+  const prefix = "process.env."
+  const variables = {
+    [`${prefix}BUNDLE_NAME`]: JSON.stringify(name),
+    [`${prefix}BUNDLE_VERSION`]: JSON.stringify(version),
+    [`${prefix}BUNDLE_TARGET`]: JSON.stringify(target)
+  }
+
+  // This protected helper is required to make Preppy not optimizing itself here.
+  const protectedEnv = process.env
+  const env = protectedEnv.NODE_ENV
+  if (env) {
+    variables[`${prefix}NODE_ENV`] = JSON.stringify(env)
+  }
+
+  if (verbose) {
+    console.log("Variables:", formatJSON(variables))
+  }
+
   return {
     input,
     cache,
@@ -317,37 +335,20 @@ function getRollupOutputOptions({ banner, format, name, target, root, output }) 
 }
 
 async function bundleTo(options) {
-  const { verbose, quiet, name, version, target, format, output } = options
-  let progress = null
+  const { quiet, name, version, target, format, output } = options
+
   const bundleMessage = `${chalk.yellow("Bundling")} ${chalk.magenta(
     name
   )}-${chalk.magenta(version)} [${chalk.blue(target.toUpperCase())}] ➤ ${chalk.green(
     output
   )} [${chalk.blue(format.toUpperCase())}]`
 
+  let progress = null
   if (!quiet) {
     progress = ora({
       text: `${bundleMessage} ...`,
       interval: 30
     }).start()
-  }
-
-  const prefix = "process.env."
-  const variables = {
-    [`${prefix}BUNDLE_NAME`]: JSON.stringify(name),
-    [`${prefix}BUNDLE_VERSION`]: JSON.stringify(version),
-    [`${prefix}BUNDLE_TARGET`]: JSON.stringify(target)
-  }
-
-  // This protected helper is required to make Preppy not optimizing itself here.
-  const protectedEnv = process.env
-  const env = protectedEnv.NODE_ENV
-  if (env) {
-    variables[`${prefix}NODE_ENV`] = JSON.stringify(env)
-  }
-
-  if (verbose) {
-    console.log("Variables:", formatJSON(variables))
   }
 
   let bundle = null
@@ -359,7 +360,7 @@ async function bundleTo(options) {
     } else if (process.env.NODE_ENV === "test") {
       throw new Error(bundleError.message)
     } else {
-      console.error(bundleError.message)
+      console.error(bundleError)
     }
 
     if (process.env.NODE_ENV !== "test") {
@@ -376,7 +377,7 @@ async function bundleTo(options) {
     } else if (process.env.NODE_ENV === "test") {
       throw new Error(writeError.message)
     } else {
-      console.error(writeError.message)
+      console.error(writeError)
     }
 
     if (process.env.NODE_ENV !== "test") {

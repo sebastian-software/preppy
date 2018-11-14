@@ -23,6 +23,10 @@ import typescriptResolvePlugin from "./typescriptResolvePlugin"
 
 let cache
 
+const WATCH_OPTS = {
+  exclude: "node_modules/**"
+}
+
 export default async function index(opts) {
   const { verbose, quiet, root } = opts
   const pkg = require(resolve(root, "package.json"))
@@ -161,7 +165,7 @@ async function bundleAll({
             verbose,
             quiet
           })
-        } catch(typeError) {
+        } catch (typeError) {
           if (!quiet) {
             progress.fail(typeError.message)
           } else if (process.env.NODE_ENV === "test") {
@@ -241,6 +245,64 @@ function formatJSON(json) {
   return JSON.stringify(json, null, 2).replace(/\\"/g, "")
 }
 
+function getRollupInputOptions({ input, variables, format, env, target, output }) {
+  return {
+    input,
+    cache,
+    onwarn: (error) => {
+      console.warn(chalk.red(`  - ${error.message}`))
+    },
+    external(dependency) {
+      // Very simple externalization:
+      // We exclude all files from NodeJS resolve basically which are not relative to current file.
+      // We also bundle absolute paths, these are just an intermediate step in Rollup resolving files and
+      // as we do not support resolving from node_modules (we never bundle these) we only hit this code
+      // path for originally local dependencies.
+      return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
+    },
+    plugins: [
+      replacePlugin(variables),
+      cjsPlugin({
+        include: "node_modules/**"
+      }),
+      typescriptResolvePlugin(),
+      yamlPlugin(),
+      jsonPlugin(),
+      babelPlugin({
+        // Rollup Setting: Prefer usage of a common library of helpers
+        runtimeHelpers: format !== "umd",
+
+        // We use envName to pass information about the build target and format to Babel
+        envName: env ? `${env}-${target}-${format}` : `${target}-${format}`,
+
+        // The Babel-Plugin is not using a pre-defined include, but builds up
+        // its include list from the default extensions of Babel-Core.
+        // Default Extensions: [".js", ".jsx", ".es6", ".es", ".mjs"]
+        // We add TypeScript extensions here as well to be able to post-process
+        // any TypeScript sources with Babel. This allows us for using presets
+        // like "react" and plugins like "fast-async" with TypeScript as well.
+        extensions: [ ".js", ".jsx", ".es6", ".es", ".mjs", ".ts", ".tsx" ],
+
+        // Do not transpile external code
+        // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
+        exclude: [ "node_modules/**", "**/*.json" ]
+      }),
+      (env === "production" && (format === "umd" || target === "cli")) ||
+      (/\.min\./).exec(output) ?
+        terserPlugin({
+          toplevel: format === "esm" || format === "cjs",
+          safari10: true,
+          output: {
+            ascii_only: true,
+            semicolons: false
+          }
+        }) :
+        null,
+      target === "cli" ? executablePlugin() : null
+    ].filter(Boolean)
+  }
+}
+
 async function bundleTo({
   verbose,
   quiet,
@@ -254,11 +316,11 @@ async function bundleTo({
   output
 }) {
   let progress = null
-  const bundleMessage = `${chalk.yellow("Bundling")} ${chalk.magenta(name)}-${chalk.magenta(
-    version
-  )} [${chalk.blue(target.toUpperCase())}] ➤ ${chalk.green(output)} [${chalk.blue(
-    format.toUpperCase()
-  )}]`
+  const bundleMessage = `${chalk.yellow("Bundling")} ${chalk.magenta(
+    name
+  )}-${chalk.magenta(version)} [${chalk.blue(target.toUpperCase())}] ➤ ${chalk.green(
+    output
+  )} [${chalk.blue(format.toUpperCase())}]`
 
   if (!quiet) {
     progress = ora({
@@ -289,61 +351,9 @@ async function bundleTo({
 
   let bundle = null
   try {
-    bundle = await rollup({
-      input,
-      cache,
-      onwarn: (error) => {
-        console.warn(chalk.red(`  - ${error.message}`))
-      },
-      external(dependency) {
-        // Very simple externalization:
-        // We exclude all files from NodeJS resolve basically which are not relative to current file.
-        // We also bundle absolute paths, these are just an intermediate step in Rollup resolving files and
-        // as we do not support resolving from node_modules (we never bundle these) we only hit this code
-        // path for originally local dependencies.
-        return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
-      },
-      plugins: [
-        replacePlugin(variables),
-        cjsPlugin({
-          include: "node_modules/**"
-        }),
-        typescriptResolvePlugin(),
-        yamlPlugin(),
-        jsonPlugin(),
-        babelPlugin({
-          // Rollup Setting: Prefer usage of a common library of helpers
-          runtimeHelpers: format !== "umd",
-
-          // We use envName to pass information about the build target and format to Babel
-          envName: env ? `${env}-${target}-${format}` : `${target}-${format}`,
-
-          // The Babel-Plugin is not using a pre-defined include, but builds up
-          // its include list from the default extensions of Babel-Core.
-          // Default Extensions: [".js", ".jsx", ".es6", ".es", ".mjs"]
-          // We add TypeScript extensions here as well to be able to post-process
-          // any TypeScript sources with Babel. This allows us for using presets
-          // like "react" and plugins like "fast-async" with TypeScript as well.
-          extensions: [ ".js", ".jsx", ".es6", ".es", ".mjs", ".ts", ".tsx" ],
-
-          // Do not transpile external code
-          // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
-          exclude: [ "node_modules/**", "**/*.json" ]
-        }),
-        (env === "production" && (format === "umd" || target === "cli")) ||
-        (/\.min\./).exec(output) ?
-          terserPlugin({
-            toplevel: format === "esm" || format === "cjs",
-            safari10: true,
-            output: {
-              ascii_only: true,
-              semicolons: false
-            }
-          }) :
-          null,
-        target === "cli" ? executablePlugin() : null
-      ].filter(Boolean)
-    })
+    bundle = await rollup(
+      getRollupInputOptions({ input, variables, format, env, target, output })
+    )
   } catch (bundleError) {
     if (!quiet) {
       progress.fail(bundleError.message)

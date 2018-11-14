@@ -1,22 +1,22 @@
 /* eslint-disable complexity, max-statements, max-depth */
-import { extname, dirname, isAbsolute, resolve, join } from "path"
-import chalk from "chalk"
-import { rollup } from "rollup"
-import { camelCase } from "lodash"
-import ora from "ora"
-
+import { dirname, extname, isAbsolute, join, resolve } from "path"
 import babelPlugin from "rollup-plugin-babel"
+import chalk from "chalk"
 import cjsPlugin from "rollup-plugin-commonjs"
-import jsonPlugin from "rollup-plugin-json"
-import replacePlugin from "rollup-plugin-replace"
-import yamlPlugin from "rollup-plugin-yaml"
-import { terser as terserPlugin } from "rollup-plugin-terser"
 import executablePlugin from "rollup-plugin-executable"
 
+import jsonPlugin from "rollup-plugin-json"
+import ora from "ora"
+import replacePlugin from "rollup-plugin-replace"
+import yamlPlugin from "rollup-plugin-yaml"
+import { camelCase } from "lodash"
+import { rollup } from "rollup"
+import { terser as terserPlugin } from "rollup-plugin-terser"
+
 import extractTypes from "./extractTypes"
-import getFormattedSize from "./getFormattedSize"
 import getBanner from "./getBanner"
 import getEntries from "./getEntries"
+import getFormattedSize from "./getFormattedSize"
 import getOutputMatrix from "./getOutputMatrix"
 
 import typescriptResolvePlugin from "./typescriptResolvePlugin"
@@ -139,7 +139,11 @@ async function bundleAll({
 
     if ([ ".ts", ".tsx" ].includes(extname(entries.library))) {
       if (output.types) {
-        let message = `${chalk.yellow("Extracting types")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue("tsdef".toUpperCase())}] ▶ ${chalk.green(dirname(output.types))}`
+        let message = `${chalk.yellow("Extracting types")} ${chalk.magenta(
+          name
+        )}-${chalk.magenta(version)} [${chalk.blue(
+          "tsdef".toUpperCase()
+        )}] ➤ ${chalk.green(dirname(output.types))}`
         let progress = null
 
         if (!quiet) {
@@ -236,12 +240,15 @@ async function bundleTo({
   output
 }) {
   let progress = null
-  let message = `${chalk.yellow("Bundling")} ${chalk.magenta(name)}-${chalk.magenta(version)} [${chalk.blue(target.toUpperCase())}] ▶ ${chalk.green(output)} [${chalk.blue(format.toUpperCase())}]`
+  const bundleMessage = `${chalk.yellow("Bundling")} ${chalk.magenta(name)}-${chalk.magenta(
+    version
+  )} [${chalk.blue(target.toUpperCase())}] ➤ ${chalk.green(output)} [${chalk.blue(
+    format.toUpperCase()
+  )}]`
 
   if (!quiet) {
-    /* eslint-disable max-len */
     progress = ora({
-      text: `${message} ...`,
+      text: `${bundleMessage} ...`,
       interval: 30
     }).start()
   }
@@ -266,68 +273,103 @@ async function bundleTo({
     console.log("Variables:", formatJSON(variables))
   }
 
-  const bundle = await rollup({
-    input,
-    cache,
-    onwarn: (error) => {
-      console.warn(chalk.red(`  - ${error.message}`))
-    },
-    external(dependency) {
-      // Very simple externalization:
-      // We exclude all files from NodeJS resolve basically which are not relative to current file.
-      // We also bundle absolute paths, these are just an intermediate step in Rollup resolving files and
-      // as we do not support resolving from node_modules (we never bundle these) we only hit this code
-      // path for originally local dependencies.
-      return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
-    },
-    plugins: [
-      replacePlugin(variables),
-      cjsPlugin({
-        include: "node_modules/**"
-      }),
-      typescriptResolvePlugin(),
-      yamlPlugin(),
-      jsonPlugin(),
-      babelPlugin({
-        // Rollup Setting: Prefer usage of a common library of helpers
-        runtimeHelpers: format !== "umd",
+  let bundle = null
+  try {
+    bundle = await rollup({
+      input,
+      cache,
+      onwarn: (error) => {
+        console.warn(chalk.red(`  - ${error.message}`))
+      },
+      external(dependency) {
+        // Very simple externalization:
+        // We exclude all files from NodeJS resolve basically which are not relative to current file.
+        // We also bundle absolute paths, these are just an intermediate step in Rollup resolving files and
+        // as we do not support resolving from node_modules (we never bundle these) we only hit this code
+        // path for originally local dependencies.
+        return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
+      },
+      plugins: [
+        replacePlugin(variables),
+        cjsPlugin({
+          include: "node_modules/**"
+        }),
+        typescriptResolvePlugin(),
+        yamlPlugin(),
+        jsonPlugin(),
+        babelPlugin({
+          // Rollup Setting: Prefer usage of a common library of helpers
+          runtimeHelpers: format !== "umd",
 
-        // We use envName to pass information about the build target and format to Babel
-        envName: env ? `${env}-${target}-${format}` : `${target}-${format}`,
+          // We use envName to pass information about the build target and format to Babel
+          envName: env ? `${env}-${target}-${format}` : `${target}-${format}`,
 
-        // The Babel-Plugin is not using a pre-defined include, but builds up
-        // its include list from the default extensions of Babel-Core.
-        // Default Extensions: [".js", ".jsx", ".es6", ".es", ".mjs"]
-        // We add TypeScript extensions here as well to be able to post-process
-        // any TypeScript sources with Babel. This allows us for using presets
-        // like "react" and plugins like "fast-async" with TypeScript as well.
-        extensions: [ ".js", ".jsx", ".es6", ".es", ".mjs", ".ts", ".tsx" ],
+          // The Babel-Plugin is not using a pre-defined include, but builds up
+          // its include list from the default extensions of Babel-Core.
+          // Default Extensions: [".js", ".jsx", ".es6", ".es", ".mjs"]
+          // We add TypeScript extensions here as well to be able to post-process
+          // any TypeScript sources with Babel. This allows us for using presets
+          // like "react" and plugins like "fast-async" with TypeScript as well.
+          extensions: [ ".js", ".jsx", ".es6", ".es", ".mjs", ".ts", ".tsx" ],
 
-        // Do not transpile external code
-        // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
-        exclude: [ "node_modules/**", "**/*.json" ]
-      }),
-      (env === "production" && (format === "umd" || target === "cli")) || (/\.min\./).exec(output) ? terserPlugin({
-        toplevel: format === "esm" || format === "cjs",
-        safari10: true,
-        output: {
-          ascii_only: true,
-          semicolons: false
-        }
-      }) : null,
-      target === "cli" ? executablePlugin() : null
-    ].filter(Boolean)
-  })
+          // Do not transpile external code
+          // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
+          exclude: [ "node_modules/**", "**/*.json" ]
+        }),
+        (env === "production" && (format === "umd" || target === "cli")) ||
+        (/\.min\./).exec(output) ?
+          terserPlugin({
+            toplevel: format === "esm" || format === "cjs",
+            safari10: true,
+            output: {
+              ascii_only: true,
+              semicolons: false
+            }
+          }) :
+          null,
+        target === "cli" ? executablePlugin() : null
+      ].filter(Boolean)
+    })
+  } catch (bundleError) {
+    if (!quiet) {
+      progress.fail(bundleError.message)
+    } else if (process.env.NODE_ENV === "test") {
+      throw new Error(bundleError.message)
+    } else {
+      console.error(bundleError.message)
+    }
 
-  const { code } = await bundle.write({
-    format,
-    name,
-    banner: target === "cli" ? shebang + "\n\n" + banner : banner,
-    sourcemap: true,
-    file: join(root, output)
-  })
+    if (process.env.NODE_ENV !== "test") {
+      process.exit(1)
+    }
+  }
+
+  let result = null
+  try {
+    result = await bundle.write({
+      format,
+      name,
+      banner: target === "cli" ? `${shebang}\n\n${banner}` : banner,
+      sourcemap: true,
+      file: join(root, output)
+    })
+  } catch (writeError) {
+    if (!quiet) {
+      progress.fail(writeError.message)
+    } else if (process.env.NODE_ENV === "test") {
+      throw new Error(writeError.message)
+    } else {
+      console.error(writeError.message)
+    }
+
+    if (process.env.NODE_ENV !== "test") {
+      process.exit(1)
+    }
+  }
 
   if (!quiet) {
-    progress.succeed(`${message} ${await getFormattedSize(code, output, target !== "cli")}`)
+    progress.succeed(
+      `${bundleMessage} ${await getFormattedSize(result.code, output, target !== "cli")}`
+    )
   }
 }

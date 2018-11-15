@@ -1,4 +1,4 @@
-import { join, dirname } from "path"
+import { dirname, join } from "path"
 import { ScriptTarget, ModuleResolutionKind, createProgram, getPreEmitDiagnostics, flattenDiagnosticMessageText } from "typescript";
 
 // Compiler based on code shown in the official docs:
@@ -7,7 +7,7 @@ function compile(fileNames, options, verbose) {
   const program = createProgram(fileNames, options)
   const emitResult = program.emit()
 
-   /* istanbul ignore next */
+  /* istanbul ignore next */
   if (verbose) {
     const allDiagnostics = getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
 
@@ -28,7 +28,7 @@ function compile(fileNames, options, verbose) {
 }
 
 export default function extractTypes({ input, root, output, verbose }) {
-  return compile([input], {
+  return compile([ input ], {
     declarationDir: join(root, dirname(output)),
     declaration: true,
     emitDeclarationOnly: true,

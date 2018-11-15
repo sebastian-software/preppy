@@ -40,10 +40,17 @@ export default async function index(opts) {
 
   options.entries = getEntries(options)
 
-  if (opts.watch) {
-    console.log("Watching...")
+  const tasks = getTasks(options)
+
+  if (options.watch) {
+    // pass
   } else {
-    await bundleAll(options)
+    // Parallel execution. Confuses console messages right now. Not clearly faster.
+    // await Promise(tasks.map(executeTask))
+
+    for (const task of tasks) {
+      await executeTask(task)
+    }
   }
 }
 
@@ -70,7 +77,11 @@ function bundleTypes(options) {
   }
 }
 
-async function bundleAll({
+async function executeTask(task) {
+  return task.format === "tsc" ? bundleTypes(task) : bundleTo(task)
+}
+
+function getTasks({
   verbose,
   quiet,
   name,
@@ -93,9 +104,11 @@ async function bundleAll({
     banner
   }
 
+  const tasks = []
+
   if (entries.node) {
     if (output.main) {
-      await bundleTo({
+      tasks.push({
         ...base,
         input: entries.node,
         target: "node",
@@ -105,7 +118,7 @@ async function bundleAll({
     }
 
     if (output.module) {
-      await bundleTo({
+      tasks.push({
         ...base,
         input: entries.node,
         target: "node",
@@ -115,7 +128,7 @@ async function bundleAll({
     }
   } else if (entries.library) {
     if (output.module) {
-      await bundleTo({
+      tasks.push({
         ...base,
         input: entries.library,
         target: "lib",
@@ -125,7 +138,7 @@ async function bundleAll({
     }
 
     if (output.main) {
-      await bundleTo({
+      tasks.push({
         ...base,
         input: entries.library,
         target: "lib",
@@ -136,7 +149,7 @@ async function bundleAll({
 
     if (!entries.browser) {
       if (output.umd) {
-        await bundleTo({
+        tasks.push({
           ...base,
           input: entries.library,
           target: "lib",
@@ -147,7 +160,7 @@ async function bundleAll({
     }
 
     if (output.types) {
-      bundleTypes({
+      tasks.push({
         ...base,
         input: entries.library,
         target: "lib",
@@ -159,7 +172,7 @@ async function bundleAll({
 
   if (entries.browser) {
     if (output.browser) {
-      await bundleTo({
+      tasks.push({
         ...base,
         input: entries.browser,
         target: "browser",
@@ -169,7 +182,7 @@ async function bundleAll({
     }
 
     if (output.umd) {
-      await bundleTo({
+      tasks.push({
         ...base,
         input: entries.browser,
         target: "lib",
@@ -182,7 +195,7 @@ async function bundleAll({
   if (entries.binaries) {
     if (output.binaries) {
       for (const binaryName in output.binaries) {
-        await bundleTo({
+        tasks.push({
           ...base,
           input: entries.binaries[binaryName],
           target: "cli",
@@ -192,6 +205,8 @@ async function bundleAll({
       }
     }
   }
+
+  return tasks
 }
 
 function isRelative(dependency) {

@@ -42,7 +42,6 @@ module.exports = (api) => {
         {
           exclude: [ "transform-regenerator", "transform-async-to-generator" ],
           useBuiltIns: "usage",
-          loose: true,
           modules
         }
       ],

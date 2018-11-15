@@ -41,10 +41,60 @@ export default async function index(opts) {
   options.entries = getEntries(options)
 
   const tasks = getTasks(options)
+  const rollupTasks = []
 
   if (options.watch) {
-    // pass
+    for (const task of tasks) {
+      if (task.format !== "tsc") {
+        rollupTasks.push({
+          output: getRollupOutputOptions(task),
+          watch: WATCH_OPTS,
+          ...getRollupInputOptions(task)
+        })
+      }
+    }
+
+    console.log(chalk.bold(`Watching ${options.name}-${options.version}...`))
+
+    for (const task of tasks) {
+      console.log(
+        `${figures.bullet} [${chalk.blue(task.target.toUpperCase())}] ${chalk.blue(
+          relative(task.root, task.input)
+        )} ${figures.pointer} ${chalk.green(task.output)} [${chalk.green(
+          task.format.toUpperCase()
+        )}]`
+      )
+    }
+
+    const progress = ora()
+
+    watch(rollupTasks).on("event", (watchEvent) => {
+      if (watchEvent.code === "FATAL") {
+        progress.fail(watchEvent.error)
+        process.exit(1)
+      } else if (watchEvent.code === "ERROR") {
+        progress.fail(watchEvent.error)
+      }
+
+      if (watchEvent.code === "START") {
+        progress.start("Bundling...")
+      } else if (watchEvent.code === "BUNDLE_START") {
+        progress.info(`Rebuilding ${relative(options.root, watchEvent.input)}...`)
+        progress.start("Bundling...")
+      } else if (watchEvent.code === "BUNDLE_END") {
+        watchEvent.output.forEach((output) => {
+          progress.succeed(
+            `Written ${relative(options.root, output)} in ${watchEvent.duration}ms`
+          )
+          progress.start("Bundling...")
+        })
+      } else if (watchEvent.code === "END") {
+        progress.stop("Waiting...")
+      }
+    })
   } else {
+    console.log(chalk.bold(`Building ${options.name}-${options.version}...`))
+
     // Parallel execution. Confuses console messages right now. Not clearly faster.
     // await Promise(tasks.map(executeTask))
 
@@ -81,16 +131,7 @@ async function executeTask(task) {
   return task.format === "tsc" ? bundleTypes(task) : bundleTo(task)
 }
 
-function getTasks({
-  verbose,
-  quiet,
-  name,
-  version,
-  root,
-  banner,
-  entries,
-  output
-}) {
+function getTasks({ verbose, quiet, name, version, root, banner, entries, output }) {
   if (!output.main && !entries.binaries) {
     console.warn(chalk.red.bold("  - Missing `main` or `bin` entry in `package.json`!"))
   }
@@ -318,11 +359,9 @@ function generateMessage(
   post,
   { name, version, root, target, input, output, format }
 ) {
-  return `${task} ${name}-${version} [${chalk.blue(target.toUpperCase())}] ${chalk.blue(
-    relative(root, input)
-  )} ${figures.pointer} ${chalk.green(output)} [${chalk.green(
-    format.toUpperCase()
-  )}] ${post}`
+  return `[${chalk.blue(target.toUpperCase())}] ${chalk.blue(relative(root, input))} ${
+    figures.pointer
+  } ${chalk.green(output)} [${chalk.green(format.toUpperCase())}] ${post}`
 }
 
 function handleError(error, progress) {

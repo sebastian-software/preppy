@@ -13,9 +13,10 @@ export default function parseCommandline() {
     --entry-cli        Entry file for CLI target [auto]
 
     --root             The root folder of your project [auto]
-    --output           Override output folder (and package.json entries) [auto]
+    --output           Overrides output folder (and package.json entries) [auto]
+    --watch            Keeps running and rebuilds on any change [false]
+    --sourcemap        Creates a source map file during processing [true]
 
-    -m, --sourcemap    Create a source map file during processing [true]
     -v, --verbose      Verbose output mode [false]
     -q, --quiet        Quiet output mode [false]
 `,
@@ -45,8 +46,11 @@ export default function parseCommandline() {
           default: null
         },
 
+        watch: {
+          default: false
+        },
+
         sourcemap: {
-          alias: "m",
           default: true
         },
 

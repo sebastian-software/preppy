@@ -131,12 +131,6 @@ async function bundleAll({
   }
 
   if (entries.node) {
-    if (verbose) {
-      if (output.main || output.module) {
-        console.log(">>> Node Entry:", entries.node)
-      }
-    }
-
     if (output.main) {
       await bundleTo({
         ...base,
@@ -157,12 +151,6 @@ async function bundleAll({
       })
     }
   } else if (entries.library) {
-    if (verbose) {
-      if (output.main || output.module || output.umd || output.types) {
-        console.log(">>> Library Entry:", entries.library)
-      }
-    }
-
     if (output.module) {
       await bundleTo({
         ...base,
@@ -205,12 +193,6 @@ async function bundleAll({
   }
 
   if (entries.browser) {
-    if (verbose) {
-      if (output.browser || output.umd) {
-        console.log(">>> Browser Entry:", entries.browser)
-      }
-    }
-
     if (output.browser) {
       await bundleTo({
         ...base,
@@ -233,12 +215,6 @@ async function bundleAll({
   }
 
   if (entries.binaries) {
-    if (verbose) {
-      if (output.binaries) {
-        console.log(">>> CLI Entry:", entries.binaries)
-      }
-    }
-
     if (output.binaries) {
       for (const binaryName in output.binaries) {
         await bundleTo({

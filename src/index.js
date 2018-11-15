@@ -57,52 +57,25 @@ export default async function index(opts) {
   })
 }
 
-function bundleTypes({ input, output, name, version, root, verbose, quiet }) {
-  let message = null
-  if ([ ".ts", ".tsx" ].includes(extname(input))) {
-    if (output) {
-      message = `${chalk.yellow("Extracting types")} ${chalk.magenta(
-        name
-      )}-${chalk.magenta(version)} [${chalk.blue("tsdef".toUpperCase())}] ➤ ${chalk.green(
-        dirname(output)
-      )}`
-      let progress = null
+function bundleTypes(options) {
+  if ([ ".ts", ".tsx" ].includes(extname(options.input))) {
+    let progress = null
+    if (!options.quiet) {
+      progress = ora({
+        interval: 30,
+        text: generateMessage("Extracting", "...", options)
+      }).start()
+    }
 
-      if (!quiet) {
-        progress = ora({
-          interval: 30,
-          text: `${message}...`
-        }).start()
-      }
+    try {
+      // Unfortunately there is no async API here.
+      extractTypes(options)
+    } catch (typeError) {
+      handleError(typeError, progress)
+    }
 
-      try {
-        // Unfortunately there is no async API here.
-        extractTypes({
-          entry: input,
-          output: dirname(output),
-          root,
-          verbose,
-          quiet
-        })
-      } catch (typeError) {
-        if (!quiet) {
-          progress.fail(typeError.message)
-        } else if (process.env.NODE_ENV === "test") {
-          throw new Error(typeError.message)
-        } else {
-          console.error(typeError.message)
-        }
-
-        if (process.env.NODE_ENV !== "test") {
-          process.exit(1)
-        }
-      }
-
-      if (!quiet) {
-        progress.succeed(`${message}`)
-      }
-    } else {
-      console.warn(chalk.red.bold("  - Missing `types` entry in `package.json`!"))
+    if (!options.quiet) {
+      progress.succeed(generateMessage("Extracting", "Done", options))
     }
   }
 }
@@ -187,6 +160,8 @@ async function bundleAll({
       bundleTypes({
         ...base,
         input: entries.library,
+        target: "lib",
+        format: "tsc",
         output: output.types
       })
     }
@@ -345,6 +320,20 @@ function generateMessage(
   )}] ${post}`
 }
 
+function handleError(error, progress) {
+  if (progress) {
+    progress.fail(error.message)
+  } else if (process.env.NODE_ENV === "test") {
+    throw new Error(error.message)
+  } else {
+    console.error(error)
+  }
+
+  if (process.env.NODE_ENV !== "test") {
+    process.exit(1)
+  }
+}
+
 async function bundleTo(options) {
   let progress = null
   if (!options.quiet) {
@@ -358,34 +347,14 @@ async function bundleTo(options) {
   try {
     bundle = await rollup(getRollupInputOptions(options))
   } catch (bundleError) {
-    if (!options.quiet) {
-      progress.fail(bundleError.message)
-    } else if (process.env.NODE_ENV === "test") {
-      throw new Error(bundleError.message)
-    } else {
-      console.error(bundleError)
-    }
-
-    if (process.env.NODE_ENV !== "test") {
-      process.exit(1)
-    }
+    handleError(bundleError, progress)
   }
 
   let result = null
   try {
     result = await bundle.write(getRollupOutputOptions(options))
   } catch (writeError) {
-    if (!options.quiet) {
-      progress.fail(writeError.message)
-    } else if (process.env.NODE_ENV === "test") {
-      throw new Error(writeError.message)
-    } else {
-      console.error(writeError)
-    }
-
-    if (process.env.NODE_ENV !== "test") {
-      process.exit(1)
-    }
+    handleError(writeError, progress)
   }
 
   if (!options.quiet) {

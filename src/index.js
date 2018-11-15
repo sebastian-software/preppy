@@ -42,9 +42,7 @@ export default async function index(opts) {
   }
 
   if (opts.watch) {
-
   } else {
-
   }
 
   await bundleAll({
@@ -372,10 +370,8 @@ function generateMessage(
 }
 
 async function bundleTo(options) {
-  const { quiet, target, output } = options
-
   let progress = null
-  if (!quiet) {
+  if (!options.quiet) {
     progress = ora({
       text: `${generateMessage("Bundling", "...", options)}`,
       interval: 30
@@ -386,7 +382,7 @@ async function bundleTo(options) {
   try {
     bundle = await rollup(getRollupInputOptions(options))
   } catch (bundleError) {
-    if (!quiet) {
+    if (!options.quiet) {
       progress.fail(bundleError.message)
     } else if (process.env.NODE_ENV === "test") {
       throw new Error(bundleError.message)
@@ -403,7 +399,7 @@ async function bundleTo(options) {
   try {
     result = await bundle.write(getRollupOutputOptions(options))
   } catch (writeError) {
-    if (!quiet) {
+    if (!options.quiet) {
       progress.fail(writeError.message)
     } else if (process.env.NODE_ENV === "test") {
       throw new Error(writeError.message)
@@ -416,11 +412,11 @@ async function bundleTo(options) {
     }
   }
 
-  if (!quiet) {
+  if (!options.quiet) {
     progress.succeed(
       generateMessage(
         "Bundling",
-        await getFormattedSize(result.code, output, target !== "cli"),
+        await getFormattedSize(result.code, options.output, options.target !== "cli"),
         options
       )
     )

@@ -1,10 +1,11 @@
 /* eslint-disable complexity, max-statements, max-depth */
-import { dirname, extname, isAbsolute, join, resolve } from "path"
+import { dirname, extname, isAbsolute, join, relative, resolve } from "path"
 import babelPlugin from "rollup-plugin-babel"
 import chalk from "chalk"
 import cjsPlugin from "rollup-plugin-commonjs"
 import executablePlugin from "rollup-plugin-executable"
 
+import figures from "figures"
 import jsonPlugin from "rollup-plugin-json"
 import ora from "ora"
 import replacePlugin from "rollup-plugin-replace"
@@ -64,9 +65,9 @@ function bundleTypes({ input, output, name, version, root, verbose, quiet }) {
     if (output) {
       message = `${chalk.yellow("Extracting types")} ${chalk.magenta(
         name
-      )}-${chalk.magenta(version)} [${chalk.blue(
-        "tsdef".toUpperCase()
-      )}] ➤ ${chalk.green(dirname(output))}`
+      )}-${chalk.magenta(version)} [${chalk.blue("tsdef".toUpperCase())}] ➤ ${chalk.green(
+        dirname(output)
+      )}`
       let progress = null
 
       if (!quiet) {
@@ -262,7 +263,15 @@ function formatJSON(json) {
   return JSON.stringify(json, null, 2).replace(/\\"/g, "")
 }
 
-function getRollupInputOptions({ name, verbose, version, input, format, target, output }) {
+function getRollupInputOptions({
+  name,
+  verbose,
+  version,
+  input,
+  format,
+  target,
+  output
+}) {
   const prefix = "process.env."
   const variables = {
     [`${prefix}BUNDLE_NAME`]: JSON.stringify(name),
@@ -350,19 +359,25 @@ function getRollupOutputOptions({ banner, format, name, target, root, output }) 
   }
 }
 
-async function bundleTo(options) {
-  const { quiet, name, version, target, format, output } = options
+function generateMessage(
+  task,
+  post,
+  { name, version, root, target, input, output, format }
+) {
+  return `${task} ${name}-${version} [${chalk.blue(target.toUpperCase())}] ${chalk.blue(
+    relative(root, input)
+  )} ${figures.pointer} ${chalk.green(output)} [${chalk.green(
+    format.toUpperCase()
+  )}] ${post}`
+}
 
-  const bundleMessage = `${chalk.yellow("Bundling")} ${chalk.magenta(
-    name
-  )}-${chalk.magenta(version)} [${chalk.blue(target.toUpperCase())}] ➤ ${chalk.green(
-    output
-  )} [${chalk.blue(format.toUpperCase())}]`
+async function bundleTo(options) {
+  const { quiet, target, output } = options
 
   let progress = null
   if (!quiet) {
     progress = ora({
-      text: `${bundleMessage} ...`,
+      text: `${generateMessage("Bundling", "...", options)}`,
       interval: 30
     }).start()
   }
@@ -403,7 +418,11 @@ async function bundleTo(options) {
 
   if (!quiet) {
     progress.succeed(
-      `${bundleMessage} ${await getFormattedSize(result.code, output, target !== "cli")}`
+      generateMessage(
+        "Bundling",
+        await getFormattedSize(result.code, output, target !== "cli"),
+        options
+      )
     )
   }
 }

@@ -40,6 +40,12 @@ export default async function index(opts) {
     console.log("Options:", opts)
   }
 
+  if (opts.watch) {
+
+  } else {
+
+  }
+
   await bundleAll({
     verbose,
     quiet,
@@ -50,6 +56,56 @@ export default async function index(opts) {
     entries,
     output
   })
+}
+
+function bundleTypes({ input, output, name, version, root, verbose, quiet }) {
+  let message = null
+  if ([ ".ts", ".tsx" ].includes(extname(input))) {
+    if (output) {
+      message = `${chalk.yellow("Extracting types")} ${chalk.magenta(
+        name
+      )}-${chalk.magenta(version)} [${chalk.blue(
+        "tsdef".toUpperCase()
+      )}] ➤ ${chalk.green(dirname(output))}`
+      let progress = null
+
+      if (!quiet) {
+        progress = ora({
+          interval: 30,
+          text: `${message}...`
+        }).start()
+      }
+
+      try {
+        // Unfortunately there is no async API here.
+        extractTypes({
+          entry: input,
+          output: dirname(output),
+          root,
+          verbose,
+          quiet
+        })
+      } catch (typeError) {
+        if (!quiet) {
+          progress.fail(typeError.message)
+        } else if (process.env.NODE_ENV === "test") {
+          throw new Error(typeError.message)
+        } else {
+          console.error(typeError.message)
+        }
+
+        if (process.env.NODE_ENV !== "test") {
+          process.exit(1)
+        }
+      }
+
+      if (!quiet) {
+        progress.succeed(`${message}`)
+      }
+    } else {
+      console.warn(chalk.red.bold("  - Missing `types` entry in `package.json`!"))
+    }
+  }
 }
 
 async function bundleAll({
@@ -140,51 +196,12 @@ async function bundleAll({
       }
     }
 
-    let message = null
-    if ([ ".ts", ".tsx" ].includes(extname(entries.library))) {
-      if (output.types) {
-        message = `${chalk.yellow("Extracting types")} ${chalk.magenta(
-          name
-        )}-${chalk.magenta(version)} [${chalk.blue(
-          "tsdef".toUpperCase()
-        )}] ➤ ${chalk.green(dirname(output.types))}`
-        let progress = null
-
-        if (!quiet) {
-          progress = ora({
-            interval: 30,
-            text: `${message}...`
-          }).start()
-        }
-
-        try {
-          extractTypes({
-            entry: entries.library,
-            output: dirname(output.types),
-            root,
-            verbose,
-            quiet
-          })
-        } catch (typeError) {
-          if (!quiet) {
-            progress.fail(typeError.message)
-          } else if (process.env.NODE_ENV === "test") {
-            throw new Error(typeError.message)
-          } else {
-            console.error(typeError.message)
-          }
-
-          if (process.env.NODE_ENV !== "test") {
-            process.exit(1)
-          }
-        }
-
-        if (!quiet) {
-          progress.succeed(`${message}`)
-        }
-      } else {
-        console.warn(chalk.red.bold("  - Missing `types` entry in `package.json`!"))
-      }
+    if (output.types) {
+      bundleTypes({
+        ...base,
+        input: entries.library,
+        output: output.types
+      })
     }
   }
 

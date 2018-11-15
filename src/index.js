@@ -106,6 +106,8 @@ export default async function index(opts) {
 
 function bundleTypes(options) {
   if ([ ".ts", ".tsx" ].includes(extname(options.input))) {
+    const start = process.hrtime()
+
     let progress = null
     if (!options.quiet) {
       progress = ora({
@@ -122,7 +124,7 @@ function bundleTypes(options) {
     }
 
     if (!options.quiet) {
-      progress.succeed(generateMessage("Extracting", "Done", options))
+      progress.succeed(generateMessage("Extracting", "Done" + formatDuration(start), options))
     }
   }
 }
@@ -378,6 +380,16 @@ function handleError(error, progress) {
   }
 }
 
+function formatDuration(start) {
+  const NS_PER_SEC = 1e9
+  const NS_TO_MS = 1e6
+  const diff = process.hrtime(start)
+  const nano = diff[0] * NS_PER_SEC + diff[1]
+  const ms = Math.round(nano / NS_TO_MS)
+
+  return ` in ${ms}ms`
+}
+
 async function bundleTo(options) {
   let progress = null
   if (!options.quiet) {
@@ -386,6 +398,8 @@ async function bundleTo(options) {
       interval: 30
     }).start()
   }
+
+  const start =  process.hrtime()
 
   let bundle = null
   try {
@@ -405,7 +419,7 @@ async function bundleTo(options) {
     progress.succeed(
       generateMessage(
         "Bundling",
-        await getFormattedSize(result.code, options.output, options.target !== "cli"),
+        await getFormattedSize(result.code, options.output, options.target !== "cli") + formatDuration(start),
         options
       )
     )

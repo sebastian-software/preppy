@@ -1,4 +1,6 @@
-# *Preppy* - A Simple and lightweight tool for preparing the publish of NPM packages.
+# *Preppy*
+
+**An incredibly simple and lightweight tool for preparing packaging for the publishing process.**
 
 <img src="https://raw.githubusercontent.com/sebastian-software/preppy/master/demo.gif?raw=true" alt="Demo of Preppy"  height=350 width=650/>
 

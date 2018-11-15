@@ -18,20 +18,32 @@
 [codecov-img]: https://img.shields.io/codecov/c/gh/sebastian-software/preppy.svg
 [codecov]: https://codecov.io/gh/sebastian-software/preppy
 
-## ✨ Features:
+## 🥁 Features:
 
 - Rock solid infrastructure. Builds on well maintained Babel and Rollup under the hood.
-- Supports multiple entry modules (cli, client, server, library, ...)
-- Creates multipke output formats (ESM, CommonJS, UMD, ...)
+- Supports multiple entry modules (cli, client, server, library, ...) - even multiple binary entries.
+- Creates multiple output formats (ESM, CommonJS, UMD, ...)
 - Supports exporting of TypeScript definitions (respects `types` definition in `package.json`).
-- Includes a watch mode for live development of libraries, etc.
-- Supports minified builds by compressing bundles with Terser as needed.
+- Includes a watch mode for live development of libraries.
+- Supports minified builds by compressing bundles with Terser as needed (for files with `.min` in their name).
+- Prints out gzipped sizes of all client-relevant bundles.
+- Injects common env-variables into the build (`BUNDLE_{NAME|VERSION|TARGET}`, `NODE_ENV`)
+- Support for YAML and JSON is built-in.
+
 
 ## 🔧 Installation
 
+For Preppy itself installation is done by executing one command.
 
 ```console
-$ npm i -D preppy
+$ npm install -D preppy
+```
+
+Dependending on your transpiling needs you need Babel with the requires presets/plugins. This is nothing extra to install typically as you might have these things in-place already. Example:
+
+```console
+$ npm install -D @babel/plugin-transform-runtime @babel/preset-env @babel/preset-typescript @babel/core
+$ npm install @babel/runtime corejs
 ```
 
 
@@ -86,10 +98,9 @@ Note: Please disable `transform-runtime` for all UMD builds as UMD is better wor
 
 ### Installing Babel Dependencies
 
-```console
-$ npm install --save-dev @babel/plugin-transform-runtime @babel/preset-env @babel/preset-typescript @babel/core
-$ npm install --save @babel/runtime corejs
-```
+
+
+
 
 ## 📦 Usage
 

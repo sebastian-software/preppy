@@ -1,8 +1,8 @@
+# *Preppy* - A Simple and lightweight tool for preparing the publish of NPM packages.
+
 <img src="https://raw.githubusercontent.com/sebastian-software/preppy/master/demo.gif?raw=true" alt="Demo of Preppy"  height=350 width=650/>
 
-# *Preppy* <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Code Coverage][codecov-img]][codecov] [![Dependencies][deps-img]][deps]
-
-> *Preppy* - A Simple and lightweight tool for preparing the publish of NPM packages.
+[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Code Coverage][codecov-img]][codecov] [![Dependencies][deps-img]][deps]
 
 [sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
@@ -31,7 +31,7 @@
 - Support for YAML and JSON is built-in.
 
 
-## 🔧 Installation
+## 🔧 Installation:
 
 For Preppy itself installation is done by executing one command.
 
@@ -102,7 +102,7 @@ Note: Please disable `transform-runtime` for all UMD builds as UMD is better wor
 
 
 
-## 📦 Usage
+## 📦 Usage:
 
 To keep things simple and reduce to number of dependencies, *Preppy* uses your local Babel configuration to transpile your code. You have to make sure that all required Babel mechanics, presets and plugins are installed locally to your project.
 
@@ -251,8 +251,9 @@ Options
 
   --root             The root folder of your project [auto]
   --output           Override output folder (and package.json entries) [auto]
+  --watch            Keeps running and rebuilds on any change [false]
+  --sourcemap        Create a source map file during processing [true]
 
-  -m, --sourcemap    Create a source map file during processing [true]
   -v, --verbose      Verbose output mode [false]
   -q, --quiet        Quiet output mode [false]
 ```

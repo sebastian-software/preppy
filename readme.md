@@ -1,4 +1,4 @@
-[Demo of Preppy](https://raw.githubusercontent.com/sebastian-software/preppy/master/demo.gif)
+[Demo of Preppy](https://raw.githubusercontent.com/sebastian-software/preppy/master/demo.gif?raw=true)
 
 # *Preppy* <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Code Coverage][codecov-img]][codecov] [![Dependencies][deps-img]][deps]
 

@@ -40,6 +40,9 @@
     "prepare": "rimraf bin && babel-node src/cli.js"
   },
   "jest": {
+    "setupFiles": [
+      "./jest.setup.js"
+    ],
     "testEnvironment": "node",
     "testMatch": [
       "**/index.test.js"

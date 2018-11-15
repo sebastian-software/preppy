@@ -18,136 +18,24 @@
 [codecov-img]: https://img.shields.io/codecov/c/gh/sebastian-software/preppy.svg
 [codecov]: https://codecov.io/gh/sebastian-software/preppy
 
-To keep things simple and reduce to number of dependencies, *Preppy* uses your local Babel configuration to transpile your code. You have to make sure that all required Babel mechanics, presets and plugins are installed locally to your project.
+## ✨ Features:
 
-Preppy also support extracting *TypeScript* types into `.d.ts` files to make them usable by users of your libraries. The generated code is still transpiled by Babel. The standard `typescript` CLI is used for extracting the types.
+- Rock solid infrastructure. Builds on well maintained Babel and Rollup under the hood.
+- Supports multiple entry modules (cli, client, server, library, ...)
+- Creates multipke output formats (ESM, CommonJS, UMD, ...)
+- Supports exporting of TypeScript definitions (respects `types` definition in `package.json`).
+- Includes a watch mode for live development of libraries, etc.
+- Supports minified builds by compressing bundles with Terser as needed.
 
-## Input Files
+## 🔧 Installation
 
-These are the typical entry points looked up for by *Preppy*:
-
-- `src/index.{js|jsx|ts|tsx}`
-
-We made the experience that this works pretty fine for most projects. If you have the need for more input files, please report back to us.
-
-## Output Targets
-
-*Preppy* produces exports of your sources depending on the entries of your packages `package.json`. It supports building for *ESM*, *CommonJS* and *UMD*. Just add the relevant entries to the package configuration.
-
-- *CommonJS*: `main`
-- *EcmaScript Modules (ESM)*: `module`: New module standard for optimal tree shaking of bundlers.
-- *Universal Module Definition (UMD)*: `umd` + `unpkg` for delivering a minified bundle to the CDN.
-
-Basic Example:
-
-```json
-{
-  "name": "mypackage",
-  "main": "lib/index.cjs.js",
-  "module": "lib/index.esm.js",
-  "unpkg": "lib/index.umd.min.js",
-}
-```
-
-For exporting types with TypeScript you should add a `types` entry to your `package.json` as well:
-
-```json
-{
-  "name": "mypackage",
-  "main": "lib/index.cjs.js",
-  "module": "lib/index.esm.js",
-  "unpkg": "lib/index.umd.min.js",
-  "types": "lib/index.d.ts"
-}
-```
-
-
-## Binary Output(s)
-
-Additionally *Preppy* is capable in generating for binary targets e.g. CLI tools. Not just one, but each of the one listed in the `bin` section of your `package.json`.
-
-The following example generates a `mycli` binary which is generated from the matching source file.
-
-Binaries are generally generated from one of these source files:
-
-- `src/{name}.{js|ts}`
-- `src/cli/{name}.{js|ts}`
-- `src/cli.{js|ts}`
-- `src/cli/index.{js|ts}`
-
-Example Configuration:
-
-```json
-{
-  "name": "mycli",
-  "bin": {
-    "mycli": "bin/mycli"
-  }
-}
-```
-
-
-## Universal Output
-
-*Preppy* also has some support for building universal libraries. While for most projects it's completely feasible
-to have one library for both NodeJS and browsers (or only for one of these), others might want (slightly) different
-packages to browsers and NodeJS.
-
-The only difference here is that you have to define a new `browser` definition inside your `package.json`. Also
-the input fields differ from the one of the normal libraries or binaries:
-
-- `src/client.{js|jsx|ts|tsx}`
-- `src/browser.{js|jsx|ts|tsx}`
-- `src/client/index.{js|jsx|ts|tsx}`
-- `src/browser/index.{js|jsx|ts|tsx}`
-
-For the NodeJS part you can use any of the following entries:
-
-- `src/node.{js|jsx|ts|tsx}`
-- `src/server.{js|jsx|ts|tsx}`
-- `src/node/index.{js|jsx|ts|tsx}`
-- `src/server/index.{js|jsx|ts|tsx}`
-
-Example Configuration:
-
-```json
-{
-  "name": "mylib",
-  "browser": "lib/browser.esm.js",
-  "unpkg": "lib/browser.umd.js",
-  "main": "lib/node.cjs.js",
-  "module": "lib/node.esm.js"
-}
-```
-
-Note: The bundle under `browser` is a ESM bundle which is ideally used by bundlers like *Webpack* or *Parcel*.
-
-Note: When any of these files exists, we use prefer it over the normal library for the `unpkg` entry in `package.json` as well.
-
-## Environment Settings
-
-*Preppy* injects these environment values into your code base:
-
-- `process.env.BUNDLE_NAME`: Extracted `name` field from `package.json`.
-- `process.env.BUNDLE_VERSION`: Extracted `version` field from `package.json`.
-- `process.env.BUNDLE_TARGET`: One of the supported targets. Either
-- `process.env.NODE_ENV`: Injects environment config e.g. via `NODE_ENV="production" preppy` (optional)
-
-These values are injected into your code base by replacing the original instance.
-
-Note: It only works correctly when you use the whole identifier.
-
-Note: In verbose mode we are logging the environment settings configured.
-
-
-## Installation
 
 ```console
-$ npm install --save-dev preppy
+$ npm i -D preppy
 ```
 
 
-## Configure Babel
+### Configure Babel
 
 As transpiling happens via Babel you have to install the *Babel* Core, Plugins and Presets on your own. You also need to use a standard Babel Configuration inside your package.
 
@@ -203,8 +91,131 @@ $ npm install --save-dev @babel/plugin-transform-runtime @babel/preset-env @babe
 $ npm install --save @babel/runtime corejs
 ```
 
+## 📦 Usage
 
-## Usage
+To keep things simple and reduce to number of dependencies, *Preppy* uses your local Babel configuration to transpile your code. You have to make sure that all required Babel mechanics, presets and plugins are installed locally to your project.
+
+Preppy also support extracting *TypeScript* types into `.d.ts` files to make them usable by users of your libraries. The generated code is still transpiled by Babel. The standard `typescript` CLI is used for extracting the types.
+
+### Input Files
+
+These are the typical entry points looked up for by *Preppy*:
+
+- `src/index.{js|jsx|ts|tsx}`
+
+We made the experience that this works pretty fine for most projects. If you have the need for more input files, please report back to us.
+
+### Output Targets
+
+*Preppy* produces exports of your sources depending on the entries of your packages `package.json`. It supports building for *ESM*, *CommonJS* and *UMD*. Just add the relevant entries to the package configuration.
+
+- *CommonJS*: `main`
+- *EcmaScript Modules (ESM)*: `module`: New module standard for optimal tree shaking of bundlers.
+- *Universal Module Definition (UMD)*: `umd` + `unpkg` for delivering a minified bundle to the CDN.
+
+Basic Example:
+
+```json
+{
+  "name": "mypackage",
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.esm.js",
+  "unpkg": "lib/index.umd.min.js",
+}
+```
+
+For exporting types with TypeScript you should add a `types` entry to your `package.json` as well:
+
+```json
+{
+  "name": "mypackage",
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.esm.js",
+  "unpkg": "lib/index.umd.min.js",
+  "types": "lib/index.d.ts"
+}
+```
+
+
+### Binary Output(s)
+
+Additionally *Preppy* is capable in generating for binary targets e.g. CLI tools. Not just one, but each of the one listed in the `bin` section of your `package.json`.
+
+The following example generates a `mycli` binary which is generated from the matching source file.
+
+Binaries are generally generated from one of these source files:
+
+- `src/{name}.{js|ts}`
+- `src/cli/{name}.{js|ts}`
+- `src/cli.{js|ts}`
+- `src/cli/index.{js|ts}`
+
+Example Configuration:
+
+```json
+{
+  "name": "mycli",
+  "bin": {
+    "mycli": "bin/mycli"
+  }
+}
+```
+
+
+### Universal Output
+
+*Preppy* also has some support for building universal libraries. While for most projects it's completely feasible
+to have one library for both NodeJS and browsers (or only for one of these), others might want (slightly) different
+packages to browsers and NodeJS.
+
+The only difference here is that you have to define a new `browser` definition inside your `package.json`. Also
+the input fields differ from the one of the normal libraries or binaries:
+
+- `src/client.{js|jsx|ts|tsx}`
+- `src/browser.{js|jsx|ts|tsx}`
+- `src/client/index.{js|jsx|ts|tsx}`
+- `src/browser/index.{js|jsx|ts|tsx}`
+
+For the NodeJS part you can use any of the following entries:
+
+- `src/node.{js|jsx|ts|tsx}`
+- `src/server.{js|jsx|ts|tsx}`
+- `src/node/index.{js|jsx|ts|tsx}`
+- `src/server/index.{js|jsx|ts|tsx}`
+
+Example Configuration:
+
+```json
+{
+  "name": "mylib",
+  "browser": "lib/browser.esm.js",
+  "unpkg": "lib/browser.umd.js",
+  "main": "lib/node.cjs.js",
+  "module": "lib/node.esm.js"
+}
+```
+
+Note: The bundle under `browser` is a ESM bundle which is ideally used by bundlers like *Webpack* or *Parcel*.
+
+Note: When any of these files exists, we use prefer it over the normal library for the `unpkg` entry in `package.json` as well.
+
+### Environment Settings
+
+*Preppy* injects these environment values into your code base:
+
+- `process.env.BUNDLE_NAME`: Extracted `name` field from `package.json`.
+- `process.env.BUNDLE_VERSION`: Extracted `version` field from `package.json`.
+- `process.env.BUNDLE_TARGET`: One of the supported targets. Either
+- `process.env.NODE_ENV`: Injects environment config e.g. via `NODE_ENV="production" preppy` (optional)
+
+These values are injected into your code base by replacing the original instance.
+
+Note: It only works correctly when you use the whole identifier.
+
+Note: In verbose mode we are logging the environment settings configured.
+
+
+### Command Line Interface
 
 *Preppy* comes with a binary which can be called from within your `scripts` section
 in the `package.json` file.

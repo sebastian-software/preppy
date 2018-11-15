@@ -96,7 +96,9 @@ export default async function index(opts) {
     console.log(chalk.bold(`Building ${options.name}-${options.version}...`))
 
     // Parallel execution. Confuses console messages right now. Not clearly faster.
-    // await Promise(tasks.map(executeTask))
+    // Probably needs some better parallel execution
+    // e.g. via https://github.com/facebook/jest/tree/master/packages/jest-worker
+    // await Promise.all(tasks.map(executeTask))
 
     for (const task of tasks) {
       await executeTask(task)

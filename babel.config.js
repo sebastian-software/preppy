@@ -14,6 +14,10 @@ module.exports = (api) => {
   return {
     sourceMaps: true,
     plugins: [
+      // This makes fast-async more compatible somehow.
+      // Otherwise we got some crazy "Duplicate Declarations" which are
+      // unfortunately never reproducable with pure Babel.
+      "@babel/plugin-transform-block-scoping",
       "module:fast-async",
       [
         "@babel/proposal-class-properties",
@@ -42,6 +46,7 @@ module.exports = (api) => {
         {
           exclude: [ "transform-regenerator", "transform-async-to-generator" ],
           useBuiltIns: "usage",
+          loose: true,
           modules
         }
       ],

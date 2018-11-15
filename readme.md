@@ -1,3 +1,5 @@
+[Demo of Preppy](https://raw.githubusercontent.com/sebastian-software/preppy/master/demo.gif)
+
 # *Preppy* <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Code Coverage][codecov-img]][codecov] [![Dependencies][deps-img]][deps]
 
 > *Preppy* - A Simple and lightweight tool for preparing the publish of NPM packages.

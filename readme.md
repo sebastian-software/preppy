@@ -6,19 +6,21 @@
 
 [![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Code Coverage][codecov-img]][codecov] [![Dependencies][deps-img]][deps]
 
-[sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
+
 [sponsor]: https://www.sebastian-software.de
 [deps]: https://david-dm.org/sebastian-software/preppy
-[deps-img]: https://david-dm.org/sebastian-software/preppy.svg
 [npm]: https://www.npmjs.com/package/preppy
-[npm-downloads-img]: https://img.shields.io/npm/dm/preppy.svg
-[npm-version-img]: https://img.shields.io/npm/v/preppy.svg
-[travis-img]: https://img.shields.io/travis/sebastian-software/preppy/master.svg?branch=master&label=unix%20build
-[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/preppy/master.svg?label=windows%20build
 [travis]: https://travis-ci.org/sebastian-software/preppy
 [appveyor]: https://ci.appveyor.com/project/swernerx/preppy/branch/master
-[codecov-img]: https://img.shields.io/codecov/c/gh/sebastian-software/preppy.svg
 [codecov]: https://codecov.io/gh/sebastian-software/preppy
+
+[sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/692446
+[deps-img]: https://badgen.net/david/dep/sebastian-software/preppy
+[npm-downloads-img]: https://badgen.net/npm/dm/preppy
+[npm-version-img]: https://badgen.net/npm/v/preppy
+[travis-img]: https://badgen.net/travis/sebastian-software/preppy?label=unix%20build
+[appveyor-img]: https://badgen.net/appveyor/ci/swernerx/preppy?label=windows%20build
+[codecov-img]: https://badgen.net/codecov/c/github/sebastian-software/preppy.svg
 
 ## 🥁 Features:
 

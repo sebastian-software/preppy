@@ -28,33 +28,23 @@ const WATCH_OPTS = {
 }
 
 export default async function index(opts) {
-  const { verbose, quiet, root } = opts
-  const pkg = require(resolve(root, "package.json"))
-  const name = pkg.name || dirname(root)
-  const version = pkg.version || "0.0.0"
+  const pkg = require(resolve(opts.root, "package.json"))
 
-  const banner = getBanner(pkg)
-  const output = getOutputMatrix(opts, pkg)
-  const entries = getEntries(opts, output)
-
-  if (opts.verbose) {
-    console.log("Options:", opts)
+  const options = {
+    ...opts,
+    name: pkg.name || dirname(opts.root),
+    version: pkg.version || "0.0.0",
+    banner: getBanner(pkg),
+    output: getOutputMatrix(opts, pkg)
   }
+
+  options.entries = getEntries(options)
 
   if (opts.watch) {
+    console.log("Watching...")
   } else {
+    await bundleAll(options)
   }
-
-  await bundleAll({
-    verbose,
-    quiet,
-    name,
-    version,
-    root,
-    banner,
-    entries,
-    output
-  })
 }
 
 function bundleTypes(options) {

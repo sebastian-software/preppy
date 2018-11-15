@@ -10,20 +10,20 @@ function isEmpty(obj) {
   return true
 }
 
-export default function getEntries(opts, output) {
+export default function getEntries(options) {
   const entries = {}
 
-  const hasInputs = opts.entryLib || opts.entryNode || opts.entryBrowser || opts.entryCli
+  const hasInputs = options.entryLib || options.entryNode || options.entryBrowser || options.entryCli
 
-  const addRoot = (fileName) => join(opts.root, fileName)
+  const addRoot = (fileName) => join(options.root, fileName)
 
-  if (opts.entryLib) {
-    if (!existsSync(opts.entryLib)) {
+  if (options.entryLib) {
+    if (!existsSync(options.entryLib)) {
       throw new Error(
-        `Library entry point specified does not exist: ${opts.entryLib}!`
+        `Library entry point specified does not exist: ${options.entryLib}!`
       )
     }
-    entries.library = opts.entryLib
+    entries.library = options.entryLib
   } else if (!hasInputs) {
     entries.library = [
       "src/index.js",
@@ -33,13 +33,13 @@ export default function getEntries(opts, output) {
     ].map(addRoot).filter(existsSync)[0]
   }
 
-  if (opts.entryNode) {
-    if (!existsSync(opts.entryNode)) {
+  if (options.entryNode) {
+    if (!existsSync(options.entryNode)) {
       throw new Error(
-        `NodeJS entry point specified does not exist: ${opts.entryNode}!`
+        `NodeJS entry point specified does not exist: ${options.entryNode}!`
       )
     }
-    entries.node = opts.entryNode
+    entries.node = options.entryNode
   } else if (!hasInputs) {
     entries.node = [
       "src/node.js",
@@ -61,13 +61,13 @@ export default function getEntries(opts, output) {
     ].map(addRoot).filter(existsSync)[0]
   }
 
-  if (opts.entryBrowser) {
-    if (!existsSync(opts.entryBrowser)) {
+  if (options.entryBrowser) {
+    if (!existsSync(options.entryBrowser)) {
       throw new Error(
-        `Browser entry point specified does not exist: ${opts.entryBrowser}!`
+        `Browser entry point specified does not exist: ${options.entryBrowser}!`
       )
     }
-    entries.browser = opts.entryBrowser
+    entries.browser = options.entryBrowser
   } else if (!hasInputs) {
     entries.browser = [
       "src/client.js",
@@ -91,16 +91,16 @@ export default function getEntries(opts, output) {
 
   entries.binaries = {}
 
-  if (opts.entryCli) {
-    if (!existsSync(opts.entryCli)) {
+  if (options.entryCli) {
+    if (!existsSync(options.entryCli)) {
       throw new Error(
-        `CLI entry point specified does not exist: ${opts.entryCli}!`
+        `CLI entry point specified does not exist: ${options.entryCli}!`
       )
     }
 
-    entries.binaries.index = opts.entryCli
-  } else if (!hasInputs && output.binaries) {
-    const binaryNames = Object.keys(output.binaries)
+    entries.binaries.index = options.entryCli
+  } else if (!hasInputs && options.output.binaries) {
+    const binaryNames = Object.keys(options.output.binaries)
 
     binaryNames.forEach((name) => {
       // Check existance of all these files in priority of there order here.

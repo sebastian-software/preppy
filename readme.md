@@ -20,7 +20,7 @@
 [npm-version-img]: https://badgen.net/npm/v/preppy
 [travis-img]: https://badgen.net/travis/sebastian-software/preppy?label=unix%20build
 [appveyor-img]: https://badgen.net/appveyor/ci/swernerx/preppy?label=windows%20build
-[codecov-img]: https://badgen.net/codecov/c/github/sebastian-software/preppy.svg
+[codecov-img]: https://badgen.net/codecov/c/github/sebastian-software/preppy
 
 ## 🥁 Features:
 

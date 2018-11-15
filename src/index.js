@@ -9,7 +9,6 @@ import jsonPlugin from "rollup-plugin-json"
 import ora from "ora"
 import replacePlugin from "rollup-plugin-replace"
 import yamlPlugin from "rollup-plugin-yaml"
-import { camelCase } from "lodash"
 import { rollup, watch } from "rollup"
 import { terser as terserPlugin } from "rollup-plugin-terser"
 

@@ -77,7 +77,7 @@ export default function progressPlugin(options = {}) {
       for (const fileName in bundle) {
         const entry = bundle[fileName]
         console.log(
-          `${chalk.green(figures.tick)} Written ${chalk.green(
+          `${chalk.green(figures.tick)} Written: ${chalk.green(
             path.relative(root, outputOptions.file)
           )} in ${chalk.blue(formatDuration(start))} [${prettyBytes(entry.code.length)}]`
         )

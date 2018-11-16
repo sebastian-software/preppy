@@ -40,7 +40,7 @@ export default async function index(opts) {
     // We are unable to watch and regenerate TSC defintion files in watcher
     if (!options.watch || task.format !== "tsc") {
       console.log(
-        `${chalk.yellow(figures.star)} ${chalk.blue(
+        `${chalk.yellow(figures.star)} Added: ${chalk.blue(
           relative(task.root, task.input)
         )} [${chalk.blue(task.target.toUpperCase())}] ${figures.pointer} ${chalk.green(
           task.output
@@ -56,7 +56,9 @@ export default async function index(opts) {
       if (task.format !== "tsc") {
         rollupTasks.push({
           output: getRollupOutputOptions(task),
-          watch: WATCH_OPTS,
+          watch: {
+            exclude: "node_modules/**"
+          },
           ...getRollupInputOptions(task)
         })
       }
@@ -66,10 +68,6 @@ export default async function index(opts) {
   } else {
     await Promise.all(tasks.map(executeTask))
   }
-}
-
-const WATCH_OPTS = {
-  exclude: "node_modules/**"
 }
 
 function watchHandler(watchEvent) {
@@ -128,7 +126,7 @@ function bundleTypes(options) {
 
     if (!options.quiet) {
       progress.succeed(
-        `Written ${chalk.green(relative(options.root, options.output))} in ${chalk.blue(
+        `Written: ${chalk.green(relative(options.root, options.output))} in ${chalk.blue(
           formatDuration(start)
         )}`
       )

@@ -9,15 +9,11 @@ import { rollup, watch } from "rollup"
 import extractTypes from "./extractTypes"
 import getBanner from "./getBanner"
 import getEntries from "./getEntries"
-import getFormattedSize from "./getFormattedSize"
 import getOutputMatrix from "./getOutputMatrix"
 import getRollupInputOptions from "./getRollupInputOptions"
 import getRollupOutputOptions from "./getRollupOutputOptions"
 import getTasks from "./getTasks"
-
-const WATCH_OPTS = {
-  exclude: "node_modules/**"
-}
+import { formatDuration } from "./progressPlugin"
 
 export default async function index(opts) {
   const pkg = require(resolve(opts.root, "package.json"))
@@ -44,11 +40,11 @@ export default async function index(opts) {
     // We are unable to watch and regenerate TSC defintion files in watcher
     if (!options.watch || task.format !== "tsc") {
       console.log(
-        `${chalk.yellow(figures.star)} [${chalk.blue(
-          task.target.toUpperCase()
-        )}] ${chalk.blue(relative(task.root, task.input))} ${
-          figures.pointer
-        } ${chalk.green(task.output)} [${chalk.green(task.format.toUpperCase())}]`
+        `${chalk.yellow(figures.star)} ${chalk.blue(
+          relative(task.root, task.input)
+        )} [${chalk.blue(task.target.toUpperCase())}] ${figures.pointer} ${chalk.green(
+          task.output
+        )} [${chalk.green(task.format.toUpperCase())}]`
       )
     }
   }
@@ -66,42 +62,27 @@ export default async function index(opts) {
       }
     }
 
-    watch(rollupTasks).on("event", (watchEvent) => {
-      if (watchEvent.code === "FATAL" || watchEvent.code === "ERROR") {
-        console.error(`${chalk.red(figures.cross)} ${formatError(watchEvent.error)}`)
-        if (watchEvent.code === "FATAL") {
-          process.exit(1)
-        }
-      } else if (watchEvent.code === "BUNDLE_END") {
-        watchEvent.output.forEach((output) => {
-          console.log(
-            `${chalk.green(figures.tick)} Written ${relative(options.root, output)} in ${
-              watchEvent.duration
-            }ms`
-          )
-        })
-      }
-    })
+    watch(rollupTasks).on("event", watchHandler)
   } else {
-    // Parallel execution. Confuses console messages right now. Not clearly faster.
-    // Probably needs some better parallel execution
-    // e.g. via https://github.com/facebook/jest/tree/master/packages/jest-worker
-    // await Promise.all(tasks.map(executeTask))
+    await Promise.all(tasks.map(executeTask))
+  }
+}
 
-    for (const task of tasks) {
-      await executeTask(task)
+const WATCH_OPTS = {
+  exclude: "node_modules/**"
+}
+
+function watchHandler(watchEvent) {
+  if (watchEvent.code === "FATAL" || watchEvent.code === "ERROR") {
+    console.error(`${chalk.red(figures.cross)} ${formatError(watchEvent.error)}`)
+    if (watchEvent.code === "FATAL") {
+      process.exit(1)
     }
   }
 }
 
 async function executeTask(task) {
-  return task.format === "tsc" ? bundleTypes(task) : bundleTo(task)
-}
-
-function generateMessage(post, { name, version, root, target, input, output, format }) {
-  return `[${chalk.blue(target.toUpperCase())}] ${chalk.blue(relative(root, input))} ${
-    figures.pointer
-  } ${chalk.green(output)} [${chalk.green(format.toUpperCase())}] ${post}`
+  return task.format === "tsc" ? bundleTypes(task) : bundleScript(task)
 }
 
 function formatError(error) {
@@ -126,16 +107,6 @@ function handleError(error, progress) {
   }
 }
 
-function formatDuration(start) {
-  const NS_PER_SEC = 1e9
-  const NS_TO_MS = 1e6
-  const diff = process.hrtime(start)
-  const nano = diff[0] * NS_PER_SEC + diff[1]
-  const ms = Math.round(nano / NS_TO_MS)
-
-  return ` in ${ms}ms`
-}
-
 function bundleTypes(options) {
   if ([ ".ts", ".tsx" ].includes(extname(options.input))) {
     const start = process.hrtime()
@@ -144,7 +115,7 @@ function bundleTypes(options) {
     if (!options.quiet) {
       progress = terminalSpinner({
         interval: 30,
-        text: generateMessage("...", options)
+        text: `Extracting types from: ${relative(options.root, options.input)}`
       }).start()
     }
 
@@ -156,43 +127,26 @@ function bundleTypes(options) {
     }
 
     if (!options.quiet) {
-      progress.succeed(generateMessage(`Done${formatDuration(start)}`, options))
+      progress.succeed(
+        `Written ${chalk.green(relative(options.root, options.output))} in ${chalk.blue(
+          formatDuration(start)
+        )}`
+      )
     }
   }
 }
 
-async function bundleTo(options) {
-  let progress = null
-  if (!options.quiet) {
-    progress = terminalSpinner({
-      text: `${generateMessage("...", options)}`,
-      interval: 30
-    }).start()
-  }
-
-  const start = process.hrtime()
-
-  let bundle = null
+async function bundleScript(options) {
+  let bundle
   try {
     bundle = await rollup(getRollupInputOptions(options))
   } catch (bundleError) {
-    handleError(bundleError, progress)
+    handleError(bundleError)
   }
 
-  let result = null
   try {
-    result = await bundle.write(getRollupOutputOptions(options))
+    await bundle.write(getRollupOutputOptions(options))
   } catch (writeError) {
-    handleError(writeError, progress)
-  }
-
-  if (!options.quiet) {
-    progress.succeed(
-      generateMessage(
-        (await getFormattedSize(result.code, options.output, options.target !== "cli")) +
-          formatDuration(start),
-        options
-      )
-    )
+    handleError(writeError)
   }
 }

@@ -24,7 +24,7 @@ delete flags.q
 delete flags.m
 
 // Check whether there is something new available
-updateNotifier({ pkg: { name, version } }).notify();
+updateNotifier({ pkg: { name, version } }).notify()
 
 // Call main method
 main(flags)

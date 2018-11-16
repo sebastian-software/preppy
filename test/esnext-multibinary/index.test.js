@@ -15,8 +15,7 @@ test("Multi Binary from ESNext", async () => {
   await lazyDelete(resolve(__dirname, "./bin"))
 
   await preppy({
-    root: __dirname,
-    quiet: true
+    root: __dirname
   })
 
   expect(

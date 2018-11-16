@@ -16,8 +16,7 @@ test("Publish Test File via Babel as Universal", async () => {
   await lazyDelete(resolve(__dirname, "./bin"))
 
   await preppy({
-    root: __dirname,
-    quiet: true
+    root: __dirname
   })
 
   expect(

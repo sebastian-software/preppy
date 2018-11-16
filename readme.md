@@ -25,14 +25,15 @@
 ## 🥁 Features:
 
 - Rock solid infrastructure. Builds on well maintained Babel and Rollup under the hood.
-- Supports multiple entry modules (cli, client, server, library, ...) - even multiple binary entries.
+- Supports multiple entries (cli, client, server, library, ...) - even multiple binary entries.
 - Creates multiple output formats (ESM, CommonJS, UMD, ...)
 - Supports exporting of TypeScript definitions (respects `types` definition in `package.json`).
-- Includes a watch mode for live development of libraries.
-- Supports minified builds by compressing bundles with Terser as needed (for files with `.min` in their name).
-- Prints out gzipped sizes of all client-relevant bundles.
+- Includes a *watch mode* for live development of libraries.
+- Supports auto-executing binaries. This is *super useful* when dealing with development web servers for example.
+- Supports minified builds by compressing bundles with *Terser* as needed (for files with `.min` in their name).
+- Prints out generated file sizes of all bundles.
 - Injects common env-variables into the build (`BUNDLE_{NAME|VERSION|TARGET}`, `NODE_ENV`)
-- Support for YAML and JSON is built-in.
+- Supports YAML and JSON out of the box.
 
 
 ## 🔧 Installation:

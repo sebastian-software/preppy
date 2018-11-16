@@ -26,8 +26,8 @@ export default function getTasks({
     banner
   }
 
-  function matches() {
-    return limit ? toRegex(limit, { contains: true }) : true
+  function matches(fileName) {
+    return limit ? toRegex(limit, { contains: true }).exec(fileName) : true
   }
 
   function check(fileName) {

@@ -1,5 +1,5 @@
 /* eslint-disable complexity, max-statements, max-depth */
-import { dirname, extname, isAbsolute, join, relative, resolve } from "path"
+import { dirname, extname, isAbsolute, join, relative, resolve, sep } from "path"
 import babelPlugin from "rollup-plugin-babel"
 import chalk from "chalk"
 import cjsPlugin from "rollup-plugin-commonjs"
@@ -7,8 +7,8 @@ import executablePlugin from "rollup-plugin-executable"
 
 import figures from "figures"
 import jsonPlugin from "rollup-plugin-json"
-import ora from "ora"
 import replacePlugin from "rollup-plugin-replace"
+import terminalSpinner from "ora"
 import yamlPlugin from "rollup-plugin-yaml"
 import { rollup, watch } from "rollup"
 import { terser as terserPlugin } from "rollup-plugin-terser"
@@ -18,7 +18,7 @@ import getBanner from "./getBanner"
 import getEntries from "./getEntries"
 import getFormattedSize from "./getFormattedSize"
 import getOutputMatrix from "./getOutputMatrix"
-
+import progressPlugin from "./progressPlugin"
 import typescriptResolvePlugin from "./typescriptResolvePlugin"
 
 let cache
@@ -41,9 +41,29 @@ export default async function index(opts) {
   options.entries = getEntries(options)
 
   const tasks = getTasks(options)
-  const rollupTasks = []
 
   if (options.watch) {
+    console.log(chalk.bold(`Watching ${options.name}-${options.version}...`))
+  } else {
+    console.log(chalk.bold(`Building ${options.name}-${options.version}...`))
+  }
+
+  for (const task of tasks) {
+    // We are unable to watch and regenerate TSC defintion files in watcher
+    if (!options.watch || task.format !== "tsc") {
+      console.log(
+        `${chalk.yellow(figures.star)} [${chalk.blue(task.target.toUpperCase())}] ${chalk.blue(
+          relative(task.root, task.input)
+        )} ${figures.pointer} ${chalk.green(task.output)} [${chalk.green(
+          task.format.toUpperCase()
+        )}]`
+      )
+    }
+  }
+
+  if (options.watch) {
+    const rollupTasks = []
+
     for (const task of tasks) {
       if (task.format !== "tsc") {
         rollupTasks.push({
@@ -54,47 +74,21 @@ export default async function index(opts) {
       }
     }
 
-    console.log(chalk.bold(`Watching ${options.name}-${options.version}...`))
-
-    for (const task of tasks) {
-      console.log(
-        `${figures.bullet} [${chalk.blue(task.target.toUpperCase())}] ${chalk.blue(
-          relative(task.root, task.input)
-        )} ${figures.pointer} ${chalk.green(task.output)} [${chalk.green(
-          task.format.toUpperCase()
-        )}]`
-      )
-    }
-
-    const progress = ora()
-
     watch(rollupTasks).on("event", (watchEvent) => {
-      if (watchEvent.code === "FATAL") {
-        progress.fail(watchEvent.error)
-        process.exit(1)
-      } else if (watchEvent.code === "ERROR") {
-        progress.fail(watchEvent.error)
-      }
-
-      if (watchEvent.code === "START") {
-        progress.start("Bundling...")
-      } else if (watchEvent.code === "BUNDLE_START") {
-        progress.info(`Rebuilding ${relative(options.root, watchEvent.input)}...`)
-        progress.start("Bundling...")
+      if (watchEvent.code === "FATAL" || watchEvent.code === "ERROR") {
+        console.error(`${chalk.red(figures.cross)} ${formatError(watchEvent.error)}`)
+        if (watchEvent.code === "FATAL") {
+          process.exit(1)
+        }
       } else if (watchEvent.code === "BUNDLE_END") {
         watchEvent.output.forEach((output) => {
-          progress.succeed(
-            `Written ${relative(options.root, output)} in ${watchEvent.duration}ms`
+          console.log(
+            `${chalk.green(figures.tick)} Written ${relative(options.root, output)} in ${watchEvent.duration}ms`
           )
-          progress.start("Bundling...")
         })
-      } else if (watchEvent.code === "END") {
-        progress.stop("Waiting...")
       }
     })
   } else {
-    console.log(chalk.bold(`Building ${options.name}-${options.version}...`))
-
     // Parallel execution. Confuses console messages right now. Not clearly faster.
     // Probably needs some better parallel execution
     // e.g. via https://github.com/facebook/jest/tree/master/packages/jest-worker
@@ -112,9 +106,9 @@ function bundleTypes(options) {
 
     let progress = null
     if (!options.quiet) {
-      progress = ora({
+      progress = terminalSpinner({
         interval: 30,
-        text: generateMessage("Extracting", "...", options)
+        text: generateMessage("...", options)
       }).start()
     }
 
@@ -126,7 +120,9 @@ function bundleTypes(options) {
     }
 
     if (!options.quiet) {
-      progress.succeed(generateMessage("Extracting", "Done" + formatDuration(start), options))
+      progress.succeed(
+        generateMessage(`Done${formatDuration(start)}`, options)
+      )
     }
   }
 }
@@ -262,15 +258,9 @@ function formatJSON(json) {
   return JSON.stringify(json, null, 2).replace(/\\"/g, "")
 }
 
-function getRollupInputOptions({
-  name,
-  verbose,
-  version,
-  input,
-  format,
-  target,
-  output
-}) {
+function getRollupInputOptions(options) {
+  const { name, verbose, version, input, format, target, output } = options
+
   const prefix = "process.env."
   const variables = {
     [`${prefix}BUNDLE_NAME`]: JSON.stringify(name),
@@ -304,6 +294,7 @@ function getRollupInputOptions({
       return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
     },
     plugins: [
+      progressPlugin(),
       replacePlugin(variables),
       cjsPlugin({
         include: "node_modules/**"
@@ -359,7 +350,6 @@ function getRollupOutputOptions({ banner, format, name, target, root, output }) 
 }
 
 function generateMessage(
-  task,
   post,
   { name, version, root, target, input, output, format }
 ) {
@@ -368,13 +358,21 @@ function generateMessage(
   } ${chalk.green(output)} [${chalk.green(format.toUpperCase())}] ${post}`
 }
 
+function formatError(error) {
+  const lines = error.toString().split("\n")
+  // Format in red color + replace working directory with empty string
+  lines[0] = chalk.red(lines[0].replace(process.cwd() + sep, ""))
+  return lines.join("\n")
+}
+
 function handleError(error, progress) {
+  const formattedMsg = formatError(error)
   if (progress) {
-    progress.fail(error.message)
+    progress.fail(formattedMsg)
   } else if (process.env.NODE_ENV === "test") {
-    throw new Error(error.message)
+    throw new Error(formattedMsg)
   } else {
-    console.error(error)
+    console.error(formattedMsg)
   }
 
   if (process.env.NODE_ENV !== "test") {
@@ -395,13 +393,13 @@ function formatDuration(start) {
 async function bundleTo(options) {
   let progress = null
   if (!options.quiet) {
-    progress = ora({
-      text: `${generateMessage("Bundling", "...", options)}`,
+    progress = terminalSpinner({
+      text: `${generateMessage("...", options)}`,
       interval: 30
     }).start()
   }
 
-  const start =  process.hrtime()
+  const start = process.hrtime()
 
   let bundle = null
   try {
@@ -420,8 +418,8 @@ async function bundleTo(options) {
   if (!options.quiet) {
     progress.succeed(
       generateMessage(
-        "Bundling",
-        await getFormattedSize(result.code, options.output, options.target !== "cli") + formatDuration(start),
+        (await getFormattedSize(result.code, options.output, options.target !== "cli")) +
+          formatDuration(start),
         options
       )
     )

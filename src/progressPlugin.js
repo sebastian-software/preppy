@@ -1,6 +1,6 @@
 import path from "path"
-import terminalSpinner from "ora"
 import figures from "figures"
+import terminalSpinner from "ora"
 
 const DEFAULT_LIMIT = 50
 
@@ -50,7 +50,9 @@ export default function progressPlugin(options = {}) {
       }
 
       const short = file.slice(-limit)
-      progress.text = `${prefix} ${short !== file ? figures.ellipsis : ""}${short} [${loaded}]`
+      progress.text = `${prefix} ${
+        short !== file ? figures.ellipsis : ""
+      }${short} [${loaded}]`
       progress.render()
     },
 

@@ -5,6 +5,7 @@ import cjsPlugin from "rollup-plugin-commonjs"
 import executablePlugin from "rollup-plugin-executable"
 import jsonPlugin from "rollup-plugin-json"
 import replacePlugin from "rollup-plugin-replace"
+import runPlugin from "rollup-plugin-run"
 import yamlPlugin from "rollup-plugin-yaml"
 import { terser as terserPlugin } from "rollup-plugin-terser"
 
@@ -30,15 +31,18 @@ export default function getRollupInputOptions(options) {
     [`${prefix}BUNDLE_VERSION`]: JSON.stringify(version),
     [`${prefix}BUNDLE_TARGET`]: JSON.stringify(target)
   }
+
   // This protected helper is required to make Preppy not optimizing itself here.
   const protectedEnv = process.env
   const env = protectedEnv.NODE_ENV
   if (env) {
     variables[`${prefix}NODE_ENV`] = JSON.stringify(env)
   }
+
   if (verbose) {
     console.log("Variables:", formatJSON(variables))
   }
+
   return {
     input,
     cache,
@@ -55,6 +59,7 @@ export default function getRollupInputOptions(options) {
     },
     plugins: [
       options.quiet ? null : progressPlugin(),
+      options.exec ? runPlugin() : null,
       replacePlugin(variables),
       cjsPlugin({
         include: "node_modules/**"

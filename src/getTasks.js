@@ -11,7 +11,8 @@ export default function getTasks({
   banner,
   entries,
   output,
-  limit
+  limit,
+  exec
 }) {
   if (!output.main && !entries.binaries) {
     console.warn(chalk.red.bold("  - Missing `main` or `bin` entry in `package.json`!"))
@@ -34,6 +35,7 @@ export default function getTasks({
   }
 
   const tasks = []
+
   if (entries.node) {
     if (check(output.main)) {
       tasks.push({
@@ -93,6 +95,7 @@ export default function getTasks({
       })
     }
   }
+
   if (entries.browser) {
     if (check(output.browser)) {
       tasks.push({
@@ -113,6 +116,7 @@ export default function getTasks({
       })
     }
   }
+
   if (entries.binaries) {
     if (output.binaries) {
       for (const binaryName in output.binaries) {
@@ -122,11 +126,13 @@ export default function getTasks({
             input: entries.binaries[binaryName],
             target: "cli",
             format: "cjs",
-            output: output.binaries[binaryName]
+            output: output.binaries[binaryName],
+            exec
           })
         }
       }
     }
   }
+
   return tasks
 }

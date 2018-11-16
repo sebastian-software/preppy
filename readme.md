@@ -256,6 +256,7 @@ Options
   --root             The root folder of your project [auto]
   --output           Override output folder (and package.json entries) [auto]
   --watch            Keeps running and rebuilds on any change [false]
+  --limit            Limits the current build scope to files matching [null]
   --sourcemap        Create a source map file during processing [true]
 
   -v, --verbose      Verbose output mode [false]

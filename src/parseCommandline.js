@@ -25,51 +25,63 @@ export default function parseCommandline() {
     {
       flags: {
         entryLib: {
+          type: "string",
           default: null
         },
 
         entryBrowser: {
+          type: "string",
           default: null
         },
 
         entryNode: {
+          type: "string",
           default: null
         },
 
         entryCli: {
+          type: "string",
           default: null
         },
 
         root: {
+          type: "string",
           default: null
         },
 
         output: {
+          type: "string",
           default: null
         },
 
         watch: {
+          type: "boolean",
           default: false
         },
 
         limit: {
+          type: "string",
           default: null
         },
 
         exec: {
+          type: "boolean",
           default: false
         },
 
         sourcemap: {
+          type: "boolean",
           default: true
         },
 
         verbose: {
+          type: "boolean",
           alias: "v",
           default: false
         },
 
         quiet: {
+          type: "boolean",
           alias: "q",
           default: false
         }

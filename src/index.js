@@ -18,6 +18,7 @@ import getBanner from "./getBanner"
 import getEntries from "./getEntries"
 import getFormattedSize from "./getFormattedSize"
 import getOutputMatrix from "./getOutputMatrix"
+import getTasks from "./getTasks"
 import progressPlugin from "./progressPlugin"
 import typescriptResolvePlugin from "./typescriptResolvePlugin"
 
@@ -52,11 +53,11 @@ export default async function index(opts) {
     // We are unable to watch and regenerate TSC defintion files in watcher
     if (!options.watch || task.format !== "tsc") {
       console.log(
-        `${chalk.yellow(figures.star)} [${chalk.blue(task.target.toUpperCase())}] ${chalk.blue(
-          relative(task.root, task.input)
-        )} ${figures.pointer} ${chalk.green(task.output)} [${chalk.green(
-          task.format.toUpperCase()
-        )}]`
+        `${chalk.yellow(figures.star)} [${chalk.blue(
+          task.target.toUpperCase()
+        )}] ${chalk.blue(relative(task.root, task.input))} ${
+          figures.pointer
+        } ${chalk.green(task.output)} [${chalk.green(task.format.toUpperCase())}]`
       )
     }
   }
@@ -83,7 +84,9 @@ export default async function index(opts) {
       } else if (watchEvent.code === "BUNDLE_END") {
         watchEvent.output.forEach((output) => {
           console.log(
-            `${chalk.green(figures.tick)} Written ${relative(options.root, output)} in ${watchEvent.duration}ms`
+            `${chalk.green(figures.tick)} Written ${relative(options.root, output)} in ${
+              watchEvent.duration
+            }ms`
           )
         })
       }
@@ -120,134 +123,13 @@ function bundleTypes(options) {
     }
 
     if (!options.quiet) {
-      progress.succeed(
-        generateMessage(`Done${formatDuration(start)}`, options)
-      )
+      progress.succeed(generateMessage(`Done${formatDuration(start)}`, options))
     }
   }
 }
 
 async function executeTask(task) {
   return task.format === "tsc" ? bundleTypes(task) : bundleTo(task)
-}
-
-function getTasks({ verbose, quiet, name, version, root, banner, entries, output }) {
-  if (!output.main && !entries.binaries) {
-    console.warn(chalk.red.bold("  - Missing `main` or `bin` entry in `package.json`!"))
-  }
-
-  const base = {
-    verbose,
-    quiet,
-    root,
-    name,
-    version,
-    banner
-  }
-
-  const tasks = []
-
-  if (entries.node) {
-    if (output.main) {
-      tasks.push({
-        ...base,
-        input: entries.node,
-        target: "node",
-        format: "cjs",
-        output: output.main
-      })
-    }
-
-    if (output.module) {
-      tasks.push({
-        ...base,
-        input: entries.node,
-        target: "node",
-        format: "esm",
-        output: output.module
-      })
-    }
-  } else if (entries.library) {
-    if (output.module) {
-      tasks.push({
-        ...base,
-        input: entries.library,
-        target: "lib",
-        format: "esm",
-        output: output.module
-      })
-    }
-
-    if (output.main) {
-      tasks.push({
-        ...base,
-        input: entries.library,
-        target: "lib",
-        format: "cjs",
-        output: output.main
-      })
-    }
-
-    if (!entries.browser) {
-      if (output.umd) {
-        tasks.push({
-          ...base,
-          input: entries.library,
-          target: "lib",
-          format: "umd",
-          output: output.umd
-        })
-      }
-    }
-
-    if (output.types) {
-      tasks.push({
-        ...base,
-        input: entries.library,
-        target: "lib",
-        format: "tsc",
-        output: output.types
-      })
-    }
-  }
-
-  if (entries.browser) {
-    if (output.browser) {
-      tasks.push({
-        ...base,
-        input: entries.browser,
-        target: "browser",
-        format: "esm",
-        output: output.browser
-      })
-    }
-
-    if (output.umd) {
-      tasks.push({
-        ...base,
-        input: entries.browser,
-        target: "lib",
-        format: "umd",
-        output: output.umd
-      })
-    }
-  }
-
-  if (entries.binaries) {
-    if (output.binaries) {
-      for (const binaryName in output.binaries) {
-        tasks.push({
-          ...base,
-          input: entries.binaries[binaryName],
-          target: "cli",
-          format: "cjs",
-          output: output.binaries[binaryName]
-        })
-      }
-    }
-  }
-
-  return tasks
 }
 
 function isRelative(dependency) {
@@ -349,10 +231,7 @@ function getRollupOutputOptions({ banner, format, name, target, root, output }) 
   }
 }
 
-function generateMessage(
-  post,
-  { name, version, root, target, input, output, format }
-) {
+function generateMessage(post, { name, version, root, target, input, output, format }) {
   return `[${chalk.blue(target.toUpperCase())}] ${chalk.blue(relative(root, input))} ${
     figures.pointer
   } ${chalk.green(output)} [${chalk.green(format.toUpperCase())}] ${post}`

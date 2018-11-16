@@ -21,6 +21,7 @@ export function formatJSON(json) {
   return JSON.stringify(json, null, 2).replace(/\\"/g, "")
 }
 
+/* eslint-disable complexity */
 export default function getRollupInputOptions(options) {
   const { name, verbose, version, input, format, target, output } = options
   const prefix = "process.env."
@@ -53,7 +54,7 @@ export default function getRollupInputOptions(options) {
       return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
     },
     plugins: [
-      progressPlugin(),
+      options.quiet ? null : progressPlugin(),
       replacePlugin(variables),
       cjsPlugin({
         include: "node_modules/**"

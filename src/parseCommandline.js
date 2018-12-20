@@ -19,6 +19,7 @@ export default function parseCommandline() {
     --exec             Executes the generated binary after creation [false]
 
     --no-sourcemap     Disables creation of a source map file during processing [false]
+    --no-notify        Disables notifications [false]
 
     -v, --verbose      Verbose output mode [false]
     -q, --quiet        Quiet output mode [false]
@@ -71,6 +72,11 @@ export default function parseCommandline() {
         },
 
         sourcemap: {
+          type: "boolean",
+          default: true
+        },
+
+        notify: {
           type: "boolean",
           default: true
         },

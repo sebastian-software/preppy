@@ -80,18 +80,25 @@ export default async function index(opts) {
     watch(rollupTasks).on("event", watchHandler.bind(null, options))
   } else {
     await Promise.all(tasks.map(executeTask))
-    notify(options, "Bundle complete")
+    if (options.notify) {
+      notify(options, "Bundle complete")
+    }
   }
 }
 
 function watchHandler(options, watchEvent) {
   if (watchEvent.code === "FATAL" || watchEvent.code === "ERROR") {
     console.error(`${chalk.red(figures.cross)} ${formatError(watchEvent.error)}`)
+    if (options.notify) {
+      notify(options, "Bundle update failed!")
+    }
     if (watchEvent.code === "FATAL") {
       process.exit(1)
     }
   } else if (watchEvent.code === "BUNDLE_END") {
-    notify(options, "Updated bundle")
+    if (options.notify) {
+      notify(options, "Bundle updated")
+    }
   }
 }
 

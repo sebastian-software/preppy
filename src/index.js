@@ -5,6 +5,7 @@ import chalk from "chalk"
 import figures from "figures"
 import terminalSpinner from "ora"
 import { rollup, watch } from "rollup"
+import stackTrace from "stack-trace"
 
 import extractTypes from "./extractTypes"
 import getBanner from "./getBanner"
@@ -83,11 +84,29 @@ async function executeTask(task) {
   return task.format === "tsc" ? bundleTypes(task) : bundleScript(task)
 }
 
+function formatStack(error) {
+  const parsed = stackTrace.parse(error)
+
+  const formatted = parsed.map((callSite) => {
+    let path = relative(process.cwd(), callSite.getFileName())
+    path = path.replace(/^node_modules\b/, "~")
+    let funcName = callSite.getMethodName() || callSite.getFunctionName()
+    if (funcName) {
+      funcName += "()"
+    }
+    return `  - ${chalk.white(path)}:${callSite.getLineNumber()} ${chalk.blue(funcName)}`
+  }).join("\n")
+
+  return `${chalk.underline("Stack Trace:")}\n${formatted}`
+}
+
 function formatError(error) {
+  const stack = formatStack(error)
   const lines = error.toString().split("\n")
+
   // Format in red color + replace working directory with empty string
   lines[0] = chalk.red(lines[0].replace(process.cwd() + sep, ""))
-  return lines.join("\n")
+  return lines.join("\n") + "\n" + stack
 }
 
 function handleError(error, progress) {

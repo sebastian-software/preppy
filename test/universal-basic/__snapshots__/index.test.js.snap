@@ -16,8 +16,8 @@ exports[`Publish Test File via Babel as Universal: browser-umd 1`] = `
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global['universal-basic'] = factory());
-}(this, (function () { 'use strict';
+  (global = global || self, global['universal-basic'] = factory());
+}(this, function () { 'use strict';
 
   function browser () {
     console.log(\\"I'm in the Browser\\");
@@ -25,7 +25,7 @@ exports[`Publish Test File via Babel as Universal: browser-umd 1`] = `
 
   return browser;
 
-})));
+}));
 //# sourceMappingURL=browser.umd.js.map
 "
 `;

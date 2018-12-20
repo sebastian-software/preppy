@@ -270,8 +270,8 @@ exports[`Publish Test File via Typescript: umd 1`] = `
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es6.object.assign'), require('core-js/modules/web.dom.iterable'), require('core-js/modules/es6.array.iterator'), require('core-js/modules/es6.string.iterator'), require('core-js/modules/es6.set'), require('core-js/modules/es7.array.includes'), require('core-js/modules/es6.promise'), require('lodash')) :
   typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es6.object.assign', 'core-js/modules/web.dom.iterable', 'core-js/modules/es6.array.iterator', 'core-js/modules/es6.string.iterator', 'core-js/modules/es6.set', 'core-js/modules/es7.array.includes', 'core-js/modules/es6.promise', 'lodash'], factory) :
-  (factory((global.typescript = {}),null,null,null,null,null,null,null,global.lodash));
-}(this, (function (exports,es6_object_assign,web_dom_iterable,es6_array_iterator,es6_string_iterator,es6_set,es7_array_includes,es6_promise,lodash) { 'use strict';
+  (global = global || self, factory(global.typescript = {}, null, null, null, null, null, null, null, global.lodash));
+}(this, function (exports, es6_object_assign, web_dom_iterable, es6_array_iterator, es6_string_iterator, es6_set, es7_array_includes, es6_promise, lodash) { 'use strict';
 
   function _inheritsLoose(subClass, superClass) {
     subClass.prototype = Object.create(superClass.prototype);
@@ -385,7 +385,7 @@ exports[`Publish Test File via Typescript: umd 1`] = `
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=index.umd.js.map
 "
 `;

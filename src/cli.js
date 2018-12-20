@@ -22,6 +22,10 @@ if (flags.root) {
 delete flags.v
 delete flags.q
 
+if (flags.verbose) {
+  console.log("Flags:", flags)
+}
+
 // Check whether there is something new available
 updateNotifier({ pkg: { name, version } }).notify()
 

@@ -17,7 +17,8 @@ export default function parseCommandline() {
     --watch            Keeps running and rebuilds on any change [false]
     --limit            Limits the current build scope to files matching [null]
     --exec             Executes the generated binary after creation [false]
-    --sourcemap        Creates a source map file during processing [true]
+
+    --no-sourcemap     Disables creation of a source map file during processing [false]
 
     -v, --verbose      Verbose output mode [false]
     -q, --quiet        Quiet output mode [false]

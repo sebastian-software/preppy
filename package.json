@@ -61,6 +61,7 @@
     "find-root": "^1.1.0",
     "lodash": "^4.17.11",
     "meow": "^5.0.0",
+    "node-notifier": "^5.3.0",
     "ora": "^3.0.0",
     "pretty-bytes": "^5.1.0",
     "rollup": "^0.68.1",

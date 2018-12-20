@@ -3,9 +3,10 @@ import { dirname, extname, relative, resolve, sep } from "path"
 import chalk from "chalk"
 
 import figures from "figures"
+import notifier from "node-notifier"
+import stackTrace from "stack-trace"
 import terminalSpinner from "ora"
 import { rollup, watch } from "rollup"
-import stackTrace from "stack-trace"
 
 import extractTypes from "./extractTypes"
 import getBanner from "./getBanner"
@@ -15,6 +16,17 @@ import getRollupInputOptions from "./getRollupInputOptions"
 import getRollupOutputOptions from "./getRollupOutputOptions"
 import getTasks from "./getTasks"
 import { formatDuration } from "./progressPlugin"
+
+function notify(options, message) {
+  notifier.notify({
+    title: `Preppy: ${options.name}-${options.version}`,
+    message,
+    sound: "Glass",
+
+    // Brilliant: For any ‘group’, only one notification will ever be shown, replacing previously posted notifications.
+    group: `Preppy: ${options.name}-${options.version}`
+  })
+}
 
 export default async function index(opts) {
   const pkg = require(resolve(opts.root, "package.json"))
@@ -65,18 +77,21 @@ export default async function index(opts) {
       }
     }
 
-    watch(rollupTasks).on("event", watchHandler)
+    watch(rollupTasks).on("event", watchHandler.bind(null, options))
   } else {
     await Promise.all(tasks.map(executeTask))
+    notify(options, "Bundle complete")
   }
 }
 
-function watchHandler(watchEvent) {
+function watchHandler(options, watchEvent) {
   if (watchEvent.code === "FATAL" || watchEvent.code === "ERROR") {
     console.error(`${chalk.red(figures.cross)} ${formatError(watchEvent.error)}`)
     if (watchEvent.code === "FATAL") {
       process.exit(1)
     }
+  } else if (watchEvent.code === "BUNDLE_END") {
+    notify(options, "Updated bundle")
   }
 }
 
@@ -87,15 +102,19 @@ async function executeTask(task) {
 function formatStack(error) {
   const parsed = stackTrace.parse(error)
 
-  const formatted = parsed.map((callSite) => {
-    let path = relative(process.cwd(), callSite.getFileName())
-    path = path.replace(/^node_modules\b/, "~")
-    let funcName = callSite.getMethodName() || callSite.getFunctionName()
-    if (funcName) {
-      funcName += "()"
-    }
-    return `  - ${chalk.white(path)}:${callSite.getLineNumber()} ${chalk.blue(funcName)}`
-  }).join("\n")
+  const formatted = parsed
+    .map((callSite) => {
+      let path = relative(process.cwd(), callSite.getFileName())
+      path = path.replace(/^node_modules\b/, "~")
+      let funcName = callSite.getMethodName() || callSite.getFunctionName()
+      if (funcName) {
+        funcName += "()"
+      }
+      return `  - ${chalk.white(path)}:${callSite.getLineNumber()} ${chalk.blue(
+        funcName
+      )}`
+    })
+    .join("\n")
 
   return `${chalk.underline("Stack Trace:")}\n${formatted}`
 }
@@ -106,7 +125,7 @@ function formatError(error) {
 
   // Format in red color + replace working directory with empty string
   lines[0] = chalk.red(lines[0].replace(process.cwd() + sep, ""))
-  return lines.join("\n") + "\n" + stack
+  return `${lines.join("\n")  }\n${  stack}`
 }
 
 function handleError(error, progress) {

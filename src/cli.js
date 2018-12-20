@@ -21,7 +21,6 @@ if (flags.root) {
 // Cleanup shorthands from flags
 delete flags.v
 delete flags.q
-delete flags.m
 
 // Check whether there is something new available
 updateNotifier({ pkg: { name, version } }).notify()

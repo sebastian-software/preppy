@@ -8,6 +8,7 @@ import replacePlugin from "rollup-plugin-replace"
 import runPlugin from "rollup-plugin-run"
 import yamlPlugin from "rollup-plugin-yaml"
 import { terser as terserPlugin } from "rollup-plugin-terser"
+import rebasePlugin from "rollup-plugin-rebase"
 
 import progressPlugin from "./progressPlugin"
 import typescriptResolvePlugin from "./typescriptResolvePlugin"
@@ -60,6 +61,7 @@ export default function getRollupInputOptions(options) {
     plugins: [
       options.quiet ? null : progressPlugin(),
       options.exec ? runPlugin() : null,
+      rebasePlugin(),
       replacePlugin(variables),
       cjsPlugin({
         include: "node_modules/**"

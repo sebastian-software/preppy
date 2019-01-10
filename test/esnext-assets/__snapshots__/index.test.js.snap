@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Publish Test File via Babel: cjs 1`] = `
+"/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var imageUrl = _interopDefault(require('./bXipeBrs.png'));
+var contentUrl = _interopDefault(require('./bsdudxaF.md'));
+var styleUrl = _interopDefault(require('./ABCYSDdq.css'));
+
+console.log(\\"Logo-URL is \\" + imageUrl);
+console.log(\\"Content-URL is \\" + contentUrl);
+console.log(\\"Style-URL is \\" + styleUrl);
+//# sourceMappingURL=index.cjs.js.map
+"
+`;
+
+exports[`Publish Test File via Babel: esm 1`] = `
+"/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+import imageUrl from './bXipeBrs.png';
+import contentUrl from './bsdudxaF.md';
+import styleUrl from './ABCYSDdq.css';
+
+console.log(\\"Logo-URL is \\" + imageUrl);
+console.log(\\"Content-URL is \\" + contentUrl);
+console.log(\\"Style-URL is \\" + styleUrl);
+//# sourceMappingURL=index.esm.js.map
+"
+`;
+
+exports[`Publish Test File via Babel: umd 1`] = `
+"/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('./bXipeBrs.png'), require('./bsdudxaF.md'), require('./ABCYSDdq.css')) :
+	typeof define === 'function' && define.amd ? define(['./bXipeBrs.png', './bsdudxaF.md', './ABCYSDdq.css'], factory) :
+	(global = global || self, factory(global.imageUrl, global.contentUrl, global.styleUrl));
+}(this, function (imageUrl, contentUrl, styleUrl) { 'use strict';
+
+	imageUrl = imageUrl && imageUrl.hasOwnProperty('default') ? imageUrl['default'] : imageUrl;
+	contentUrl = contentUrl && contentUrl.hasOwnProperty('default') ? contentUrl['default'] : contentUrl;
+	styleUrl = styleUrl && styleUrl.hasOwnProperty('default') ? styleUrl['default'] : styleUrl;
+
+	console.log(\\"Logo-URL is \\" + imageUrl);
+	console.log(\\"Content-URL is \\" + contentUrl);
+	console.log(\\"Style-URL is \\" + styleUrl);
+
+}));
+//# sourceMappingURL=index.umd.js.map
+"
+`;
+
+exports[`Publish Test File via Babel: umd 2`] = `
+"body {
+  font-size: 20px;
+  background: url(./VyVNPqgN.woff) top left repeat;
+}
+
+/*# sourceMappingURL=ABCYSDdq.css.map */"
+`;

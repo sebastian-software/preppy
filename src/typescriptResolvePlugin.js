@@ -1,5 +1,5 @@
-import { statSync } from "fs"
 import { extname } from "path"
+import { statSync } from "fs"
 import { nodeModuleNameResolver } from "typescript"
 
 const resolveHost = {

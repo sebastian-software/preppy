@@ -13,7 +13,8 @@ function isEmpty(obj) {
 export default function getEntries(options) {
   const entries = {}
 
-  const hasInputs = options.entryLib || options.entryNode || options.entryBrowser || options.entryCli
+  const hasInputs =
+    options.entryLib || options.entryNode || options.entryBrowser || options.entryCli
 
   const addRoot = (fileName) => join(options.root, fileName)
 
@@ -58,7 +59,9 @@ export default function getEntries(options) {
       "src/server/index.jsx",
       "src/server/index.ts",
       "src/server/index.tsx"
-    ].map(addRoot).filter(existsSync)[0]
+    ]
+      .map(addRoot)
+      .filter(existsSync)[0]
   }
 
   if (options.entryBrowser) {
@@ -86,16 +89,16 @@ export default function getEntries(options) {
       "src/browser/index.jsx",
       "src/browser/index.ts",
       "src/browser/index.tsx"
-    ].map(addRoot).filter(existsSync)[0]
+    ]
+      .map(addRoot)
+      .filter(existsSync)[0]
   }
 
   entries.binaries = {}
 
   if (options.entryCli) {
     if (!existsSync(options.entryCli)) {
-      throw new Error(
-        `CLI entry point specified does not exist: ${options.entryCli}!`
-      )
+      throw new Error(`CLI entry point specified does not exist: ${options.entryCli}!`)
     }
 
     entries.binaries.index = options.entryCli
@@ -114,7 +117,9 @@ export default function getEntries(options) {
         "src/cli.ts",
         "src/cli/index.js",
         "src/cli/index.ts"
-      ].map(addRoot).filter(existsSync)[0]
+      ]
+        .map(addRoot)
+        .filter(existsSync)[0]
 
       if (binaryEntry == null) {
         console.warn(`Did not found any matching entry for binary: ${name}!`)

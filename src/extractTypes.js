@@ -1,5 +1,11 @@
 import { dirname, join } from "path"
-import { ScriptTarget, ModuleResolutionKind, createProgram, getPreEmitDiagnostics, flattenDiagnosticMessageText } from "typescript";
+import {
+  createProgram,
+  flattenDiagnosticMessageText,
+  getPreEmitDiagnostics,
+  ModuleResolutionKind,
+  ScriptTarget
+} from "typescript"
 
 // Compiler based on code shown in the official docs:
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
@@ -28,14 +34,18 @@ function compile(fileNames, options, verbose) {
 }
 
 export default function extractTypes({ input, root, output, verbose }) {
-  return compile([ input ], {
-    declarationDir: join(root, dirname(output)),
-    declaration: true,
-    emitDeclarationOnly: true,
-    allowSyntheticDefaultImports: true,
-    esModuleInterop: true,
-    moduleResolution: ModuleResolutionKind.NodeJs,
-    target: ScriptTarget.ES2017,
-    jsx: "preserve"
-  }, verbose)
+  return compile(
+    [ input ],
+    {
+      declarationDir: join(root, dirname(output)),
+      declaration: true,
+      emitDeclarationOnly: true,
+      allowSyntheticDefaultImports: true,
+      esModuleInterop: true,
+      moduleResolution: ModuleResolutionKind.NodeJs,
+      target: ScriptTarget.ES2017,
+      jsx: "preserve"
+    },
+    verbose
+  )
 }

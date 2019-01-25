@@ -1,6 +1,13 @@
 import { join } from "path"
 
-export default function getRollupOutputOptions({ banner, format, name, target, root, output }) {
+export default function getRollupOutputOptions({
+  banner,
+  format,
+  name,
+  target,
+  root,
+  output
+}) {
   const shebang = "#!/usr/bin/env node"
   return {
     format,

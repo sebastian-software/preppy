@@ -132,7 +132,7 @@ function formatError(error) {
 
   // Format in red color + replace working directory with empty string
   lines[0] = chalk.red(lines[0].replace(process.cwd() + sep, ""))
-  return `${lines.join("\n")  }\n${  stack}`
+  return `${lines.join("\n")}\n${stack}`
 }
 
 function handleError(error, progress) {

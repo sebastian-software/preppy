@@ -1,6 +1,6 @@
 import { statSync } from "fs"
 import { extname } from "path"
-import { nodeModuleNameResolver } from "typescript";
+import { nodeModuleNameResolver } from "typescript"
 
 const resolveHost = {
   directoryExists(dirPath) {

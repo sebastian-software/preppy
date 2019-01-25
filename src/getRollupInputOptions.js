@@ -63,13 +63,13 @@ export default function getRollupInputOptions(options) {
     plugins: [
       options.quiet ? null : progressPlugin(),
       options.exec ? runPlugin() : null,
+      typescriptResolvePlugin(),
       rebasePlugin(),
-      replacePlugin(variables),
       cjsPlugin({
         include: "node_modules/**",
         extensions
       }),
-      typescriptResolvePlugin(),
+      replacePlugin(variables),
       yamlPlugin(),
       jsonPlugin(),
       babelPlugin({

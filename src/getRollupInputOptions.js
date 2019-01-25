@@ -44,6 +44,8 @@ export default function getRollupInputOptions(options) {
     console.log("Variables:", formatJSON(variables))
   }
 
+  const extensions = [ ".js", ".jsx", ".es6", ".es", ".mjs", ".ts", ".tsx" ]
+
   return {
     input,
     cache,
@@ -64,7 +66,8 @@ export default function getRollupInputOptions(options) {
       rebasePlugin(),
       replacePlugin(variables),
       cjsPlugin({
-        include: "node_modules/**"
+        include: "node_modules/**",
+        extensions
       }),
       typescriptResolvePlugin(),
       yamlPlugin(),
@@ -80,7 +83,7 @@ export default function getRollupInputOptions(options) {
         // We add TypeScript extensions here as well to be able to post-process
         // any TypeScript sources with Babel. This allows us for using presets
         // like "react" and plugins like "fast-async" with TypeScript as well.
-        extensions: [ ".js", ".jsx", ".es6", ".es", ".mjs", ".ts", ".tsx" ],
+        extensions,
         // Do not transpile external code
         // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
         exclude: [ "node_modules/**", "**/*.json" ]

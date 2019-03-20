@@ -17,6 +17,16 @@ import getRollupOutputOptions from "./getRollupOutputOptions"
 import getTasks from "./getTasks"
 import { formatDuration } from "./progressPlugin"
 
+const earlyExit = new Promise((resolve, reject) => {
+  process.on('SIGTERM', () => {
+    resolve('SIGTERM')
+  })
+
+  process.on('SIGINT', () => {
+    reject('SIGINT')
+  })
+})
+
 function notify(options, message) {
   notifier.notify({
     title: `Preppy: ${options.name}-${options.version}`,
@@ -79,7 +89,7 @@ export default async function index(opts) {
 
     watch(rollupTasks).on("event", watchHandler.bind(null, options))
   } else {
-    await Promise.all(tasks.map(executeTask))
+    await Promise.race([ Promise.all(tasks.map(executeTask)), earlyExit ])
     if (options.notify) {
       notify(options, "Bundle complete")
     }

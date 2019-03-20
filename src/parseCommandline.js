@@ -17,9 +17,9 @@ export default function parseCommandline() {
     --watch            Keeps running and rebuilds on any change [false]
     --limit            Limits the current build scope to files matching [null]
     --exec             Executes the generated binary after creation [false]
+    --notify           Enables notifications (useful when used in watch mode) [false]
 
     --no-sourcemap     Disables creation of a source map file during processing [false]
-    --no-notify        Disables notifications [false]
 
     -v, --verbose      Verbose output mode [false]
     -q, --quiet        Quiet output mode [false]
@@ -78,7 +78,7 @@ export default function parseCommandline() {
 
         notify: {
           type: "boolean",
-          default: true
+          default: false
         },
 
         verbose: {

@@ -35,7 +35,7 @@
 - Prints out generated file sizes of all bundles.
 - Injects common env-variables into the build (`BUNDLE_{NAME|VERSION|TARGET}`, `NODE_ENV`)
 - Executes Babel with an environment based on `NODE_ENV` but with additional data from the `target` (e.g. `node`, `lib` or `cli`) and the output `format` (e.g. `esm`, `cjs`)
-- Supports YAML and JSON out of the box and inlines the serialized content into the bundle.
+- Supports JSON out of the box and inlines the serialized content into the bundle.
 
 
 ## 🔧 Installation:
@@ -81,6 +81,7 @@ module.exports = (api) => {
         "@babel/env",
         {
           useBuiltIns: "usage",
+          corejs: 3,
           loose: true,
           modules
         }

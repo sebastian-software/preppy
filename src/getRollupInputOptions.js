@@ -7,7 +7,6 @@ import jsonPlugin from "rollup-plugin-json"
 import rebasePlugin from "rollup-plugin-rebase"
 import replacePlugin from "rollup-plugin-replace"
 import runPlugin from "rollup-plugin-run"
-import yamlPlugin from "rollup-plugin-yaml"
 import { terser as terserPlugin } from "rollup-plugin-terser"
 
 import progressPlugin from "./progressPlugin"
@@ -70,7 +69,6 @@ export default function getRollupInputOptions(options) {
         extensions
       }),
       replacePlugin(variables),
-      yamlPlugin(),
       jsonPlugin(),
       babelPlugin({
         // Rollup Setting: Prefer usage of a common library of helpers

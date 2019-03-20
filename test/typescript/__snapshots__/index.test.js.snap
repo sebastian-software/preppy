@@ -8,14 +8,15 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+require('core-js/modules/es.array.includes');
+require('core-js/modules/es.array.iterator');
+require('core-js/modules/es.object.assign');
+require('core-js/modules/es.object.to-string');
+require('core-js/modules/es.promise');
+require('core-js/modules/es.set');
+require('core-js/modules/es.string.iterator');
+require('core-js/modules/web.dom-collections.iterator');
 var _inheritsLoose = _interopDefault(require('@babel/runtime/helpers/inheritsLoose'));
-require('core-js/modules/es6.object.assign');
-require('core-js/modules/web.dom.iterable');
-require('core-js/modules/es6.array.iterator');
-require('core-js/modules/es6.string.iterator');
-require('core-js/modules/es6.set');
-require('core-js/modules/es7.array.includes');
-require('core-js/modules/es6.promise');
 var lodash = require('lodash');
 
 /**
@@ -127,14 +128,15 @@ exports.setValues = setValues;
 
 exports[`Publish Test File via Typescript: esm 1`] = `
 "/*! typescript v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+import 'core-js/modules/es.array.includes';
+import 'core-js/modules/es.array.iterator';
+import 'core-js/modules/es.object.assign';
+import 'core-js/modules/es.object.to-string';
+import 'core-js/modules/es.promise';
+import 'core-js/modules/es.set';
+import 'core-js/modules/es.string.iterator';
+import 'core-js/modules/web.dom-collections.iterator';
 import _inheritsLoose from '@babel/runtime/helpers/inheritsLoose';
-import 'core-js/modules/es6.object.assign';
-import 'core-js/modules/web.dom.iterable';
-import 'core-js/modules/es6.array.iterator';
-import 'core-js/modules/es6.string.iterator';
-import 'core-js/modules/es6.set';
-import 'core-js/modules/es7.array.includes';
-import 'core-js/modules/es6.promise';
 import { camelCase } from 'lodash';
 
 /**
@@ -268,10 +270,10 @@ export declare const something = 42;
 exports[`Publish Test File via Typescript: umd 1`] = `
 "/*! typescript v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es6.object.assign'), require('core-js/modules/web.dom.iterable'), require('core-js/modules/es6.array.iterator'), require('core-js/modules/es6.string.iterator'), require('core-js/modules/es6.set'), require('core-js/modules/es7.array.includes'), require('core-js/modules/es6.promise'), require('lodash')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es6.object.assign', 'core-js/modules/web.dom.iterable', 'core-js/modules/es6.array.iterator', 'core-js/modules/es6.string.iterator', 'core-js/modules/es6.set', 'core-js/modules/es7.array.includes', 'core-js/modules/es6.promise', 'lodash'], factory) :
-  (global = global || self, factory(global.typescript = {}, null, null, null, null, null, null, null, global.lodash));
-}(this, function (exports, es6_object_assign, web_dom_iterable, es6_array_iterator, es6_string_iterator, es6_set, es7_array_includes, es6_promise, lodash) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es.array.includes'), require('core-js/modules/es.array.iterator'), require('core-js/modules/es.object.assign'), require('core-js/modules/es.object.to-string'), require('core-js/modules/es.promise'), require('core-js/modules/es.set'), require('core-js/modules/es.string.iterator'), require('core-js/modules/web.dom-collections.iterator'), require('lodash')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es.array.includes', 'core-js/modules/es.array.iterator', 'core-js/modules/es.object.assign', 'core-js/modules/es.object.to-string', 'core-js/modules/es.promise', 'core-js/modules/es.set', 'core-js/modules/es.string.iterator', 'core-js/modules/web.dom-collections.iterator', 'lodash'], factory) :
+  (global = global || self, factory(global.typescript = {}, null, null, null, null, null, null, null, null, global.lodash));
+}(this, function (exports, es_array_includes, es_array_iterator, es_object_assign, es_object_toString, es_promise, es_set, es_string_iterator, web_domCollections_iterator, lodash) { 'use strict';
 
   function _inheritsLoose(subClass, superClass) {
     subClass.prototype = Object.create(superClass.prototype);

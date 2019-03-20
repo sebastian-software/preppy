@@ -2,18 +2,17 @@
 
 exports[`Publish Test File via Babel: cjs 1`] = `
 "\\"use strict\\"
-var e,o=(e=require(\\"@babel/runtime/helpers/inheritsLoose\\"))&&\\"object\\"==typeof e&&\\"default\\"in e?e.default:e
-require(\\"core-js/modules/es6.object.assign\\"),require(\\"core-js/modules/web.dom.iterable\\"),require(\\"core-js/modules/es6.array.iterator\\"),require(\\"core-js/modules/es6.string.iterator\\"),require(\\"core-js/modules/es6.set\\"),require(\\"core-js/modules/es7.array.includes\\"),require(\\"core-js/modules/es6.promise\\")
-var r=require(\\"lodash\\")
+require(\\"core-js/modules/es.array.includes\\"),require(\\"core-js/modules/es.array.iterator\\"),require(\\"core-js/modules/es.object.assign\\"),require(\\"core-js/modules/es.object.to-string\\"),require(\\"core-js/modules/es.promise\\"),require(\\"core-js/modules/es.set\\"),require(\\"core-js/modules/es.string.iterator\\"),require(\\"core-js/modules/web.dom-collections.iterator\\")
+var e,o=(e=require(\\"@babel/runtime/helpers/inheritsLoose\\"))&&\\"object\\"==typeof e&&\\"default\\"in e?e.default:e,r=require(\\"lodash\\")
 console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===r.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"esnext\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(e,o){e(\\"resolved\\")}).then(function(e){console.log(\\"Promise:\\",e)})
 console.log(\\"Constant:\\",123)
 var s=[1,2,3]
 console.log(\\"Supports Array.includes?:\\",s.includes&&s.includes(2))
-var l,n=new Set(s)
-console.log(\\"Supports Set:\\",n.add(4)),void 0===l&&(l=!0),console.log(\\"Supports default parameters:\\",l)
+var l,t=new Set(s)
+console.log(\\"Supports Set:\\",t.add(4)),void 0===l&&(l=!0),console.log(\\"Supports default parameters:\\",l)
 console.log(\\"X Value from inner scope:\\",\\"inner\\"),console.log(\\"X Value from outer scope:\\",\\"outer\\")
-var t=Object.assign({third:3},{first:1,second:2})
-console.log(\\"Destructed:\\",t)
+var n=Object.assign({third:3},{first:1,second:2})
+console.log(\\"Destructed:\\",n)
 var c=function(){function e(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return e.prototype.helper=function(){console.log(\\"Called helper\\")},e}()
 c()
 console.log(\\"Initialized class:\\",new c),new Promise(function(e,o){return Promise.resolve(PromiseHelper()).then(function(r){try{return e(42)}catch(s){return o(s)}},o)})
@@ -22,14 +21,15 @@ console.log(\\"Initialized class:\\",new c),new Promise(function(e,o){return Pro
 `;
 
 exports[`Publish Test File via Babel: esm 1`] = `
-"import o from\\"@babel/runtime/helpers/inheritsLoose\\"
-import\\"core-js/modules/es6.object.assign\\"
-import\\"core-js/modules/web.dom.iterable\\"
-import\\"core-js/modules/es6.array.iterator\\"
-import\\"core-js/modules/es6.string.iterator\\"
-import\\"core-js/modules/es6.set\\"
-import\\"core-js/modules/es7.array.includes\\"
-import\\"core-js/modules/es6.promise\\"
+"import\\"core-js/modules/es.array.includes\\"
+import\\"core-js/modules/es.array.iterator\\"
+import\\"core-js/modules/es.object.assign\\"
+import\\"core-js/modules/es.object.to-string\\"
+import\\"core-js/modules/es.promise\\"
+import\\"core-js/modules/es.set\\"
+import\\"core-js/modules/es.string.iterator\\"
+import\\"core-js/modules/web.dom-collections.iterator\\"
+import o from\\"@babel/runtime/helpers/inheritsLoose\\"
 import{camelCase as e}from\\"lodash\\"
 console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===e(\\"hello world\\")),console.log(\\"Package\\",\\"esnext\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(o,e){o(\\"resolved\\")}).then(function(o){console.log(\\"Promise:\\",o)})
 console.log(\\"Constant:\\",123)
@@ -48,19 +48,19 @@ console.log(\\"Initialized class:\\",new n),new Promise(function(o,e){return Pro
 `;
 
 exports[`Publish Test File via Babel: umd 1`] = `
-"!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"core-js/modules/es6.object.assign\\"),require(\\"core-js/modules/web.dom.iterable\\"),require(\\"core-js/modules/es6.array.iterator\\"),require(\\"core-js/modules/es6.string.iterator\\"),require(\\"core-js/modules/es6.set\\"),require(\\"core-js/modules/es7.array.includes\\"),require(\\"core-js/modules/es6.promise\\"),require(\\"lodash\\")):\\"function\\"==typeof define&&define.amd?define([\\"core-js/modules/es6.object.assign\\",\\"core-js/modules/web.dom.iterable\\",\\"core-js/modules/es6.array.iterator\\",\\"core-js/modules/es6.string.iterator\\",\\"core-js/modules/es6.set\\",\\"core-js/modules/es7.array.includes\\",\\"core-js/modules/es6.promise\\",\\"lodash\\"],o):o(null,null,null,null,null,null,null,(e=e||self).lodash)}(this,function(e,o,s,r,l,n,t,c){\\"use strict\\"
-console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===c.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"esnext\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(e,o){e(\\"resolved\\")}).then(function(e){console.log(\\"Promise:\\",e)})
+"!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"core-js/modules/es.array.includes\\"),require(\\"core-js/modules/es.array.iterator\\"),require(\\"core-js/modules/es.object.assign\\"),require(\\"core-js/modules/es.object.to-string\\"),require(\\"core-js/modules/es.promise\\"),require(\\"core-js/modules/es.set\\"),require(\\"core-js/modules/es.string.iterator\\"),require(\\"core-js/modules/web.dom-collections.iterator\\"),require(\\"lodash\\")):\\"function\\"==typeof define&&define.amd?define([\\"core-js/modules/es.array.includes\\",\\"core-js/modules/es.array.iterator\\",\\"core-js/modules/es.object.assign\\",\\"core-js/modules/es.object.to-string\\",\\"core-js/modules/es.promise\\",\\"core-js/modules/es.set\\",\\"core-js/modules/es.string.iterator\\",\\"core-js/modules/web.dom-collections.iterator\\",\\"lodash\\"],o):o(null,null,null,null,null,null,null,null,(e=e||self).lodash)}(this,function(e,o,s,r,l,n,t,c,i){\\"use strict\\"
+console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===i.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"esnext\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(e,o){e(\\"resolved\\")}).then(function(e){console.log(\\"Promise:\\",e)})
 console.log(\\"Constant:\\",123)
 var u=[1,2,3]
 console.log(\\"Supports Array.includes?:\\",u.includes&&u.includes(2))
-var i,a=new Set(u)
-console.log(\\"Supports Set:\\",a.add(4)),void 0===i&&(i=!0),console.log(\\"Supports default parameters:\\",i)
+var d,a=new Set(u)
+console.log(\\"Supports Set:\\",a.add(4)),void 0===d&&(d=!0),console.log(\\"Supports default parameters:\\",d)
 console.log(\\"X Value from inner scope:\\",\\"inner\\"),console.log(\\"X Value from outer scope:\\",\\"outer\\")
-var d=Object.assign({third:3},{first:1,second:2})
-console.log(\\"Destructed:\\",d)
-var m=function(){function e(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return e.prototype.helper=function(){console.log(\\"Called helper\\")},e}()
-m()
-console.log(\\"Initialized class:\\",new m),new Promise(function(e,o){return Promise.resolve(PromiseHelper()).then(function(s){try{return e(42)}catch(r){return o(r)}},o)})})
+var m=Object.assign({third:3},{first:1,second:2})
+console.log(\\"Destructed:\\",m)
+var g=function(){function e(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return e.prototype.helper=function(){console.log(\\"Called helper\\")},e}()
+g()
+console.log(\\"Initialized class:\\",new g),new Promise(function(e,o){return Promise.resolve(PromiseHelper()).then(function(s){try{return e(42)}catch(r){return o(r)}},o)})})
 //# sourceMappingURL=index.umd.min.js.map
 "
 `;

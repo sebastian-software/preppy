@@ -118,7 +118,7 @@ function formatStack(error) {
 
   const formatted = parsed
     .map((callSite) => {
-      let path = relative(process.cwd(), callSite.getFileName())
+      let path = relative(process.cwd(), callSite.getFileName() || "")
       path = path.replace(/^node_modules\b/, "~")
       let funcName = callSite.getMethodName() || callSite.getFunctionName()
       if (funcName) {

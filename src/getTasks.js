@@ -85,15 +85,21 @@ export default function getTasks({
         })
       }
     }
-    if (check(output.types)) {
-      tasks.push({
-        ...base,
-        input: entries.library,
-        target: "lib",
-        format: "tsc",
-        output: output.types
-      })
-    }
+  }
+
+  // We accept type output from the library target and only from the
+  // library target. In cases where multiple output scenarios are configured
+  // this makes sense as we can only offer one type definition for both targets.
+  // My having a separate library entry here, we can fine-tune what is exported
+  // for types.
+  if (entries.library && check(output.types)) {
+    tasks.push({
+      ...base,
+      input: entries.library,
+      target: "lib",
+      format: "tsc",
+      output: output.types
+    })
   }
 
   if (entries.browser) {

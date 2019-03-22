@@ -41,6 +41,13 @@ export default async function index(opts) {
 
   options.entries = getEntries(options)
 
+  if (options.verbose) {
+    console.log("Entries:")
+    for (const entryId in options.entries) {
+      console.log(`- ${entryId}: ${options.entries[entryId]}`)
+    }
+  }
+
   const tasks = getTasks(options)
 
   if (options.watch) {

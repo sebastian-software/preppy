@@ -253,8 +253,10 @@ export declare class MyClass {
     helper(x: string): void;
 }
 export declare const setValues: (values: FormValues) => void;
-"
+//# sourceMappingURL=index.d.ts.map"
 `;
+
+exports[`Publish Test File via Typescript: types-main-map 1`] = `"{\\"version\\":3,\\"file\\":\\"index.d.ts\\",\\"sourceRoot\\":\\"\\",\\"sources\\":[\\"../src/index.tsx\\"],\\"names\\":[],\\"mappings\\":\\"AASA,OAAO,EAAE,UAAU,EAAa,MAAM,SAAS,CAAA;AAwC/C,qBAAa,OAAO;;IAOlB,OAAO,aAEN;IAED,MAAM,CAAC,CAAC,EAAE,MAAM;CAGjB;AAkBD,eAAO,MAAM,SAAS,8BAErB,CAAA\\"}"`;
 
 exports[`Publish Test File via Typescript: types-sub 1`] = `
 "/**
@@ -264,7 +266,7 @@ export interface FormValues {
     [field: string]: any;
 }
 export declare const something = 42;
-"
+//# sourceMappingURL=types.d.ts.map"
 `;
 
 exports[`Publish Test File via Typescript: umd 1`] = `

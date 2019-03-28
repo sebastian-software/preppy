@@ -1,3 +1,5 @@
+import { existsSync } from "fs"
+import { merge } from "lodash"
 import { dirname, join } from "path"
 import {
   createProgram,
@@ -34,18 +36,35 @@ function compile(fileNames, options, verbose) {
 }
 
 export default function extractTypes({ input, root, output, verbose }) {
+  const tsConfig = join(root, "tsconfig.json")
+  const configured = existsSync(tsConfig) && require(tsConfig).compilerOptions
+
+  const defaults = {
+    allowSyntheticDefaultImports: true,
+    esModuleInterop: true,
+    target: ScriptTarget.ES2017,
+  }
+
+  const enforced = {
+    declaration: true,
+    declarationDir: join(root, dirname(output)),
+    emitDeclarationOnly: true,
+    jsx: "preserve",
+    moduleResolution: ModuleResolutionKind.NodeJs,
+  }
+
+  const compilerOptions = merge(defaults, configured, enforced)
+
+  if (verbose) {
+    console.log(
+      "Compiler options used for extracting types:",
+      JSON.stringify(compilerOptions, null, 2)
+    )
+  }
+
   return compile(
-    [ input ],
-    {
-      declarationDir: join(root, dirname(output)),
-      declaration: true,
-      emitDeclarationOnly: true,
-      allowSyntheticDefaultImports: true,
-      esModuleInterop: true,
-      moduleResolution: ModuleResolutionKind.NodeJs,
-      target: ScriptTarget.ES2017,
-      jsx: "preserve"
-    },
+    [input],
+    compilerOptions,
     verbose
   )
 }

@@ -30,9 +30,9 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "lint:js": "eslint .",
-    "fix:js": "eslint --fix .",
-    "format:js": "prettier --write '**/*.js' && npm run fix:js",
+    "lint": "eslint .",
+    "fix": "eslint --fix .",
+    "format": "prettier --write '**/*.js' && npm run fix",
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
@@ -100,6 +100,7 @@
     "fast-async": "^7.0.6",
     "jest": "^24.5.0",
     "pify": "^4.0.1",
+    "prettier": "^1.16.4",
     "rimraf": "^2.6.3"
   }
 }

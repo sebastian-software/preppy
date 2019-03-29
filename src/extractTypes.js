@@ -1,12 +1,11 @@
 import { existsSync } from "fs"
-import { merge } from "lodash"
 import { dirname, join } from "path"
 import {
   createProgram,
   flattenDiagnosticMessageText,
   getPreEmitDiagnostics,
   ModuleResolutionKind,
-  ScriptTarget
+  ScriptTarget,
 } from "typescript"
 
 // Compiler based on code shown in the official docs:
@@ -53,7 +52,11 @@ export default function extractTypes({ input, root, output, verbose }) {
     moduleResolution: ModuleResolutionKind.NodeJs,
   }
 
-  const compilerOptions = merge(defaults, configured, enforced)
+  const compilerOptions = {
+    ...defaults,
+    ...configured,
+    ...enforced,
+  }
 
   if (verbose) {
     console.log(

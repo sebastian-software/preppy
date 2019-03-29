@@ -1,4 +1,3 @@
-import { existsSync } from "fs"
 import { dirname, join } from "path"
 import {
   createProgram,
@@ -34,15 +33,14 @@ function compile(fileNames, options, verbose) {
   }
 }
 
-export default function extractTypes({ input, root, output, verbose }) {
-  const tsConfig = join(root, "tsconfig.json")
-  const configured = existsSync(tsConfig) && require(tsConfig).compilerOptions
-
+export default function extractTypes({ input, root, output, verbose, tsConfig }) {
   const defaults = {
     allowSyntheticDefaultImports: true,
     esModuleInterop: true,
     target: ScriptTarget.ES2017,
   }
+
+  const configured = tsConfig && tsConfig.compilerOptions || {}
 
   const enforced = {
     declaration: true,

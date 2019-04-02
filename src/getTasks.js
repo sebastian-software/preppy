@@ -12,7 +12,8 @@ export default function getTasks({
   entries,
   output,
   limit,
-  exec
+  exec,
+  tsConfig,
 }) {
   if (!output.main && !entries.binaries) {
     console.warn(chalk.red.bold("  - Missing `main` or `bin` entry in `package.json`!"))
@@ -98,7 +99,8 @@ export default function getTasks({
       input: entries.library,
       target: "lib",
       format: "tsc",
-      output: output.types
+      output: output.types,
+      tsConfig,
     })
   }
 

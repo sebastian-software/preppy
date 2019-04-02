@@ -1,12 +1,12 @@
 /* eslint-disable complexity, max-statements, max-depth */
-import { dirname, extname, relative, resolve, sep } from "path"
 import chalk from "chalk"
-
 import figures from "figures"
+import { existsSync } from "fs"
 import notifier from "node-notifier"
-import stackTrace from "stack-trace"
 import terminalSpinner from "ora"
+import { dirname, extname, relative, resolve, sep } from "path"
 import { rollup, watch } from "rollup"
+import stackTrace from "stack-trace"
 
 import extractTypes from "./extractTypes"
 import getBanner from "./getBanner"
@@ -30,13 +30,16 @@ function notify(options, message) {
 
 export default async function index(opts) {
   const pkg = require(resolve(opts.root, "package.json"))
+  const tsConfigFile = resolve(opts.root, "tsconfig.json")
+  const tsConfig = existsSync(tsConfigFile) ? require(tsConfigFile) : undefined
 
   const options = {
     ...opts,
     name: pkg.name || dirname(opts.root),
     version: pkg.version || "0.0.0",
     banner: getBanner(pkg),
-    output: getOutputMatrix(opts, pkg)
+    output: getOutputMatrix(opts, pkg),
+    tsConfig,
   }
 
   options.entries = getEntries(options)
@@ -158,7 +161,7 @@ function handleError(error, progress) {
 }
 
 function bundleTypes(options) {
-  if ([ ".ts", ".tsx" ].includes(extname(options.input))) {
+  if ([".ts", ".tsx"].includes(extname(options.input))) {
     const start = process.hrtime()
 
     let progress = null

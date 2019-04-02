@@ -4,7 +4,7 @@ import {
   flattenDiagnosticMessageText,
   getPreEmitDiagnostics,
   ModuleResolutionKind,
-  ScriptTarget
+  ScriptTarget,
 } from "typescript"
 
 // Compiler based on code shown in the official docs:
@@ -33,19 +33,39 @@ function compile(fileNames, options, verbose) {
   }
 }
 
-export default function extractTypes({ input, root, output, verbose }) {
+export default function extractTypes({ input, root, output, verbose, tsConfig }) {
+  const defaults = {
+    allowSyntheticDefaultImports: true,
+    esModuleInterop: true,
+    target: ScriptTarget.ES2017,
+  }
+
+  const configured = tsConfig && tsConfig.compilerOptions || {}
+
+  const enforced = {
+    declaration: true,
+    declarationDir: join(root, dirname(output)),
+    emitDeclarationOnly: true,
+    jsx: "preserve",
+    moduleResolution: ModuleResolutionKind.NodeJs,
+  }
+
+  const compilerOptions = {
+    ...defaults,
+    ...configured,
+    ...enforced,
+  }
+
+  if (verbose) {
+    console.log(
+      "Compiler options used for extracting types:",
+      JSON.stringify(compilerOptions, null, 2)
+    )
+  }
+
   return compile(
-    [ input ],
-    {
-      declarationDir: join(root, dirname(output)),
-      declaration: true,
-      emitDeclarationOnly: true,
-      allowSyntheticDefaultImports: true,
-      esModuleInterop: true,
-      moduleResolution: ModuleResolutionKind.NodeJs,
-      target: ScriptTarget.ES2017,
-      jsx: "preserve"
-    },
+    [input],
+    compilerOptions,
     verbose
   )
 }

@@ -1,5 +1,5 @@
 {
-  "name": "esnext",
+  "name": "esnext-min",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.cjs.min.js",

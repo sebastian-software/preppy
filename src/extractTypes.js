@@ -4,7 +4,7 @@ import {
   flattenDiagnosticMessageText,
   getPreEmitDiagnostics,
   ModuleResolutionKind,
-  ScriptTarget,
+  ScriptTarget
 } from "typescript"
 
 // Compiler based on code shown in the official docs:
@@ -37,7 +37,7 @@ export default function extractTypes({ input, root, output, verbose, tsConfig })
   const defaults = {
     allowSyntheticDefaultImports: true,
     esModuleInterop: true,
-    target: ScriptTarget.ES2017,
+    target: ScriptTarget.ES2017
   }
 
   const configured = tsConfig && tsConfig.compilerOptions || {}
@@ -47,13 +47,13 @@ export default function extractTypes({ input, root, output, verbose, tsConfig })
     declarationDir: join(root, dirname(output)),
     emitDeclarationOnly: true,
     jsx: "preserve",
-    moduleResolution: ModuleResolutionKind.NodeJs,
+    moduleResolution: ModuleResolutionKind.NodeJs
   }
 
   const compilerOptions = {
     ...defaults,
     ...configured,
-    ...enforced,
+    ...enforced
   }
 
   if (verbose) {

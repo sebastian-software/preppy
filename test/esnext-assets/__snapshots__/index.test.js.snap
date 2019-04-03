@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Publish Test File via Babel: cjs 1`] = `
-"/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! esnext-assets v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
@@ -18,7 +18,7 @@ console.log(\\"Style-URL is \\" + styleUrl);
 `;
 
 exports[`Publish Test File via Babel: esm 1`] = `
-"/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! esnext-assets v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 import imageUrl from './bXipeBrs.png';
 import contentUrl from './bsdudxaF.md';
 import styleUrl from './ABCYSDdq.css';
@@ -31,7 +31,7 @@ console.log(\\"Style-URL is \\" + styleUrl);
 `;
 
 exports[`Publish Test File via Babel: umd 1`] = `
-"/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! esnext-assets v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('./bXipeBrs.png'), require('./bsdudxaF.md'), require('./ABCYSDdq.css')) :
 	typeof define === 'function' && define.amd ? define(['./bXipeBrs.png', './bsdudxaF.md', './ABCYSDdq.css'], factory) :

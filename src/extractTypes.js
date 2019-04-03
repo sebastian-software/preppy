@@ -55,7 +55,9 @@ export default function extractTypes({ input, root, output, verbose, tsConfig })
   // Make sure that user configured paths are absolute.
   // Otherwise TypeScript as of v3.3 and v3.4 might crash.
   configured.rootDir = makeAbsolute(configured.rootDir)
-  configured.rootDirs = configured.rootDirs.map(makeAbsolute)
+  if (configured.rootDirs) {
+    configured.rootDirs = configured.rootDirs.map(makeAbsolute)
+  }
   configured.outDir = makeAbsolute(configured.outDir)
 
   const enforced = {

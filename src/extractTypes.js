@@ -1,4 +1,4 @@
-import { dirname, join } from "path"
+import { dirname, isAbsolute, join } from "path"
 import {
   createProgram,
   flattenDiagnosticMessageText,
@@ -34,17 +34,33 @@ function compile(fileNames, options, verbose) {
 }
 
 export default function extractTypes({ input, root, output, verbose, tsConfig }) {
+  const outputDir = dirname(output)
+
+  function makeAbsolute(anyPath) {
+    if (anyPath && !isAbsolute(anyPath)) {
+      return join(root, outputDir)
+    }
+
+    return anyPath
+  }
+
   const defaults = {
     allowSyntheticDefaultImports: true,
     esModuleInterop: true,
     target: ScriptTarget.ES2017
   }
 
-  const configured = tsConfig && tsConfig.compilerOptions || {}
+  const configured = tsConfig ? tsConfig.compilerOptions : {}
+
+  // Make sure that user configured paths are absolute.
+  // Otherwise TypeScript as of v3.3 and v3.4 might crash.
+  configured.rootDir = makeAbsolute(configured.rootDir)
+  configured.rootDirs = configured.rootDirs.map(makeAbsolute)
+  configured.outDir = makeAbsolute(configured.outDir)
 
   const enforced = {
     declaration: true,
-    declarationDir: join(root, dirname(output)),
+    declarationDir: join(root, outputDir),
     emitDeclarationOnly: true,
     jsx: "preserve",
     moduleResolution: ModuleResolutionKind.NodeJs

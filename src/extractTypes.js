@@ -64,7 +64,7 @@ export default function extractTypes({ input, root, output, verbose, tsConfig })
   }
 
   return compile(
-    [input],
+    [ input ],
     compilerOptions,
     verbose
   )

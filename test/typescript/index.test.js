@@ -15,7 +15,8 @@ test("Publish Test File via Typescript", async () => {
   await lazyDelete(resolve(__dirname, "./dist"))
 
   await preppy({
-    root: __dirname
+    root: __dirname,
+    quiet: true
   })
 
   expect(

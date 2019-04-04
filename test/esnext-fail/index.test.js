@@ -15,7 +15,8 @@ test("Publish Test File via Babel", async () => {
 
   await expect(
     preppy({
-      root: __dirname
+      root: __dirname,
+      quiet: true
     })
   ).rejects.toThrowError(`Unexpected token, expected ";" (2:17)`)
 })

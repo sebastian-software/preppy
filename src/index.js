@@ -1,6 +1,5 @@
 /* eslint-disable complexity, max-statements, max-depth */
 import { dirname, extname, relative, resolve, sep } from "path"
-import { existsSync } from "fs"
 import chalk from "chalk"
 import figures from "figures"
 import notifier from "node-notifier"
@@ -16,6 +15,7 @@ import getRollupInputOptions from "./getRollupInputOptions"
 import getRollupOutputOptions from "./getRollupOutputOptions"
 import getTasks from "./getTasks"
 import { formatDuration } from "./progressPlugin"
+import { readJSON } from "./file"
 
 function notify(options, message) {
   notifier.notify({
@@ -29,9 +29,11 @@ function notify(options, message) {
 }
 
 export default async function index(opts) {
-  const pkg = require(resolve(opts.root, "package.json"))
-  const tsConfigFile = resolve(opts.root, "tsconfig.json")
-  const tsConfig = existsSync(tsConfigFile) ? require(tsConfigFile) : undefined
+  const pkg = await readJSON(resolve(opts.root, "package.json"))
+  let tsConfig
+  try {
+    tsConfig = await readJSON(resolve(opts.root, "tsconfig.json"))
+  } catch (tsError) {}
 
   const options = {
     ...opts,

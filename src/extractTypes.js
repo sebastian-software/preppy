@@ -1,33 +1,32 @@
 import { dirname, isAbsolute, join } from "path"
-import {
-  createProgram,
-  flattenDiagnosticMessageText,
-  getPreEmitDiagnostics,
-  ModuleResolutionKind,
-  ScriptTarget
-} from "typescript"
+
+/* eslint-disable id-length */
+let ts
+try {
+  ts = require("typescript")
+} catch(importError) {}
 
 // Compiler based on code shown in the official docs:
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
 function compile(fileNames, options, verbose) {
-  const program = createProgram(fileNames, options)
+  const program = ts.createProgram(fileNames, options)
   const emitResult = program.emit()
 
   /* istanbul ignore next */
   if (verbose) {
-    const allDiagnostics = getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
+    const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
 
     allDiagnostics.forEach((diagnostic) => {
       if (diagnostic.file) {
         const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(
           diagnostic.start
         )
-        const message = flattenDiagnosticMessageText(diagnostic.messageText, "\n")
+        const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
         console.log(
           `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`
         )
       } else {
-        console.log(`${flattenDiagnosticMessageText(diagnostic.messageText, "\n")}`)
+        console.log(`${ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")}`)
       }
     })
   }
@@ -47,7 +46,7 @@ export default function extractTypes({ input, root, output, verbose, tsConfig })
   const defaults = {
     allowSyntheticDefaultImports: true,
     esModuleInterop: true,
-    target: ScriptTarget.ES2017
+    target: ts.ScriptTarget.ES2017
   }
 
   const configured = tsConfig ? tsConfig.compilerOptions : {}
@@ -65,7 +64,7 @@ export default function extractTypes({ input, root, output, verbose, tsConfig })
     declarationDir: join(root, outputDir),
     emitDeclarationOnly: true,
     jsx: "preserve",
-    moduleResolution: ModuleResolutionKind.NodeJs
+    moduleResolution: ts.ModuleResolutionKind.NodeJs
   }
 
   const compilerOptions = {

@@ -1,6 +1,11 @@
 import { extname } from "path"
 import { statSync } from "fs"
-import { nodeModuleNameResolver } from "typescript"
+
+/* eslint-disable id-length */
+let ts
+try {
+  ts = require("typescript")
+} catch(importError) {}
 
 const resolveHost = {
   directoryExists(dirPath) {
@@ -42,7 +47,7 @@ export default () => {
 
       importer = importer.split("\\").join("/")
 
-      const result = nodeModuleNameResolver(
+      const result = ts.nodeModuleNameResolver(
         importee,
         importer,
         compilerOptions,

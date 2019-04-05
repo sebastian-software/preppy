@@ -49,7 +49,7 @@ export default function extractTypes({ input, root, output, verbose, tsConfig })
     target: ts.ScriptTarget.ES2017
   }
 
-  const configured = tsConfig ? tsConfig.compilerOptions : {}
+  const configured = tsConfig || {}
 
   // Make sure that user configured paths are absolute.
   // Otherwise TypeScript as of v3.3 and v3.4 might crash.

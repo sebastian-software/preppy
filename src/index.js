@@ -16,6 +16,7 @@ import getRollupOutputOptions from "./getRollupOutputOptions"
 import getTasks from "./getTasks"
 import { formatDuration } from "./progressPlugin"
 import { readJSON } from "./file"
+import { getTsCompilerOptions } from "./getTsCompilerOptions"
 
 function notify(options, message) {
   notifier.notify({
@@ -30,10 +31,6 @@ function notify(options, message) {
 
 export default async function index(opts) {
   const pkg = await readJSON(resolve(opts.root, "package.json"))
-  let tsConfig
-  try {
-    tsConfig = await readJSON(resolve(opts.root, "tsconfig.json"))
-  } catch (tsError) {}
 
   const options = {
     ...opts,
@@ -41,7 +38,7 @@ export default async function index(opts) {
     version: pkg.version || "0.0.0",
     banner: getBanner(pkg),
     output: getOutputMatrix(opts, pkg),
-    tsConfig
+    tsConfig: getTsCompilerOptions(opts)
   }
 
   options.entries = getEntries(options)

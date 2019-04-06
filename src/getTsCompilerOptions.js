@@ -14,12 +14,19 @@ export function getTsCompilerOptions(opts) {
   const readResult = ts.readConfigFile(file, ts.sys.readFile)
 
   if (readResult.error) {
-    console.error("Error reading tsconfig:", readResult.error)
+    console.error("Error reading tsconfig:", readResult.error.messageText)
     return
   }
 
   const basePath = ts.getDirectoryPath(file)
   const config = ts.parseJsonConfigFileContent(readResult.config, ts.sys, basePath)
+
+  if (config.errors && config.errors.length) {
+    config.errors.forEach(error => {
+      console.error("Error reading tsconfig:", error.messageText)
+    })
+    return
+  }
 
   return config.options
 }

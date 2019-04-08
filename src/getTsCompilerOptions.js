@@ -1,4 +1,8 @@
-import ts from "typescript"
+/* eslint-disable id-length */
+let ts
+try {
+  ts = require("typescript")
+} catch(importError) {}
 
 export function getTsCompilerOptions(opts) {
   const { verbose } = opts

@@ -1,4 +1,4 @@
-import { dirname, isAbsolute, join } from "path"
+import { dirname, join } from "path"
 
 /* eslint-disable id-length */
 let ts
@@ -35,29 +35,22 @@ function compile(fileNames, options, verbose) {
 export default function extractTypes({ input, root, output, verbose, tsConfig }) {
   const outputDir = dirname(output)
 
-  function makeAbsolute(anyPath) {
-    if (anyPath && !isAbsolute(anyPath)) {
-      return join(root, outputDir)
-    }
-
-    return anyPath
-  }
-
   const defaults = {
     allowSyntheticDefaultImports: true,
     esModuleInterop: true,
     target: ts.ScriptTarget.ES2017
   }
 
-  const configured = tsConfig ? tsConfig.compilerOptions : {}
+  const configured = tsConfig || {}
 
   // Make sure that user configured paths are absolute.
   // Otherwise TypeScript as of v3.3 and v3.4 might crash.
-  configured.rootDir = makeAbsolute(configured.rootDir)
+  configured.declarationDir = ts.getNormalizedAbsolutePath(configured.declarationDir)
+  configured.outDir = ts.getNormalizedAbsolutePath(configured.outDir)
+  configured.rootDir = ts.getNormalizedAbsolutePath(configured.rootDir)
   if (configured.rootDirs) {
-    configured.rootDirs = configured.rootDirs.map(makeAbsolute)
+    configured.rootDirs = configured.rootDirs.map(ts.getNormalizedAbsolutePath)
   }
-  configured.outDir = makeAbsolute(configured.outDir)
 
   const enforced = {
     declaration: true,

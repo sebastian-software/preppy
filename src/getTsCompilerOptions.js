@@ -5,12 +5,16 @@ try {
 } catch(importError) {}
 
 export function getTsCompilerOptions(opts) {
+  if (!ts) {
+    return
+  }
+
   const { verbose } = opts
   const file = ts.findConfigFile(opts.root, ts.sys.fileExists)
 
   if (!file) {
     if (verbose) {
-      console.error("No tsconfig found in", opts.root)
+      console.log("No tsconfig found in", opts.root)
     }
     return
   }

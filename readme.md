@@ -74,7 +74,11 @@ module.exports = (api) => {
   return {
     sourceMaps: true,
     plugins: [
-      isUmd ? null : "@babel/transform-runtime"
+      isUmd ? null : [
+        "@babel/transform-runtime", {
+          corejs: 3
+        }
+      ]
     ].filter(Boolean),
     presets: [
       [
@@ -224,8 +228,8 @@ Note: When any of these files exists, we use prefer it over the normal library f
 
 - `process.env.BUNDLE_NAME`: Extracted `name` field from `package.json`.
 - `process.env.BUNDLE_VERSION`: Extracted `version` field from `package.json`.
-- `process.env.BUNDLE_TARGET`: One of the supported targets. Either
-- `process.env.NODE_ENV`: Injects environment config e.g. via `NODE_ENV="production" preppy` (optional)
+- `process.env.BUNDLE_TARGET`: One of the supported targets. Either `node`, `browser`, `lib` or `cli`.
+- `process.env.NODE_ENV`: Injects environment name. Typical values are `development`, `production` and `test`.
 
 These values are injected into your code base by replacing the original instance.
 

@@ -64,11 +64,11 @@ export default function getRollupInputOptions(options) {
       options.exec ? runPlugin() : null,
       typescriptResolvePlugin(),
       rebasePlugin(),
+      replacePlugin(variables),
       cjsPlugin({
         include: "node_modules/**",
         extensions
       }),
-      replacePlugin(variables),
       jsonPlugin(),
       babelPlugin({
         // Rollup Setting: Prefer usage of a common library of helpers

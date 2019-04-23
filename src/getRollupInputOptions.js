@@ -101,6 +101,7 @@ export default function getRollupInputOptions(options) {
           toplevel: format === "esm" || format === "cjs",
           safari10: true,
           output: {
+            /* eslint-disable-next-line camelcase */
             ascii_only: true,
             semicolons: false
           }

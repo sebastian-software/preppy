@@ -3,6 +3,7 @@ import babelPlugin from "rollup-plugin-babel"
 import chalk from "chalk"
 import cjsPlugin from "rollup-plugin-commonjs"
 import executablePlugin from "rollup-plugin-executable"
+import figures from "figures"
 import jsonPlugin from "rollup-plugin-json"
 import rebasePlugin from "rollup-plugin-rebase"
 import replacePlugin from "rollup-plugin-replace"
@@ -36,6 +37,14 @@ export default function getRollupInputOptions(options) {
   const protectedEnv = process.env
   const env = protectedEnv.NODE_ENV
   if (env) {
+    if (target !== "cli") {
+      console.warn(
+        `${
+          figures.warning
+        } Setting 'NODE_ENV' during publishing prevents selecting environment during usage!`
+      )
+    }
+
     variables[`${prefix}NODE_ENV`] = JSON.stringify(env)
   }
 

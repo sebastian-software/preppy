@@ -30,6 +30,10 @@ function notify(options, message) {
 }
 
 export default async function index(opts) {
+  // Change to detected root directory
+  // This helps rollup plugins e.g. for Babel to use the correct config file.
+  process.chdir(opts.root)
+
   const pkg = await readJSON(resolve(opts.root, "package.json"))
 
   const options = {

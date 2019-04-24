@@ -59,13 +59,6 @@ export default function getRollupInputOptions(options) {
     input,
     cache,
     onwarn: (warning) => {
-      // Somehow the JSX plugin results into new warnings for unused imports.
-      // Interestingly these are actually false positive reports which seem
-      // to be a result of the plugin
-      if (warning.code === "UNUSED_EXTERNAL_IMPORT") {
-        return
-      }
-
       console.warn(chalk.red(`  - ${warning.message} [${warning.code}]`))
     },
     external(dependency) {

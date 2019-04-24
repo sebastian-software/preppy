@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Publish Test File via Babel xx: cjs 1`] = `
+"/*! jsx v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function MyButton() {
+  return <b>Press</b>;
+}
+
+exports.MyButton = MyButton;
+//# sourceMappingURL=index.cjs.js.map
+"
+`;
+
+exports[`Publish Test File via Babel xx: esm 1`] = `
+"/*! jsx v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+function MyButton() {
+  return <b>Press</b>;
+}
+
+export { MyButton };
+//# sourceMappingURL=index.esm.js.map
+"
+`;
+
+exports[`Publish Test File via Babel xx: umd 1`] = `
+"/*! jsx v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = global || self, factory(global.jsx = {}));
+}(this, function (exports) { 'use strict';
+
+  function MyButton() {
+    return <b>Press</b>;
+  }
+
+  exports.MyButton = MyButton;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+}));
+//# sourceMappingURL=index.umd.js.map
+"
+`;

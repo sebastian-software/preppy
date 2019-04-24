@@ -7,9 +7,12 @@ exports[`Publish Test File via Babel xx: cjs 1`] = `
 Object.defineProperty(exports, '__esModule', { value: true });
 
 require('react');
+require('react-intl');
 
 function MyButton() {
-  return <b>Press</b>;
+  return <button>
+      <FormattedMessage id=\\"press-button\\" />
+    </button>;
 }
 
 exports.MyButton = MyButton;
@@ -20,9 +23,12 @@ exports.MyButton = MyButton;
 exports[`Publish Test File via Babel xx: esm 1`] = `
 "/*! jsx v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 import 'react';
+import 'react-intl';
 
 function MyButton() {
-  return <b>Press</b>;
+  return <button>
+      <FormattedMessage id=\\"press-button\\" />
+    </button>;
 }
 
 export { MyButton };
@@ -33,15 +39,17 @@ export { MyButton };
 exports[`Publish Test File via Babel xx: umd 1`] = `
 "/*! jsx v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'react'], factory) :
-  (global = global || self, factory(global.jsx = {}, global.react));
-}(this, function (exports, react) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-intl')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-intl'], factory) :
+  (global = global || self, factory(global.jsx = {}, global.react, global.reactIntl));
+}(this, function (exports, react, reactIntl) { 'use strict';
 
   react = react && react.hasOwnProperty('default') ? react['default'] : react;
 
   function MyButton() {
-    return <b>Press</b>;
+    return <button>
+        <FormattedMessage id=\\"press-button\\" />
+      </button>;
   }
 
   exports.MyButton = MyButton;

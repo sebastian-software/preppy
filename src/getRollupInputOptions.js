@@ -9,6 +9,7 @@ import rebasePlugin from "rollup-plugin-rebase"
 import replacePlugin from "rollup-plugin-replace"
 import runPlugin from "rollup-plugin-run"
 import { terser as terserPlugin } from "rollup-plugin-terser"
+import jsx from "acorn-jsx"
 
 import progressPlugin from "./progressPlugin"
 import typescriptResolvePlugin from "./typescriptResolvePlugin"
@@ -57,8 +58,15 @@ export default function getRollupInputOptions(options) {
   return {
     input,
     cache,
-    onwarn: (error) => {
-      console.warn(chalk.red(`  - ${error.message}`))
+    onwarn: (warning) => {
+      // Somehow the JSX plugin results into new warnings for unused imports.
+      // Interestingly these are actually false positive reports which seem
+      // to be a result of the plugin
+      if (warning.code === "UNUSED_EXTERNAL_IMPORT") {
+        return
+      }
+
+      console.warn(chalk.red(`  - ${warning.message} [${warning.code}]`))
     },
     external(dependency) {
       // Very simple externalization:
@@ -68,6 +76,9 @@ export default function getRollupInputOptions(options) {
       // path for originally local dependencies.
       return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
     },
+    acornInjectPlugins: [
+      jsx()
+    ],
     plugins: [
       options.quiet ? null : progressPlugin(),
       options.exec ? runPlugin() : null,

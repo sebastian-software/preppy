@@ -6,6 +6,8 @@ exports[`Publish Test File via Babel xx: cjs 1`] = `
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+require('react');
+
 function MyButton() {
   return <b>Press</b>;
 }
@@ -17,6 +19,8 @@ exports.MyButton = MyButton;
 
 exports[`Publish Test File via Babel xx: esm 1`] = `
 "/*! jsx v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+import 'react';
+
 function MyButton() {
   return <b>Press</b>;
 }
@@ -29,10 +33,12 @@ export { MyButton };
 exports[`Publish Test File via Babel xx: umd 1`] = `
 "/*! jsx v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.jsx = {}));
-}(this, function (exports) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'react'], factory) :
+  (global = global || self, factory(global.jsx = {}, global.react));
+}(this, function (exports, react) { 'use strict';
+
+  react = react && react.hasOwnProperty('default') ? react['default'] : react;
 
   function MyButton() {
     return <b>Press</b>;

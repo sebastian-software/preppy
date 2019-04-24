@@ -38,7 +38,7 @@ export default function getRollupInputOptions(options) {
   const protectedEnv = process.env
   const env = protectedEnv.NODE_ENV
   if (env) {
-    if (target !== "cli") {
+    if (target !== "cli" && process.env.NODE_ENV !== 'test') {
       console.warn(
         `${
           figures.warning

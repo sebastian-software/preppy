@@ -12,6 +12,7 @@ import { terser as terserPlugin } from "rollup-plugin-terser"
 import jsx from "acorn-jsx"
 
 import progressPlugin from "./progressPlugin"
+import jsxPlugin from "./jsxPlugin"
 import typescriptResolvePlugin from "./typescriptResolvePlugin"
 
 let cache
@@ -75,6 +76,7 @@ export default function getRollupInputOptions(options) {
     plugins: [
       options.quiet ? null : progressPlugin(),
       options.exec ? runPlugin() : null,
+      jsxPlugin(),
       typescriptResolvePlugin(),
       rebasePlugin(),
       cjsPlugin({

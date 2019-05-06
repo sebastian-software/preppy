@@ -24,18 +24,19 @@
 
 ## 🥁 Features:
 
-- Rock solid infrastructure. Builds on well maintained Babel and Rollup under the hood.
+- Rock solid infrastructure. Builds on well maintained [Acorn](https://github.com/acornjs/acorn), [Babel](https://babeljs.io/) and [Rollup](https://rollupjs.org/) under the hood.
 - Supports multiple entries (cli, client, server, library, ...) - even multiple binary entries.
 - Creates multiple output formats (ESM, CommonJS, UMD, ...)
-- Exports TypeScript definitions (respects `types` definition in `package.json`).
+- Exports *TypeScript* definitions (respects `types` definition in `package.json`).
+- *Lazy JSX* support (powered by a custom Rollup plugin) to keep JSX intact while bundling. Major benefit for e.g. UI components: This moves decision over JSX debug capabilities into the application.
 - Rebases assets to the bundled output destination. Say hello to images, web fonts, and more. It also supports assets references in CSS/SCSS.
-- Includes a *watch mode* for live development of libraries.
+- Includes a *watch mode* for live development. Very useful for developing libraries.
 - Supports auto-executing binaries. This is *super useful* when dealing with development web servers for example.
 - Offers builds by compressing bundles with *Terser* as needed (for files with `.min` in their name).
 - Prints out generated file sizes of all bundles.
-- Injects common env-variables into the build (`BUNDLE_{NAME|VERSION|TARGET}`, `NODE_ENV`)
+- Injects common env-variables into the build (`BUNDLE_{NAME|VERSION|TARGET}`). Also `NODE_ENV` for all UMD builds.
 - Executes Babel with an environment based on `NODE_ENV` but with additional data from the `target` (e.g. `node`, `lib` or `cli`) and the output `format` (e.g. `esm`, `cjs`)
-- Supports JSON out of the box and inlines the serialized content into the bundle.
+- Supports *JSON* out of the box and inlines the serialized content into the bundle.
 
 
 ## 🔧 Installation:

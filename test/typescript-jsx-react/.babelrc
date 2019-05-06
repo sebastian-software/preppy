@@ -1,5 +1,17 @@
 {
+  "plugins": [
+    "@babel/plugin-syntax-jsx"
+  ],
   "presets": [
+    [
+      "@babel/typescript",
+      {
+        // We like JSX everywhere. No reason why we have to deal with
+        // legacy type assertion supported in earlier versions.
+        "allExtensions": true,
+        "isTSX": true
+      }
+    ],
     [
       "@babel/env",
       {

@@ -1,0 +1,391 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Publish Test File via Typescript: cjs 1`] = `
+"/*! typescript-jsx-react v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+require('core-js/modules/es.array.includes');
+require('core-js/modules/es.array.iterator');
+require('core-js/modules/es.object.assign');
+require('core-js/modules/es.object.to-string');
+require('core-js/modules/es.promise');
+require('core-js/modules/es.set');
+require('core-js/modules/es.string.iterator');
+require('core-js/modules/web.dom-collections.iterator');
+var lodash = require('lodash');
+var React$1 = _interopDefault(require('react'));
+var reactIntl = require('react-intl');
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+/**
+ * Values of fields in the form
+ */
+var something = 42;
+function Item() {
+  return React.createElement(\\"b\\", null, \\"Bold\\");
+}
+
+console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
+console.log(\\"Imported JS from other file:\\", something);
+console.log(\\"Package\\", \\"typescript-jsx-react\\");
+console.log(\\"Target\\", \\"lib\\");
+console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
+new Promise(function (resolve, reject) {
+  resolve(\\"resolved\\");
+}).then(function (first) {
+  console.log(\\"Promise:\\", first);
+});
+var CONSTANT = 123;
+console.log(\\"Constant:\\", CONSTANT);
+var myArray = [1, 2, 3];
+console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+var mySet = new Set(myArray);
+console.log(\\"Supports Set:\\", mySet.add(4));
+
+(function (supportsDefault) {
+  if (supportsDefault === void 0) {
+    supportsDefault = true;
+  }
+
+  console.log(\\"Supports default parameters:\\", supportsDefault);
+})();
+/* eslint-disable no-shadow */
+
+
+var testVariable = \\"outer\\";
+{
+  var _testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", _testVariable);
+}
+console.log(\\"X Value from outer scope:\\", testVariable);
+var source = {
+  first: 1,
+  second: 2
+};
+var destructed = Object.assign({
+  third: 3
+}, source);
+console.log(\\"Destructed:\\", destructed);
+var MyClass =
+/*#__PURE__*/
+function () {
+  function MyClass() {
+    console.log(\\"Called constructor\\");
+    this.helper();
+    this.instanceProperty = 3;
+  }
+
+  var _proto = MyClass.prototype;
+
+  _proto.helper = function helper(x) {
+    console.log(\\"Called helper: \\" + x);
+  };
+
+  return MyClass;
+}();
+
+var SecondClass =
+/*#__PURE__*/
+function (_MyClass) {
+  _inheritsLoose(SecondClass, _MyClass);
+
+  function SecondClass() {
+    return _MyClass.call(this, 100) || this;
+  }
+
+  return SecondClass;
+}(MyClass());
+
+console.log(\\"Initialized class:\\", new MyClass());
+var setValues = function setValues(values) {
+  setState({
+    values: values
+  }, function () {
+    return true;
+  });
+};
+function MyButton() {
+  return React$1.createElement(\\"button\\", null, React$1.createElement(reactIntl.FormattedMessage, {
+    id: \\"press-button\\"
+  }));
+}
+
+exports.Item = Item;
+exports.MyButton = MyButton;
+exports.MyClass = MyClass;
+exports.setValues = setValues;
+//# sourceMappingURL=index.cjs.js.map
+"
+`;
+
+exports[`Publish Test File via Typescript: esm 1`] = `
+"/*! typescript-jsx-react v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+import 'core-js/modules/es.array.includes';
+import 'core-js/modules/es.array.iterator';
+import 'core-js/modules/es.object.assign';
+import 'core-js/modules/es.object.to-string';
+import 'core-js/modules/es.promise';
+import 'core-js/modules/es.set';
+import 'core-js/modules/es.string.iterator';
+import 'core-js/modules/web.dom-collections.iterator';
+import { camelCase } from 'lodash';
+import React$1 from 'react';
+import { FormattedMessage } from 'react-intl';
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+/**
+ * Values of fields in the form
+ */
+var something = 42;
+function Item() {
+  return React.createElement(\\"b\\", null, \\"Bold\\");
+}
+
+console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
+console.log(\\"Imported JS from other file:\\", something);
+console.log(\\"Package\\", \\"typescript-jsx-react\\");
+console.log(\\"Target\\", \\"lib\\");
+console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
+new Promise(function (resolve, reject) {
+  resolve(\\"resolved\\");
+}).then(function (first) {
+  console.log(\\"Promise:\\", first);
+});
+var CONSTANT = 123;
+console.log(\\"Constant:\\", CONSTANT);
+var myArray = [1, 2, 3];
+console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+var mySet = new Set(myArray);
+console.log(\\"Supports Set:\\", mySet.add(4));
+
+(function (supportsDefault) {
+  if (supportsDefault === void 0) {
+    supportsDefault = true;
+  }
+
+  console.log(\\"Supports default parameters:\\", supportsDefault);
+})();
+/* eslint-disable no-shadow */
+
+
+var testVariable = \\"outer\\";
+{
+  var _testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", _testVariable);
+}
+console.log(\\"X Value from outer scope:\\", testVariable);
+var source = {
+  first: 1,
+  second: 2
+};
+var destructed = Object.assign({
+  third: 3
+}, source);
+console.log(\\"Destructed:\\", destructed);
+var MyClass =
+/*#__PURE__*/
+function () {
+  function MyClass() {
+    console.log(\\"Called constructor\\");
+    this.helper();
+    this.instanceProperty = 3;
+  }
+
+  var _proto = MyClass.prototype;
+
+  _proto.helper = function helper(x) {
+    console.log(\\"Called helper: \\" + x);
+  };
+
+  return MyClass;
+}();
+
+var SecondClass =
+/*#__PURE__*/
+function (_MyClass) {
+  _inheritsLoose(SecondClass, _MyClass);
+
+  function SecondClass() {
+    return _MyClass.call(this, 100) || this;
+  }
+
+  return SecondClass;
+}(MyClass());
+
+console.log(\\"Initialized class:\\", new MyClass());
+var setValues = function setValues(values) {
+  setState({
+    values: values
+  }, function () {
+    return true;
+  });
+};
+function MyButton() {
+  return React$1.createElement(\\"button\\", null, React$1.createElement(FormattedMessage, {
+    id: \\"press-button\\"
+  }));
+}
+
+export { Item, MyButton, MyClass, setValues };
+//# sourceMappingURL=index.esm.js.map
+"
+`;
+
+exports[`Publish Test File via Typescript: types-main 1`] = `
+"import { FormValues, Item } from \\"./types\\";
+export declare class MyClass {
+    constructor();
+    helper(x: string): void;
+}
+export declare const setValues: (values: FormValues) => void;
+export { Item };
+export declare function MyButton(): any;
+"
+`;
+
+exports[`Publish Test File via Typescript: types-sub 1`] = `
+"/**
+ * Values of fields in the form
+ */
+export interface FormValues {
+    [field: string]: any;
+}
+export declare const something = 42;
+export declare function Item(): any;
+"
+`;
+
+exports[`Publish Test File via Typescript: umd 1`] = `
+"/*! typescript-jsx-react v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es.array.includes'), require('core-js/modules/es.array.iterator'), require('core-js/modules/es.object.assign'), require('core-js/modules/es.object.to-string'), require('core-js/modules/es.promise'), require('core-js/modules/es.set'), require('core-js/modules/es.string.iterator'), require('core-js/modules/web.dom-collections.iterator'), require('lodash'), require('react'), require('react-intl')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es.array.includes', 'core-js/modules/es.array.iterator', 'core-js/modules/es.object.assign', 'core-js/modules/es.object.to-string', 'core-js/modules/es.promise', 'core-js/modules/es.set', 'core-js/modules/es.string.iterator', 'core-js/modules/web.dom-collections.iterator', 'lodash', 'react', 'react-intl'], factory) :
+  (global = global || self, factory(global['typescript-jsx-react'] = {}, null, null, null, null, null, null, null, null, global.lodash, global.React$1, global.reactIntl));
+}(this, function (exports, es_array_includes, es_array_iterator, es_object_assign, es_object_toString, es_promise, es_set, es_string_iterator, web_domCollections_iterator, lodash, React$1, reactIntl) { 'use strict';
+
+  React$1 = React$1 && React$1.hasOwnProperty('default') ? React$1['default'] : React$1;
+
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+    subClass.__proto__ = superClass;
+  }
+
+  /**
+   * Values of fields in the form
+   */
+  var something = 42;
+  function Item() {
+    return React.createElement(\\"b\\", null, \\"Bold\\");
+  }
+
+  console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
+  console.log(\\"Imported JS from other file:\\", something);
+  console.log(\\"Package\\", \\"typescript-jsx-react\\");
+  console.log(\\"Target\\", \\"lib\\");
+  console.log(\\"ES2016 Enabled:\\", Math.pow(2, 2) === 4);
+  new Promise(function (resolve, reject) {
+    resolve(\\"resolved\\");
+  }).then(function (first) {
+    console.log(\\"Promise:\\", first);
+  });
+  var CONSTANT = 123;
+  console.log(\\"Constant:\\", CONSTANT);
+  var myArray = [1, 2, 3];
+  console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+  var mySet = new Set(myArray);
+  console.log(\\"Supports Set:\\", mySet.add(4));
+
+  (function (supportsDefault) {
+    if (supportsDefault === void 0) {
+      supportsDefault = true;
+    }
+
+    console.log(\\"Supports default parameters:\\", supportsDefault);
+  })();
+  /* eslint-disable no-shadow */
+
+
+  var testVariable = \\"outer\\";
+  {
+    var _testVariable = \\"inner\\";
+    console.log(\\"X Value from inner scope:\\", _testVariable);
+  }
+  console.log(\\"X Value from outer scope:\\", testVariable);
+  var source = {
+    first: 1,
+    second: 2
+  };
+  var destructed = Object.assign({
+    third: 3
+  }, source);
+  console.log(\\"Destructed:\\", destructed);
+  var MyClass =
+  /*#__PURE__*/
+  function () {
+    function MyClass() {
+      console.log(\\"Called constructor\\");
+      this.helper();
+      this.instanceProperty = 3;
+    }
+
+    var _proto = MyClass.prototype;
+
+    _proto.helper = function helper(x) {
+      console.log(\\"Called helper: \\" + x);
+    };
+
+    return MyClass;
+  }();
+
+  var SecondClass =
+  /*#__PURE__*/
+  function (_MyClass) {
+    _inheritsLoose(SecondClass, _MyClass);
+
+    function SecondClass() {
+      return _MyClass.call(this, 100) || this;
+    }
+
+    return SecondClass;
+  }(MyClass());
+
+  console.log(\\"Initialized class:\\", new MyClass());
+  var setValues = function setValues(values) {
+    setState({
+      values: values
+    }, function () {
+      return true;
+    });
+  };
+  function MyButton() {
+    return React$1.createElement(\\"button\\", null, React$1.createElement(reactIntl.FormattedMessage, {
+      id: \\"press-button\\"
+    }));
+  }
+
+  exports.Item = Item;
+  exports.MyButton = MyButton;
+  exports.MyClass = MyClass;
+  exports.setValues = setValues;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+}));
+//# sourceMappingURL=index.umd.js.map
+"
+`;

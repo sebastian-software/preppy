@@ -47,7 +47,13 @@ export default function getRollupInputOptions(options) {
       )
     }
 
-    variables[`${prefix}NODE_ENV`] = JSON.stringify(env)
+    // Only inject NODE_ENV for UMD (final browser bundles). For all other
+    // cases this variable handling is better done in the final use case:
+    // - live variable for CLI and NodeJS libraries
+    // - bundle injection for Webpack bundling
+    if (format === "umd") {
+      variables[`${prefix}NODE_ENV`] = JSON.stringify(env)
+    }
   }
 
   if (verbose) {

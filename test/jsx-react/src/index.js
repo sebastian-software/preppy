@@ -1,10 +1,14 @@
 import React from "react"
 import { FormattedMessage } from "react-intl"
+import Header from "components/Header"
 
-export function MyButton() {
+export function MyPage() {
   return (
-    <button>
-      <FormattedMessage id="press-button" />
-    </button>
+    <>
+      <Header>Title</Header>
+      <button>
+        <FormattedMessage id="press-button" />
+      </button>
+    </>
   )
 }

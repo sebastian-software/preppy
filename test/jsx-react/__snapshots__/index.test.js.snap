@@ -10,14 +10,15 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = _interopDefault(require('react'));
 var reactIntl = require('react-intl');
+var Header = _interopDefault(require('components/Header'));
 
-function MyButton() {
-  return React.createElement(\\"button\\", null, React.createElement(reactIntl.FormattedMessage, {
+function MyPage() {
+  return React.createElement(React.Fragment, null, React.createElement(Header, null, \\"Title\\"), React.createElement(\\"button\\", null, React.createElement(reactIntl.FormattedMessage, {
     id: \\"press-button\\"
-  }));
+  })));
 }
 
-exports.MyButton = MyButton;
+exports.MyPage = MyPage;
 //# sourceMappingURL=index.cjs.js.map
 "
 `;
@@ -26,14 +27,15 @@ exports[`Publish Test File via Babel xx: esm 1`] = `
 "/*! jsx-react v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import Header from 'components/Header';
 
-function MyButton() {
-  return React.createElement(\\"button\\", null, React.createElement(FormattedMessage, {
+function MyPage() {
+  return React.createElement(React.Fragment, null, React.createElement(Header, null, \\"Title\\"), React.createElement(\\"button\\", null, React.createElement(FormattedMessage, {
     id: \\"press-button\\"
-  }));
+  })));
 }
 
-export { MyButton };
+export { MyPage };
 //# sourceMappingURL=index.esm.js.map
 "
 `;
@@ -41,20 +43,21 @@ export { MyButton };
 exports[`Publish Test File via Babel xx: umd 1`] = `
 "/*! jsx-react v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-intl')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-intl'], factory) :
-  (global = global || self, factory(global['jsx-react'] = {}, global.React, global.reactIntl));
-}(this, function (exports, React, reactIntl) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-intl'), require('components/Header')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-intl', 'components/Header'], factory) :
+  (global = global || self, factory(global['jsx-react'] = {}, global.React, global.reactIntl, global.Header));
+}(this, function (exports, React, reactIntl, Header) { 'use strict';
 
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
+  Header = Header && Header.hasOwnProperty('default') ? Header['default'] : Header;
 
-  function MyButton() {
-    return React.createElement(\\"button\\", null, React.createElement(reactIntl.FormattedMessage, {
+  function MyPage() {
+    return React.createElement(React.Fragment, null, React.createElement(Header, null, \\"Title\\"), React.createElement(\\"button\\", null, React.createElement(reactIntl.FormattedMessage, {
       id: \\"press-button\\"
-    }));
+    })));
   }
 
-  exports.MyButton = MyButton;
+  exports.MyPage = MyPage;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

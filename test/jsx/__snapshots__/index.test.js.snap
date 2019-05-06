@@ -10,14 +10,18 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = _interopDefault(require('react'));
 var reactIntl = require('react-intl');
+var Header = _interopDefault(require('components/Header'));
 
-function MyButton() {
-  return <button>
-      <reactIntl.FormattedMessage id=\\"press-button\\" />
-    </button>;
+function MyPage() {
+  return <>
+      <Header>Title</Header>
+      <button>
+        <reactIntl.FormattedMessage id=\\"press-button\\" />
+      </button>
+    </>;
 }
 
-exports.MyButton = MyButton;
+exports.MyPage = MyPage;
 //# sourceMappingURL=index.cjs.js.map
 "
 `;
@@ -26,14 +30,18 @@ exports[`Publish Test File via Babel xx: esm 1`] = `
 "/*! jsx v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import Header from 'components/Header';
 
-function MyButton() {
-  return <button>
-      <FormattedMessage id=\\"press-button\\" />
-    </button>;
+function MyPage() {
+  return <>
+      <Header>Title</Header>
+      <button>
+        <FormattedMessage id=\\"press-button\\" />
+      </button>
+    </>;
 }
 
-export { MyButton };
+export { MyPage };
 //# sourceMappingURL=index.esm.js.map
 "
 `;
@@ -41,20 +49,24 @@ export { MyButton };
 exports[`Publish Test File via Babel xx: umd 1`] = `
 "/*! jsx v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-intl')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-intl'], factory) :
-  (global = global || self, factory(global.jsx = {}, global.React, global.reactIntl));
-}(this, function (exports, React, reactIntl) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-intl'), require('components/Header')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-intl', 'components/Header'], factory) :
+  (global = global || self, factory(global.jsx = {}, global.React, global.reactIntl, global.Header));
+}(this, function (exports, React, reactIntl, Header) { 'use strict';
 
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
+  Header = Header && Header.hasOwnProperty('default') ? Header['default'] : Header;
 
-  function MyButton() {
-    return <button>
-        <reactIntl.FormattedMessage id=\\"press-button\\" />
-      </button>;
+  function MyPage() {
+    return <>
+        <Header>Title</Header>
+        <button>
+          <reactIntl.FormattedMessage id=\\"press-button\\" />
+        </button>
+      </>;
   }
 
-  exports.MyButton = MyButton;
+  exports.MyPage = MyPage;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

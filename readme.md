@@ -230,13 +230,18 @@ Note: When any of these files exists, we use prefer it over the normal library f
 - `process.env.BUNDLE_NAME`: Extracted `name` field from `package.json`.
 - `process.env.BUNDLE_VERSION`: Extracted `version` field from `package.json`.
 - `process.env.BUNDLE_TARGET`: One of the supported targets. Either `node`, `browser`, `lib` or `cli`.
-- `process.env.NODE_ENV`: Injects environment name. Typical values are `development`, `production` and `test`.
+- `process.env.BUNDLE_ENV`: Environment name. Typical values are `development`, `production` and `test`. Use this instead of `NODE_ENV` to inject the current value at bundle time.
 
 These values are injected into your code base by replacing the original instance.
 
-Note: It only works correctly when you use the whole identifier.
+For UMD bundles we also replace:
 
-Note: In verbose mode we are logging the environment settings configured.
+- `process.env.NODE_ENV`: Same as `BUNDLE_ENV` - mainly replaced as this is a pretty common standard field which can't be resolved in browsers.
+
+Notes:
+
+- It only works correctly when you use the whole identifier.
+- In verbose mode we are logging the environment settings configured.
 
 
 ### Command Line Interface

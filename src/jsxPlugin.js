@@ -35,7 +35,7 @@ export default () => ({
       const usedNamesAndIds = Array.from(idsByName).map(
         ([ name, tagId ]) => `/*${tagId}*/${name}`
       )
-      magicString.append(`;__PREPPY_USED_JSX_NAMES__(React,${usedNamesAndIds.join(",")});`)
+      magicString.append(`;__PREPPY_JSX_NAMES__(React,${usedNamesAndIds.join(",")});`)
       return magicString.toString()
     }
 
@@ -48,7 +48,7 @@ export default () => ({
 
         // this finds all injected artificial usages from the transform hook, removes them
         // and collects the new variable names as a side-effect
-        .replace(/__PREPPY_USED_JSX_NAMES__\(([^)]*)\);/g, (matchedCall, usedList) => {
+        .replace(/__PREPPY_JSX_NAMES__\(([^)]*)\);/g, (matchedCall, usedList) => {
           usedList
             .split(",")
 
@@ -58,6 +58,8 @@ export default () => ({
             .map((replacementAndVariable) => replacementAndVariable.match(/^\s*?\/\*([^*]*)\*\/\s*?(\S*)$/))
             .filter(Boolean)
             .forEach(([ usedEntry, tagId, updatedName ]) => replacements.set(tagId, updatedName))
+
+          // clearing out the actual values
           return ""
         })
 

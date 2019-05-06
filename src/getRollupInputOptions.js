@@ -76,7 +76,7 @@ export default function getRollupInputOptions(options) {
     plugins: [
       options.quiet ? null : progressPlugin(),
       options.exec ? runPlugin() : null,
-      jsxPlugin(),
+
       typescriptResolvePlugin(),
       rebasePlugin(),
       cjsPlugin({
@@ -101,6 +101,7 @@ export default function getRollupInputOptions(options) {
         // https://github.com/rollup/rollup-plugin-babel/issues/48#issuecomment-211025960
         exclude: [ "node_modules/**", "**/*.json" ]
       }),
+      jsxPlugin(),
       (env === "production" && (format === "umd" || target === "cli")) ||
       (/\.min\./).exec(output) ?
         terserPlugin({

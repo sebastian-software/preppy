@@ -17,7 +17,6 @@ function MyButton() {
     </button>;
 }
 
-
 exports.MyButton = MyButton;
 //# sourceMappingURL=index.cjs.js.map
 "
@@ -33,7 +32,6 @@ function MyButton() {
       <FormattedMessage id=\\"press-button\\" />
     </button>;
 }
-
 
 export { MyButton };
 //# sourceMappingURL=index.esm.js.map
@@ -55,7 +53,6 @@ exports[`Publish Test File via Babel xx: umd 1`] = `
         <reactIntl.FormattedMessage id=\\"press-button\\" />
       </button>;
   }
-  
 
   exports.MyButton = MyButton;
 

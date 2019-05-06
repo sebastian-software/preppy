@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Publish Test File via Babel xx: cjs 1`] = `
+"/*! jsx-react v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var React = _interopDefault(require('react'));
+var reactIntl = require('react-intl');
+
+function MyButton() {
+  return React.createElement(\\"button\\", null, React.createElement(reactIntl.FormattedMessage, {
+    id: \\"press-button\\"
+  }));
+}
+
+exports.MyButton = MyButton;
+//# sourceMappingURL=index.cjs.js.map
+"
+`;
+
+exports[`Publish Test File via Babel xx: esm 1`] = `
+"/*! jsx-react v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
+function MyButton() {
+  return React.createElement(\\"button\\", null, React.createElement(FormattedMessage, {
+    id: \\"press-button\\"
+  }));
+}
+
+export { MyButton };
+//# sourceMappingURL=index.esm.js.map
+"
+`;
+
+exports[`Publish Test File via Babel xx: umd 1`] = `
+"/*! jsx-react v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-intl')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-intl'], factory) :
+  (global = global || self, factory(global['jsx-react'] = {}, global.React, global.reactIntl));
+}(this, function (exports, React, reactIntl) { 'use strict';
+
+  React = React && React.hasOwnProperty('default') ? React['default'] : React;
+
+  function MyButton() {
+    return React.createElement(\\"button\\", null, React.createElement(reactIntl.FormattedMessage, {
+      id: \\"press-button\\"
+    }));
+  }
+
+  exports.MyButton = MyButton;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+}));
+//# sourceMappingURL=index.umd.js.map
+"
+`;

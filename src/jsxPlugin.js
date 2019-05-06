@@ -52,8 +52,9 @@ export default () => ({
 
             // this extracts the artificial tag id from the comment and the possibly renamed variable
             // name from the variable via two capture groups
-            .map((arg) => arg.match(/^\/\*([^*]*)\*\/(.*)$/))
             .slice(1)
+            .map((arg) => arg.match(/^\s*?\/\*([^*]*)\*\/\s*?(\S*)$/))
+            .filter(Boolean)
             .forEach(([ _, tagId, updatedName ]) => replacements.set(tagId, updatedName))
           return ""
         })

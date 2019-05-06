@@ -14,12 +14,12 @@ export default () => ({
   transform(code) {
     const magicString = new MagicString(code)
     const idsByName = new Map()
-    const ast = this.parse(code)
-    walk(ast, {
+    const tree = this.parse(code)
+    walk(tree, {
       enter(node) {
         if (node.type === "JSXMemberExpression" || node.type === "JSXIdentifier") {
           const name = getJsxName(node)
-          const tagId = idsByName.get(name) || `JSX_PLUGIN_ID_${nextId++}`
+          const tagId = idsByName.get(name) || `JSX_PLUGIN_ID_${nextId += 1}`
 
           // overwrite all JSX tags with artificial tag ids so that we can find them again later
           magicString.overwrite(node.start, node.end, tagId)
@@ -46,16 +46,16 @@ export default () => ({
 
         // this finds all injected artificial usages from the transform hook, removes them
         // and collects the new variable names as a side-effect
-        .replace(/USED_JSX_NAMES\(([^)]*)\);/g, (_, args) => {
-          args
+        .replace(/USED_JSX_NAMES\(([^)]*)\);/g, (matchedCall, usedList) => {
+          usedList
             .split(",")
 
             // this extracts the artificial tag id from the comment and the possibly renamed variable
             // name from the variable via two capture groups
             .slice(1)
-            .map((arg) => arg.match(/^\s*?\/\*([^*]*)\*\/\s*?(\S*)$/))
+            .map((replacementAndVariable) => replacementAndVariable.match(/^\s*?\/\*([^*]*)\*\/\s*?(\S*)$/))
             .filter(Boolean)
-            .forEach(([ _, tagId, updatedName ]) => replacements.set(tagId, updatedName))
+            .forEach(([ usedEntry, tagId, updatedName ]) => replacements.set(tagId, updatedName))
           return ""
         })
 

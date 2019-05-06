@@ -28,7 +28,7 @@
 - Supports multiple entries (cli, client, server, library, ...) - even multiple binary entries.
 - Creates multiple output formats (ESM, CommonJS, UMD, ...)
 - Exports *TypeScript* definitions (respects `types` definition in `package.json`).
-- *Lazy JSX* support (powered by a custom Rollup plugin) to keep JSX intact while bundling. Major benefit for e.g. UI components: This moves decision over JSX debug capabilities into the application.
+- *Lazy JSX* support (powered by a [custom Rollup plugin](https://github.com/rollup/rollup/issues/2822)) to keep JSX intact while bundling. Major benefit for e.g. UI components: This moves decision over JSX debug capabilities or optimization settings into the application space.
 - Rebases assets to the bundled output destination. Say hello to images, web fonts, and more. It also supports assets references in CSS/SCSS.
 - Includes a *watch mode* for live development. Very useful for developing libraries.
 - Supports auto-executing binaries. This is *super useful* when dealing with development web servers for example.

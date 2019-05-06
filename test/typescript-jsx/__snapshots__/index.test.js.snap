@@ -18,6 +18,8 @@ require('core-js/modules/es.string.iterator');
 require('core-js/modules/web.dom-collections.iterator');
 var _inheritsLoose = _interopDefault(require('@babel/runtime/helpers/inheritsLoose'));
 var lodash = require('lodash');
+var React$1 = _interopDefault(require('react'));
+var reactIntl = require('react-intl');
 
 /**
  * Values of fields in the form
@@ -122,8 +124,14 @@ var setValues = function setValues(values) {
     return true;
   });
 };
+function MyButton() {
+  return React$1.createElement(\\"button\\", null, React$1.createElement(reactIntl.FormattedMessage, {
+    id: \\"press-button\\"
+  }));
+}
 
 exports.Item = Item;
+exports.MyButton = MyButton;
 exports.MyClass = MyClass;
 exports.setValues = setValues;
 //# sourceMappingURL=index.cjs.js.map
@@ -142,6 +150,8 @@ import 'core-js/modules/es.string.iterator';
 import 'core-js/modules/web.dom-collections.iterator';
 import _inheritsLoose from '@babel/runtime/helpers/inheritsLoose';
 import { camelCase } from 'lodash';
+import React$1 from 'react';
+import { FormattedMessage } from 'react-intl';
 
 /**
  * Values of fields in the form
@@ -246,8 +256,13 @@ var setValues = function setValues(values) {
     return true;
   });
 };
+function MyButton() {
+  return React$1.createElement(\\"button\\", null, React$1.createElement(FormattedMessage, {
+    id: \\"press-button\\"
+  }));
+}
 
-export { Item, MyClass, setValues };
+export { Item, MyButton, MyClass, setValues };
 //# sourceMappingURL=index.esm.js.map
 "
 `;
@@ -261,6 +276,7 @@ export declare class MyClass {
 }
 export declare const setValues: (values: FormValues) => void;
 export { Item };
+export declare function MyButton(): any;
 "
 `;
 
@@ -279,10 +295,12 @@ export declare function Item(): any;
 exports[`Publish Test File via Typescript: umd 1`] = `
 "/*! typescript-jsx v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es.array.includes'), require('core-js/modules/es.array.iterator'), require('core-js/modules/es.object.assign'), require('core-js/modules/es.object.to-string'), require('core-js/modules/es.promise'), require('core-js/modules/es.set'), require('core-js/modules/es.string.iterator'), require('core-js/modules/web.dom-collections.iterator'), require('lodash')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es.array.includes', 'core-js/modules/es.array.iterator', 'core-js/modules/es.object.assign', 'core-js/modules/es.object.to-string', 'core-js/modules/es.promise', 'core-js/modules/es.set', 'core-js/modules/es.string.iterator', 'core-js/modules/web.dom-collections.iterator', 'lodash'], factory) :
-  (global = global || self, factory(global['typescript-jsx'] = {}, null, null, null, null, null, null, null, null, global.lodash));
-}(this, function (exports, es_array_includes, es_array_iterator, es_object_assign, es_object_toString, es_promise, es_set, es_string_iterator, web_domCollections_iterator, lodash) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es.array.includes'), require('core-js/modules/es.array.iterator'), require('core-js/modules/es.object.assign'), require('core-js/modules/es.object.to-string'), require('core-js/modules/es.promise'), require('core-js/modules/es.set'), require('core-js/modules/es.string.iterator'), require('core-js/modules/web.dom-collections.iterator'), require('lodash'), require('react'), require('react-intl')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es.array.includes', 'core-js/modules/es.array.iterator', 'core-js/modules/es.object.assign', 'core-js/modules/es.object.to-string', 'core-js/modules/es.promise', 'core-js/modules/es.set', 'core-js/modules/es.string.iterator', 'core-js/modules/web.dom-collections.iterator', 'lodash', 'react', 'react-intl'], factory) :
+  (global = global || self, factory(global['typescript-jsx'] = {}, null, null, null, null, null, null, null, null, global.lodash, global.React$1, global.reactIntl));
+}(this, function (exports, es_array_includes, es_array_iterator, es_object_assign, es_object_toString, es_promise, es_set, es_string_iterator, web_domCollections_iterator, lodash, React$1, reactIntl) { 'use strict';
+
+  React$1 = React$1 && React$1.hasOwnProperty('default') ? React$1['default'] : React$1;
 
   function _inheritsLoose(subClass, superClass) {
     subClass.prototype = Object.create(superClass.prototype);
@@ -393,8 +411,14 @@ exports[`Publish Test File via Typescript: umd 1`] = `
       return true;
     });
   };
+  function MyButton() {
+    return React$1.createElement(\\"button\\", null, React$1.createElement(reactIntl.FormattedMessage, {
+      id: \\"press-button\\"
+    }));
+  }
 
   exports.Item = Item;
+  exports.MyButton = MyButton;
   exports.MyClass = MyClass;
   exports.setValues = setValues;
 

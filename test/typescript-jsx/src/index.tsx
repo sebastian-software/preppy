@@ -7,6 +7,9 @@
 /* eslint-disable prefer-const */
 
 import { camelCase } from "lodash"
+import React from "react"
+import { FormattedMessage } from "react-intl"
+
 import { FormValues, something, Item } from "./types"
 
 console.log("CherryPick Import Lodash:", camelCase("hello world") === "helloWorld")
@@ -84,3 +87,11 @@ export const setValues = (values: FormValues) => {
 }
 
 export { Item }
+
+export function MyButton() {
+  return (
+    <button>
+      <FormattedMessage id="press-button" />
+    </button>
+  )
+}

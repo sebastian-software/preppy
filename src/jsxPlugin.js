@@ -1,5 +1,5 @@
-const walk = require("estree-walker").walk
-const MagicString = require("magic-string")
+import MagicString from "magic-string"
+import { walk } from "estree-walker"
 
 let nextId = 0
 
@@ -38,6 +38,8 @@ export default () => ({
       magicString.append(`;USED_JSX_NAMES(React,${usedNamesAndIds.join(",")});`)
       return magicString.toString()
     }
+
+    return code
   },
   renderChunk(code) {
     const replacements = new Map()

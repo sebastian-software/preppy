@@ -31,7 +31,4 @@ test("Publish Test File via Typescript", async () => {
   expect(
     await lazyRead(resolve(__dirname, "dist/index.d.ts"), "utf8")
   ).toMatchSnapshot("types-main")
-  expect(
-    await lazyRead(resolve(__dirname, "dist/types.d.ts"), "utf8")
-  ).toMatchSnapshot("types-sub")
 })

@@ -16,17 +16,22 @@ require('core-js/modules/es.promise');
 require('core-js/modules/es.set');
 require('core-js/modules/es.string.iterator');
 require('core-js/modules/web.dom-collections.iterator');
-var _inheritsLoose = _interopDefault(require('@babel/runtime/helpers/inheritsLoose'));
 var lodash = require('lodash');
 var React$1 = _interopDefault(require('react'));
 var reactIntl = require('react-intl');
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
 
 /**
  * Values of fields in the form
  */
 var something = 42;
 function Item() {
-  return React.createElement(\\"b\\", null, \\"Bold\\");
+  return <b>Bold</b>;
 }
 
 console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
@@ -57,8 +62,10 @@ console.log(\\"Supports Set:\\", mySet.add(4));
 
 
 var testVariable = \\"outer\\";
-var _testVariable = \\"inner\\";
-console.log(\\"X Value from inner scope:\\", _testVariable);
+{
+  var _testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", _testVariable);
+}
 console.log(\\"X Value from outer scope:\\", testVariable);
 var source = {
   first: 1,
@@ -72,10 +79,6 @@ var MyClass =
 /*#__PURE__*/
 function () {
   function MyClass() {
-    this.onClick = function () {
-      console.log(\\"Clickedx\\");
-    };
-
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;
@@ -103,20 +106,6 @@ function (_MyClass) {
 }(MyClass());
 
 console.log(\\"Initialized class:\\", new MyClass());
-
-function helper() {
-  return new Promise(function ($return, $error) {
-    return Promise.resolve(PromiseHelper()).then(function ($await_1) {
-      try {
-        return $return(42);
-      } catch ($boundEx) {
-        return $error($boundEx);
-      }
-    }, $error);
-  });
-}
-
-helper();
 var setValues = function setValues(values) {
   setState({
     values: values
@@ -125,9 +114,9 @@ var setValues = function setValues(values) {
   });
 };
 function MyButton() {
-  return React$1.createElement(\\"button\\", null, React$1.createElement(reactIntl.FormattedMessage, {
-    id: \\"press-button\\"
-  }));
+  return <button>
+      <reactIntl.FormattedMessage id=\\"press-button\\" />
+    </button>;
 }
 
 exports.Item = Item;
@@ -148,17 +137,22 @@ import 'core-js/modules/es.promise';
 import 'core-js/modules/es.set';
 import 'core-js/modules/es.string.iterator';
 import 'core-js/modules/web.dom-collections.iterator';
-import _inheritsLoose from '@babel/runtime/helpers/inheritsLoose';
 import { camelCase } from 'lodash';
 import React$1 from 'react';
 import { FormattedMessage } from 'react-intl';
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
 
 /**
  * Values of fields in the form
  */
 var something = 42;
 function Item() {
-  return React.createElement(\\"b\\", null, \\"Bold\\");
+  return <b>Bold</b>;
 }
 
 console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
@@ -189,8 +183,10 @@ console.log(\\"Supports Set:\\", mySet.add(4));
 
 
 var testVariable = \\"outer\\";
-var _testVariable = \\"inner\\";
-console.log(\\"X Value from inner scope:\\", _testVariable);
+{
+  var _testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", _testVariable);
+}
 console.log(\\"X Value from outer scope:\\", testVariable);
 var source = {
   first: 1,
@@ -204,10 +200,6 @@ var MyClass =
 /*#__PURE__*/
 function () {
   function MyClass() {
-    this.onClick = function () {
-      console.log(\\"Clickedx\\");
-    };
-
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;
@@ -235,20 +227,6 @@ function (_MyClass) {
 }(MyClass());
 
 console.log(\\"Initialized class:\\", new MyClass());
-
-function helper() {
-  return new Promise(function ($return, $error) {
-    return Promise.resolve(PromiseHelper()).then(function ($await_1) {
-      try {
-        return $return(42);
-      } catch ($boundEx) {
-        return $error($boundEx);
-      }
-    }, $error);
-  });
-}
-
-helper();
 var setValues = function setValues(values) {
   setState({
     values: values
@@ -257,9 +235,9 @@ var setValues = function setValues(values) {
   });
 };
 function MyButton() {
-  return React$1.createElement(\\"button\\", null, React$1.createElement(FormattedMessage, {
-    id: \\"press-button\\"
-  }));
+  return <button>
+      <FormattedMessage id=\\"press-button\\" />
+    </button>;
 }
 
 export { Item, MyButton, MyClass, setValues };
@@ -271,7 +249,6 @@ exports[`Publish Test File via Typescript: types-main 1`] = `
 "import { FormValues, Item } from \\"./types\\";
 export declare class MyClass {
     constructor();
-    onClick: () => void;
     helper(x: string): void;
 }
 export declare const setValues: (values: FormValues) => void;
@@ -313,7 +290,7 @@ exports[`Publish Test File via Typescript: umd 1`] = `
    */
   var something = 42;
   function Item() {
-    return React.createElement(\\"b\\", null, \\"Bold\\");
+    return <b>Bold</b>;
   }
 
   console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
@@ -344,8 +321,10 @@ exports[`Publish Test File via Typescript: umd 1`] = `
 
 
   var testVariable = \\"outer\\";
-  var _testVariable = \\"inner\\";
-  console.log(\\"X Value from inner scope:\\", _testVariable);
+  {
+    var _testVariable = \\"inner\\";
+    console.log(\\"X Value from inner scope:\\", _testVariable);
+  }
   console.log(\\"X Value from outer scope:\\", testVariable);
   var source = {
     first: 1,
@@ -359,10 +338,6 @@ exports[`Publish Test File via Typescript: umd 1`] = `
   /*#__PURE__*/
   function () {
     function MyClass() {
-      this.onClick = function () {
-        console.log(\\"Clickedx\\");
-      };
-
       console.log(\\"Called constructor\\");
       this.helper();
       this.instanceProperty = 3;
@@ -390,20 +365,6 @@ exports[`Publish Test File via Typescript: umd 1`] = `
   }(MyClass());
 
   console.log(\\"Initialized class:\\", new MyClass());
-
-  function helper() {
-    return new Promise(function ($return, $error) {
-      return Promise.resolve(PromiseHelper()).then(function ($await_1) {
-        try {
-          return $return(42);
-        } catch ($boundEx) {
-          return $error($boundEx);
-        }
-      }, $error);
-    });
-  }
-
-  helper();
   var setValues = function setValues(values) {
     setState({
       values: values
@@ -412,9 +373,9 @@ exports[`Publish Test File via Typescript: umd 1`] = `
     });
   };
   function MyButton() {
-    return React$1.createElement(\\"button\\", null, React$1.createElement(reactIntl.FormattedMessage, {
-      id: \\"press-button\\"
-    }));
+    return <button>
+        <reactIntl.FormattedMessage id=\\"press-button\\" />
+      </button>;
   }
 
   exports.Item = Item;

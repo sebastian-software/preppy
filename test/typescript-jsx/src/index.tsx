@@ -57,10 +57,6 @@ export class MyClass {
     this.instanceProperty = 3
   }
 
-  onClick = () => {
-    console.log("Clickedx")
-  }
-
   helper(x: string) {
     console.log("Called helper: " + x)
   }
@@ -73,14 +69,6 @@ class SecondClass extends MyClass() {
 }
 
 console.log("Initialized class:", new MyClass())
-
-async function helper() {
-  await PromiseHelper()
-
-  return 42
-}
-
-helper()
 
 export const setValues = (values: FormValues) => {
   setState({ values }, () => true)

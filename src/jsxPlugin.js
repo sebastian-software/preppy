@@ -19,7 +19,7 @@ export default () => ({
       enter(node) {
         if (node.type === "JSXMemberExpression" || node.type === "JSXIdentifier") {
           const name = getJsxName(node)
-          const tagId = idsByName.get(name) || `JSX_PLUGIN_ID_${nextId += 1}`
+          const tagId = idsByName.get(name) || `PREPPY_JSX_ID_${nextId += 1}`
 
           // overwrite all JSX tags with artificial tag ids so that we can find them again later
           magicString.overwrite(node.start, node.end, tagId)
@@ -35,7 +35,7 @@ export default () => ({
       const usedNamesAndIds = Array.from(idsByName).map(
         ([ name, tagId ]) => `/*${tagId}*/${name}`
       )
-      magicString.append(`;USED_JSX_NAMES(React,${usedNamesAndIds.join(",")});`)
+      magicString.append(`;__PREPPY_USED_JSX_NAMES__(React,${usedNamesAndIds.join(",")});`)
       return magicString.toString()
     }
 
@@ -48,7 +48,7 @@ export default () => ({
 
         // this finds all injected artificial usages from the transform hook, removes them
         // and collects the new variable names as a side-effect
-        .replace(/USED_JSX_NAMES\(([^)]*)\);/g, (matchedCall, usedList) => {
+        .replace(/__PREPPY_USED_JSX_NAMES__\(([^)]*)\);/g, (matchedCall, usedList) => {
           usedList
             .split(",")
 
@@ -62,7 +62,7 @@ export default () => ({
         })
 
         // this replaces the artificial tag ids in the actual JSX tags
-        .replace(/JSX_PLUGIN_ID_\d+/g, (tagId) => replacements.get(tagId))
+        .replace(/PREPPY_JSX_ID_\d+/g, (tagId) => replacements.get(tagId))
     )
   }
 })

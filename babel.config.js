@@ -60,7 +60,13 @@ module.exports = (api) => {
           isTSX: true
         }
       ],
-      "@babel/react"
+      [
+        "@babel/react",
+        {
+          useBuiltIns: "usage",
+          corejs: 3
+        }
+      ]
     ]
   }
 }

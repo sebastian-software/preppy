@@ -6,14 +6,17 @@ exports[`Publish Test File via Babel xx: cjs 1`] = `
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-require('react');
-require('react-intl');
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var React = _interopDefault(require('react'));
+var reactIntl = require('react-intl');
 
 function MyButton() {
   return <button>
-      <FormattedMessage id=\\"press-button\\" />
+      <reactIntl.FormattedMessage id=\\"press-button\\" />
     </button>;
 }
+
 
 exports.MyButton = MyButton;
 //# sourceMappingURL=index.cjs.js.map
@@ -22,14 +25,15 @@ exports.MyButton = MyButton;
 
 exports[`Publish Test File via Babel xx: esm 1`] = `
 "/*! jsx v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
-import 'react';
-import 'react-intl';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 function MyButton() {
   return <button>
       <FormattedMessage id=\\"press-button\\" />
     </button>;
 }
+
 
 export { MyButton };
 //# sourceMappingURL=index.esm.js.map
@@ -41,16 +45,17 @@ exports[`Publish Test File via Babel xx: umd 1`] = `
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-intl')) :
   typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-intl'], factory) :
-  (global = global || self, factory(global.jsx = {}, global.react, global.reactIntl));
-}(this, function (exports, react, reactIntl) { 'use strict';
+  (global = global || self, factory(global.jsx = {}, global.React, global.reactIntl));
+}(this, function (exports, React, reactIntl) { 'use strict';
 
-  react = react && react.hasOwnProperty('default') ? react['default'] : react;
+  React = React && React.hasOwnProperty('default') ? React['default'] : React;
 
   function MyButton() {
     return <button>
-        <FormattedMessage id=\\"press-button\\" />
+        <reactIntl.FormattedMessage id=\\"press-button\\" />
       </button>;
   }
+  
 
   exports.MyButton = MyButton;
 

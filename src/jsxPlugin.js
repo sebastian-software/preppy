@@ -11,6 +11,8 @@ function getJsxName(node) {
 }
 
 export default () => ({
+  name: "jsx",
+
   transform(code) {
     const magicString = new MagicString(code)
     const idsByName = new Map()
@@ -19,7 +21,7 @@ export default () => ({
       enter(node) {
         if (node.type === "JSXMemberExpression" || node.type === "JSXIdentifier") {
           const name = getJsxName(node)
-          const tagId = idsByName.get(name) || `PREPPY_JSX_ID_${nextId += 1}`
+          const tagId = idsByName.get(name) || `PREPPY_JSX_ID_${(nextId += 1)}`
 
           // overwrite all JSX tags with artificial tag ids so that we can find them again later
           magicString.overwrite(node.start, node.end, tagId)
@@ -36,15 +38,22 @@ export default () => ({
         ([ name, tagId ]) => `/*${tagId}*/${name}`
       )
       magicString.append(`;__PREPPY_JSX_NAMES__(React,${usedNamesAndIds.join(",")});`)
-      return magicString.toString()
+      return {
+        code: magicString.toString(),
+        map: magicString.generateMap({
+          includeContent: true,
+          hires: true
+        })
+      }
     }
 
-    return code
+    return null
   },
+
   renderChunk(code) {
     const replacements = new Map()
-    return (
-      code
+    return {
+      code: code
 
         // this finds all injected artificial usages from the transform hook, removes them
         // and collects the new variable names as a side-effect
@@ -55,16 +64,21 @@ export default () => ({
             // this extracts the artificial tag id from the comment and the possibly renamed variable
             // name from the variable via two capture groups
             .slice(1)
-            .map((replacementAndVariable) => replacementAndVariable.match(/^\s*?\/\*([^*]*)\*\/\s*?(\S*)$/))
+            .map((replacementAndVariable) =>
+              replacementAndVariable.match(/^\s*?\/\*([^*]*)\*\/\s*?(\S*)$/)
+            )
             .filter(Boolean)
-            .forEach(([ usedEntry, tagId, updatedName ]) => replacements.set(tagId, updatedName))
+            .forEach(([ usedEntry, tagId, updatedName ]) =>
+              replacements.set(tagId, updatedName)
+            )
 
           // clearing out the actual values
           return ""
         })
 
         // this replaces the artificial tag ids in the actual JSX tags
-        .replace(/PREPPY_JSX_ID_\d+/g, (tagId) => replacements.get(tagId))
-    )
+        .replace(/PREPPY_JSX_ID_\d+/g, (tagId) => replacements.get(tagId)),
+      map: null
+    }
   }
 })

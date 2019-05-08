@@ -28,32 +28,25 @@ export function formatJSON(json) {
 /* eslint-disable complexity */
 export default function getRollupInputOptions(options) {
   const { name, verbose, version, input, format, target, output } = options
-  const prefix = "process.env."
-  const variables = {
-    [`${prefix}BUNDLE_NAME`]: JSON.stringify(name),
-    [`${prefix}BUNDLE_VERSION`]: JSON.stringify(version),
-    [`${prefix}BUNDLE_TARGET`]: JSON.stringify(target)
-  }
 
   // This protected helper is required to make Preppy not optimizing itself here.
   const protectedEnv = process.env
   const env = protectedEnv.NODE_ENV
-  if (env) {
-    if (target !== "cli" && process.env.NODE_ENV !== 'test') {
-      console.warn(
-        `${
-          figures.warning
-        } Setting 'NODE_ENV' during publishing prevents selecting environment during usage!`
-      )
-    }
 
-    // Only inject NODE_ENV for UMD (final browser bundles). For all other
-    // cases this variable handling is better done in the final use case:
-    // - live variable for CLI and NodeJS libraries
-    // - bundle injection for Webpack bundling
-    if (format === "umd") {
-      variables[`${prefix}NODE_ENV`] = JSON.stringify(env)
-    }
+  const prefix = "process.env."
+  const variables = {
+    [`${prefix}BUNDLE_NAME`]: JSON.stringify(name),
+    [`${prefix}BUNDLE_VERSION`]: JSON.stringify(version),
+    [`${prefix}BUNDLE_TARGET`]: JSON.stringify(target),
+    [`${prefix}BUNDLE_ENV`]: JSON.stringify(env)
+  }
+
+  // Only inject NODE_ENV for UMD (final browser bundles). For all other
+  // cases this variable handling is better done in the final use case:
+  // - live variable for CLI and NodeJS libraries
+  // - bundle injection for Webpack bundling
+  if (format === "umd" && env) {
+    variables[`${prefix}NODE_ENV`] = JSON.stringify(env)
   }
 
   if (verbose) {

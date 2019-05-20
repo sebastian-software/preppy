@@ -2,6 +2,7 @@ import path from "path"
 
 import chalk from "chalk"
 import figures from "figures"
+import isCi from "is-ci"
 import prettyBytes from "pretty-bytes"
 import terminalSpinner from "ora"
 
@@ -28,6 +29,12 @@ export default function progressPlugin(options = {}) {
   let { prefix, limit } = options
 
   const root = process.cwd()
+
+  if (isCi) {
+    return {
+      name: "progress"
+    }
+  }
 
   const progress = terminalSpinner({
     interval: 32

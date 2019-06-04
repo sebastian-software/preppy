@@ -35,6 +35,10 @@ function compile(fileNames, options, verbose) {
 export default function extractTypes({ input, root, output, verbose, tsConfig }) {
   const outputDir = dirname(output)
 
+  if (ts == null) {
+    throw new Error("Extracting types requires local installation of the peer dependency 'typescript'!")
+  }
+
   const defaults = {
     allowSyntheticDefaultImports: true,
     esModuleInterop: true,

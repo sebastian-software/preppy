@@ -55,7 +55,7 @@ $ npm install @babel/runtime corejs
 ```
 
 
-### Configure Babel
+## 🔨 Configure Babel
 
 As transpiling happens via Babel you have to install the *Babel* Core, Plugins and Presets on your own. You also need to use a standard Babel Configuration inside your package.
 
@@ -108,10 +108,6 @@ Note: `env` gets a lot more depth when working with *Preppy*. It's actually set 
 Note: Leave out the `"@babel/typescript"` when you do not need TypeScript transpiling.
 
 Note: Please disable `transform-runtime` for all UMD builds as UMD is better working when only clean named imports are kept external.
-
-### Installing Babel Dependencies
-
-
 
 
 

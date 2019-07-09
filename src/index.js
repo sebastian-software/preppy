@@ -105,13 +105,13 @@ export default async function index(opts) {
     const successful = Object.entries(exitMap).reduce((prev, current) => {
       const [ binary, exitCode ] = current
 
-      if (exitCode === 0) {
+      if (exitCode === 0 && !options.quiet) {
         stream.write(
           `${logSymbols.success} Executed: ${chalk.green(binary)} ${chalk.green(
             "succeeded"
           )}`
         )
-      } else {
+      } else if (exitCode > 0) {
         stream.write(
           `${logSymbols.error} Executed: ${chalk.green(binary)} ${chalk.red(
             `failed with exit code ${exitCode}`

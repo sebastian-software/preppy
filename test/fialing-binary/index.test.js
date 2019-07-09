@@ -6,10 +6,20 @@ import rimraf from "rimraf"
 
 import preppy from "../../src/index"
 
-const lazyRead = pify(readFile)
 const lazyDelete = pify(rimraf)
 
 jest.setTimeout(20000)
+
+function fixInterOSPaths(map) {
+  return Object.entries(map).reduce((prev, current) => {
+    const [ binary, exitCode ] = current
+
+    const fixedBinaryName = binary.replace("\\", "/")
+    prev[fixedBinaryName] = exitCode
+
+    return prev
+  }, {})
+}
 
 test("Multi Binary from ESNext with failing binary", async () => {
   await lazyDelete(resolve(__dirname, "./bin"))
@@ -21,5 +31,5 @@ test("Multi Binary from ESNext with failing binary", async () => {
   })
 
   expect(value.successful).toBe(false)
-  expect(value.exitCodes).toMatchSnapshot()
+  expect(fixInterOSPaths(value.exitCodes)).toMatchSnapshot()
 })

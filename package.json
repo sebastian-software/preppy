@@ -65,6 +65,7 @@
     "find-root": "^1.1.0",
     "is-ci": "^2.0.0",
     "lodash": "^4.17.11",
+    "log-symbols": "^3.0.0",
     "magic-string": "^0.25.2",
     "meow": "^5.0.0",
     "node-notifier": "^5.4.0",

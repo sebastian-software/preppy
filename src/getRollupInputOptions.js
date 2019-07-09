@@ -5,15 +5,15 @@ import cjsPlugin from "rollup-plugin-commonjs"
 import executablePlugin from "rollup-plugin-executable"
 import figures from "figures"
 import jsonPlugin from "rollup-plugin-json"
+import jsx from "acorn-jsx"
 import rebasePlugin from "rollup-plugin-rebase"
 import replacePlugin from "rollup-plugin-replace"
-import runPlugin from "rollup-plugin-run"
 import { terser as terserPlugin } from "rollup-plugin-terser"
-import jsx from "acorn-jsx"
+import jsxPlugin from "./jsxPlugin"
 
 import progressPlugin from "./progressPlugin"
-import jsxPlugin from "./jsxPlugin"
 import typescriptResolvePlugin from "./typescriptResolvePlugin"
+import { advancedRollupRunPlugin } from "./advancedRollupRunPlugin"
 
 let cache
 
@@ -69,12 +69,10 @@ export default function getRollupInputOptions(options) {
       // path for originally local dependencies.
       return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
     },
-    acornInjectPlugins: [
-      jsx()
-    ],
+    acornInjectPlugins: [ jsx() ],
     plugins: [
       options.quiet ? null : progressPlugin(),
-      options.exec ? runPlugin() : null,
+      options.exec ? advancedRollupRunPlugin() : null,
 
       typescriptResolvePlugin(),
       rebasePlugin(),

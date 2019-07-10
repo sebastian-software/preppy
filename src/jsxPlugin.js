@@ -68,9 +68,7 @@ export default () => ({
               replacementAndVariable.match(/^\s*?\/\*([^*]*)\*\/\s*?(\S*)$/)
             )
             .filter(Boolean)
-            .forEach(([ usedEntry, tagId, updatedName ]) =>
-              replacements.set(tagId, updatedName)
-            )
+            .forEach(([ usedEntry, tagId, updatedName ]) => replacements.set(tagId, updatedName))
 
           // clearing out the actual values
           return ""

@@ -14,9 +14,7 @@ function compile(fileNames, options, verbose) {
 
   /* istanbul ignore next */
   if (verbose) {
-    const allDiagnostics = ts
-      .getPreEmitDiagnostics(program)
-      .concat(emitResult.diagnostics)
+    const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
 
     allDiagnostics.forEach((diagnostic) => {
       if (diagnostic.file) {
@@ -24,9 +22,7 @@ function compile(fileNames, options, verbose) {
           diagnostic.start
         )
         const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
-        console.log(
-          `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`
-        )
+        console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`)
       } else {
         console.log(`${ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")}`)
       }

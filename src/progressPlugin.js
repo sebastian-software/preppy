@@ -72,9 +72,7 @@ export default function progressPlugin(options = {}) {
       }
 
       const short = file.slice(-limit)
-      progress.text = `${prefix} ${
-        short !== file ? figures.ellipsis : ""
-      }${short} [${loaded}]`
+      progress.text = `${prefix} ${short !== file ? figures.ellipsis : ""}${short} [${loaded}]`
       progress.render()
     },
 

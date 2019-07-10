@@ -108,9 +108,7 @@ export default async function index(opts) {
 
       if (exitCode === 0 && !options.quiet) {
         stream.write(
-          `${logSymbols.success} Executed: ${chalk.green(binary)} ${chalk.green(
-            "succeeded"
-          )}`
+          `${logSymbols.success} Executed: ${chalk.green(binary)} ${chalk.green("succeeded")}`
         )
       } else if (exitCode > 0) {
         stream.write(
@@ -170,9 +168,7 @@ function formatStack(error) {
       if (funcName) {
         funcName += "()"
       }
-      return `  - ${chalk.white(path)}:${callSite.getLineNumber()} ${chalk.blue(
-        funcName
-      )}`
+      return `  - ${chalk.white(path)}:${callSite.getLineNumber()} ${chalk.blue(funcName)}`
     })
     .join("\n")
 

@@ -20,9 +20,7 @@ export default function getEntries(options) {
 
   if (options.entryLib) {
     if (!existsSync(options.entryLib)) {
-      throw new Error(
-        `Library entry point specified does not exist: ${options.entryLib}!`
-      )
+      throw new Error(`Library entry point specified does not exist: ${options.entryLib}!`)
     }
     entries.library = options.entryLib
   } else if (!hasInputs) {
@@ -33,9 +31,7 @@ export default function getEntries(options) {
 
   if (options.entryNode) {
     if (!existsSync(options.entryNode)) {
-      throw new Error(
-        `NodeJS entry point specified does not exist: ${options.entryNode}!`
-      )
+      throw new Error(`NodeJS entry point specified does not exist: ${options.entryNode}!`)
     }
     entries.node = options.entryNode
   } else if (!hasInputs) {
@@ -63,9 +59,7 @@ export default function getEntries(options) {
 
   if (options.entryBrowser) {
     if (!existsSync(options.entryBrowser)) {
-      throw new Error(
-        `Browser entry point specified does not exist: ${options.entryBrowser}!`
-      )
+      throw new Error(`Browser entry point specified does not exist: ${options.entryBrowser}!`)
     }
     entries.browser = options.entryBrowser
   } else if (!hasInputs) {

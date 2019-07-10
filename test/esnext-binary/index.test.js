@@ -20,7 +20,5 @@ test("Binary from ESNext", async () => {
     quiet: true
   })
 
-  expect(await lazyRead(resolve(__dirname, "bin/mycli.js"), "utf8")).toMatchSnapshot(
-    "cli"
-  )
+  expect(await lazyRead(resolve(__dirname, "bin/mycli.js"), "utf8")).toMatchSnapshot("cli")
 })

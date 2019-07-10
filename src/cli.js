@@ -29,5 +29,15 @@ if (flags.verbose) {
 // Check whether there is something new available
 updateNotifier({ pkg: { name, version } }).notify()
 
-// Call main method
-main(flags)
+async function run() {
+  // Call main method
+  const result = await main(flags)
+
+  if (!result.successful) {
+    process.exit(1)
+  }
+
+  process.exit(0)
+}
+
+run()

@@ -1,0 +1,16 @@
+{
+  "name": "failing-binary",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "first": "bin/first-cli.js",
+    "second": "bin/second-cli.js",
+    "third": "bin/third-cli.js"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [],
+  "author": "Sebastian Fastner <s.fastner@sebastian-software.de>",
+  "license": "MIT"
+}

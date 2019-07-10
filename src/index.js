@@ -2,9 +2,11 @@
 import { dirname, extname, relative, resolve, sep } from "path"
 import chalk from "chalk"
 import figures from "figures"
+import logSymbols from "log-symbols"
 import notifier from "node-notifier"
 import stackTrace from "stack-trace"
 import terminalSpinner from "ora"
+import { getExitMap } from "rollup-plugin-advanced-run"
 import { rollup, watch } from "rollup"
 
 import extractTypes from "./extractTypes"
@@ -15,8 +17,8 @@ import getRollupInputOptions from "./getRollupInputOptions"
 import getRollupOutputOptions from "./getRollupOutputOptions"
 import getTasks from "./getTasks"
 import { formatDuration } from "./progressPlugin"
-import { readJSON } from "./file"
 import { getTsCompilerOptions } from "./getTsCompilerOptions"
+import { readJSON } from "./file"
 
 function notify(options, message) {
   notifier.notify({
@@ -96,6 +98,43 @@ export default async function index(opts) {
     if (options.notify) {
       notify(options, "Bundle complete")
     }
+
+    // Look at exit codes
+    const exitMap = await getExitMap(opts.root)
+    const stream = process.stderr
+    const successful = Object.entries(exitMap).reduce((prev, current) => {
+      const [ binary, exitCode ] = current
+
+      if (exitCode === 0 && !options.quiet) {
+        stream.write(
+          `${logSymbols.success} Executed: ${chalk.green(binary)} ${chalk.green(
+            "succeeded"
+          )}`
+        )
+      } else if (exitCode > 0) {
+        stream.write(
+          `${logSymbols.error} Executed: ${chalk.green(binary)} ${chalk.red(
+            `failed with exit code ${exitCode}`
+          )}`
+        )
+      }
+      stream.write("\n")
+
+      if (exitCode > 0) {
+        return false
+      }
+
+      return prev
+    }, true)
+
+    return {
+      successful,
+      exitCodes: await getExitMap()
+    }
+  }
+
+  return {
+    successful: true
   }
 }
 

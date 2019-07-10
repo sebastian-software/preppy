@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Multi Binary from ESNext with failing binary 1`] = `
+Object {
+  "bin/first-cli.js": 1,
+  "bin/second-cli.js": 0,
+  "bin/third-cli.js": 0,
+}
+`;

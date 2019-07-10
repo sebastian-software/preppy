@@ -101,7 +101,7 @@
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
-    "@effective/eslint-config": "^0.7.3",
+    "@effective/eslint-config": "^0.7.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.8.0",
     "codecov": "^3.5.0",

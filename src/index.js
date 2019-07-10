@@ -1,5 +1,6 @@
 /* eslint-disable complexity, max-statements, max-depth */
 import { dirname, extname, relative, resolve, sep } from "path"
+
 import chalk from "chalk"
 import figures from "figures"
 import logSymbols from "log-symbols"

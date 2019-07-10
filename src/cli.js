@@ -1,11 +1,14 @@
 /* eslint-disable no-console */
 
 import { resolve } from "path"
+
 import findRoot from "find-root"
 import updateNotifier from "update-notifier"
+
 import { name, version } from "../package.json"
 
 import parseCommandline from "./parseCommandline"
+
 import main from "./index"
 
 const command = parseCommandline()

@@ -26,12 +26,9 @@ export default function getEntries(options) {
     }
     entries.library = options.entryLib
   } else if (!hasInputs) {
-    entries.library = [
-      "src/index.js",
-      "src/index.jsx",
-      "src/index.ts",
-      "src/index.tsx"
-    ].map(addRoot).filter(existsSync)[0]
+    entries.library = [ "src/index.js", "src/index.jsx", "src/index.ts", "src/index.tsx" ]
+      .map(addRoot)
+      .filter(existsSync)[0]
   }
 
   if (options.entryNode) {

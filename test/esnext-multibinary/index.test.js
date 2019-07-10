@@ -1,6 +1,7 @@
 /* global __dirname */
 import { readFile } from "fs"
 import { resolve } from "path"
+
 import pify from "pify"
 import rimraf from "rimraf"
 
@@ -19,10 +20,10 @@ test("Multi Binary from ESNext", async () => {
     quiet: true
   })
 
-  expect(
-    await lazyRead(resolve(__dirname, "bin/first-cli.js"), "utf8")
-  ).toMatchSnapshot("first")
-  expect(
-    await lazyRead(resolve(__dirname, "bin/second-cli.js"), "utf8")
-  ).toMatchSnapshot("second")
+  expect(await lazyRead(resolve(__dirname, "bin/first-cli.js"), "utf8")).toMatchSnapshot(
+    "first"
+  )
+  expect(await lazyRead(resolve(__dirname, "bin/second-cli.js"), "utf8")).toMatchSnapshot(
+    "second"
+  )
 })

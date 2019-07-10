@@ -4,7 +4,7 @@ import { dirname, join } from "path"
 let ts
 try {
   ts = require("typescript")
-} catch(importError) {}
+} catch (importError) {}
 
 // Compiler based on code shown in the official docs:
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
@@ -14,7 +14,9 @@ function compile(fileNames, options, verbose) {
 
   /* istanbul ignore next */
   if (verbose) {
-    const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
+    const allDiagnostics = ts
+      .getPreEmitDiagnostics(program)
+      .concat(emitResult.diagnostics)
 
     allDiagnostics.forEach((diagnostic) => {
       if (diagnostic.file) {
@@ -36,7 +38,9 @@ export default function extractTypes({ input, root, output, verbose, tsConfig })
   const outputDir = dirname(output)
 
   if (ts == null) {
-    throw new Error("Extracting types requires local installation of the peer dependency 'typescript'!")
+    throw new Error(
+      "Extracting types requires local installation of the peer dependency 'typescript'!"
+    )
   }
 
   const defaults = {
@@ -77,9 +81,5 @@ export default function extractTypes({ input, root, output, verbose, tsConfig })
     )
   }
 
-  return compile(
-    [ input ],
-    compilerOptions,
-    verbose
-  )
+  return compile([ input ], compilerOptions, verbose)
 }

@@ -1,7 +1,8 @@
-import fs from 'fs'
-import stripBom from 'strip-bom'
-import stripComments from 'strip-json-comments'
-import { fromCallback } from 'universalify'
+import fs from "fs"
+
+import stripBom from "strip-bom"
+import stripComments from "strip-json-comments"
+import { fromCallback } from "universalify"
 
 function readJSONCb(file, callback) {
   fs.readFile(file, { encoding: "utf-8" }, (readError, data) => {

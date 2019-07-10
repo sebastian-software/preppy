@@ -32,13 +32,15 @@ module.exports = (api) => {
           loose: true
         }
       ],
-      isUmd ? null : [
-        "@babel/transform-runtime",
-        {
-          helpers: true,
-          regenerator: false
-        }
-      ]
+      isUmd ?
+        null :
+        [
+          "@babel/transform-runtime",
+          {
+            helpers: true,
+            regenerator: false
+          }
+        ]
     ].filter(Boolean),
     presets: [
       [

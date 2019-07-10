@@ -2,7 +2,7 @@
 let ts
 try {
   ts = require("typescript")
-} catch(importError) {}
+} catch (importError) {}
 
 export function getTsCompilerOptions(opts) {
   if (!ts) {
@@ -30,7 +30,7 @@ export function getTsCompilerOptions(opts) {
   const config = ts.parseJsonConfigFileContent(readResult.config, ts.sys, basePath)
 
   if (config.errors && config.errors.length) {
-    config.errors.forEach(error => {
+    config.errors.forEach((error) => {
       console.error("Error reading tsconfig:", error.messageText)
     })
     return

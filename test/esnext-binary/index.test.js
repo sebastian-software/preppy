@@ -1,6 +1,7 @@
 /* global __dirname */
 import { readFile } from "fs"
 import { resolve } from "path"
+
 import pify from "pify"
 import rimraf from "rimraf"
 
@@ -19,7 +20,7 @@ test("Binary from ESNext", async () => {
     quiet: true
   })
 
-  expect(
-    await lazyRead(resolve(__dirname, "bin/mycli.js"), "utf8")
-  ).toMatchSnapshot("cli")
+  expect(await lazyRead(resolve(__dirname, "bin/mycli.js"), "utf8")).toMatchSnapshot(
+    "cli"
+  )
 })

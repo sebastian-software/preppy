@@ -1,6 +1,7 @@
 /* global __dirname */
 import { readFile } from "fs"
 import { resolve } from "path"
+
 import pify from "pify"
 import rimraf from "rimraf"
 
@@ -18,5 +19,5 @@ test("Publish Test File via Babel", async () => {
       root: __dirname,
       quiet: true
     })
-  ).rejects.toThrowError(`Unexpected token, expected ";" (2:17)`)
+  ).rejects.toThrow(`Unexpected token, expected ";" (2:17)`)
 })

@@ -1,6 +1,7 @@
 /* global __dirname */
 import { readFile } from "fs"
 import { resolve } from "path"
+
 import pify from "pify"
 import rimraf from "rimraf"
 

@@ -5,7 +5,7 @@ import { statSync } from "fs"
 let ts
 try {
   ts = require("typescript")
-} catch(importError) {}
+} catch (importError) {}
 
 const resolveHost = {
   directoryExists(dirPath) {
@@ -30,41 +30,39 @@ const resolveHost = {
 const extensions = [ ".ts", ".tsx" ]
 const compilerOptions = {}
 
-export default () => {
-  return {
-    name: "typescript-resolve",
+export default () => ({
+  name: "typescript-resolve",
 
-    resolveId(importee, importer) {
-      if (!importer) {
-        return null
-      }
+  resolveId(importee, importer) {
+    if (!importer) {
+      return null
+    }
 
-      // Only help resolving requests from inside TypeScript sources
-      if (!extensions.includes(extname(importer))) {
+    // Only help resolving requests from inside TypeScript sources
+    if (!extensions.includes(extname(importer))) {
+      /* istanbul ignore next */
+      return null
+    }
+
+    importer = importer.split("\\").join("/")
+
+    const result = ts.nodeModuleNameResolver(
+      importee,
+      importer,
+      compilerOptions,
+      resolveHost
+    )
+
+    if (result.resolvedModule && result.resolvedModule.resolvedFileName) {
+      if (result.resolvedModule.resolvedFileName.endsWith(".d.ts")) {
         /* istanbul ignore next */
         return null
       }
 
-      importer = importer.split("\\").join("/")
-
-      const result = ts.nodeModuleNameResolver(
-        importee,
-        importer,
-        compilerOptions,
-        resolveHost
-      )
-
-      if (result.resolvedModule && result.resolvedModule.resolvedFileName) {
-        if (result.resolvedModule.resolvedFileName.endsWith(".d.ts")) {
-          /* istanbul ignore next */
-          return null
-        }
-
-        return result.resolvedModule.resolvedFileName
-      }
-
-      /* istanbul ignore next */
-      return null
+      return result.resolvedModule.resolvedFileName
     }
+
+    /* istanbul ignore next */
+    return null
   }
-}
+})

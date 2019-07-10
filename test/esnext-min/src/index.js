@@ -7,6 +7,7 @@
 /* eslint-disable prefer-const */
 
 import { camelCase } from "lodash"
+
 console.log("CherryPick Import Lodash:", camelCase("hello world") === "helloWorld")
 
 console.log("Package", process.env.BUNDLE_NAME)
@@ -30,7 +31,7 @@ var mySet = new Set(myArray)
 console.log("Supports Set:", mySet.add(4))
 ;(function(supportsDefault = true) {
 console.log("Supports default parameters:", supportsDefault)
-})()
+}())
 
 /* eslint-disable no-shadow */
 let testVariable = "outer"

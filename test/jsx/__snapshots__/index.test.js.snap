@@ -12,10 +12,11 @@ var React = _interopDefault(require('react'));
 var reactIntl = require('react-intl');
 var Header = _interopDefault(require('components/Header'));
 
+/* eslint-disable import/no-unresolved */
 function MyPage() {
   return <>
       <Header>Title</Header>
-      <button>
+      <button type=\\"submit\\">
         <reactIntl.FormattedMessage id=\\"press-button\\" />
       </button>
     </>;
@@ -32,10 +33,11 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Header from 'components/Header';
 
+/* eslint-disable import/no-unresolved */
 function MyPage() {
   return <>
       <Header>Title</Header>
-      <button>
+      <button type=\\"submit\\">
         <FormattedMessage id=\\"press-button\\" />
       </button>
     </>;
@@ -57,10 +59,11 @@ exports[`Publish Test File via Babel xx: umd 1`] = `
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
   Header = Header && Header.hasOwnProperty('default') ? Header['default'] : Header;
 
+  /* eslint-disable import/no-unresolved */
   function MyPage() {
     return <>
         <Header>Title</Header>
-        <button>
+        <button type=\\"submit\\">
           <reactIntl.FormattedMessage id=\\"press-button\\" />
         </button>
       </>;

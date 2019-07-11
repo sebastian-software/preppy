@@ -36,11 +36,14 @@ async function run() {
   // Call main method
   const result = await main(flags)
 
-  if (!result.successful) {
-    process.exit(1)
-  }
+  if (!flags.watch) {
+    // Only run process.exit() in non-watch mode
+    if (!result.successful) {
+      process.exit(1)
+    }
 
-  process.exit(0)
+    process.exit(0)
+  }
 }
 
 run()

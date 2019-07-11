@@ -22,7 +22,7 @@ function fixInterOSPaths(map) {
   }, {})
 }
 
-test("Multi Binary from ESNext with failing binary", async () => {
+test.skip("Multi Binary from ESNext with failing binary", async () => {
   await lazyDelete(resolve(__dirname, "./bin"))
 
   const value = await preppy({

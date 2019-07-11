@@ -1,7 +1,6 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable func-style */
 /* eslint-disable no-empty-function */
-/* eslint-disable lodash/prefer-noop */
 /* eslint-disable no-console */
 /* eslint-disable no-var */
 /* eslint-disable prefer-const */

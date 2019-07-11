@@ -1,8 +1,11 @@
 /* eslint-disable id-length */
 let ts
 try {
+  // eslint-disable-next-line global-require
   ts = require("typescript")
-} catch (importError) {}
+} catch (importError) {
+  // ignore failures here (typescript = optional)
+}
 
 export function getTsCompilerOptions(opts) {
   if (!ts) {

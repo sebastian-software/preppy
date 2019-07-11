@@ -3,8 +3,11 @@ import { dirname, join } from "path"
 /* eslint-disable id-length */
 let ts
 try {
+  // eslint-disable-next-line global-require
   ts = require("typescript")
-} catch (importError) {}
+} catch (importError) {
+  // ignore failures here (typescript = optional)
+}
 
 // Compiler based on code shown in the official docs:
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API

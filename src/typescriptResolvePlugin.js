@@ -1,11 +1,14 @@
 import { extname } from "path"
 import { statSync } from "fs"
 
-/* eslint-disable id-length */
+// eslint-disable-next-line id-length
 let ts
 try {
+  // eslint-disable-next-line global-require
   ts = require("typescript")
-} catch (importError) {}
+} catch (importError) {
+  // ignore failures here (typescript = optional)
+}
 
 const resolveHost = {
   directoryExists(dirPath) {

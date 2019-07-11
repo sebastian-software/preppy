@@ -4,13 +4,12 @@ import babelPlugin from "rollup-plugin-babel"
 import chalk from "chalk"
 import cjsPlugin from "rollup-plugin-commonjs"
 import executablePlugin from "rollup-plugin-executable"
-import figures from "figures"
 import { advancedRun } from "rollup-plugin-advanced-run"
 import jsonPlugin from "rollup-plugin-json"
 import rebasePlugin from "rollup-plugin-rebase"
 import replacePlugin from "rollup-plugin-replace"
 import { terser as terserPlugin } from "rollup-plugin-terser"
-import jsx from "acorn-jsx"
+import acornJsx from "acorn-jsx"
 
 import progressPlugin from "./progressPlugin"
 import jsxPlugin from "./jsxPlugin"
@@ -70,7 +69,7 @@ export default function getRollupInputOptions(options) {
       // path for originally local dependencies.
       return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
     },
-    acornInjectPlugins: [ jsx() ],
+    acornInjectPlugins: [ acornJsx() ],
     plugins: [
       options.quiet ? null : progressPlugin(),
       options.exec ? advancedRun() : null,

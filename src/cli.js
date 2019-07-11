@@ -32,7 +32,7 @@ if (flags.verbose) {
 // Check whether there is something new available
 updateNotifier({ pkg: { name, version } }).notify()
 
-async function run() {
+async function wrappedMain() {
   // Call main method
   const result = await main(flags)
 
@@ -46,4 +46,4 @@ async function run() {
   }
 }
 
-run()
+wrappedMain()

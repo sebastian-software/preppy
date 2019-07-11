@@ -128,7 +128,7 @@ export default async function index(opts) {
 
     return {
       successful,
-      exitCodes: await getExitMap()
+      exitCodes: exitMap
     }
   }
 

@@ -26,13 +26,13 @@ new Promise((resolve, reject) => {
 const CONSTANT: number = 123
 console.log("Constant:", CONSTANT)
 
-var myArray = [ 1, 2, 3 ]
+var myArray = [1, 2, 3]
 console.log("Supports Array.includes?:", myArray.includes && myArray.includes(2))
 
 var mySet = new Set(myArray)
 console.log("Supports Set:", mySet.add(4))
 ;(function(supportsDefault = true) {
-console.log("Supports default parameters:", supportsDefault)
+  console.log("Supports default parameters:", supportsDefault)
 })()
 
 /* eslint-disable no-shadow */

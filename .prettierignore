@@ -1,3 +1,4 @@
 bin
 coverage
 test/esnext-fail/src/index.js
+dist

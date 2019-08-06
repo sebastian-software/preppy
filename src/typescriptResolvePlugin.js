@@ -49,7 +49,12 @@ export default () => ({
 
     const fixedImporter = importer.split("\\").join("/")
 
-    const result = ts.nodeModuleNameResolver(importee, fixedImporter, compilerOptions, resolveHost)
+    const result = ts.nodeModuleNameResolver(
+      importee,
+      fixedImporter,
+      compilerOptions,
+      resolveHost
+    )
 
     if (result.resolvedModule && result.resolvedModule.resolvedFileName) {
       if (result.resolvedModule.resolvedFileName.endsWith(".d.ts")) {

@@ -1,10 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Publish Test File via Babel: cjs 1`] = `
-"\\"use strict\\"
+"/*! esnext-min v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+\\"use strict\\"
 require(\\"core-js/modules/es.array.includes\\"),require(\\"core-js/modules/es.array.iterator\\"),require(\\"core-js/modules/es.object.assign\\"),require(\\"core-js/modules/es.object.to-string\\"),require(\\"core-js/modules/es.promise\\"),require(\\"core-js/modules/es.set\\"),require(\\"core-js/modules/es.string.iterator\\"),require(\\"core-js/modules/web.dom-collections.iterator\\")
 var e,o=(e=require(\\"@babel/runtime/helpers/inheritsLoose\\"))&&\\"object\\"==typeof e&&\\"default\\"in e?e.default:e,r=require(\\"lodash\\")
-console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===r.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(e,o){e(\\"resolved\\")}).then(function(e){console.log(\\"Promise:\\",e)})
+console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===r.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise((function(e,o){e(\\"resolved\\")})).then((function(e){console.log(\\"Promise:\\",e)}))
 console.log(\\"Constant:\\",123)
 var s=[1,2,3]
 console.log(\\"Supports Array.includes?:\\",s.includes&&s.includes(2))
@@ -15,13 +16,14 @@ var t=Object.assign({third:3},{first:1,second:2})
 console.log(\\"Destructed:\\",t)
 var c=function(){function e(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return e.prototype.helper=function(){console.log(\\"Called helper\\")},e}()
 c()
-console.log(\\"Initialized class:\\",new c),new Promise(function(e,o){return Promise.resolve(PromiseHelper()).then(function(r){try{return e(42)}catch(s){return o(s)}},o)})
+console.log(\\"Initialized class:\\",new c),new Promise((function(e,o){return Promise.resolve(PromiseHelper()).then((function(r){try{return e(42)}catch(s){return o(s)}}),o)}))
 //# sourceMappingURL=index.cjs.min.js.map
 "
 `;
 
 exports[`Publish Test File via Babel: esm 1`] = `
-"import\\"core-js/modules/es.array.includes\\"
+"/*! esnext-min v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+import\\"core-js/modules/es.array.includes\\"
 import\\"core-js/modules/es.array.iterator\\"
 import\\"core-js/modules/es.object.assign\\"
 import\\"core-js/modules/es.object.to-string\\"
@@ -31,7 +33,7 @@ import\\"core-js/modules/es.string.iterator\\"
 import\\"core-js/modules/web.dom-collections.iterator\\"
 import o from\\"@babel/runtime/helpers/inheritsLoose\\"
 import{camelCase as e}from\\"lodash\\"
-console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===e(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(o,e){o(\\"resolved\\")}).then(function(o){console.log(\\"Promise:\\",o)})
+console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===e(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise((function(o,e){o(\\"resolved\\")})).then((function(o){console.log(\\"Promise:\\",o)}))
 console.log(\\"Constant:\\",123)
 var r=[1,2,3]
 console.log(\\"Supports Array.includes?:\\",r.includes&&r.includes(2))
@@ -42,14 +44,15 @@ var t=Object.assign({third:3},{first:1,second:2})
 console.log(\\"Destructed:\\",t)
 var n=function(){function o(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return o.prototype.helper=function(){console.log(\\"Called helper\\")},o}()
 n()
-console.log(\\"Initialized class:\\",new n),new Promise(function(o,e){return Promise.resolve(PromiseHelper()).then(function(r){try{return o(42)}catch(s){return e(s)}},e)})
+console.log(\\"Initialized class:\\",new n),new Promise((function(o,e){return Promise.resolve(PromiseHelper()).then((function(r){try{return o(42)}catch(s){return e(s)}}),e)}))
 //# sourceMappingURL=index.esm.min.js.map
 "
 `;
 
 exports[`Publish Test File via Babel: umd 1`] = `
-"!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"core-js/modules/es.array.includes\\"),require(\\"core-js/modules/es.array.iterator\\"),require(\\"core-js/modules/es.object.assign\\"),require(\\"core-js/modules/es.object.to-string\\"),require(\\"core-js/modules/es.promise\\"),require(\\"core-js/modules/es.set\\"),require(\\"core-js/modules/es.string.iterator\\"),require(\\"core-js/modules/web.dom-collections.iterator\\"),require(\\"lodash\\")):\\"function\\"==typeof define&&define.amd?define([\\"core-js/modules/es.array.includes\\",\\"core-js/modules/es.array.iterator\\",\\"core-js/modules/es.object.assign\\",\\"core-js/modules/es.object.to-string\\",\\"core-js/modules/es.promise\\",\\"core-js/modules/es.set\\",\\"core-js/modules/es.string.iterator\\",\\"core-js/modules/web.dom-collections.iterator\\",\\"lodash\\"],o):o(null,null,null,null,null,null,null,null,(e=e||self).lodash)}(this,function(e,o,s,r,l,n,t,c,i){\\"use strict\\"
-console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===i.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise(function(e,o){e(\\"resolved\\")}).then(function(e){console.log(\\"Promise:\\",e)})
+"/*! esnext-min v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"core-js/modules/es.array.includes\\"),require(\\"core-js/modules/es.array.iterator\\"),require(\\"core-js/modules/es.object.assign\\"),require(\\"core-js/modules/es.object.to-string\\"),require(\\"core-js/modules/es.promise\\"),require(\\"core-js/modules/es.set\\"),require(\\"core-js/modules/es.string.iterator\\"),require(\\"core-js/modules/web.dom-collections.iterator\\"),require(\\"lodash\\")):\\"function\\"==typeof define&&define.amd?define([\\"core-js/modules/es.array.includes\\",\\"core-js/modules/es.array.iterator\\",\\"core-js/modules/es.object.assign\\",\\"core-js/modules/es.object.to-string\\",\\"core-js/modules/es.promise\\",\\"core-js/modules/es.set\\",\\"core-js/modules/es.string.iterator\\",\\"core-js/modules/web.dom-collections.iterator\\",\\"lodash\\"],o):o(null,null,null,null,null,null,null,null,(e=e||self).lodash)}(this,(function(e,o,s,r,l,n,t,c,i){\\"use strict\\"
+console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===i.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise((function(e,o){e(\\"resolved\\")})).then((function(e){console.log(\\"Promise:\\",e)}))
 console.log(\\"Constant:\\",123)
 var u=[1,2,3]
 console.log(\\"Supports Array.includes?:\\",u.includes&&u.includes(2))
@@ -60,7 +63,7 @@ var m=Object.assign({third:3},{first:1,second:2})
 console.log(\\"Destructed:\\",m)
 var g=function(){function e(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return e.prototype.helper=function(){console.log(\\"Called helper\\")},e}()
 g()
-console.log(\\"Initialized class:\\",new g),new Promise(function(e,o){return Promise.resolve(PromiseHelper()).then(function(s){try{return e(42)}catch(r){return o(r)}},o)})})
+console.log(\\"Initialized class:\\",new g),new Promise((function(e,o){return Promise.resolve(PromiseHelper()).then((function(s){try{return e(42)}catch(r){return o(r)}}),o)}))}))
 //# sourceMappingURL=index.umd.min.js.map
 "
 `;

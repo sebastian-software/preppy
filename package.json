@@ -1,6 +1,6 @@
 {
   "name": "preppy",
-  "version": "8.3.3",
+  "version": "9.0.0",
   "description": "A simple and lightweight tool for preparing the publish of NPM packages.",
   "keywords": [
     "npm",

@@ -5,6 +5,7 @@ import figures from "figures"
 import isCi from "is-ci"
 import prettyBytes from "pretty-bytes"
 import terminalSpinner from "ora"
+import getTasks from "./getTasks"
 
 const DEFAULT_LIMIT = 50
 
@@ -26,7 +27,7 @@ function normalizePath(id) {
 
 export default function progressPlugin(options = {}) {
   let loaded, start
-  let { prefix, limit } = options
+  let { prefix, limit, task } = options
 
   const root = process.cwd()
 
@@ -35,10 +36,6 @@ export default function progressPlugin(options = {}) {
       name: "progress"
     }
   }
-
-  const progress = terminalSpinner({
-    interval: 32
-  })
 
   if (!limit) {
     limit = DEFAULT_LIMIT
@@ -53,12 +50,7 @@ export default function progressPlugin(options = {}) {
 
     buildStart() {
       start = process.hrtime()
-      progress.start(prefix)
       loaded = 0
-    },
-
-    buildEnd() {
-      progress.stop().clear()
     },
 
     load(id) {
@@ -72,21 +64,7 @@ export default function progressPlugin(options = {}) {
       }
 
       const short = file.slice(-limit)
-      progress.text = `${prefix} ${short !== file ? figures.ellipsis : ""}${short} [${loaded}]`
-      progress.render()
-    },
-
-    async generateBundle(outputOptions, bundle, isWrite) {
-      progress.stop().clear()
-
-      for (const fileName in bundle) {
-        const entry = bundle[fileName]
-        console.log(
-          `${chalk.green(figures.tick)} Written: ${chalk.green(
-            path.relative(root, outputOptions.file)
-          )} in ${chalk.blue(formatDuration(start))} [${prettyBytes(entry.code.length)}]`
-        )
-      }
+      task.output = `${prefix} ${short !== file ? figures.ellipsis : ""}${short} [${loaded}]`
     }
   }
 }

@@ -26,7 +26,7 @@ export function formatJSON(json) {
 }
 
 /* eslint-disable complexity */
-export default function getRollupInputOptions(options) {
+export default function getRollupInputOptions(options, task) {
   const { name, verbose, version, input, format, target, output } = options
 
   // This protected helper is required to make Preppy not optimizing itself here.
@@ -71,7 +71,7 @@ export default function getRollupInputOptions(options) {
     },
     acornInjectPlugins: [ acornJsx() ],
     plugins: [
-      options.quiet ? null : progressPlugin(),
+      options.quiet ? null : progressPlugin({ task }),
       options.exec ? advancedRun() : null,
 
       typescriptResolvePlugin(),

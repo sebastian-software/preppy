@@ -9,6 +9,7 @@ import stackTrace from "stack-trace"
 import terminalSpinner from "ora"
 import { getExitMap } from "rollup-plugin-advanced-run"
 import { rollup, watch } from "rollup"
+import Listr from "listr"
 
 import extractTypes from "./extractTypes"
 import getBanner from "./getBanner"
@@ -65,18 +66,18 @@ export default async function index(opts) {
     console.log(chalk.bold(`Building ${options.name}-${options.version}...`))
   }
 
-  for (const task of tasks) {
-    // We are unable to watch and regenerate TSC defintion files in watcher
-    if (!options.watch || task.format !== "tsc") {
-      console.log(
-        `${chalk.yellow(figures.star)} Added: ${chalk.blue(
-          relative(task.root, task.input)
-        )} [${chalk.blue(task.target.toUpperCase())}] ${figures.pointer} ${chalk.green(
-          task.output
-        )} [${chalk.green(task.format.toUpperCase())}]`
-      )
-    }
-  }
+  // for (const task of tasks) {
+  //   // We are unable to watch and regenerate TSC defintion files in watcher
+  //   if (!options.watch || task.format !== "tsc") {
+  //     console.log(
+  //       `${chalk.yellow(figures.star)} Added: ${chalk.blue(
+  //         relative(task.root, task.input)
+  //       )} [${chalk.blue(task.target.toUpperCase())}] ${figures.pointer} ${chalk.green(
+  //         task.output
+  //       )} [${chalk.green(task.format.toUpperCase())}]`
+  //     )
+  //   }
+  // }
 
   if (options.watch) {
     const rollupTasks = []
@@ -95,7 +96,26 @@ export default async function index(opts) {
 
     watch(rollupTasks).on("event", watchHandler.bind(null, options))
   } else {
-    await Promise.all(tasks.map(executeTask))
+    // FIXME: Make run in sequence to fix issues with "ora"
+    // https://github.com/sindresorhus/ora/issues/133
+    // https://github.com/sindresorhus/ora/issues/116
+    // Alternatively migrate to https://www.npmjs.com/package/listr
+    // await Promise.all(tasks.map(executeTask))
+
+    const runner = new Listr(
+      tasks.map((config) => ({
+        title: `${chalk.blue(relative(config.root, config.input))} [${chalk.blue(
+          config.target.toUpperCase()
+        )}] ${figures.pointer} ${chalk.green(config.output)} [${chalk.green(
+          config.format.toUpperCase()
+        )}]`,
+
+        task: (context, task) => executeTask(config, context, task)
+      }))
+    , {concurrent: true})
+
+    await runner.run()
+
     if (options.notify) {
       notify(options, "Bundle complete")
     }
@@ -104,7 +124,7 @@ export default async function index(opts) {
     const exitMap = await getExitMap(opts.root)
     const stream = process.stderr
     const successful = Object.entries(exitMap).reduce((prev, current) => {
-      const [ binary, exitCode ] = current
+      const [binary, exitCode] = current
 
       if (exitCode === 0 && !options.quiet) {
         stream.write(
@@ -153,8 +173,10 @@ function watchHandler(options, watchEvent) {
   }
 }
 
-async function executeTask(task) {
-  return task.format === "tsc" ? bundleTypes(task) : bundleScript(task)
+async function executeTask(options, context, task) {
+  return options.format === "tsc"
+    ? bundleTypes(options, context, task)
+    : bundleScript(options, context, task)
 }
 
 function formatStack(error) {
@@ -199,45 +221,37 @@ function handleError(error, progress) {
   }
 }
 
-function bundleTypes(options) {
-  if ([ ".ts", ".tsx" ].includes(extname(options.input))) {
-    const start = process.hrtime()
+function bundleTypes(options, context, task) {
+  if (![".ts", ".tsx"].includes(extname(options.input))) {
+    return
+  }
 
-    let progress = null
-    if (!options.quiet) {
-      progress = terminalSpinner({
-        interval: 30,
-        text: `Extracting types from: ${relative(options.root, options.input)}`
-      }).start()
-    }
+  const start = process.hrtime()
 
-    try {
-      // Unfortunately there is no async API here.
-      extractTypes(options)
-    } catch (typeError) {
-      handleError(typeError, progress)
-    }
+  if (!options.quiet) {
+    task.output = `Extracting types from: ${relative(options.root, options.input)}`
+  }
 
-    if (!options.quiet) {
-      progress.succeed(
-        `Written: ${chalk.green(relative(options.root, options.output))} in ${chalk.blue(
-          formatDuration(start)
-        )}`
-      )
-    }
+  // Unfortunately there is no async API here.
+  extractTypes(options)
+
+  if (!options.quiet) {
+    task.output = `Written: ${chalk.green(
+      relative(options.root, options.output)
+    )} in ${chalk.blue(formatDuration(start))}`
   }
 }
 
-async function bundleScript(options) {
+async function bundleScript(options, context, task) {
   let bundle
   try {
-    bundle = await rollup(getRollupInputOptions(options))
+    bundle = await rollup(getRollupInputOptions(options, task))
   } catch (bundleError) {
     handleError(bundleError)
   }
 
   try {
-    await bundle.write(getRollupOutputOptions(options))
+    await bundle.write(getRollupOutputOptions(options, task))
   } catch (writeError) {
     handleError(writeError)
   }

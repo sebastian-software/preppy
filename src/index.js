@@ -95,7 +95,11 @@ export default async function index(opts) {
 
     watch(rollupTasks).on("event", watchHandler.bind(null, options))
   } else {
-    await Promise.all(tasks.map(executeTask))
+    for (const task of tasks) {
+      // eslint-disable-next-line no-await-in-loop
+      await executeTask(task)
+    }
+
     if (options.notify) {
       notify(options, "Bundle complete")
     }

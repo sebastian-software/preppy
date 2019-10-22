@@ -12,12 +12,10 @@ const lazyDelete = pify(rimraf)
 jest.setTimeout(20000)
 
 function fixInterOSPaths(exitCodes) {
-  return exitCodes.map((item) => {
-    return {
-      ...item,
-      command: item.command.replace("\\", "/")
-    }
-  })
+  return exitCodes.map((item) => ({
+    ...item,
+    command: item.command.replace("\\", "/")
+  }))
 }
 
 test("Multi Binary from ESNext with failing binary", async () => {

@@ -107,16 +107,20 @@ export default async function index(opts) {
     // Look at exit codes
     const exitMap = await getExitMap(opts.root)
     const stream = process.stderr
-    const successful = Object.entries(exitMap).reduce((prev, current) => {
-      const [ binary, exitCode ] = current
-
+    const successful = exitMap.reduce((prev, { command, exitCode, error }) => {
       if (exitCode === 0 && !options.quiet) {
         stream.write(
-          `${logSymbols.success} Executed: ${chalk.green(binary)} ${chalk.green("succeeded")}`
+          `${logSymbols.success} Executed: ${chalk.green(command)} ${chalk.green("succeeded")}`
+        )
+      } else if (error) {
+        stream.write(
+          `${logSymbols.error} Executed: ${chalk.green(command)} ${chalk.red(
+            `aborted with error ${error.message}`
+          )}`
         )
       } else if (exitCode > 0) {
         stream.write(
-          `${logSymbols.error} Executed: ${chalk.green(binary)} ${chalk.red(
+          `${logSymbols.error} Executed: ${chalk.green(command)} ${chalk.red(
             `failed with exit code ${exitCode}`
           )}`
         )

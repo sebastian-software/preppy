@@ -52,7 +52,7 @@ exports[`Publish Test File via Typescript: umd 1`] = `
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-intl'), require('components/Header')) :
   typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-intl', 'components/Header'], factory) :
   (global = global || self, factory(global['typescript-jsx-react'] = {}, global.React, global.reactIntl, global.Header));
-}(this, function (exports, React, reactIntl, Header) { 'use strict';
+}(this, (function (exports, React, reactIntl, Header) { 'use strict';
 
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
   Header = Header && Header.hasOwnProperty('default') ? Header['default'] : Header;
@@ -67,7 +67,7 @@ exports[`Publish Test File via Typescript: umd 1`] = `
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=index.umd.js.map
 "
 `;

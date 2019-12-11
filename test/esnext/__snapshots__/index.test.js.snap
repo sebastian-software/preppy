@@ -212,7 +212,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('core-js/modules/es.array.includes'), require('core-js/modules/es.array.iterator'), require('core-js/modules/es.object.assign'), require('core-js/modules/es.object.to-string'), require('core-js/modules/es.promise'), require('core-js/modules/es.set'), require('core-js/modules/es.string.iterator'), require('core-js/modules/web.dom-collections.iterator'), require('lodash')) :
   typeof define === 'function' && define.amd ? define(['core-js/modules/es.array.includes', 'core-js/modules/es.array.iterator', 'core-js/modules/es.object.assign', 'core-js/modules/es.object.to-string', 'core-js/modules/es.promise', 'core-js/modules/es.set', 'core-js/modules/es.string.iterator', 'core-js/modules/web.dom-collections.iterator', 'lodash'], factory) :
   (global = global || self, factory(null, null, null, null, null, null, null, null, global.lodash));
-}(this, function (es_array_includes, es_array_iterator, es_object_assign, es_object_toString, es_promise, es_set, es_string_iterator, web_domCollections_iterator, lodash) { 'use strict';
+}(this, (function (es_array_includes, es_array_iterator, es_object_assign, es_object_toString, es_promise, es_set, es_string_iterator, web_domCollections_iterator, lodash) { 'use strict';
 
   function _inheritsLoose(subClass, superClass) {
     subClass.prototype = Object.create(superClass.prototype);
@@ -305,7 +305,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
   helper();
 
-}));
+})));
 //# sourceMappingURL=index.umd.js.map
 "
 `;

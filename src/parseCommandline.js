@@ -27,33 +27,27 @@ export default function parseCommandline() {
     {
       flags: {
         entryLib: {
-          type: "string",
-          default: null
+          type: "string"
         },
 
         entryBrowser: {
-          type: "string",
-          default: null
+          type: "string"
         },
 
         entryNode: {
-          type: "string",
-          default: null
+          type: "string"
         },
 
         entryCli: {
-          type: "string",
-          default: null
+          type: "string"
         },
 
         root: {
-          type: "string",
-          default: null
+          type: "string"
         },
 
         output: {
-          type: "string",
-          default: null
+          type: "string"
         },
 
         watch: {
@@ -62,8 +56,7 @@ export default function parseCommandline() {
         },
 
         limit: {
-          type: "string",
-          default: null
+          type: "string"
         },
 
         exec: {

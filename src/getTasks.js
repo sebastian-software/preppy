@@ -5,6 +5,7 @@ import toRegex from "to-regex"
 export default function getTasks({
   verbose,
   quiet,
+  watch,
   name,
   version,
   root,
@@ -21,6 +22,7 @@ export default function getTasks({
   const base = {
     verbose,
     quiet,
+    watch,
     root,
     name,
     version,

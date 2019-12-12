@@ -71,7 +71,7 @@ export default function getRollupInputOptions(options) {
     },
     acornInjectPlugins: [ acornJsx() ],
     plugins: [
-      options.quiet ? null : progressPlugin(),
+      options.quiet ? null : progressPlugin({ watch: options.watch }),
       options.exec ? advancedRun() : null,
 
       typescriptResolvePlugin(),

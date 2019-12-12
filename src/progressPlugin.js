@@ -26,13 +26,28 @@ function normalizePath(id) {
 
 export default function progressPlugin(options = {}) {
   let loaded, start
-  let { prefix, limit } = options
+  let { prefix, limit, watch } = options
 
   const root = process.cwd()
 
-  if (isCi) {
+  if (isCi || watch) {
     return {
-      name: "progress"
+      name: "progress",
+
+      buildStart() {
+        start = process.hrtime()
+      },
+
+      async generateBundle(outputOptions, bundle, isWrite) {
+        for (const fileName in bundle) {
+          const entry = bundle[fileName]
+          console.log(
+            `${chalk.green(figures.tick)} Written: ${chalk.green(
+              path.relative(root, outputOptions.file)
+            )} in ${chalk.blue(formatDuration(start))} [${prettyBytes(entry.code.length)}]`
+          )
+        }
+      }
     }
   }
 

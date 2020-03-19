@@ -35,7 +35,7 @@ export default function getOutputMatrix(opts, pkg) {
     matrix.browser = pkg["browser"] || null
 
     // Binary Target (supports multiple binaries)
-    matrix.binaries = pkg.bin || null
+    matrix.binaries = typeof pkg.bin === "object" ? pkg.bin : null
 
     // Types Target (TypeScript)
     matrix.types = pkg["types"] || null

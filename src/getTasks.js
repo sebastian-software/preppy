@@ -12,6 +12,7 @@ export default function getTasks({
   banner,
   entries,
   output,
+  deep,
   limit,
   exec,
   tsConfig
@@ -24,6 +25,7 @@ export default function getTasks({
     quiet,
     watch,
     root,
+    deep,
     name,
     version,
     banner

@@ -30,6 +30,7 @@
 - _Lazy JSX_ support (powered by a [custom Rollup plugin](https://github.com/rollup/rollup/issues/2822)) to keep JSX intact while bundling. Major benefit for e.g. UI components: This moves decision over JSX debug capabilities or optimization settings into the application space.
 - Rebases assets to the bundled output destination. Say hello to images, web fonts, and more. It also supports assets references in CSS/SCSS.
 - Includes a _watch mode_ for live development. Very useful for developing libraries.
+- New: Deep bundling allows Webpack-like bundling where content from `node_modules` in bundled as well. By default only local code is bundled.
 - Supports auto-executing binaries. This is _super useful_ when dealing with development web servers for example.
 - Offers builds by compressing bundles with _Terser_ as needed (for files with `.min` in their name).
 - Prints out generated file sizes of all bundles.
@@ -262,6 +263,7 @@ Options
   --output           Override output folder (and package.json entries) [auto]
   --watch            Keeps running and rebuilds on any change [false]
   --limit            Limits the current build scope to files matching [null]
+  --deep             Produces a deep bundle which includes dependencies inline [false]
   --exec             Executes the generated binary after creation [false]
   --notify           Enables notifications (useful when used in watch mode) [false]
 
@@ -279,4 +281,4 @@ Options
 
 <img src="https://cdn.rawgit.com/sebastian-software/sebastian-software-brand/0d4ec9d6/sebastiansoftware-en.svg" alt="Logo of Sebastian Software GmbH, Mainz, Germany" width="460" height="160"/>
 
-Copyright 2016-2019<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)
+Copyright 2016-2020<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)

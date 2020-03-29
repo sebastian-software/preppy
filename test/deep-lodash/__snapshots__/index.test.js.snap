@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Publish Test File via Babel: cjs 1`] = `
-"/*! esnext-deep v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! deep-lodash v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -986,7 +986,7 @@ exports.makeCamelCase = makeCamelCase;
 `;
 
 exports[`Publish Test File via Babel: esm 1`] = `
-"/*! esnext-deep v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! deep-lodash v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 /** Detect free variable \`global\` from Node.js. */
@@ -1967,11 +1967,11 @@ export { makeCamelCase };
 `;
 
 exports[`Publish Test File via Babel: umd 1`] = `
-"/*! esnext-deep v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+"/*! deep-lodash v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(global = global || self, factory(global['esnext-deep'] = {}));
+	(global = global || self, factory(global['deep-lodash'] = {}));
 }(this, (function (exports) { 'use strict';
 
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};

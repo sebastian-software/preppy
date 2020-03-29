@@ -1,8 +1,9 @@
 import { isAbsolute } from "path"
 
 import babelPlugin from "rollup-plugin-babel"
+import builtinModules from "builtin-modules"
 import chalk from "chalk"
-import cjsPlugin from "rollup-plugin-commonjs"
+import commonjsPlugin from "@rollup/plugin-commonjs"
 import executablePlugin from "rollup-plugin-executable"
 import { advancedRun } from "rollup-plugin-advanced-run"
 import jsonPlugin from "@rollup/plugin-json"
@@ -25,6 +26,8 @@ export function isRelative(dependency) {
 export function formatJSON(json) {
   return JSON.stringify(json, null, 2).replace(/\\"/g, "")
 }
+
+const builtIns = new Set(builtinModules)
 
 /* eslint-disable complexity */
 export default function getRollupInputOptions(options) {
@@ -68,7 +71,15 @@ export default function getRollupInputOptions(options) {
       // We also bundle absolute paths, these are just an intermediate step in Rollup resolving files and
       // as we do not support resolving from node_modules (we never bundle these) we only hit this code
       // path for originally local dependencies.
-      return !(dependency === input || isRelative(dependency) || isAbsolute(dependency))
+      const inlineDependency = dependency === input || isRelative(dependency) || isAbsolute(dependency)
+      if (!inlineDependency && options.deep) {
+        // Only mark dependencies as internal which are not built-in
+        if (!builtIns.has(dependency)) {
+          return false
+        }
+      }
+
+      return !inlineDependency
     },
     acornInjectPlugins: [ acornJsx() ],
     plugins: [
@@ -78,10 +89,7 @@ export default function getRollupInputOptions(options) {
       typescriptResolvePlugin(),
       rebasePlugin(),
       options.deep ? nodeResolvePlugin() : null,
-      cjsPlugin({
-        include: "node_modules/**",
-        extensions
-      }),
+      commonjsPlugin(),
       replacePlugin(variables),
       jsonPlugin(),
       babelPlugin({

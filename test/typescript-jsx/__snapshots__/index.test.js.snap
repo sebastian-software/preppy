@@ -60,8 +60,8 @@ exports[`Publish Test File via Typescript: umd 1`] = `
   (global = global || self, factory(global['typescript-jsx'] = {}, global.React, global.reactIntl, global.Header));
 }(this, (function (exports, React, reactIntl, Header) { 'use strict';
 
-  React = React && React.hasOwnProperty('default') ? React['default'] : React;
-  Header = Header && Header.hasOwnProperty('default') ? Header['default'] : Header;
+  React = React && Object.prototype.hasOwnProperty.call(React, 'default') ? React['default'] : React;
+  Header = Header && Object.prototype.hasOwnProperty.call(Header, 'default') ? Header['default'] : Header;
 
   function MyPage() {
     return <>

@@ -3,20 +3,20 @@
 exports[`Publish Test File via Babel: cjs 1`] = `
 "/*! esnext-min v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 \\"use strict\\"
-require(\\"core-js/modules/es.array.includes\\"),require(\\"core-js/modules/es.array.iterator\\"),require(\\"core-js/modules/es.object.assign\\"),require(\\"core-js/modules/es.object.to-string\\"),require(\\"core-js/modules/es.promise\\"),require(\\"core-js/modules/es.set\\"),require(\\"core-js/modules/es.string.iterator\\"),require(\\"core-js/modules/web.dom-collections.iterator\\")
+require(\\"core-js/modules/es.array.includes\\"),require(\\"core-js/modules/es.array.iterator\\"),require(\\"core-js/modules/es.object.assign\\"),require(\\"core-js/modules/es.object.to-string\\"),require(\\"core-js/modules/es.promise\\"),require(\\"core-js/modules/es.reflect.construct\\"),require(\\"core-js/modules/es.regexp.to-string\\"),require(\\"core-js/modules/es.set\\"),require(\\"core-js/modules/es.string.iterator\\"),require(\\"core-js/modules/web.dom-collections.iterator\\"),require(\\"@babel/runtime/helpers/possibleConstructorReturn\\"),require(\\"@babel/runtime/helpers/getPrototypeOf\\")
 var e,o=(e=require(\\"@babel/runtime/helpers/inheritsLoose\\"))&&\\"object\\"==typeof e&&\\"default\\"in e?e.default:e,r=require(\\"lodash\\")
 console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===r.camelCase(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise((function(e,o){e(\\"resolved\\")})).then((function(e){console.log(\\"Promise:\\",e)}))
 console.log(\\"Constant:\\",123)
 var s=[1,2,3]
 console.log(\\"Supports Array.includes?:\\",s.includes&&s.includes(2))
-var l,n=new Set(s)
-console.log(\\"Supports Set:\\",n.add(4)),void 0===l&&(l=!0),console.log(\\"Supports default parameters:\\",l)
+var l,t=new Set(s)
+console.log(\\"Supports Set:\\",t.add(4)),void 0===l&&(l=!0),console.log(\\"Supports default parameters:\\",l)
 console.log(\\"X Value from inner scope:\\",\\"inner\\"),console.log(\\"X Value from outer scope:\\",\\"outer\\")
-var t=Object.assign({third:3},{first:1,second:2})
-console.log(\\"Destructed:\\",t)
-var c=function(){function e(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return e.prototype.helper=function(){console.log(\\"Called helper\\")},e}()
-c()
-console.log(\\"Initialized class:\\",new c),new Promise((function(e,o){return Promise.resolve(PromiseHelper()).then((function(r){try{return e(42)}catch(s){return o(s)}}),o)}))
+var n=Object.assign({third:3},{first:1,second:2})
+console.log(\\"Destructed:\\",n)
+var i=function(){function e(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return e.prototype.helper=function(){console.log(\\"Called helper\\")},e}()
+i()
+console.log(\\"Initialized class:\\",new i),new Promise((function(e,o){return Promise.resolve(PromiseHelper()).then((function(r){try{return e(42)}catch(s){return o(s)}}),o)}))
 //# sourceMappingURL=index.cjs.min.js.map
 "
 `;
@@ -28,20 +28,24 @@ import\\"core-js/modules/es.array.iterator\\"
 import\\"core-js/modules/es.object.assign\\"
 import\\"core-js/modules/es.object.to-string\\"
 import\\"core-js/modules/es.promise\\"
+import\\"core-js/modules/es.reflect.construct\\"
+import\\"core-js/modules/es.regexp.to-string\\"
 import\\"core-js/modules/es.set\\"
 import\\"core-js/modules/es.string.iterator\\"
 import\\"core-js/modules/web.dom-collections.iterator\\"
+import\\"@babel/runtime/helpers/possibleConstructorReturn\\"
+import\\"@babel/runtime/helpers/getPrototypeOf\\"
 import o from\\"@babel/runtime/helpers/inheritsLoose\\"
 import{camelCase as e}from\\"lodash\\"
 console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===e(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",4===Math.pow(2,2)),new Promise((function(o,e){o(\\"resolved\\")})).then((function(o){console.log(\\"Promise:\\",o)}))
 console.log(\\"Constant:\\",123)
 var r=[1,2,3]
 console.log(\\"Supports Array.includes?:\\",r.includes&&r.includes(2))
-var s,l=new Set(r)
-console.log(\\"Supports Set:\\",l.add(4)),void 0===s&&(s=!0),console.log(\\"Supports default parameters:\\",s)
+var s,t=new Set(r)
+console.log(\\"Supports Set:\\",t.add(4)),void 0===s&&(s=!0),console.log(\\"Supports default parameters:\\",s)
 console.log(\\"X Value from inner scope:\\",\\"inner\\"),console.log(\\"X Value from outer scope:\\",\\"outer\\")
-var t=Object.assign({third:3},{first:1,second:2})
-console.log(\\"Destructed:\\",t)
+var l=Object.assign({third:3},{first:1,second:2})
+console.log(\\"Destructed:\\",l)
 var n=function(){function o(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}return o.prototype.helper=function(){console.log(\\"Called helper\\")},o}()
 n()
 console.log(\\"Initialized class:\\",new n),new Promise((function(o,e){return Promise.resolve(PromiseHelper()).then((function(r){try{return o(42)}catch(s){return e(s)}}),e)}))

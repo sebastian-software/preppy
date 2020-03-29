@@ -11,9 +11,13 @@ require('core-js/modules/es.array.iterator');
 require('core-js/modules/es.object.assign');
 require('core-js/modules/es.object.to-string');
 require('core-js/modules/es.promise');
+require('core-js/modules/es.reflect.construct');
+require('core-js/modules/es.regexp.to-string');
 require('core-js/modules/es.set');
 require('core-js/modules/es.string.iterator');
 require('core-js/modules/web.dom-collections.iterator');
+require('@babel/runtime/helpers/possibleConstructorReturn');
+require('@babel/runtime/helpers/getPrototypeOf');
 var _inheritsLoose = _interopDefault(require('@babel/runtime/helpers/inheritsLoose'));
 var lodash = require('lodash');
 
@@ -56,9 +60,7 @@ var destructed = Object.assign({
 }, source);
 console.log(\\"Destructed:\\", destructed);
 
-var MyClass =
-/*#__PURE__*/
-function () {
+var MyClass = /*#__PURE__*/function () {
   function MyClass() {
     console.log(\\"Called constructor\\");
     this.helper();
@@ -74,9 +76,7 @@ function () {
   return MyClass;
 }();
 
-var SecondClass =
-/*#__PURE__*/
-function (_MyClass) {
+var SecondClass = /*#__PURE__*/function (_MyClass) {
   _inheritsLoose(SecondClass, _MyClass);
 
   function SecondClass() {
@@ -90,7 +90,7 @@ console.log(\\"Initialized class:\\", new MyClass());
 
 function helper() {
   return new Promise(function ($return, $error) {
-    return Promise.resolve(PromiseHelper()).then(function ($await_1) {
+    return Promise.resolve(PromiseHelper()).then(function ($await_2) {
       try {
         return $return(42);
       } catch ($boundEx) {
@@ -112,9 +112,13 @@ import 'core-js/modules/es.array.iterator';
 import 'core-js/modules/es.object.assign';
 import 'core-js/modules/es.object.to-string';
 import 'core-js/modules/es.promise';
+import 'core-js/modules/es.reflect.construct';
+import 'core-js/modules/es.regexp.to-string';
 import 'core-js/modules/es.set';
 import 'core-js/modules/es.string.iterator';
 import 'core-js/modules/web.dom-collections.iterator';
+import '@babel/runtime/helpers/possibleConstructorReturn';
+import '@babel/runtime/helpers/getPrototypeOf';
 import _inheritsLoose from '@babel/runtime/helpers/inheritsLoose';
 import { camelCase } from 'lodash';
 
@@ -157,9 +161,7 @@ var destructed = Object.assign({
 }, source);
 console.log(\\"Destructed:\\", destructed);
 
-var MyClass =
-/*#__PURE__*/
-function () {
+var MyClass = /*#__PURE__*/function () {
   function MyClass() {
     console.log(\\"Called constructor\\");
     this.helper();
@@ -175,9 +177,7 @@ function () {
   return MyClass;
 }();
 
-var SecondClass =
-/*#__PURE__*/
-function (_MyClass) {
+var SecondClass = /*#__PURE__*/function (_MyClass) {
   _inheritsLoose(SecondClass, _MyClass);
 
   function SecondClass() {
@@ -191,7 +191,7 @@ console.log(\\"Initialized class:\\", new MyClass());
 
 function helper() {
   return new Promise(function ($return, $error) {
-    return Promise.resolve(PromiseHelper()).then(function ($await_1) {
+    return Promise.resolve(PromiseHelper()).then(function ($await_2) {
       try {
         return $return(42);
       } catch ($boundEx) {
@@ -259,9 +259,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
   }, source);
   console.log(\\"Destructed:\\", destructed);
 
-  var MyClass =
-  /*#__PURE__*/
-  function () {
+  var MyClass = /*#__PURE__*/function () {
     function MyClass() {
       console.log(\\"Called constructor\\");
       this.helper();
@@ -277,9 +275,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
     return MyClass;
   }();
 
-  var SecondClass =
-  /*#__PURE__*/
-  function (_MyClass) {
+  var SecondClass = /*#__PURE__*/function (_MyClass) {
     _inheritsLoose(SecondClass, _MyClass);
 
     function SecondClass() {

@@ -17,7 +17,8 @@ test("Publish Test File via Babel", async () => {
 
   await preppy({
     root: __dirname,
-    quiet: true
+    quiet: true,
+    deep: true
   })
 
   expect(await lazyRead(resolve(__dirname, "dist/index.cjs.js"), "utf8")).toMatchSnapshot(

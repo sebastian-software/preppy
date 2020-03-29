@@ -16,6 +16,7 @@ export default function parseCommandline() {
     --output           Overrides output folder (and package.json entries) [auto]
     --watch            Keeps running and rebuilds on any change [false]
     --limit            Limits the current build scope to files matching [null]
+    --deep             Produces a deep bundle which includes dependencies inline [false]
     --exec             Executes the generated binary after creation [false]
     --notify           Enables notifications (useful when used in watch mode) [false]
 
@@ -57,6 +58,11 @@ export default function parseCommandline() {
 
         limit: {
           type: "string"
+        },
+
+        deep: {
+          type: "boolean",
+          default: false
         },
 
         exec: {

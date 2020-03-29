@@ -32,6 +32,12 @@ module.exports = (api) => {
           loose: true
         }
       ],
+      [
+        "babel-plugin-lodash",
+        {
+          id: [ "lodash", "async", "rambda", "recompose" ]
+        }
+      ],
       isUmd ?
         null :
         [

@@ -1,5 +1,5 @@
-import { camelCase } from "lodash"
+import _ from "lodash"
 
 export function makeCamelCase(string) {
-  return camelCase(string)
+  return _.camelCase(string)
 }

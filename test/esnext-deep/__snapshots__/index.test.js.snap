@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Publish Test File via Babel: cjs 1`] = `
+"/*! esnext-deep v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var lodash = require('lodash');
+
+function makeCamelCase(string) {
+  return lodash.camelCase(string);
+}
+
+exports.makeCamelCase = makeCamelCase;
+//# sourceMappingURL=index.cjs.js.map
+"
+`;
+
+exports[`Publish Test File via Babel: esm 1`] = `
+"/*! esnext-deep v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+import { camelCase } from 'lodash';
+
+function makeCamelCase(string) {
+  return camelCase(string);
+}
+
+export { makeCamelCase };
+//# sourceMappingURL=index.esm.js.map
+"
+`;
+
+exports[`Publish Test File via Babel: umd 1`] = `
+"/*! esnext-deep v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'lodash'], factory) :
+  (global = global || self, factory(global['esnext-deep'] = {}, global.lodash));
+}(this, (function (exports, lodash) { 'use strict';
+
+  function makeCamelCase(string) {
+    return lodash.camelCase(string);
+  }
+
+  exports.makeCamelCase = makeCamelCase;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+//# sourceMappingURL=index.umd.js.map
+"
+`;

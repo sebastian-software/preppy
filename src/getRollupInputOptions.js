@@ -7,6 +7,7 @@ import executablePlugin from "rollup-plugin-executable"
 import { advancedRun } from "rollup-plugin-advanced-run"
 import jsonPlugin from "@rollup/plugin-json"
 import rebasePlugin from "rollup-plugin-rebase"
+import nodeResolvePlugin from "@rollup/plugin-node-resolve"
 import replacePlugin from "@rollup/plugin-replace"
 import { terser as terserPlugin } from "rollup-plugin-terser"
 import acornJsx from "acorn-jsx"
@@ -76,6 +77,7 @@ export default function getRollupInputOptions(options) {
 
       typescriptResolvePlugin(),
       rebasePlugin(),
+      options.deep ? nodeResolvePlugin() : null,
       cjsPlugin({
         include: "node_modules/**",
         extensions

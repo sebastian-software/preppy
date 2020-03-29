@@ -6,11 +6,13 @@ exports[`Multi Binary from ESNext: first 1`] = `
 /*! esnext-multibinary v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
-var lodash = require('lodash');
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var _snakeCase = _interopDefault(require('lodash/snakeCase'));
 
 var realWords = \\"Eine dicke Kuh lacht\\";
 
-console.log(\\"Magic:\\", lodash.snakeCase(realWords));
+console.log(\\"Magic:\\", _snakeCase(realWords));
 //# sourceMappingURL=first-cli.js.map
 "
 `;
@@ -21,11 +23,13 @@ exports[`Multi Binary from ESNext: second 1`] = `
 /*! esnext-multibinary v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
-var lodash = require('lodash');
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var _camelCase = _interopDefault(require('lodash/camelCase'));
 
 var realWords = \\"Eine dicke Kuh lacht\\";
 
-console.log(\\"Magic:\\", lodash.camelCase(realWords));
+console.log(\\"Magic:\\", _camelCase(realWords));
 //# sourceMappingURL=second-cli.js.map
 "
 `;

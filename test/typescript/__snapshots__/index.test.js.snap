@@ -21,14 +21,14 @@ require('core-js/modules/web.dom-collections.iterator');
 require('@babel/runtime/helpers/possibleConstructorReturn');
 require('@babel/runtime/helpers/getPrototypeOf');
 var _inheritsLoose = _interopDefault(require('@babel/runtime/helpers/inheritsLoose'));
-var lodash = require('lodash');
+var _camelCase = _interopDefault(require('lodash/camelCase'));
 
 /**
  * Values of fields in the form
  */
 var something = 42;
 
-console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
+console.log(\\"CherryPick Import Lodash:\\", _camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Imported JS from other file:\\", something);
 console.log(\\"Package\\", \\"typescript\\");
 console.log(\\"Target\\", \\"lib\\");
@@ -141,14 +141,14 @@ import 'core-js/modules/web.dom-collections.iterator';
 import '@babel/runtime/helpers/possibleConstructorReturn';
 import '@babel/runtime/helpers/getPrototypeOf';
 import _inheritsLoose from '@babel/runtime/helpers/inheritsLoose';
-import { camelCase } from 'lodash';
+import _camelCase from 'lodash/camelCase';
 
 /**
  * Values of fields in the form
  */
 var something = 42;
 
-console.log(\\"CherryPick Import Lodash:\\", camelCase(\\"hello world\\") === \\"helloWorld\\");
+console.log(\\"CherryPick Import Lodash:\\", _camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Imported JS from other file:\\", something);
 console.log(\\"Package\\", \\"typescript\\");
 console.log(\\"Target\\", \\"lib\\");
@@ -272,10 +272,12 @@ export declare const something = 42;
 exports[`Publish Test File via Typescript: umd 1`] = `
 "/*! typescript v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es.array.includes'), require('core-js/modules/es.array.iterator'), require('core-js/modules/es.object.assign'), require('core-js/modules/es.object.to-string'), require('core-js/modules/es.promise'), require('core-js/modules/es.set'), require('core-js/modules/es.string.iterator'), require('core-js/modules/web.dom-collections.iterator'), require('lodash')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es.array.includes', 'core-js/modules/es.array.iterator', 'core-js/modules/es.object.assign', 'core-js/modules/es.object.to-string', 'core-js/modules/es.promise', 'core-js/modules/es.set', 'core-js/modules/es.string.iterator', 'core-js/modules/web.dom-collections.iterator', 'lodash'], factory) :
-  (global = global || self, factory(global.typescript = {}, null, null, null, null, null, null, null, null, global.lodash));
-}(this, (function (exports, es_array_includes, es_array_iterator, es_object_assign, es_object_toString, es_promise, es_set, es_string_iterator, web_domCollections_iterator, lodash) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es.array.includes'), require('core-js/modules/es.array.iterator'), require('core-js/modules/es.object.assign'), require('core-js/modules/es.object.to-string'), require('core-js/modules/es.promise'), require('core-js/modules/es.set'), require('core-js/modules/es.string.iterator'), require('core-js/modules/web.dom-collections.iterator'), require('lodash/camelCase')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es.array.includes', 'core-js/modules/es.array.iterator', 'core-js/modules/es.object.assign', 'core-js/modules/es.object.to-string', 'core-js/modules/es.promise', 'core-js/modules/es.set', 'core-js/modules/es.string.iterator', 'core-js/modules/web.dom-collections.iterator', 'lodash/camelCase'], factory) :
+  (global = global || self, factory(global.typescript = {}, null, null, null, null, null, null, null, null, global._camelCase));
+}(this, (function (exports, es_array_includes, es_array_iterator, es_object_assign, es_object_toString, es_promise, es_set, es_string_iterator, web_domCollections_iterator, _camelCase) { 'use strict';
+
+  _camelCase = _camelCase && Object.prototype.hasOwnProperty.call(_camelCase, 'default') ? _camelCase['default'] : _camelCase;
 
   function _inheritsLoose(subClass, superClass) {
     subClass.prototype = Object.create(superClass.prototype);
@@ -288,7 +290,7 @@ exports[`Publish Test File via Typescript: umd 1`] = `
    */
   var something = 42;
 
-  console.log(\\"CherryPick Import Lodash:\\", lodash.camelCase(\\"hello world\\") === \\"helloWorld\\");
+  console.log(\\"CherryPick Import Lodash:\\", _camelCase(\\"hello world\\") === \\"helloWorld\\");
   console.log(\\"Imported JS from other file:\\", something);
   console.log(\\"Package\\", \\"typescript\\");
   console.log(\\"Target\\", \\"lib\\");

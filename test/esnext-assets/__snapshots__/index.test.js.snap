@@ -10,9 +10,9 @@ var imageUrl = _interopDefault(require('./bXipeBrs.png'));
 var contentUrl = _interopDefault(require('./bsdudxaF.md'));
 var styleUrl = _interopDefault(require('./ABCYSDdq.css'));
 
-console.log(\\"Logo-URL is \\" + imageUrl);
-console.log(\\"Content-URL is \\" + contentUrl);
-console.log(\\"Style-URL is \\" + styleUrl);
+console.log(\`Logo-URL is \${imageUrl}\`);
+console.log(\`Content-URL is \${contentUrl}\`);
+console.log(\`Style-URL is \${styleUrl}\`);
 //# sourceMappingURL=index.cjs.js.map
 "
 `;
@@ -23,9 +23,9 @@ import imageUrl from './bXipeBrs.png';
 import contentUrl from './bsdudxaF.md';
 import styleUrl from './ABCYSDdq.css';
 
-console.log(\\"Logo-URL is \\" + imageUrl);
-console.log(\\"Content-URL is \\" + contentUrl);
-console.log(\\"Style-URL is \\" + styleUrl);
+console.log(\`Logo-URL is \${imageUrl}\`);
+console.log(\`Content-URL is \${contentUrl}\`);
+console.log(\`Style-URL is \${styleUrl}\`);
 //# sourceMappingURL=index.esm.js.map
 "
 `;
@@ -42,9 +42,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	contentUrl = contentUrl && Object.prototype.hasOwnProperty.call(contentUrl, 'default') ? contentUrl['default'] : contentUrl;
 	styleUrl = styleUrl && Object.prototype.hasOwnProperty.call(styleUrl, 'default') ? styleUrl['default'] : styleUrl;
 
-	console.log(\\"Logo-URL is \\" + imageUrl);
-	console.log(\\"Content-URL is \\" + contentUrl);
-	console.log(\\"Style-URL is \\" + styleUrl);
+	console.log(\`Logo-URL is \${imageUrl}\`);
+	console.log(\`Content-URL is \${contentUrl}\`);
+	console.log(\`Style-URL is \${styleUrl}\`);
 
 })));
 //# sourceMappingURL=index.umd.js.map

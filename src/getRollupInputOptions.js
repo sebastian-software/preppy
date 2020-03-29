@@ -54,7 +54,7 @@ export default function getRollupInputOptions(options) {
     console.log("Variables:", formatJSON(variables))
   }
 
-  const extensions = [ ".js", ".jsx", ".es6", ".es", ".mjs", ".ts", ".tsx" ]
+  const extensions = [ ".js", ".jsx", ".mjs", ".ts", ".tsx" ]
 
   return {
     input,

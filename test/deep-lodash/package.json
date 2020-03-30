@@ -10,5 +10,8 @@
   },
   "keywords": [],
   "author": "Sebastian Werner <s.werner@sebastian-software.de>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "lodash": "^4.17.15"
+  }
 }

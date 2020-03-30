@@ -236,6 +236,11 @@ Notes:
 - It only works correctly when you use the whole identifier.
 - In verbose mode we are logging the environment settings configured.
 
+### Deep Mode
+
+This is a special mode for Preppy. Where it normally targets build steps for libraries this
+so-called *deep* mode compares to default behavior of **Parcel** or **Webpack**. It inlines code which is defined in `node_modules` as possible. The logic uses information from the `package.json` file and only bundles dependencies which are defined in `devDependencies` and not in `dependencies`. All this combined with the tree-shaking capabilities of the underlying **Rollup** results into monolithic easy to deploy code with minimal external runtime dependencies.
+
 ### Command Line Interface
 
 _Preppy_ comes with a binary which can be called from within your `scripts` section

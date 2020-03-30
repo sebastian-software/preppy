@@ -32,6 +32,10 @@ function notify(options, message) {
   })
 }
 
+function simplifyDependencies(list = {}) {
+  return new Set(Object.keys(list))
+}
+
 export default async function index(opts) {
   // Change to detected root directory
   // This helps rollup plugins e.g. for Babel to use the correct config file.
@@ -43,6 +47,11 @@ export default async function index(opts) {
     ...opts,
     name: pkg.name || dirname(opts.root),
     version: pkg.version || "0.0.0",
+    deps: {
+      runtime: simplifyDependencies(pkg.dependencies),
+      development: simplifyDependencies(pkg.devDependencies),
+      peer: simplifyDependencies(pkg.peerDependencies)
+    },
     banner: getBanner(pkg),
     output: getOutputMatrix(opts, pkg),
     tsConfig: getTsCompilerOptions(opts)

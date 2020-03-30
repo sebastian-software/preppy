@@ -12,6 +12,7 @@ export default function getTasks({
   banner,
   entries,
   output,
+  deps,
   deep,
   limit,
   exec,
@@ -27,6 +28,7 @@ export default function getTasks({
     root,
     deep,
     name,
+    deps,
     version,
     banner
   }

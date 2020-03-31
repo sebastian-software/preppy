@@ -12,6 +12,7 @@
   "author": "Sebastian Werner <s.werner@sebastian-software.de>",
   "license": "MIT",
   "devDependencies": {
+    "core-js": "^3.6.4",
     "p-queue": "^6.3.0"
   }
 }

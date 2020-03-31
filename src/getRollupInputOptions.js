@@ -56,14 +56,16 @@ function isVirtualRollupFile(filename) {
   return /\0/.exec(filename)
 }
 
-function shouldDependencyBeInlined(name, importer, deps, state) {
+function shouldDependencyBeInlined(name, importer, deps, state, verbose) {
   const packageName = dependencyToPackageName(name)
 
   // If is still listed in normal (runtime) or peer dependencies then
   // we assume that the owner do not want to bundle it.
   if (deps.runtime.has(packageName) || deps.peer.has(packageName)) {
     if (!state.required.has(packageName)) {
-      console.info(`Local Package ${packageName} will be required at runtime!`)
+      if (verbose) {
+        console.log(`Local Package ${packageName} will be required at runtime!`)
+      }
       state.required.add(packageName)
     }
 
@@ -75,7 +77,9 @@ function shouldDependencyBeInlined(name, importer, deps, state) {
   // To make this possible we have to inline it.
   if (deps.development.has(packageName)) {
     if (!state.inlined.has(packageName)) {
-      console.info(`Local Package ${packageName} will be inlined into bundle.`)
+      if (verbose) {
+        console.log(`Local Package ${packageName} will be inlined into bundle.`)
+      }
       state.inlined.add(packageName)
     }
     return true
@@ -93,7 +97,9 @@ function shouldDependencyBeInlined(name, importer, deps, state) {
 
   if (importerName === ".") {
     if (!state.globalized.has(packageName)) {
-      console.info(`Global Package '${packageName}' will be required at runtime!`)
+      if (verbose) {
+        console.log(`Global Package '${packageName}' will be required at runtime!`)
+      }
       state.globalized.add(packageName)
     }
     return false
@@ -156,7 +162,7 @@ export default function getRollupInputOptions(options) {
       if (!inlineDependency && options.deep) {
         // Only mark dependencies as internal which are not built-in
         if (!builtIns.has(dependency)) {
-          if (shouldDependencyBeInlined(dependency, importer, options.deps, state)) {
+          if (shouldDependencyBeInlined(dependency, importer, options.deps, state, verbose)) {
             return false
           }
         }

@@ -28,8 +28,13 @@ export function formatJSON(json) {
 }
 
 function dependencyToPackageName(dep) {
-  const index = dep.indexOf("/")
-  return index === -1 ? dep : dep.slice(0, index)
+  // short path
+  if (!dep.includes("/")) {
+    return dep
+  }
+
+  const isScoped = dep.startsWith("@")
+  return dep.split("/").slice(0, isScoped ? 2 : 1).join("/")
 }
 
 function importerToPackageName(filepath) {

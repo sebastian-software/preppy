@@ -1,6 +1,6 @@
 import { isAbsolute, relative } from "path"
 
-import babelPlugin from "rollup-plugin-babel"
+import babelPlugin from "@rollup/plugin-babel"
 import builtinModules from "builtin-modules"
 import chalk from "chalk"
 import commonjsPlugin from "@rollup/plugin-commonjs"
@@ -191,8 +191,8 @@ export default function getRollupInputOptions(options) {
       replacePlugin(variables),
       jsonPlugin(),
       babelPlugin({
-        // Rollup Setting: Prefer usage of a common library of helpers
-        runtimeHelpers: format !== "umd",
+        // Inline babel helpers when not bundling for libraries
+        babelHelpers: options.deep || format === "umd" ? "bundled" : "runtime",
         // We use envName to pass information about the build target and format to Babel
         envName: env ? `${env}-${target}-${format}` : `${target}-${format}`,
         // The Babel-Plugin is not using a pre-defined include, but builds up

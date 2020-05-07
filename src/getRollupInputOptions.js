@@ -193,6 +193,8 @@ export default function getRollupInputOptions(options) {
       replacePlugin(variables),
       jsonPlugin(),
       babelPlugin({
+        // Do not do extensive tests when running in our own test suite
+        skipPreflightCheck: process.env.NODE_ENV === "test",
         // Inline babel helpers when not bundling for libraries
         babelHelpers: options.deep || format === "umd" ? "bundled" : "runtime",
         // We use envName to pass information about the build target and format to Babel

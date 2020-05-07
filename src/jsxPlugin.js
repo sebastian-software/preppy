@@ -21,7 +21,7 @@ export default () => ({
       enter(node) {
         if (node.type === "JSXMemberExpression" || node.type === "JSXIdentifier") {
           const name = getJsxName(node)
-          const tagId = idsByName.get(name) || `PREPPY_JSX_ID_${(nextId += 1)}`
+          const tagId = idsByName.get(name) || `PREPPY_JSX_ID_${nextId += 1}`
 
           // overwrite all JSX tags with artificial tag ids so that we can find them again later
           magicString.overwrite(node.start, node.end, tagId)
@@ -34,7 +34,7 @@ export default () => ({
     })
 
     if (idsByName.size > 0) {
-      const usedNamesAndIds = Array.from(idsByName).map(
+      const usedNamesAndIds = [ ...idsByName ].map(
         ([ name, tagId ]) => `/*${tagId}*/${name}`
       )
       magicString.append(`;__PREPPY_JSX_NAMES__(React,${usedNamesAndIds.join(",")});`)

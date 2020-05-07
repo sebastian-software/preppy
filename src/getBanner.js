@@ -9,7 +9,7 @@ export default function getBanner(pkg) {
     }
   }
 
-  banner += ` */`
+  banner += " */"
 
   return banner
 }

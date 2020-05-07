@@ -5,7 +5,7 @@ import { resolve } from "path"
 import pify from "pify"
 import rimraf from "rimraf"
 
-import preppy from "../../src/index"
+import preppy from "../../src"
 
 const lazyDelete = pify(rimraf)
 
@@ -19,5 +19,5 @@ test("Publish Test File via Babel", async () => {
       root: __dirname,
       quiet: true
     })
-  ).rejects.toThrow(`SyntaxError: Unexpected token (2:17)`)
+  ).rejects.toThrow("SyntaxError: Unexpected token (2:17)")
 })

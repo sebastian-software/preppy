@@ -6,10 +6,8 @@ import findRoot from "find-root"
 import updateNotifier from "update-notifier"
 
 import { name, version } from "../package.json"
-
 import parseCommandline from "./parseCommandline"
-
-import main from "./index"
+import main from "."
 
 const command = parseCommandline()
 const flags = command.flags

@@ -5,7 +5,7 @@ import { resolve } from "path"
 import pify from "pify"
 import rimraf from "rimraf"
 
-import preppy from "../../src/index"
+import preppy from "../../src"
 
 const lazyRead = pify(readFile)
 const lazyDelete = pify(rimraf)

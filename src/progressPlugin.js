@@ -18,10 +18,7 @@ export function formatDuration(start) {
 }
 
 function normalizePath(id) {
-  return path
-    .relative(process.cwd(), id)
-    .split(path.sep)
-    .join("/")
+  return path.relative(process.cwd(), id).split(path.sep).join("/")
 }
 
 export default function progressPlugin(options = {}) {
@@ -60,7 +57,7 @@ export default function progressPlugin(options = {}) {
   }
 
   if (!prefix) {
-    prefix = `Bundling:`
+    prefix = "Bundling:"
   }
 
   return {

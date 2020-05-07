@@ -34,7 +34,10 @@ function dependencyToPackageName(dep) {
   }
 
   const isScoped = dep.startsWith("@")
-  return dep.split("/").slice(0, isScoped ? 2 : 1).join("/")
+  return dep
+    .split("/")
+    .slice(0, isScoped ? 2 : 1)
+    .join("/")
 }
 
 function importerToPackageName(filepath) {
@@ -58,7 +61,7 @@ function importerToPackageName(filepath) {
 }
 
 function isVirtualRollupFile(filename) {
-  return /\0/.exec(filename)
+  return (/\0/).exec(filename)
 }
 
 function shouldDependencyBeInlined(name, importer, deps, state, verbose) {
@@ -163,7 +166,8 @@ export default function getRollupInputOptions(options) {
       // We also bundle absolute paths, these are just an intermediate step in Rollup resolving files and
       // as we do not support resolving from node_modules (we never bundle these) we only hit this code
       // path for originally local dependencies.
-      const inlineDependency = dependency === input || isRelative(dependency) || isAbsolute(dependency)
+      const inlineDependency =
+        dependency === input || isRelative(dependency) || isAbsolute(dependency)
       if (!inlineDependency && options.deep) {
         // Only mark dependencies as internal which are not built-in
         if (!builtIns.has(dependency)) {
@@ -204,17 +208,17 @@ export default function getRollupInputOptions(options) {
       }),
       jsxPlugin(),
       (env === "production" && (format === "umd" || target === "cli")) ||
-      (/\.min\./).exec(output) ?
-        terserPlugin({
-          toplevel: format === "esm" || format === "cjs",
-          safari10: true,
-          output: {
-            /* eslint-disable-next-line @typescript-eslint/camelcase */
-            ascii_only: true,
-            semicolons: false
-          }
-        }) :
-        null,
+      (/\.min\./).exec(output)
+        ? terserPlugin({
+            toplevel: format === "esm" || format === "cjs",
+            safari10: true,
+            output: {
+              /* eslint-disable-next-line @typescript-eslint/camelcase */
+              ascii_only: true,
+              semicolons: false
+            }
+          })
+        : null,
       target === "cli" ? executablePlugin() : null
     ].filter(Boolean)
   }

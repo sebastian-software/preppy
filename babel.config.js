@@ -38,15 +38,15 @@ module.exports = (api) => {
           id: [ "lodash", "async", "rambda", "recompose" ]
         }
       ],
-      isUmd ?
-        null :
-        [
-          "@babel/transform-runtime",
-          {
-            helpers: true,
-            regenerator: false
-          }
-        ]
+      isUmd
+        ? null
+        : [
+            "@babel/transform-runtime",
+            {
+              helpers: true,
+              regenerator: false
+            }
+          ]
     ].filter(Boolean),
     presets: [
       [

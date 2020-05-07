@@ -3,6 +3,7 @@ import { statSync } from "fs"
 
 // eslint-disable-next-line id-length
 let ts
+
 try {
   // eslint-disable-next-line global-require
   ts = require("typescript")
@@ -30,7 +31,7 @@ const resolveHost = {
   }
 }
 
-const extensions = [ ".ts", ".tsx" ]
+const extensions = new Set([ ".ts", ".tsx" ])
 const compilerOptions = {}
 
 export default () => ({
@@ -42,7 +43,7 @@ export default () => ({
     }
 
     // Only help resolving requests from inside TypeScript sources
-    if (!extensions.includes(extname(importer))) {
+    if (!extensions.has(extname(importer))) {
       /* istanbul ignore next */
       return null
     }

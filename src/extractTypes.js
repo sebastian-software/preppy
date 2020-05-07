@@ -2,6 +2,7 @@ import { dirname, join } from "path"
 
 /* eslint-disable id-length */
 let ts
+
 try {
   // eslint-disable-next-line global-require
   ts = require("typescript")

@@ -23,10 +23,10 @@ new Promise((resolve, reject) => {
   console.log("Promise:", first)
 })
 
-const CONSTANT: number = 123
+const CONSTANT = 123
 console.log("Constant:", CONSTANT)
 
-var myArray = [1, 2, 3]
+var myArray = [ 1, 2, 3 ]
 console.log("Supports Array.includes?:", myArray.includes && myArray.includes(2))
 
 var mySet = new Set(myArray)

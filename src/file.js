@@ -13,6 +13,7 @@ function readJSONCb(file, callback) {
     const json = stripComments(stripBom(data))
 
     let obj
+
     try {
       obj = JSON.parse(json)
     } catch (decodeError) {

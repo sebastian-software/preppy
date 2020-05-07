@@ -61,6 +61,7 @@ export default async function index(opts) {
 
   if (options.verbose) {
     console.log("Entries:")
+
     for (const entryId in options.entries) {
       console.log(`- ${entryId}: ${options.entries[entryId]}`)
     }
@@ -247,6 +248,7 @@ function bundleTypes(options) {
 
 async function bundleScript(options) {
   let bundle
+
   try {
     bundle = await rollup(getRollupInputOptions(options))
   } catch (bundleError) {

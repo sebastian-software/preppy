@@ -3,7 +3,7 @@ module.exports = (api) => {
   const env = api.env()
   const caller = api.caller((inst) => (inst && inst.name) || "any")
 
-  const isBundler = caller === "rollup-plugin-babel"
+  const isBundler = caller === "@rollup/plugin-babel"
   const isCli = caller === "@babel/node"
   const isTest = (/\b(test)\b/).exec(env)
   const modules = (isTest && !isBundler) || isCli ? "commonjs" : false

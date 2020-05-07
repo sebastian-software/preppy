@@ -34,9 +34,7 @@ export default () => ({
     })
 
     if (idsByName.size > 0) {
-      const usedNamesAndIds = [ ...idsByName ].map(
-        ([ name, tagId ]) => `/*${tagId}*/${name}`
-      )
+      const usedNamesAndIds = [ ...idsByName ].map(([ name, tagId ]) => `/*${tagId}*/${name}`)
       magicString.append(`;__PREPPY_JSX_NAMES__(React,${usedNamesAndIds.join(",")});`)
       return {
         code: magicString.toString(),

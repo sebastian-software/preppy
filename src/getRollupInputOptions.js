@@ -186,7 +186,7 @@ export default function getRollupInputOptions(options) {
 
       typescriptResolvePlugin(),
       rebasePlugin(),
-      nodeResolvePlugin({extensions}),
+      nodeResolvePlugin({ extensions }),
       commonjsPlugin({
         include: /node_modules/
       }),

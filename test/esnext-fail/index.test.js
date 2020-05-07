@@ -19,5 +19,5 @@ test("Publish Test File via Babel", async () => {
       root: __dirname,
       quiet: true
     })
-  ).rejects.toThrow("SyntaxError: Unexpected token (2:17)")
+  ).rejects.toThrow("SyntaxError: src/index.js: Unexpected token, expected \";\" (2:17)")
 })

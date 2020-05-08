@@ -5,7 +5,7 @@ import { resolve } from "path"
 import pify from "pify"
 import rimraf from "rimraf"
 
-import preppy from "../../src"
+import { preppy } from "../util"
 
 const lazyDelete = pify(rimraf)
 
@@ -16,8 +16,7 @@ test("Publish Test File via Babel", async () => {
 
   await expect(
     preppy({
-      root: __dirname,
-      quiet: true
+      cwd: __dirname,
     })
   ).rejects.toThrow("SyntaxError: src/index.js: Unexpected token, expected \";\" (2:17)")
 })

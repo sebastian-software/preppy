@@ -5,7 +5,7 @@ import { resolve } from "path"
 import pify from "pify"
 import rimraf from "rimraf"
 
-import preppy from "../../src"
+import { preppy } from "../util"
 
 const lazyRead = pify(readFile)
 const lazyDelete = pify(rimraf)
@@ -17,8 +17,7 @@ test("Publish Test File via Babel as Universal", async () => {
   await lazyDelete(resolve(__dirname, "./bin"))
 
   await preppy({
-    root: __dirname,
-    quiet: true
+    cwd: __dirname
   })
 
   expect(await lazyRead(resolve(__dirname, "bin/mycli.js"), "utf8")).toMatchSnapshot("cli")

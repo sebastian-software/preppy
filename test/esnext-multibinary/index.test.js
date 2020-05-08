@@ -4,8 +4,9 @@ import { resolve } from "path"
 
 import pify from "pify"
 import rimraf from "rimraf"
+import execa from "execa"
 
-import preppy from "../../src"
+import { preppy } from "../util"
 
 const lazyRead = pify(readFile)
 const lazyDelete = pify(rimraf)
@@ -14,10 +15,8 @@ jest.setTimeout(20000)
 
 test("Multi Binary from ESNext", async () => {
   await lazyDelete(resolve(__dirname, "./bin"))
-
   await preppy({
-    root: __dirname,
-    quiet: true
+    cwd: __dirname,
   })
 
   expect(await lazyRead(resolve(__dirname, "bin/first-cli.js"), "utf8")).toMatchSnapshot(

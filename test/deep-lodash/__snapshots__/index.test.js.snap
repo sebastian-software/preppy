@@ -9,21 +9,21 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 /** Detect free variable \`global\` from Node.js. */
-var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 var _freeGlobal = freeGlobal;
 
 /** Detect free variable \`self\`. */
+
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
 /** Used as a reference to the global object. */
-var root = _freeGlobal || freeSelf || Function('return this')();
 
+var root = _freeGlobal || freeSelf || Function('return this')();
 var _root = root;
 
 /** Built-in value references. */
-var Symbol = _root.Symbol;
 
+var Symbol = _root.Symbol;
 var _Symbol = Symbol;
 
 /**
@@ -43,6 +43,7 @@ function arrayMap(array, iteratee) {
   while (++index < length) {
     result[index] = iteratee(array[index], index, array);
   }
+
   return result;
 }
 
@@ -72,25 +73,24 @@ var _arrayMap = arrayMap;
  * // => false
  */
 var isArray = Array.isArray;
-
 var isArray_1 = isArray;
 
 /** Used for built-in method references. */
+
 var objectProto = Object.prototype;
-
 /** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
 
+var hasOwnProperty = objectProto.hasOwnProperty;
 /**
  * Used to resolve the
  * [\`toStringTag\`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
+
 var nativeObjectToString = objectProto.toString;
-
 /** Built-in value references. */
-var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
 
+var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
 /**
  * A specialized version of \`baseGetTag\` which ignores \`Symbol.toStringTag\` values.
  *
@@ -98,6 +98,7 @@ var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
  * @param {*} value The value to query.
  * @returns {string} Returns the raw \`toStringTag\`.
  */
+
 function getRawTag(value) {
   var isOwn = hasOwnProperty.call(value, symToStringTag),
       tag = value[symToStringTag];
@@ -108,6 +109,7 @@ function getRawTag(value) {
   } catch (e) {}
 
   var result = nativeObjectToString.call(value);
+
   if (unmasked) {
     if (isOwn) {
       value[symToStringTag] = tag;
@@ -115,6 +117,7 @@ function getRawTag(value) {
       delete value[symToStringTag];
     }
   }
+
   return result;
 }
 
@@ -122,14 +125,13 @@ var _getRawTag = getRawTag;
 
 /** Used for built-in method references. */
 var objectProto$1 = Object.prototype;
-
 /**
  * Used to resolve the
  * [\`toStringTag\`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
-var nativeObjectToString$1 = objectProto$1.toString;
 
+var nativeObjectToString$1 = objectProto$1.toString;
 /**
  * Converts \`value\` to a string using \`Object.prototype.toString\`.
  *
@@ -137,6 +139,7 @@ var nativeObjectToString$1 = objectProto$1.toString;
  * @param {*} value The value to convert.
  * @returns {string} Returns the converted string.
  */
+
 function objectToString(value) {
   return nativeObjectToString$1.call(value);
 }
@@ -144,12 +147,12 @@ function objectToString(value) {
 var _objectToString = objectToString;
 
 /** \`Object#toString\` result references. */
+
 var nullTag = '[object Null]',
     undefinedTag = '[object Undefined]';
-
 /** Built-in value references. */
-var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
 
+var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
 /**
  * The base implementation of \`getTag\` without fallbacks for buggy environments.
  *
@@ -157,13 +160,13 @@ var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
  * @param {*} value The value to query.
  * @returns {string} Returns the \`toStringTag\`.
  */
+
 function baseGetTag(value) {
   if (value == null) {
     return value === undefined ? undefinedTag : nullTag;
   }
-  return (symToStringTag$1 && symToStringTag$1 in Object(value))
-    ? _getRawTag(value)
-    : _objectToString(value);
+
+  return symToStringTag$1 && symToStringTag$1 in Object(value) ? _getRawTag(value) : _objectToString(value);
 }
 
 var _baseGetTag = baseGetTag;
@@ -199,8 +202,8 @@ function isObjectLike(value) {
 var isObjectLike_1 = isObjectLike;
 
 /** \`Object#toString\` result references. */
-var symbolTag = '[object Symbol]';
 
+var symbolTag = '[object Symbol]';
 /**
  * Checks if \`value\` is classified as a \`Symbol\` primitive or object.
  *
@@ -218,20 +221,20 @@ var symbolTag = '[object Symbol]';
  * _.isSymbol('abc');
  * // => false
  */
+
 function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike_1(value) && _baseGetTag(value) == symbolTag);
+  return typeof value == 'symbol' || isObjectLike_1(value) && _baseGetTag(value) == symbolTag;
 }
 
 var isSymbol_1 = isSymbol;
 
 /** Used as references for various \`Number\` constants. */
-var INFINITY = 1 / 0;
 
+var INFINITY = 1 / 0;
 /** Used to convert symbols to primitives and strings. */
+
 var symbolProto = _Symbol ? _Symbol.prototype : undefined,
     symbolToString = symbolProto ? symbolProto.toString : undefined;
-
 /**
  * The base implementation of \`_.toString\` which doesn't convert nullish
  * values to empty strings.
@@ -240,20 +243,24 @@ var symbolProto = _Symbol ? _Symbol.prototype : undefined,
  * @param {*} value The value to process.
  * @returns {string} Returns the string.
  */
+
 function baseToString(value) {
   // Exit early for strings to avoid a performance hit in some environments.
   if (typeof value == 'string') {
     return value;
   }
+
   if (isArray_1(value)) {
     // Recursively convert values (susceptible to call stack limits).
     return _arrayMap(value, baseToString) + '';
   }
+
   if (isSymbol_1(value)) {
     return symbolToString ? symbolToString.call(value) : '';
   }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+
+  var result = value + '';
+  return result == '0' && 1 / value == -INFINITY ? '-0' : result;
 }
 
 var _baseToString = baseToString;
@@ -279,6 +286,7 @@ var _baseToString = baseToString;
  * _.toString([1, 2, 3]);
  * // => '1,2,3'
  */
+
 function toString(value) {
   return value == null ? '' : _baseToString(value);
 }
@@ -299,19 +307,23 @@ function baseSlice(array, start, end) {
       length = array.length;
 
   if (start < 0) {
-    start = -start > length ? 0 : (length + start);
+    start = -start > length ? 0 : length + start;
   }
+
   end = end > length ? length : end;
+
   if (end < 0) {
     end += length;
   }
-  length = start > end ? 0 : ((end - start) >>> 0);
-  start >>>= 0;
 
+  length = start > end ? 0 : end - start >>> 0;
+  start >>>= 0;
   var result = Array(length);
+
   while (++index < length) {
     result[index] = array[index + start];
   }
+
   return result;
 }
 
@@ -326,10 +338,11 @@ var _baseSlice = baseSlice;
  * @param {number} [end=array.length] The end position.
  * @returns {Array} Returns the cast slice.
  */
+
 function castSlice(array, start, end) {
   var length = array.length;
   end = end === undefined ? length : end;
-  return (!start && end >= length) ? array : _baseSlice(array, start, end);
+  return !start && end >= length ? array : _baseSlice(array, start, end);
 }
 
 var _castSlice = castSlice;
@@ -341,13 +354,12 @@ var rsAstralRange = '\\\\\\\\ud800-\\\\\\\\udfff',
     rsComboSymbolsRange = '\\\\\\\\u20d0-\\\\\\\\u20ff',
     rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
     rsVarRange = '\\\\\\\\ufe0e\\\\\\\\ufe0f';
-
 /** Used to compose unicode capture groups. */
+
 var rsZWJ = '\\\\\\\\u200d';
-
 /** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
-var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboRange + rsVarRange + ']');
 
+var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange + rsComboRange + rsVarRange + ']');
 /**
  * Checks if \`string\` contains Unicode symbols.
  *
@@ -355,6 +367,7 @@ var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboRange + rsVarRan
  * @param {string} string The string to inspect.
  * @returns {boolean} Returns \`true\` if a symbol is found, else \`false\`.
  */
+
 function hasUnicode(string) {
   return reHasUnicode.test(string);
 }
@@ -381,8 +394,8 @@ var rsAstralRange$1 = '\\\\\\\\ud800-\\\\\\\\udfff',
     rsComboSymbolsRange$1 = '\\\\\\\\u20d0-\\\\\\\\u20ff',
     rsComboRange$1 = rsComboMarksRange$1 + reComboHalfMarksRange$1 + rsComboSymbolsRange$1,
     rsVarRange$1 = '\\\\\\\\ufe0e\\\\\\\\ufe0f';
-
 /** Used to compose unicode capture groups. */
+
 var rsAstral = '[' + rsAstralRange$1 + ']',
     rsCombo = '[' + rsComboRange$1 + ']',
     rsFitz = '\\\\\\\\ud83c[\\\\\\\\udffb-\\\\\\\\udfff]',
@@ -391,17 +404,16 @@ var rsAstral = '[' + rsAstralRange$1 + ']',
     rsRegional = '(?:\\\\\\\\ud83c[\\\\\\\\udde6-\\\\\\\\uddff]){2}',
     rsSurrPair = '[\\\\\\\\ud800-\\\\\\\\udbff][\\\\\\\\udc00-\\\\\\\\udfff]',
     rsZWJ$1 = '\\\\\\\\u200d';
-
 /** Used to compose unicode regexes. */
+
 var reOptMod = rsModifier + '?',
     rsOptVar = '[' + rsVarRange$1 + ']?',
     rsOptJoin = '(?:' + rsZWJ$1 + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
     rsSeq = rsOptVar + reOptMod + rsOptJoin,
     rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
-
 /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
 
+var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
 /**
  * Converts a Unicode \`string\` to an array.
  *
@@ -409,6 +421,7 @@ var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
  * @param {string} string The string to convert.
  * @returns {Array} Returns the converted array.
  */
+
 function unicodeToArray(string) {
   return string.match(reUnicode) || [];
 }
@@ -422,10 +435,9 @@ var _unicodeToArray = unicodeToArray;
  * @param {string} string The string to convert.
  * @returns {Array} Returns the converted array.
  */
+
 function stringToArray(string) {
-  return _hasUnicode(string)
-    ? _unicodeToArray(string)
-    : _asciiToArray(string);
+  return _hasUnicode(string) ? _unicodeToArray(string) : _asciiToArray(string);
 }
 
 var _stringToArray = stringToArray;
@@ -437,22 +449,13 @@ var _stringToArray = stringToArray;
  * @param {string} methodName The name of the \`String\` case method to use.
  * @returns {Function} Returns the new case function.
  */
+
 function createCaseFirst(methodName) {
-  return function(string) {
+  return function (string) {
     string = toString_1(string);
-
-    var strSymbols = _hasUnicode(string)
-      ? _stringToArray(string)
-      : undefined;
-
-    var chr = strSymbols
-      ? strSymbols[0]
-      : string.charAt(0);
-
-    var trailing = strSymbols
-      ? _castSlice(strSymbols, 1).join('')
-      : string.slice(1);
-
+    var strSymbols = _hasUnicode(string) ? _stringToArray(string) : undefined;
+    var chr = strSymbols ? strSymbols[0] : string.charAt(0);
+    var trailing = strSymbols ? _castSlice(strSymbols, 1).join('') : string.slice(1);
     return chr[methodName]() + trailing;
   };
 }
@@ -476,8 +479,8 @@ var _createCaseFirst = createCaseFirst;
  * _.upperFirst('FRED');
  * // => 'FRED'
  */
-var upperFirst = _createCaseFirst('toUpperCase');
 
+var upperFirst = _createCaseFirst('toUpperCase');
 var upperFirst_1 = upperFirst;
 
 /**
@@ -495,6 +498,7 @@ var upperFirst_1 = upperFirst;
  * _.capitalize('FRED');
  * // => 'Fred'
  */
+
 function capitalize(string) {
   return upperFirst_1(toString_1(string).toLowerCase());
 }
@@ -520,9 +524,11 @@ function arrayReduce(array, iteratee, accumulator, initAccum) {
   if (initAccum && length) {
     accumulator = array[++index];
   }
+
   while (++index < length) {
     accumulator = iteratee(accumulator, array[index], index, array);
   }
+
   return accumulator;
 }
 
@@ -536,7 +542,7 @@ var _arrayReduce = arrayReduce;
  * @returns {Function} Returns the new accessor function.
  */
 function basePropertyOf(object) {
-  return function(key) {
+  return function (key) {
     return object == null ? undefined : object[key];
   };
 }
@@ -544,63 +550,201 @@ function basePropertyOf(object) {
 var _basePropertyOf = basePropertyOf;
 
 /** Used to map Latin Unicode letters to basic Latin letters. */
+
 var deburredLetters = {
   // Latin-1 Supplement block.
-  '\\\\xc0': 'A',  '\\\\xc1': 'A', '\\\\xc2': 'A', '\\\\xc3': 'A', '\\\\xc4': 'A', '\\\\xc5': 'A',
-  '\\\\xe0': 'a',  '\\\\xe1': 'a', '\\\\xe2': 'a', '\\\\xe3': 'a', '\\\\xe4': 'a', '\\\\xe5': 'a',
-  '\\\\xc7': 'C',  '\\\\xe7': 'c',
-  '\\\\xd0': 'D',  '\\\\xf0': 'd',
-  '\\\\xc8': 'E',  '\\\\xc9': 'E', '\\\\xca': 'E', '\\\\xcb': 'E',
-  '\\\\xe8': 'e',  '\\\\xe9': 'e', '\\\\xea': 'e', '\\\\xeb': 'e',
-  '\\\\xcc': 'I',  '\\\\xcd': 'I', '\\\\xce': 'I', '\\\\xcf': 'I',
-  '\\\\xec': 'i',  '\\\\xed': 'i', '\\\\xee': 'i', '\\\\xef': 'i',
-  '\\\\xd1': 'N',  '\\\\xf1': 'n',
-  '\\\\xd2': 'O',  '\\\\xd3': 'O', '\\\\xd4': 'O', '\\\\xd5': 'O', '\\\\xd6': 'O', '\\\\xd8': 'O',
-  '\\\\xf2': 'o',  '\\\\xf3': 'o', '\\\\xf4': 'o', '\\\\xf5': 'o', '\\\\xf6': 'o', '\\\\xf8': 'o',
-  '\\\\xd9': 'U',  '\\\\xda': 'U', '\\\\xdb': 'U', '\\\\xdc': 'U',
-  '\\\\xf9': 'u',  '\\\\xfa': 'u', '\\\\xfb': 'u', '\\\\xfc': 'u',
-  '\\\\xdd': 'Y',  '\\\\xfd': 'y', '\\\\xff': 'y',
-  '\\\\xc6': 'Ae', '\\\\xe6': 'ae',
-  '\\\\xde': 'Th', '\\\\xfe': 'th',
+  '\\\\xc0': 'A',
+  '\\\\xc1': 'A',
+  '\\\\xc2': 'A',
+  '\\\\xc3': 'A',
+  '\\\\xc4': 'A',
+  '\\\\xc5': 'A',
+  '\\\\xe0': 'a',
+  '\\\\xe1': 'a',
+  '\\\\xe2': 'a',
+  '\\\\xe3': 'a',
+  '\\\\xe4': 'a',
+  '\\\\xe5': 'a',
+  '\\\\xc7': 'C',
+  '\\\\xe7': 'c',
+  '\\\\xd0': 'D',
+  '\\\\xf0': 'd',
+  '\\\\xc8': 'E',
+  '\\\\xc9': 'E',
+  '\\\\xca': 'E',
+  '\\\\xcb': 'E',
+  '\\\\xe8': 'e',
+  '\\\\xe9': 'e',
+  '\\\\xea': 'e',
+  '\\\\xeb': 'e',
+  '\\\\xcc': 'I',
+  '\\\\xcd': 'I',
+  '\\\\xce': 'I',
+  '\\\\xcf': 'I',
+  '\\\\xec': 'i',
+  '\\\\xed': 'i',
+  '\\\\xee': 'i',
+  '\\\\xef': 'i',
+  '\\\\xd1': 'N',
+  '\\\\xf1': 'n',
+  '\\\\xd2': 'O',
+  '\\\\xd3': 'O',
+  '\\\\xd4': 'O',
+  '\\\\xd5': 'O',
+  '\\\\xd6': 'O',
+  '\\\\xd8': 'O',
+  '\\\\xf2': 'o',
+  '\\\\xf3': 'o',
+  '\\\\xf4': 'o',
+  '\\\\xf5': 'o',
+  '\\\\xf6': 'o',
+  '\\\\xf8': 'o',
+  '\\\\xd9': 'U',
+  '\\\\xda': 'U',
+  '\\\\xdb': 'U',
+  '\\\\xdc': 'U',
+  '\\\\xf9': 'u',
+  '\\\\xfa': 'u',
+  '\\\\xfb': 'u',
+  '\\\\xfc': 'u',
+  '\\\\xdd': 'Y',
+  '\\\\xfd': 'y',
+  '\\\\xff': 'y',
+  '\\\\xc6': 'Ae',
+  '\\\\xe6': 'ae',
+  '\\\\xde': 'Th',
+  '\\\\xfe': 'th',
   '\\\\xdf': 'ss',
   // Latin Extended-A block.
-  '\\\\u0100': 'A',  '\\\\u0102': 'A', '\\\\u0104': 'A',
-  '\\\\u0101': 'a',  '\\\\u0103': 'a', '\\\\u0105': 'a',
-  '\\\\u0106': 'C',  '\\\\u0108': 'C', '\\\\u010a': 'C', '\\\\u010c': 'C',
-  '\\\\u0107': 'c',  '\\\\u0109': 'c', '\\\\u010b': 'c', '\\\\u010d': 'c',
-  '\\\\u010e': 'D',  '\\\\u0110': 'D', '\\\\u010f': 'd', '\\\\u0111': 'd',
-  '\\\\u0112': 'E',  '\\\\u0114': 'E', '\\\\u0116': 'E', '\\\\u0118': 'E', '\\\\u011a': 'E',
-  '\\\\u0113': 'e',  '\\\\u0115': 'e', '\\\\u0117': 'e', '\\\\u0119': 'e', '\\\\u011b': 'e',
-  '\\\\u011c': 'G',  '\\\\u011e': 'G', '\\\\u0120': 'G', '\\\\u0122': 'G',
-  '\\\\u011d': 'g',  '\\\\u011f': 'g', '\\\\u0121': 'g', '\\\\u0123': 'g',
-  '\\\\u0124': 'H',  '\\\\u0126': 'H', '\\\\u0125': 'h', '\\\\u0127': 'h',
-  '\\\\u0128': 'I',  '\\\\u012a': 'I', '\\\\u012c': 'I', '\\\\u012e': 'I', '\\\\u0130': 'I',
-  '\\\\u0129': 'i',  '\\\\u012b': 'i', '\\\\u012d': 'i', '\\\\u012f': 'i', '\\\\u0131': 'i',
-  '\\\\u0134': 'J',  '\\\\u0135': 'j',
-  '\\\\u0136': 'K',  '\\\\u0137': 'k', '\\\\u0138': 'k',
-  '\\\\u0139': 'L',  '\\\\u013b': 'L', '\\\\u013d': 'L', '\\\\u013f': 'L', '\\\\u0141': 'L',
-  '\\\\u013a': 'l',  '\\\\u013c': 'l', '\\\\u013e': 'l', '\\\\u0140': 'l', '\\\\u0142': 'l',
-  '\\\\u0143': 'N',  '\\\\u0145': 'N', '\\\\u0147': 'N', '\\\\u014a': 'N',
-  '\\\\u0144': 'n',  '\\\\u0146': 'n', '\\\\u0148': 'n', '\\\\u014b': 'n',
-  '\\\\u014c': 'O',  '\\\\u014e': 'O', '\\\\u0150': 'O',
-  '\\\\u014d': 'o',  '\\\\u014f': 'o', '\\\\u0151': 'o',
-  '\\\\u0154': 'R',  '\\\\u0156': 'R', '\\\\u0158': 'R',
-  '\\\\u0155': 'r',  '\\\\u0157': 'r', '\\\\u0159': 'r',
-  '\\\\u015a': 'S',  '\\\\u015c': 'S', '\\\\u015e': 'S', '\\\\u0160': 'S',
-  '\\\\u015b': 's',  '\\\\u015d': 's', '\\\\u015f': 's', '\\\\u0161': 's',
-  '\\\\u0162': 'T',  '\\\\u0164': 'T', '\\\\u0166': 'T',
-  '\\\\u0163': 't',  '\\\\u0165': 't', '\\\\u0167': 't',
-  '\\\\u0168': 'U',  '\\\\u016a': 'U', '\\\\u016c': 'U', '\\\\u016e': 'U', '\\\\u0170': 'U', '\\\\u0172': 'U',
-  '\\\\u0169': 'u',  '\\\\u016b': 'u', '\\\\u016d': 'u', '\\\\u016f': 'u', '\\\\u0171': 'u', '\\\\u0173': 'u',
-  '\\\\u0174': 'W',  '\\\\u0175': 'w',
-  '\\\\u0176': 'Y',  '\\\\u0177': 'y', '\\\\u0178': 'Y',
-  '\\\\u0179': 'Z',  '\\\\u017b': 'Z', '\\\\u017d': 'Z',
-  '\\\\u017a': 'z',  '\\\\u017c': 'z', '\\\\u017e': 'z',
-  '\\\\u0132': 'IJ', '\\\\u0133': 'ij',
-  '\\\\u0152': 'Oe', '\\\\u0153': 'oe',
-  '\\\\u0149': \\"'n\\", '\\\\u017f': 's'
+  '\\\\u0100': 'A',
+  '\\\\u0102': 'A',
+  '\\\\u0104': 'A',
+  '\\\\u0101': 'a',
+  '\\\\u0103': 'a',
+  '\\\\u0105': 'a',
+  '\\\\u0106': 'C',
+  '\\\\u0108': 'C',
+  '\\\\u010a': 'C',
+  '\\\\u010c': 'C',
+  '\\\\u0107': 'c',
+  '\\\\u0109': 'c',
+  '\\\\u010b': 'c',
+  '\\\\u010d': 'c',
+  '\\\\u010e': 'D',
+  '\\\\u0110': 'D',
+  '\\\\u010f': 'd',
+  '\\\\u0111': 'd',
+  '\\\\u0112': 'E',
+  '\\\\u0114': 'E',
+  '\\\\u0116': 'E',
+  '\\\\u0118': 'E',
+  '\\\\u011a': 'E',
+  '\\\\u0113': 'e',
+  '\\\\u0115': 'e',
+  '\\\\u0117': 'e',
+  '\\\\u0119': 'e',
+  '\\\\u011b': 'e',
+  '\\\\u011c': 'G',
+  '\\\\u011e': 'G',
+  '\\\\u0120': 'G',
+  '\\\\u0122': 'G',
+  '\\\\u011d': 'g',
+  '\\\\u011f': 'g',
+  '\\\\u0121': 'g',
+  '\\\\u0123': 'g',
+  '\\\\u0124': 'H',
+  '\\\\u0126': 'H',
+  '\\\\u0125': 'h',
+  '\\\\u0127': 'h',
+  '\\\\u0128': 'I',
+  '\\\\u012a': 'I',
+  '\\\\u012c': 'I',
+  '\\\\u012e': 'I',
+  '\\\\u0130': 'I',
+  '\\\\u0129': 'i',
+  '\\\\u012b': 'i',
+  '\\\\u012d': 'i',
+  '\\\\u012f': 'i',
+  '\\\\u0131': 'i',
+  '\\\\u0134': 'J',
+  '\\\\u0135': 'j',
+  '\\\\u0136': 'K',
+  '\\\\u0137': 'k',
+  '\\\\u0138': 'k',
+  '\\\\u0139': 'L',
+  '\\\\u013b': 'L',
+  '\\\\u013d': 'L',
+  '\\\\u013f': 'L',
+  '\\\\u0141': 'L',
+  '\\\\u013a': 'l',
+  '\\\\u013c': 'l',
+  '\\\\u013e': 'l',
+  '\\\\u0140': 'l',
+  '\\\\u0142': 'l',
+  '\\\\u0143': 'N',
+  '\\\\u0145': 'N',
+  '\\\\u0147': 'N',
+  '\\\\u014a': 'N',
+  '\\\\u0144': 'n',
+  '\\\\u0146': 'n',
+  '\\\\u0148': 'n',
+  '\\\\u014b': 'n',
+  '\\\\u014c': 'O',
+  '\\\\u014e': 'O',
+  '\\\\u0150': 'O',
+  '\\\\u014d': 'o',
+  '\\\\u014f': 'o',
+  '\\\\u0151': 'o',
+  '\\\\u0154': 'R',
+  '\\\\u0156': 'R',
+  '\\\\u0158': 'R',
+  '\\\\u0155': 'r',
+  '\\\\u0157': 'r',
+  '\\\\u0159': 'r',
+  '\\\\u015a': 'S',
+  '\\\\u015c': 'S',
+  '\\\\u015e': 'S',
+  '\\\\u0160': 'S',
+  '\\\\u015b': 's',
+  '\\\\u015d': 's',
+  '\\\\u015f': 's',
+  '\\\\u0161': 's',
+  '\\\\u0162': 'T',
+  '\\\\u0164': 'T',
+  '\\\\u0166': 'T',
+  '\\\\u0163': 't',
+  '\\\\u0165': 't',
+  '\\\\u0167': 't',
+  '\\\\u0168': 'U',
+  '\\\\u016a': 'U',
+  '\\\\u016c': 'U',
+  '\\\\u016e': 'U',
+  '\\\\u0170': 'U',
+  '\\\\u0172': 'U',
+  '\\\\u0169': 'u',
+  '\\\\u016b': 'u',
+  '\\\\u016d': 'u',
+  '\\\\u016f': 'u',
+  '\\\\u0171': 'u',
+  '\\\\u0173': 'u',
+  '\\\\u0174': 'W',
+  '\\\\u0175': 'w',
+  '\\\\u0176': 'Y',
+  '\\\\u0177': 'y',
+  '\\\\u0178': 'Y',
+  '\\\\u0179': 'Z',
+  '\\\\u017b': 'Z',
+  '\\\\u017d': 'Z',
+  '\\\\u017a': 'z',
+  '\\\\u017c': 'z',
+  '\\\\u017e': 'z',
+  '\\\\u0132': 'IJ',
+  '\\\\u0133': 'ij',
+  '\\\\u0152': 'Oe',
+  '\\\\u0153': 'oe',
+  '\\\\u0149': \\"'n\\",
+  '\\\\u017f': 's'
 };
-
 /**
  * Used by \`_.deburr\` to convert Latin-1 Supplement and Latin Extended-A
  * letters to basic Latin letters.
@@ -609,28 +753,28 @@ var deburredLetters = {
  * @param {string} letter The matched letter to deburr.
  * @returns {string} Returns the deburred letter.
  */
-var deburrLetter = _basePropertyOf(deburredLetters);
 
+var deburrLetter = _basePropertyOf(deburredLetters);
 var _deburrLetter = deburrLetter;
 
 /** Used to match Latin Unicode letters (excluding mathematical operators). */
-var reLatin = /[\\\\xc0-\\\\xd6\\\\xd8-\\\\xf6\\\\xf8-\\\\xff\\\\u0100-\\\\u017f]/g;
 
+var reLatin = /[\\\\xc0-\\\\xd6\\\\xd8-\\\\xf6\\\\xf8-\\\\xff\\\\u0100-\\\\u017f]/g;
 /** Used to compose unicode character classes. */
+
 var rsComboMarksRange$2 = '\\\\\\\\u0300-\\\\\\\\u036f',
     reComboHalfMarksRange$2 = '\\\\\\\\ufe20-\\\\\\\\ufe2f',
     rsComboSymbolsRange$2 = '\\\\\\\\u20d0-\\\\\\\\u20ff',
     rsComboRange$2 = rsComboMarksRange$2 + reComboHalfMarksRange$2 + rsComboSymbolsRange$2;
-
 /** Used to compose unicode capture groups. */
-var rsCombo$1 = '[' + rsComboRange$2 + ']';
 
+var rsCombo$1 = '[' + rsComboRange$2 + ']';
 /**
  * Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks) and
  * [combining diacritical marks for symbols](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks_for_Symbols).
  */
-var reComboMark = RegExp(rsCombo$1, 'g');
 
+var reComboMark = RegExp(rsCombo$1, 'g');
 /**
  * Deburrs \`string\` by converting
  * [Latin-1 Supplement](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
@@ -649,6 +793,7 @@ var reComboMark = RegExp(rsCombo$1, 'g');
  * _.deburr('déjà vu');
  * // => 'deja vu'
  */
+
 function deburr(string) {
   string = toString_1(string);
   return string && string.replace(reLatin, _deburrLetter).replace(reComboMark, '');
@@ -658,7 +803,6 @@ var deburr_1 = deburr;
 
 /** Used to match words composed of alphanumeric characters. */
 var reAsciiWord = /[^\\\\x00-\\\\x2f\\\\x3a-\\\\x40\\\\x5b-\\\\x60\\\\x7b-\\\\x7f]+/g;
-
 /**
  * Splits an ASCII \`string\` into an array of its words.
  *
@@ -666,6 +810,7 @@ var reAsciiWord = /[^\\\\x00-\\\\x2f\\\\x3a-\\\\x40\\\\x5b-\\\\x60\\\\x7b-\\\\x7
  * @param {string} The string to inspect.
  * @returns {Array} Returns the words of \`string\`.
  */
+
 function asciiWords(string) {
   return string.match(reAsciiWord) || [];
 }
@@ -674,7 +819,6 @@ var _asciiWords = asciiWords;
 
 /** Used to detect strings that need a more robust regexp to match words. */
 var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
-
 /**
  * Checks if \`string\` contains a word composed of Unicode symbols.
  *
@@ -682,6 +826,7 @@ var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a
  * @param {string} string The string to inspect.
  * @returns {boolean} Returns \`true\` if a word is found, else \`false\`.
  */
+
 function hasUnicodeWord(string) {
   return reHasUnicodeWord.test(string);
 }
@@ -703,8 +848,8 @@ var rsAstralRange$2 = '\\\\\\\\ud800-\\\\\\\\udfff',
     rsUpperRange = 'A-Z\\\\\\\\xc0-\\\\\\\\xd6\\\\\\\\xd8-\\\\\\\\xde',
     rsVarRange$2 = '\\\\\\\\ufe0e\\\\\\\\ufe0f',
     rsBreakRange = rsMathOpRange + rsNonCharRange + rsPunctuationRange + rsSpaceRange;
-
 /** Used to compose unicode capture groups. */
+
 var rsApos = \\"['\\\\u2019]\\",
     rsBreak = '[' + rsBreakRange + ']',
     rsCombo$2 = '[' + rsComboRange$3 + ']',
@@ -719,8 +864,8 @@ var rsApos = \\"['\\\\u2019]\\",
     rsSurrPair$1 = '[\\\\\\\\ud800-\\\\\\\\udbff][\\\\\\\\udc00-\\\\\\\\udfff]',
     rsUpper = '[' + rsUpperRange + ']',
     rsZWJ$2 = '\\\\\\\\u200d';
-
 /** Used to compose unicode regexes. */
+
 var rsMiscLower = '(?:' + rsLower + '|' + rsMisc + ')',
     rsMiscUpper = '(?:' + rsUpper + '|' + rsMisc + ')',
     rsOptContrLower = '(?:' + rsApos + '(?:d|ll|m|re|s|t|ve))?',
@@ -732,19 +877,9 @@ var rsMiscLower = '(?:' + rsLower + '|' + rsMisc + ')',
     rsOrdUpper = '\\\\\\\\d*(?:1ST|2ND|3RD|(?![123])\\\\\\\\dTH)(?=\\\\\\\\b|[a-z_])',
     rsSeq$1 = rsOptVar$1 + reOptMod$1 + rsOptJoin$1,
     rsEmoji = '(?:' + [rsDingbat, rsRegional$1, rsSurrPair$1].join('|') + ')' + rsSeq$1;
-
 /** Used to match complex or compound words. */
-var reUnicodeWord = RegExp([
-  rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
-  rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')',
-  rsUpper + '?' + rsMiscLower + '+' + rsOptContrLower,
-  rsUpper + '+' + rsOptContrUpper,
-  rsOrdUpper,
-  rsOrdLower,
-  rsDigits,
-  rsEmoji
-].join('|'), 'g');
 
+var reUnicodeWord = RegExp([rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')', rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')', rsUpper + '?' + rsMiscLower + '+' + rsOptContrLower, rsUpper + '+' + rsOptContrUpper, rsOrdUpper, rsOrdLower, rsDigits, rsEmoji].join('|'), 'g');
 /**
  * Splits a Unicode \`string\` into an array of its words.
  *
@@ -752,6 +887,7 @@ var reUnicodeWord = RegExp([
  * @param {string} The string to inspect.
  * @returns {Array} Returns the words of \`string\`.
  */
+
 function unicodeWords(string) {
   return string.match(reUnicodeWord) || [];
 }
@@ -777,6 +913,7 @@ var _unicodeWords = unicodeWords;
  * _.words('fred, barney, & pebbles', /[^, ]+/g);
  * // => ['fred', 'barney', '&', 'pebbles']
  */
+
 function words(string, pattern, guard) {
   string = toString_1(string);
   pattern = guard ? undefined : pattern;
@@ -784,17 +921,18 @@ function words(string, pattern, guard) {
   if (pattern === undefined) {
     return _hasUnicodeWord(string) ? _unicodeWords(string) : _asciiWords(string);
   }
+
   return string.match(pattern) || [];
 }
 
 var words_1 = words;
 
 /** Used to compose unicode capture groups. */
+
 var rsApos$1 = \\"['\\\\u2019]\\";
-
 /** Used to match apostrophes. */
-var reApos = RegExp(rsApos$1, 'g');
 
+var reApos = RegExp(rsApos$1, 'g');
 /**
  * Creates a function like \`_.camelCase\`.
  *
@@ -802,8 +940,9 @@ var reApos = RegExp(rsApos$1, 'g');
  * @param {Function} callback The function to combine each word.
  * @returns {Function} Returns the new compounder function.
  */
+
 function createCompounder(callback) {
-  return function(string) {
+  return function (string) {
     return _arrayReduce(words_1(deburr_1(string).replace(reApos, '')), callback, '');
   };
 }
@@ -830,11 +969,11 @@ var _createCompounder = createCompounder;
  * _.camelCase('__FOO_BAR__');
  * // => 'fooBar'
  */
-var camelCase = _createCompounder(function(result, word, index) {
+
+var camelCase = _createCompounder(function (result, word, index) {
   word = word.toLowerCase();
   return result + (index ? capitalize_1(word) : word);
 });
-
 var camelCase_1 = camelCase;
 
 function makeCamelCase(string) {
@@ -851,21 +990,21 @@ exports[`Publish Test File via Babel: esm 1`] = `
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 /** Detect free variable \`global\` from Node.js. */
-var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 var _freeGlobal = freeGlobal;
 
 /** Detect free variable \`self\`. */
+
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
 /** Used as a reference to the global object. */
-var root = _freeGlobal || freeSelf || Function('return this')();
 
+var root = _freeGlobal || freeSelf || Function('return this')();
 var _root = root;
 
 /** Built-in value references. */
-var Symbol = _root.Symbol;
 
+var Symbol = _root.Symbol;
 var _Symbol = Symbol;
 
 /**
@@ -885,6 +1024,7 @@ function arrayMap(array, iteratee) {
   while (++index < length) {
     result[index] = iteratee(array[index], index, array);
   }
+
   return result;
 }
 
@@ -914,25 +1054,24 @@ var _arrayMap = arrayMap;
  * // => false
  */
 var isArray = Array.isArray;
-
 var isArray_1 = isArray;
 
 /** Used for built-in method references. */
+
 var objectProto = Object.prototype;
-
 /** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
 
+var hasOwnProperty = objectProto.hasOwnProperty;
 /**
  * Used to resolve the
  * [\`toStringTag\`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
+
 var nativeObjectToString = objectProto.toString;
-
 /** Built-in value references. */
-var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
 
+var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
 /**
  * A specialized version of \`baseGetTag\` which ignores \`Symbol.toStringTag\` values.
  *
@@ -940,6 +1079,7 @@ var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
  * @param {*} value The value to query.
  * @returns {string} Returns the raw \`toStringTag\`.
  */
+
 function getRawTag(value) {
   var isOwn = hasOwnProperty.call(value, symToStringTag),
       tag = value[symToStringTag];
@@ -950,6 +1090,7 @@ function getRawTag(value) {
   } catch (e) {}
 
   var result = nativeObjectToString.call(value);
+
   if (unmasked) {
     if (isOwn) {
       value[symToStringTag] = tag;
@@ -957,6 +1098,7 @@ function getRawTag(value) {
       delete value[symToStringTag];
     }
   }
+
   return result;
 }
 
@@ -964,14 +1106,13 @@ var _getRawTag = getRawTag;
 
 /** Used for built-in method references. */
 var objectProto$1 = Object.prototype;
-
 /**
  * Used to resolve the
  * [\`toStringTag\`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
-var nativeObjectToString$1 = objectProto$1.toString;
 
+var nativeObjectToString$1 = objectProto$1.toString;
 /**
  * Converts \`value\` to a string using \`Object.prototype.toString\`.
  *
@@ -979,6 +1120,7 @@ var nativeObjectToString$1 = objectProto$1.toString;
  * @param {*} value The value to convert.
  * @returns {string} Returns the converted string.
  */
+
 function objectToString(value) {
   return nativeObjectToString$1.call(value);
 }
@@ -986,12 +1128,12 @@ function objectToString(value) {
 var _objectToString = objectToString;
 
 /** \`Object#toString\` result references. */
+
 var nullTag = '[object Null]',
     undefinedTag = '[object Undefined]';
-
 /** Built-in value references. */
-var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
 
+var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
 /**
  * The base implementation of \`getTag\` without fallbacks for buggy environments.
  *
@@ -999,13 +1141,13 @@ var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
  * @param {*} value The value to query.
  * @returns {string} Returns the \`toStringTag\`.
  */
+
 function baseGetTag(value) {
   if (value == null) {
     return value === undefined ? undefinedTag : nullTag;
   }
-  return (symToStringTag$1 && symToStringTag$1 in Object(value))
-    ? _getRawTag(value)
-    : _objectToString(value);
+
+  return symToStringTag$1 && symToStringTag$1 in Object(value) ? _getRawTag(value) : _objectToString(value);
 }
 
 var _baseGetTag = baseGetTag;
@@ -1041,8 +1183,8 @@ function isObjectLike(value) {
 var isObjectLike_1 = isObjectLike;
 
 /** \`Object#toString\` result references. */
-var symbolTag = '[object Symbol]';
 
+var symbolTag = '[object Symbol]';
 /**
  * Checks if \`value\` is classified as a \`Symbol\` primitive or object.
  *
@@ -1060,20 +1202,20 @@ var symbolTag = '[object Symbol]';
  * _.isSymbol('abc');
  * // => false
  */
+
 function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike_1(value) && _baseGetTag(value) == symbolTag);
+  return typeof value == 'symbol' || isObjectLike_1(value) && _baseGetTag(value) == symbolTag;
 }
 
 var isSymbol_1 = isSymbol;
 
 /** Used as references for various \`Number\` constants. */
-var INFINITY = 1 / 0;
 
+var INFINITY = 1 / 0;
 /** Used to convert symbols to primitives and strings. */
+
 var symbolProto = _Symbol ? _Symbol.prototype : undefined,
     symbolToString = symbolProto ? symbolProto.toString : undefined;
-
 /**
  * The base implementation of \`_.toString\` which doesn't convert nullish
  * values to empty strings.
@@ -1082,20 +1224,24 @@ var symbolProto = _Symbol ? _Symbol.prototype : undefined,
  * @param {*} value The value to process.
  * @returns {string} Returns the string.
  */
+
 function baseToString(value) {
   // Exit early for strings to avoid a performance hit in some environments.
   if (typeof value == 'string') {
     return value;
   }
+
   if (isArray_1(value)) {
     // Recursively convert values (susceptible to call stack limits).
     return _arrayMap(value, baseToString) + '';
   }
+
   if (isSymbol_1(value)) {
     return symbolToString ? symbolToString.call(value) : '';
   }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+
+  var result = value + '';
+  return result == '0' && 1 / value == -INFINITY ? '-0' : result;
 }
 
 var _baseToString = baseToString;
@@ -1121,6 +1267,7 @@ var _baseToString = baseToString;
  * _.toString([1, 2, 3]);
  * // => '1,2,3'
  */
+
 function toString(value) {
   return value == null ? '' : _baseToString(value);
 }
@@ -1141,19 +1288,23 @@ function baseSlice(array, start, end) {
       length = array.length;
 
   if (start < 0) {
-    start = -start > length ? 0 : (length + start);
+    start = -start > length ? 0 : length + start;
   }
+
   end = end > length ? length : end;
+
   if (end < 0) {
     end += length;
   }
-  length = start > end ? 0 : ((end - start) >>> 0);
-  start >>>= 0;
 
+  length = start > end ? 0 : end - start >>> 0;
+  start >>>= 0;
   var result = Array(length);
+
   while (++index < length) {
     result[index] = array[index + start];
   }
+
   return result;
 }
 
@@ -1168,10 +1319,11 @@ var _baseSlice = baseSlice;
  * @param {number} [end=array.length] The end position.
  * @returns {Array} Returns the cast slice.
  */
+
 function castSlice(array, start, end) {
   var length = array.length;
   end = end === undefined ? length : end;
-  return (!start && end >= length) ? array : _baseSlice(array, start, end);
+  return !start && end >= length ? array : _baseSlice(array, start, end);
 }
 
 var _castSlice = castSlice;
@@ -1183,13 +1335,12 @@ var rsAstralRange = '\\\\\\\\ud800-\\\\\\\\udfff',
     rsComboSymbolsRange = '\\\\\\\\u20d0-\\\\\\\\u20ff',
     rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
     rsVarRange = '\\\\\\\\ufe0e\\\\\\\\ufe0f';
-
 /** Used to compose unicode capture groups. */
+
 var rsZWJ = '\\\\\\\\u200d';
-
 /** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
-var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboRange + rsVarRange + ']');
 
+var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange + rsComboRange + rsVarRange + ']');
 /**
  * Checks if \`string\` contains Unicode symbols.
  *
@@ -1197,6 +1348,7 @@ var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboRange + rsVarRan
  * @param {string} string The string to inspect.
  * @returns {boolean} Returns \`true\` if a symbol is found, else \`false\`.
  */
+
 function hasUnicode(string) {
   return reHasUnicode.test(string);
 }
@@ -1223,8 +1375,8 @@ var rsAstralRange$1 = '\\\\\\\\ud800-\\\\\\\\udfff',
     rsComboSymbolsRange$1 = '\\\\\\\\u20d0-\\\\\\\\u20ff',
     rsComboRange$1 = rsComboMarksRange$1 + reComboHalfMarksRange$1 + rsComboSymbolsRange$1,
     rsVarRange$1 = '\\\\\\\\ufe0e\\\\\\\\ufe0f';
-
 /** Used to compose unicode capture groups. */
+
 var rsAstral = '[' + rsAstralRange$1 + ']',
     rsCombo = '[' + rsComboRange$1 + ']',
     rsFitz = '\\\\\\\\ud83c[\\\\\\\\udffb-\\\\\\\\udfff]',
@@ -1233,17 +1385,16 @@ var rsAstral = '[' + rsAstralRange$1 + ']',
     rsRegional = '(?:\\\\\\\\ud83c[\\\\\\\\udde6-\\\\\\\\uddff]){2}',
     rsSurrPair = '[\\\\\\\\ud800-\\\\\\\\udbff][\\\\\\\\udc00-\\\\\\\\udfff]',
     rsZWJ$1 = '\\\\\\\\u200d';
-
 /** Used to compose unicode regexes. */
+
 var reOptMod = rsModifier + '?',
     rsOptVar = '[' + rsVarRange$1 + ']?',
     rsOptJoin = '(?:' + rsZWJ$1 + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
     rsSeq = rsOptVar + reOptMod + rsOptJoin,
     rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
-
 /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
 
+var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
 /**
  * Converts a Unicode \`string\` to an array.
  *
@@ -1251,6 +1402,7 @@ var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
  * @param {string} string The string to convert.
  * @returns {Array} Returns the converted array.
  */
+
 function unicodeToArray(string) {
   return string.match(reUnicode) || [];
 }
@@ -1264,10 +1416,9 @@ var _unicodeToArray = unicodeToArray;
  * @param {string} string The string to convert.
  * @returns {Array} Returns the converted array.
  */
+
 function stringToArray(string) {
-  return _hasUnicode(string)
-    ? _unicodeToArray(string)
-    : _asciiToArray(string);
+  return _hasUnicode(string) ? _unicodeToArray(string) : _asciiToArray(string);
 }
 
 var _stringToArray = stringToArray;
@@ -1279,22 +1430,13 @@ var _stringToArray = stringToArray;
  * @param {string} methodName The name of the \`String\` case method to use.
  * @returns {Function} Returns the new case function.
  */
+
 function createCaseFirst(methodName) {
-  return function(string) {
+  return function (string) {
     string = toString_1(string);
-
-    var strSymbols = _hasUnicode(string)
-      ? _stringToArray(string)
-      : undefined;
-
-    var chr = strSymbols
-      ? strSymbols[0]
-      : string.charAt(0);
-
-    var trailing = strSymbols
-      ? _castSlice(strSymbols, 1).join('')
-      : string.slice(1);
-
+    var strSymbols = _hasUnicode(string) ? _stringToArray(string) : undefined;
+    var chr = strSymbols ? strSymbols[0] : string.charAt(0);
+    var trailing = strSymbols ? _castSlice(strSymbols, 1).join('') : string.slice(1);
     return chr[methodName]() + trailing;
   };
 }
@@ -1318,8 +1460,8 @@ var _createCaseFirst = createCaseFirst;
  * _.upperFirst('FRED');
  * // => 'FRED'
  */
-var upperFirst = _createCaseFirst('toUpperCase');
 
+var upperFirst = _createCaseFirst('toUpperCase');
 var upperFirst_1 = upperFirst;
 
 /**
@@ -1337,6 +1479,7 @@ var upperFirst_1 = upperFirst;
  * _.capitalize('FRED');
  * // => 'Fred'
  */
+
 function capitalize(string) {
   return upperFirst_1(toString_1(string).toLowerCase());
 }
@@ -1362,9 +1505,11 @@ function arrayReduce(array, iteratee, accumulator, initAccum) {
   if (initAccum && length) {
     accumulator = array[++index];
   }
+
   while (++index < length) {
     accumulator = iteratee(accumulator, array[index], index, array);
   }
+
   return accumulator;
 }
 
@@ -1378,7 +1523,7 @@ var _arrayReduce = arrayReduce;
  * @returns {Function} Returns the new accessor function.
  */
 function basePropertyOf(object) {
-  return function(key) {
+  return function (key) {
     return object == null ? undefined : object[key];
   };
 }
@@ -1386,63 +1531,201 @@ function basePropertyOf(object) {
 var _basePropertyOf = basePropertyOf;
 
 /** Used to map Latin Unicode letters to basic Latin letters. */
+
 var deburredLetters = {
   // Latin-1 Supplement block.
-  '\\\\xc0': 'A',  '\\\\xc1': 'A', '\\\\xc2': 'A', '\\\\xc3': 'A', '\\\\xc4': 'A', '\\\\xc5': 'A',
-  '\\\\xe0': 'a',  '\\\\xe1': 'a', '\\\\xe2': 'a', '\\\\xe3': 'a', '\\\\xe4': 'a', '\\\\xe5': 'a',
-  '\\\\xc7': 'C',  '\\\\xe7': 'c',
-  '\\\\xd0': 'D',  '\\\\xf0': 'd',
-  '\\\\xc8': 'E',  '\\\\xc9': 'E', '\\\\xca': 'E', '\\\\xcb': 'E',
-  '\\\\xe8': 'e',  '\\\\xe9': 'e', '\\\\xea': 'e', '\\\\xeb': 'e',
-  '\\\\xcc': 'I',  '\\\\xcd': 'I', '\\\\xce': 'I', '\\\\xcf': 'I',
-  '\\\\xec': 'i',  '\\\\xed': 'i', '\\\\xee': 'i', '\\\\xef': 'i',
-  '\\\\xd1': 'N',  '\\\\xf1': 'n',
-  '\\\\xd2': 'O',  '\\\\xd3': 'O', '\\\\xd4': 'O', '\\\\xd5': 'O', '\\\\xd6': 'O', '\\\\xd8': 'O',
-  '\\\\xf2': 'o',  '\\\\xf3': 'o', '\\\\xf4': 'o', '\\\\xf5': 'o', '\\\\xf6': 'o', '\\\\xf8': 'o',
-  '\\\\xd9': 'U',  '\\\\xda': 'U', '\\\\xdb': 'U', '\\\\xdc': 'U',
-  '\\\\xf9': 'u',  '\\\\xfa': 'u', '\\\\xfb': 'u', '\\\\xfc': 'u',
-  '\\\\xdd': 'Y',  '\\\\xfd': 'y', '\\\\xff': 'y',
-  '\\\\xc6': 'Ae', '\\\\xe6': 'ae',
-  '\\\\xde': 'Th', '\\\\xfe': 'th',
+  '\\\\xc0': 'A',
+  '\\\\xc1': 'A',
+  '\\\\xc2': 'A',
+  '\\\\xc3': 'A',
+  '\\\\xc4': 'A',
+  '\\\\xc5': 'A',
+  '\\\\xe0': 'a',
+  '\\\\xe1': 'a',
+  '\\\\xe2': 'a',
+  '\\\\xe3': 'a',
+  '\\\\xe4': 'a',
+  '\\\\xe5': 'a',
+  '\\\\xc7': 'C',
+  '\\\\xe7': 'c',
+  '\\\\xd0': 'D',
+  '\\\\xf0': 'd',
+  '\\\\xc8': 'E',
+  '\\\\xc9': 'E',
+  '\\\\xca': 'E',
+  '\\\\xcb': 'E',
+  '\\\\xe8': 'e',
+  '\\\\xe9': 'e',
+  '\\\\xea': 'e',
+  '\\\\xeb': 'e',
+  '\\\\xcc': 'I',
+  '\\\\xcd': 'I',
+  '\\\\xce': 'I',
+  '\\\\xcf': 'I',
+  '\\\\xec': 'i',
+  '\\\\xed': 'i',
+  '\\\\xee': 'i',
+  '\\\\xef': 'i',
+  '\\\\xd1': 'N',
+  '\\\\xf1': 'n',
+  '\\\\xd2': 'O',
+  '\\\\xd3': 'O',
+  '\\\\xd4': 'O',
+  '\\\\xd5': 'O',
+  '\\\\xd6': 'O',
+  '\\\\xd8': 'O',
+  '\\\\xf2': 'o',
+  '\\\\xf3': 'o',
+  '\\\\xf4': 'o',
+  '\\\\xf5': 'o',
+  '\\\\xf6': 'o',
+  '\\\\xf8': 'o',
+  '\\\\xd9': 'U',
+  '\\\\xda': 'U',
+  '\\\\xdb': 'U',
+  '\\\\xdc': 'U',
+  '\\\\xf9': 'u',
+  '\\\\xfa': 'u',
+  '\\\\xfb': 'u',
+  '\\\\xfc': 'u',
+  '\\\\xdd': 'Y',
+  '\\\\xfd': 'y',
+  '\\\\xff': 'y',
+  '\\\\xc6': 'Ae',
+  '\\\\xe6': 'ae',
+  '\\\\xde': 'Th',
+  '\\\\xfe': 'th',
   '\\\\xdf': 'ss',
   // Latin Extended-A block.
-  '\\\\u0100': 'A',  '\\\\u0102': 'A', '\\\\u0104': 'A',
-  '\\\\u0101': 'a',  '\\\\u0103': 'a', '\\\\u0105': 'a',
-  '\\\\u0106': 'C',  '\\\\u0108': 'C', '\\\\u010a': 'C', '\\\\u010c': 'C',
-  '\\\\u0107': 'c',  '\\\\u0109': 'c', '\\\\u010b': 'c', '\\\\u010d': 'c',
-  '\\\\u010e': 'D',  '\\\\u0110': 'D', '\\\\u010f': 'd', '\\\\u0111': 'd',
-  '\\\\u0112': 'E',  '\\\\u0114': 'E', '\\\\u0116': 'E', '\\\\u0118': 'E', '\\\\u011a': 'E',
-  '\\\\u0113': 'e',  '\\\\u0115': 'e', '\\\\u0117': 'e', '\\\\u0119': 'e', '\\\\u011b': 'e',
-  '\\\\u011c': 'G',  '\\\\u011e': 'G', '\\\\u0120': 'G', '\\\\u0122': 'G',
-  '\\\\u011d': 'g',  '\\\\u011f': 'g', '\\\\u0121': 'g', '\\\\u0123': 'g',
-  '\\\\u0124': 'H',  '\\\\u0126': 'H', '\\\\u0125': 'h', '\\\\u0127': 'h',
-  '\\\\u0128': 'I',  '\\\\u012a': 'I', '\\\\u012c': 'I', '\\\\u012e': 'I', '\\\\u0130': 'I',
-  '\\\\u0129': 'i',  '\\\\u012b': 'i', '\\\\u012d': 'i', '\\\\u012f': 'i', '\\\\u0131': 'i',
-  '\\\\u0134': 'J',  '\\\\u0135': 'j',
-  '\\\\u0136': 'K',  '\\\\u0137': 'k', '\\\\u0138': 'k',
-  '\\\\u0139': 'L',  '\\\\u013b': 'L', '\\\\u013d': 'L', '\\\\u013f': 'L', '\\\\u0141': 'L',
-  '\\\\u013a': 'l',  '\\\\u013c': 'l', '\\\\u013e': 'l', '\\\\u0140': 'l', '\\\\u0142': 'l',
-  '\\\\u0143': 'N',  '\\\\u0145': 'N', '\\\\u0147': 'N', '\\\\u014a': 'N',
-  '\\\\u0144': 'n',  '\\\\u0146': 'n', '\\\\u0148': 'n', '\\\\u014b': 'n',
-  '\\\\u014c': 'O',  '\\\\u014e': 'O', '\\\\u0150': 'O',
-  '\\\\u014d': 'o',  '\\\\u014f': 'o', '\\\\u0151': 'o',
-  '\\\\u0154': 'R',  '\\\\u0156': 'R', '\\\\u0158': 'R',
-  '\\\\u0155': 'r',  '\\\\u0157': 'r', '\\\\u0159': 'r',
-  '\\\\u015a': 'S',  '\\\\u015c': 'S', '\\\\u015e': 'S', '\\\\u0160': 'S',
-  '\\\\u015b': 's',  '\\\\u015d': 's', '\\\\u015f': 's', '\\\\u0161': 's',
-  '\\\\u0162': 'T',  '\\\\u0164': 'T', '\\\\u0166': 'T',
-  '\\\\u0163': 't',  '\\\\u0165': 't', '\\\\u0167': 't',
-  '\\\\u0168': 'U',  '\\\\u016a': 'U', '\\\\u016c': 'U', '\\\\u016e': 'U', '\\\\u0170': 'U', '\\\\u0172': 'U',
-  '\\\\u0169': 'u',  '\\\\u016b': 'u', '\\\\u016d': 'u', '\\\\u016f': 'u', '\\\\u0171': 'u', '\\\\u0173': 'u',
-  '\\\\u0174': 'W',  '\\\\u0175': 'w',
-  '\\\\u0176': 'Y',  '\\\\u0177': 'y', '\\\\u0178': 'Y',
-  '\\\\u0179': 'Z',  '\\\\u017b': 'Z', '\\\\u017d': 'Z',
-  '\\\\u017a': 'z',  '\\\\u017c': 'z', '\\\\u017e': 'z',
-  '\\\\u0132': 'IJ', '\\\\u0133': 'ij',
-  '\\\\u0152': 'Oe', '\\\\u0153': 'oe',
-  '\\\\u0149': \\"'n\\", '\\\\u017f': 's'
+  '\\\\u0100': 'A',
+  '\\\\u0102': 'A',
+  '\\\\u0104': 'A',
+  '\\\\u0101': 'a',
+  '\\\\u0103': 'a',
+  '\\\\u0105': 'a',
+  '\\\\u0106': 'C',
+  '\\\\u0108': 'C',
+  '\\\\u010a': 'C',
+  '\\\\u010c': 'C',
+  '\\\\u0107': 'c',
+  '\\\\u0109': 'c',
+  '\\\\u010b': 'c',
+  '\\\\u010d': 'c',
+  '\\\\u010e': 'D',
+  '\\\\u0110': 'D',
+  '\\\\u010f': 'd',
+  '\\\\u0111': 'd',
+  '\\\\u0112': 'E',
+  '\\\\u0114': 'E',
+  '\\\\u0116': 'E',
+  '\\\\u0118': 'E',
+  '\\\\u011a': 'E',
+  '\\\\u0113': 'e',
+  '\\\\u0115': 'e',
+  '\\\\u0117': 'e',
+  '\\\\u0119': 'e',
+  '\\\\u011b': 'e',
+  '\\\\u011c': 'G',
+  '\\\\u011e': 'G',
+  '\\\\u0120': 'G',
+  '\\\\u0122': 'G',
+  '\\\\u011d': 'g',
+  '\\\\u011f': 'g',
+  '\\\\u0121': 'g',
+  '\\\\u0123': 'g',
+  '\\\\u0124': 'H',
+  '\\\\u0126': 'H',
+  '\\\\u0125': 'h',
+  '\\\\u0127': 'h',
+  '\\\\u0128': 'I',
+  '\\\\u012a': 'I',
+  '\\\\u012c': 'I',
+  '\\\\u012e': 'I',
+  '\\\\u0130': 'I',
+  '\\\\u0129': 'i',
+  '\\\\u012b': 'i',
+  '\\\\u012d': 'i',
+  '\\\\u012f': 'i',
+  '\\\\u0131': 'i',
+  '\\\\u0134': 'J',
+  '\\\\u0135': 'j',
+  '\\\\u0136': 'K',
+  '\\\\u0137': 'k',
+  '\\\\u0138': 'k',
+  '\\\\u0139': 'L',
+  '\\\\u013b': 'L',
+  '\\\\u013d': 'L',
+  '\\\\u013f': 'L',
+  '\\\\u0141': 'L',
+  '\\\\u013a': 'l',
+  '\\\\u013c': 'l',
+  '\\\\u013e': 'l',
+  '\\\\u0140': 'l',
+  '\\\\u0142': 'l',
+  '\\\\u0143': 'N',
+  '\\\\u0145': 'N',
+  '\\\\u0147': 'N',
+  '\\\\u014a': 'N',
+  '\\\\u0144': 'n',
+  '\\\\u0146': 'n',
+  '\\\\u0148': 'n',
+  '\\\\u014b': 'n',
+  '\\\\u014c': 'O',
+  '\\\\u014e': 'O',
+  '\\\\u0150': 'O',
+  '\\\\u014d': 'o',
+  '\\\\u014f': 'o',
+  '\\\\u0151': 'o',
+  '\\\\u0154': 'R',
+  '\\\\u0156': 'R',
+  '\\\\u0158': 'R',
+  '\\\\u0155': 'r',
+  '\\\\u0157': 'r',
+  '\\\\u0159': 'r',
+  '\\\\u015a': 'S',
+  '\\\\u015c': 'S',
+  '\\\\u015e': 'S',
+  '\\\\u0160': 'S',
+  '\\\\u015b': 's',
+  '\\\\u015d': 's',
+  '\\\\u015f': 's',
+  '\\\\u0161': 's',
+  '\\\\u0162': 'T',
+  '\\\\u0164': 'T',
+  '\\\\u0166': 'T',
+  '\\\\u0163': 't',
+  '\\\\u0165': 't',
+  '\\\\u0167': 't',
+  '\\\\u0168': 'U',
+  '\\\\u016a': 'U',
+  '\\\\u016c': 'U',
+  '\\\\u016e': 'U',
+  '\\\\u0170': 'U',
+  '\\\\u0172': 'U',
+  '\\\\u0169': 'u',
+  '\\\\u016b': 'u',
+  '\\\\u016d': 'u',
+  '\\\\u016f': 'u',
+  '\\\\u0171': 'u',
+  '\\\\u0173': 'u',
+  '\\\\u0174': 'W',
+  '\\\\u0175': 'w',
+  '\\\\u0176': 'Y',
+  '\\\\u0177': 'y',
+  '\\\\u0178': 'Y',
+  '\\\\u0179': 'Z',
+  '\\\\u017b': 'Z',
+  '\\\\u017d': 'Z',
+  '\\\\u017a': 'z',
+  '\\\\u017c': 'z',
+  '\\\\u017e': 'z',
+  '\\\\u0132': 'IJ',
+  '\\\\u0133': 'ij',
+  '\\\\u0152': 'Oe',
+  '\\\\u0153': 'oe',
+  '\\\\u0149': \\"'n\\",
+  '\\\\u017f': 's'
 };
-
 /**
  * Used by \`_.deburr\` to convert Latin-1 Supplement and Latin Extended-A
  * letters to basic Latin letters.
@@ -1451,28 +1734,28 @@ var deburredLetters = {
  * @param {string} letter The matched letter to deburr.
  * @returns {string} Returns the deburred letter.
  */
-var deburrLetter = _basePropertyOf(deburredLetters);
 
+var deburrLetter = _basePropertyOf(deburredLetters);
 var _deburrLetter = deburrLetter;
 
 /** Used to match Latin Unicode letters (excluding mathematical operators). */
-var reLatin = /[\\\\xc0-\\\\xd6\\\\xd8-\\\\xf6\\\\xf8-\\\\xff\\\\u0100-\\\\u017f]/g;
 
+var reLatin = /[\\\\xc0-\\\\xd6\\\\xd8-\\\\xf6\\\\xf8-\\\\xff\\\\u0100-\\\\u017f]/g;
 /** Used to compose unicode character classes. */
+
 var rsComboMarksRange$2 = '\\\\\\\\u0300-\\\\\\\\u036f',
     reComboHalfMarksRange$2 = '\\\\\\\\ufe20-\\\\\\\\ufe2f',
     rsComboSymbolsRange$2 = '\\\\\\\\u20d0-\\\\\\\\u20ff',
     rsComboRange$2 = rsComboMarksRange$2 + reComboHalfMarksRange$2 + rsComboSymbolsRange$2;
-
 /** Used to compose unicode capture groups. */
-var rsCombo$1 = '[' + rsComboRange$2 + ']';
 
+var rsCombo$1 = '[' + rsComboRange$2 + ']';
 /**
  * Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks) and
  * [combining diacritical marks for symbols](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks_for_Symbols).
  */
-var reComboMark = RegExp(rsCombo$1, 'g');
 
+var reComboMark = RegExp(rsCombo$1, 'g');
 /**
  * Deburrs \`string\` by converting
  * [Latin-1 Supplement](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
@@ -1491,6 +1774,7 @@ var reComboMark = RegExp(rsCombo$1, 'g');
  * _.deburr('déjà vu');
  * // => 'deja vu'
  */
+
 function deburr(string) {
   string = toString_1(string);
   return string && string.replace(reLatin, _deburrLetter).replace(reComboMark, '');
@@ -1500,7 +1784,6 @@ var deburr_1 = deburr;
 
 /** Used to match words composed of alphanumeric characters. */
 var reAsciiWord = /[^\\\\x00-\\\\x2f\\\\x3a-\\\\x40\\\\x5b-\\\\x60\\\\x7b-\\\\x7f]+/g;
-
 /**
  * Splits an ASCII \`string\` into an array of its words.
  *
@@ -1508,6 +1791,7 @@ var reAsciiWord = /[^\\\\x00-\\\\x2f\\\\x3a-\\\\x40\\\\x5b-\\\\x60\\\\x7b-\\\\x7
  * @param {string} The string to inspect.
  * @returns {Array} Returns the words of \`string\`.
  */
+
 function asciiWords(string) {
   return string.match(reAsciiWord) || [];
 }
@@ -1516,7 +1800,6 @@ var _asciiWords = asciiWords;
 
 /** Used to detect strings that need a more robust regexp to match words. */
 var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
-
 /**
  * Checks if \`string\` contains a word composed of Unicode symbols.
  *
@@ -1524,6 +1807,7 @@ var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a
  * @param {string} string The string to inspect.
  * @returns {boolean} Returns \`true\` if a word is found, else \`false\`.
  */
+
 function hasUnicodeWord(string) {
   return reHasUnicodeWord.test(string);
 }
@@ -1545,8 +1829,8 @@ var rsAstralRange$2 = '\\\\\\\\ud800-\\\\\\\\udfff',
     rsUpperRange = 'A-Z\\\\\\\\xc0-\\\\\\\\xd6\\\\\\\\xd8-\\\\\\\\xde',
     rsVarRange$2 = '\\\\\\\\ufe0e\\\\\\\\ufe0f',
     rsBreakRange = rsMathOpRange + rsNonCharRange + rsPunctuationRange + rsSpaceRange;
-
 /** Used to compose unicode capture groups. */
+
 var rsApos = \\"['\\\\u2019]\\",
     rsBreak = '[' + rsBreakRange + ']',
     rsCombo$2 = '[' + rsComboRange$3 + ']',
@@ -1561,8 +1845,8 @@ var rsApos = \\"['\\\\u2019]\\",
     rsSurrPair$1 = '[\\\\\\\\ud800-\\\\\\\\udbff][\\\\\\\\udc00-\\\\\\\\udfff]',
     rsUpper = '[' + rsUpperRange + ']',
     rsZWJ$2 = '\\\\\\\\u200d';
-
 /** Used to compose unicode regexes. */
+
 var rsMiscLower = '(?:' + rsLower + '|' + rsMisc + ')',
     rsMiscUpper = '(?:' + rsUpper + '|' + rsMisc + ')',
     rsOptContrLower = '(?:' + rsApos + '(?:d|ll|m|re|s|t|ve))?',
@@ -1574,19 +1858,9 @@ var rsMiscLower = '(?:' + rsLower + '|' + rsMisc + ')',
     rsOrdUpper = '\\\\\\\\d*(?:1ST|2ND|3RD|(?![123])\\\\\\\\dTH)(?=\\\\\\\\b|[a-z_])',
     rsSeq$1 = rsOptVar$1 + reOptMod$1 + rsOptJoin$1,
     rsEmoji = '(?:' + [rsDingbat, rsRegional$1, rsSurrPair$1].join('|') + ')' + rsSeq$1;
-
 /** Used to match complex or compound words. */
-var reUnicodeWord = RegExp([
-  rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
-  rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')',
-  rsUpper + '?' + rsMiscLower + '+' + rsOptContrLower,
-  rsUpper + '+' + rsOptContrUpper,
-  rsOrdUpper,
-  rsOrdLower,
-  rsDigits,
-  rsEmoji
-].join('|'), 'g');
 
+var reUnicodeWord = RegExp([rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')', rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')', rsUpper + '?' + rsMiscLower + '+' + rsOptContrLower, rsUpper + '+' + rsOptContrUpper, rsOrdUpper, rsOrdLower, rsDigits, rsEmoji].join('|'), 'g');
 /**
  * Splits a Unicode \`string\` into an array of its words.
  *
@@ -1594,6 +1868,7 @@ var reUnicodeWord = RegExp([
  * @param {string} The string to inspect.
  * @returns {Array} Returns the words of \`string\`.
  */
+
 function unicodeWords(string) {
   return string.match(reUnicodeWord) || [];
 }
@@ -1619,6 +1894,7 @@ var _unicodeWords = unicodeWords;
  * _.words('fred, barney, & pebbles', /[^, ]+/g);
  * // => ['fred', 'barney', '&', 'pebbles']
  */
+
 function words(string, pattern, guard) {
   string = toString_1(string);
   pattern = guard ? undefined : pattern;
@@ -1626,17 +1902,18 @@ function words(string, pattern, guard) {
   if (pattern === undefined) {
     return _hasUnicodeWord(string) ? _unicodeWords(string) : _asciiWords(string);
   }
+
   return string.match(pattern) || [];
 }
 
 var words_1 = words;
 
 /** Used to compose unicode capture groups. */
+
 var rsApos$1 = \\"['\\\\u2019]\\";
-
 /** Used to match apostrophes. */
-var reApos = RegExp(rsApos$1, 'g');
 
+var reApos = RegExp(rsApos$1, 'g');
 /**
  * Creates a function like \`_.camelCase\`.
  *
@@ -1644,8 +1921,9 @@ var reApos = RegExp(rsApos$1, 'g');
  * @param {Function} callback The function to combine each word.
  * @returns {Function} Returns the new compounder function.
  */
+
 function createCompounder(callback) {
-  return function(string) {
+  return function (string) {
     return _arrayReduce(words_1(deburr_1(string).replace(reApos, '')), callback, '');
   };
 }
@@ -1672,11 +1950,11 @@ var _createCompounder = createCompounder;
  * _.camelCase('__FOO_BAR__');
  * // => 'fooBar'
  */
-var camelCase = _createCompounder(function(result, word, index) {
+
+var camelCase = _createCompounder(function (result, word, index) {
   word = word.toLowerCase();
   return result + (index ? capitalize_1(word) : word);
 });
-
 var camelCase_1 = camelCase;
 
 function makeCamelCase(string) {
@@ -1699,21 +1977,21 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 	/** Detect free variable \`global\` from Node.js. */
-	var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 
+	var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 	var _freeGlobal = freeGlobal;
 
 	/** Detect free variable \`self\`. */
+
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
 	/** Used as a reference to the global object. */
-	var root = _freeGlobal || freeSelf || Function('return this')();
 
+	var root = _freeGlobal || freeSelf || Function('return this')();
 	var _root = root;
 
 	/** Built-in value references. */
-	var Symbol = _root.Symbol;
 
+	var Symbol = _root.Symbol;
 	var _Symbol = Symbol;
 
 	/**
@@ -1733,6 +2011,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  while (++index < length) {
 	    result[index] = iteratee(array[index], index, array);
 	  }
+
 	  return result;
 	}
 
@@ -1762,25 +2041,24 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * // => false
 	 */
 	var isArray = Array.isArray;
-
 	var isArray_1 = isArray;
 
 	/** Used for built-in method references. */
+
 	var objectProto = Object.prototype;
-
 	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
 
+	var hasOwnProperty = objectProto.hasOwnProperty;
 	/**
 	 * Used to resolve the
 	 * [\`toStringTag\`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
 	 * of values.
 	 */
+
 	var nativeObjectToString = objectProto.toString;
-
 	/** Built-in value references. */
-	var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
 
+	var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
 	/**
 	 * A specialized version of \`baseGetTag\` which ignores \`Symbol.toStringTag\` values.
 	 *
@@ -1788,6 +2066,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {*} value The value to query.
 	 * @returns {string} Returns the raw \`toStringTag\`.
 	 */
+
 	function getRawTag(value) {
 	  var isOwn = hasOwnProperty.call(value, symToStringTag),
 	      tag = value[symToStringTag];
@@ -1798,6 +2077,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  } catch (e) {}
 
 	  var result = nativeObjectToString.call(value);
+
 	  if (unmasked) {
 	    if (isOwn) {
 	      value[symToStringTag] = tag;
@@ -1805,6 +2085,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	      delete value[symToStringTag];
 	    }
 	  }
+
 	  return result;
 	}
 
@@ -1812,14 +2093,13 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	/** Used for built-in method references. */
 	var objectProto$1 = Object.prototype;
-
 	/**
 	 * Used to resolve the
 	 * [\`toStringTag\`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
 	 * of values.
 	 */
-	var nativeObjectToString$1 = objectProto$1.toString;
 
+	var nativeObjectToString$1 = objectProto$1.toString;
 	/**
 	 * Converts \`value\` to a string using \`Object.prototype.toString\`.
 	 *
@@ -1827,6 +2107,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {*} value The value to convert.
 	 * @returns {string} Returns the converted string.
 	 */
+
 	function objectToString(value) {
 	  return nativeObjectToString$1.call(value);
 	}
@@ -1834,12 +2115,12 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	var _objectToString = objectToString;
 
 	/** \`Object#toString\` result references. */
+
 	var nullTag = '[object Null]',
 	    undefinedTag = '[object Undefined]';
-
 	/** Built-in value references. */
-	var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
 
+	var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
 	/**
 	 * The base implementation of \`getTag\` without fallbacks for buggy environments.
 	 *
@@ -1847,13 +2128,13 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {*} value The value to query.
 	 * @returns {string} Returns the \`toStringTag\`.
 	 */
+
 	function baseGetTag(value) {
 	  if (value == null) {
 	    return value === undefined ? undefinedTag : nullTag;
 	  }
-	  return (symToStringTag$1 && symToStringTag$1 in Object(value))
-	    ? _getRawTag(value)
-	    : _objectToString(value);
+
+	  return symToStringTag$1 && symToStringTag$1 in Object(value) ? _getRawTag(value) : _objectToString(value);
 	}
 
 	var _baseGetTag = baseGetTag;
@@ -1889,8 +2170,8 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	var isObjectLike_1 = isObjectLike;
 
 	/** \`Object#toString\` result references. */
-	var symbolTag = '[object Symbol]';
 
+	var symbolTag = '[object Symbol]';
 	/**
 	 * Checks if \`value\` is classified as a \`Symbol\` primitive or object.
 	 *
@@ -1908,20 +2189,20 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * _.isSymbol('abc');
 	 * // => false
 	 */
+
 	function isSymbol(value) {
-	  return typeof value == 'symbol' ||
-	    (isObjectLike_1(value) && _baseGetTag(value) == symbolTag);
+	  return typeof value == 'symbol' || isObjectLike_1(value) && _baseGetTag(value) == symbolTag;
 	}
 
 	var isSymbol_1 = isSymbol;
 
 	/** Used as references for various \`Number\` constants. */
-	var INFINITY = 1 / 0;
 
+	var INFINITY = 1 / 0;
 	/** Used to convert symbols to primitives and strings. */
+
 	var symbolProto = _Symbol ? _Symbol.prototype : undefined,
 	    symbolToString = symbolProto ? symbolProto.toString : undefined;
-
 	/**
 	 * The base implementation of \`_.toString\` which doesn't convert nullish
 	 * values to empty strings.
@@ -1930,20 +2211,24 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {*} value The value to process.
 	 * @returns {string} Returns the string.
 	 */
+
 	function baseToString(value) {
 	  // Exit early for strings to avoid a performance hit in some environments.
 	  if (typeof value == 'string') {
 	    return value;
 	  }
+
 	  if (isArray_1(value)) {
 	    // Recursively convert values (susceptible to call stack limits).
 	    return _arrayMap(value, baseToString) + '';
 	  }
+
 	  if (isSymbol_1(value)) {
 	    return symbolToString ? symbolToString.call(value) : '';
 	  }
-	  var result = (value + '');
-	  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+
+	  var result = value + '';
+	  return result == '0' && 1 / value == -INFINITY ? '-0' : result;
 	}
 
 	var _baseToString = baseToString;
@@ -1969,6 +2254,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * _.toString([1, 2, 3]);
 	 * // => '1,2,3'
 	 */
+
 	function toString(value) {
 	  return value == null ? '' : _baseToString(value);
 	}
@@ -1989,19 +2275,23 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	      length = array.length;
 
 	  if (start < 0) {
-	    start = -start > length ? 0 : (length + start);
+	    start = -start > length ? 0 : length + start;
 	  }
+
 	  end = end > length ? length : end;
+
 	  if (end < 0) {
 	    end += length;
 	  }
-	  length = start > end ? 0 : ((end - start) >>> 0);
-	  start >>>= 0;
 
+	  length = start > end ? 0 : end - start >>> 0;
+	  start >>>= 0;
 	  var result = Array(length);
+
 	  while (++index < length) {
 	    result[index] = array[index + start];
 	  }
+
 	  return result;
 	}
 
@@ -2016,10 +2306,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {number} [end=array.length] The end position.
 	 * @returns {Array} Returns the cast slice.
 	 */
+
 	function castSlice(array, start, end) {
 	  var length = array.length;
 	  end = end === undefined ? length : end;
-	  return (!start && end >= length) ? array : _baseSlice(array, start, end);
+	  return !start && end >= length ? array : _baseSlice(array, start, end);
 	}
 
 	var _castSlice = castSlice;
@@ -2031,13 +2322,12 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	    rsComboSymbolsRange = '\\\\\\\\u20d0-\\\\\\\\u20ff',
 	    rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
 	    rsVarRange = '\\\\\\\\ufe0e\\\\\\\\ufe0f';
-
 	/** Used to compose unicode capture groups. */
+
 	var rsZWJ = '\\\\\\\\u200d';
-
 	/** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
-	var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboRange + rsVarRange + ']');
 
+	var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange + rsComboRange + rsVarRange + ']');
 	/**
 	 * Checks if \`string\` contains Unicode symbols.
 	 *
@@ -2045,6 +2335,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {string} string The string to inspect.
 	 * @returns {boolean} Returns \`true\` if a symbol is found, else \`false\`.
 	 */
+
 	function hasUnicode(string) {
 	  return reHasUnicode.test(string);
 	}
@@ -2071,8 +2362,8 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	    rsComboSymbolsRange$1 = '\\\\\\\\u20d0-\\\\\\\\u20ff',
 	    rsComboRange$1 = rsComboMarksRange$1 + reComboHalfMarksRange$1 + rsComboSymbolsRange$1,
 	    rsVarRange$1 = '\\\\\\\\ufe0e\\\\\\\\ufe0f';
-
 	/** Used to compose unicode capture groups. */
+
 	var rsAstral = '[' + rsAstralRange$1 + ']',
 	    rsCombo = '[' + rsComboRange$1 + ']',
 	    rsFitz = '\\\\\\\\ud83c[\\\\\\\\udffb-\\\\\\\\udfff]',
@@ -2081,17 +2372,16 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	    rsRegional = '(?:\\\\\\\\ud83c[\\\\\\\\udde6-\\\\\\\\uddff]){2}',
 	    rsSurrPair = '[\\\\\\\\ud800-\\\\\\\\udbff][\\\\\\\\udc00-\\\\\\\\udfff]',
 	    rsZWJ$1 = '\\\\\\\\u200d';
-
 	/** Used to compose unicode regexes. */
+
 	var reOptMod = rsModifier + '?',
 	    rsOptVar = '[' + rsVarRange$1 + ']?',
 	    rsOptJoin = '(?:' + rsZWJ$1 + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
 	    rsSeq = rsOptVar + reOptMod + rsOptJoin,
 	    rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
-
 	/** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-	var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
 
+	var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
 	/**
 	 * Converts a Unicode \`string\` to an array.
 	 *
@@ -2099,6 +2389,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {string} string The string to convert.
 	 * @returns {Array} Returns the converted array.
 	 */
+
 	function unicodeToArray(string) {
 	  return string.match(reUnicode) || [];
 	}
@@ -2112,10 +2403,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {string} string The string to convert.
 	 * @returns {Array} Returns the converted array.
 	 */
+
 	function stringToArray(string) {
-	  return _hasUnicode(string)
-	    ? _unicodeToArray(string)
-	    : _asciiToArray(string);
+	  return _hasUnicode(string) ? _unicodeToArray(string) : _asciiToArray(string);
 	}
 
 	var _stringToArray = stringToArray;
@@ -2127,22 +2417,13 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {string} methodName The name of the \`String\` case method to use.
 	 * @returns {Function} Returns the new case function.
 	 */
+
 	function createCaseFirst(methodName) {
-	  return function(string) {
+	  return function (string) {
 	    string = toString_1(string);
-
-	    var strSymbols = _hasUnicode(string)
-	      ? _stringToArray(string)
-	      : undefined;
-
-	    var chr = strSymbols
-	      ? strSymbols[0]
-	      : string.charAt(0);
-
-	    var trailing = strSymbols
-	      ? _castSlice(strSymbols, 1).join('')
-	      : string.slice(1);
-
+	    var strSymbols = _hasUnicode(string) ? _stringToArray(string) : undefined;
+	    var chr = strSymbols ? strSymbols[0] : string.charAt(0);
+	    var trailing = strSymbols ? _castSlice(strSymbols, 1).join('') : string.slice(1);
 	    return chr[methodName]() + trailing;
 	  };
 	}
@@ -2166,8 +2447,8 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * _.upperFirst('FRED');
 	 * // => 'FRED'
 	 */
-	var upperFirst = _createCaseFirst('toUpperCase');
 
+	var upperFirst = _createCaseFirst('toUpperCase');
 	var upperFirst_1 = upperFirst;
 
 	/**
@@ -2185,6 +2466,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * _.capitalize('FRED');
 	 * // => 'Fred'
 	 */
+
 	function capitalize(string) {
 	  return upperFirst_1(toString_1(string).toLowerCase());
 	}
@@ -2210,9 +2492,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  if (initAccum && length) {
 	    accumulator = array[++index];
 	  }
+
 	  while (++index < length) {
 	    accumulator = iteratee(accumulator, array[index], index, array);
 	  }
+
 	  return accumulator;
 	}
 
@@ -2226,7 +2510,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {Function} Returns the new accessor function.
 	 */
 	function basePropertyOf(object) {
-	  return function(key) {
+	  return function (key) {
 	    return object == null ? undefined : object[key];
 	  };
 	}
@@ -2234,63 +2518,201 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	var _basePropertyOf = basePropertyOf;
 
 	/** Used to map Latin Unicode letters to basic Latin letters. */
+
 	var deburredLetters = {
 	  // Latin-1 Supplement block.
-	  '\\\\xc0': 'A',  '\\\\xc1': 'A', '\\\\xc2': 'A', '\\\\xc3': 'A', '\\\\xc4': 'A', '\\\\xc5': 'A',
-	  '\\\\xe0': 'a',  '\\\\xe1': 'a', '\\\\xe2': 'a', '\\\\xe3': 'a', '\\\\xe4': 'a', '\\\\xe5': 'a',
-	  '\\\\xc7': 'C',  '\\\\xe7': 'c',
-	  '\\\\xd0': 'D',  '\\\\xf0': 'd',
-	  '\\\\xc8': 'E',  '\\\\xc9': 'E', '\\\\xca': 'E', '\\\\xcb': 'E',
-	  '\\\\xe8': 'e',  '\\\\xe9': 'e', '\\\\xea': 'e', '\\\\xeb': 'e',
-	  '\\\\xcc': 'I',  '\\\\xcd': 'I', '\\\\xce': 'I', '\\\\xcf': 'I',
-	  '\\\\xec': 'i',  '\\\\xed': 'i', '\\\\xee': 'i', '\\\\xef': 'i',
-	  '\\\\xd1': 'N',  '\\\\xf1': 'n',
-	  '\\\\xd2': 'O',  '\\\\xd3': 'O', '\\\\xd4': 'O', '\\\\xd5': 'O', '\\\\xd6': 'O', '\\\\xd8': 'O',
-	  '\\\\xf2': 'o',  '\\\\xf3': 'o', '\\\\xf4': 'o', '\\\\xf5': 'o', '\\\\xf6': 'o', '\\\\xf8': 'o',
-	  '\\\\xd9': 'U',  '\\\\xda': 'U', '\\\\xdb': 'U', '\\\\xdc': 'U',
-	  '\\\\xf9': 'u',  '\\\\xfa': 'u', '\\\\xfb': 'u', '\\\\xfc': 'u',
-	  '\\\\xdd': 'Y',  '\\\\xfd': 'y', '\\\\xff': 'y',
-	  '\\\\xc6': 'Ae', '\\\\xe6': 'ae',
-	  '\\\\xde': 'Th', '\\\\xfe': 'th',
+	  '\\\\xc0': 'A',
+	  '\\\\xc1': 'A',
+	  '\\\\xc2': 'A',
+	  '\\\\xc3': 'A',
+	  '\\\\xc4': 'A',
+	  '\\\\xc5': 'A',
+	  '\\\\xe0': 'a',
+	  '\\\\xe1': 'a',
+	  '\\\\xe2': 'a',
+	  '\\\\xe3': 'a',
+	  '\\\\xe4': 'a',
+	  '\\\\xe5': 'a',
+	  '\\\\xc7': 'C',
+	  '\\\\xe7': 'c',
+	  '\\\\xd0': 'D',
+	  '\\\\xf0': 'd',
+	  '\\\\xc8': 'E',
+	  '\\\\xc9': 'E',
+	  '\\\\xca': 'E',
+	  '\\\\xcb': 'E',
+	  '\\\\xe8': 'e',
+	  '\\\\xe9': 'e',
+	  '\\\\xea': 'e',
+	  '\\\\xeb': 'e',
+	  '\\\\xcc': 'I',
+	  '\\\\xcd': 'I',
+	  '\\\\xce': 'I',
+	  '\\\\xcf': 'I',
+	  '\\\\xec': 'i',
+	  '\\\\xed': 'i',
+	  '\\\\xee': 'i',
+	  '\\\\xef': 'i',
+	  '\\\\xd1': 'N',
+	  '\\\\xf1': 'n',
+	  '\\\\xd2': 'O',
+	  '\\\\xd3': 'O',
+	  '\\\\xd4': 'O',
+	  '\\\\xd5': 'O',
+	  '\\\\xd6': 'O',
+	  '\\\\xd8': 'O',
+	  '\\\\xf2': 'o',
+	  '\\\\xf3': 'o',
+	  '\\\\xf4': 'o',
+	  '\\\\xf5': 'o',
+	  '\\\\xf6': 'o',
+	  '\\\\xf8': 'o',
+	  '\\\\xd9': 'U',
+	  '\\\\xda': 'U',
+	  '\\\\xdb': 'U',
+	  '\\\\xdc': 'U',
+	  '\\\\xf9': 'u',
+	  '\\\\xfa': 'u',
+	  '\\\\xfb': 'u',
+	  '\\\\xfc': 'u',
+	  '\\\\xdd': 'Y',
+	  '\\\\xfd': 'y',
+	  '\\\\xff': 'y',
+	  '\\\\xc6': 'Ae',
+	  '\\\\xe6': 'ae',
+	  '\\\\xde': 'Th',
+	  '\\\\xfe': 'th',
 	  '\\\\xdf': 'ss',
 	  // Latin Extended-A block.
-	  '\\\\u0100': 'A',  '\\\\u0102': 'A', '\\\\u0104': 'A',
-	  '\\\\u0101': 'a',  '\\\\u0103': 'a', '\\\\u0105': 'a',
-	  '\\\\u0106': 'C',  '\\\\u0108': 'C', '\\\\u010a': 'C', '\\\\u010c': 'C',
-	  '\\\\u0107': 'c',  '\\\\u0109': 'c', '\\\\u010b': 'c', '\\\\u010d': 'c',
-	  '\\\\u010e': 'D',  '\\\\u0110': 'D', '\\\\u010f': 'd', '\\\\u0111': 'd',
-	  '\\\\u0112': 'E',  '\\\\u0114': 'E', '\\\\u0116': 'E', '\\\\u0118': 'E', '\\\\u011a': 'E',
-	  '\\\\u0113': 'e',  '\\\\u0115': 'e', '\\\\u0117': 'e', '\\\\u0119': 'e', '\\\\u011b': 'e',
-	  '\\\\u011c': 'G',  '\\\\u011e': 'G', '\\\\u0120': 'G', '\\\\u0122': 'G',
-	  '\\\\u011d': 'g',  '\\\\u011f': 'g', '\\\\u0121': 'g', '\\\\u0123': 'g',
-	  '\\\\u0124': 'H',  '\\\\u0126': 'H', '\\\\u0125': 'h', '\\\\u0127': 'h',
-	  '\\\\u0128': 'I',  '\\\\u012a': 'I', '\\\\u012c': 'I', '\\\\u012e': 'I', '\\\\u0130': 'I',
-	  '\\\\u0129': 'i',  '\\\\u012b': 'i', '\\\\u012d': 'i', '\\\\u012f': 'i', '\\\\u0131': 'i',
-	  '\\\\u0134': 'J',  '\\\\u0135': 'j',
-	  '\\\\u0136': 'K',  '\\\\u0137': 'k', '\\\\u0138': 'k',
-	  '\\\\u0139': 'L',  '\\\\u013b': 'L', '\\\\u013d': 'L', '\\\\u013f': 'L', '\\\\u0141': 'L',
-	  '\\\\u013a': 'l',  '\\\\u013c': 'l', '\\\\u013e': 'l', '\\\\u0140': 'l', '\\\\u0142': 'l',
-	  '\\\\u0143': 'N',  '\\\\u0145': 'N', '\\\\u0147': 'N', '\\\\u014a': 'N',
-	  '\\\\u0144': 'n',  '\\\\u0146': 'n', '\\\\u0148': 'n', '\\\\u014b': 'n',
-	  '\\\\u014c': 'O',  '\\\\u014e': 'O', '\\\\u0150': 'O',
-	  '\\\\u014d': 'o',  '\\\\u014f': 'o', '\\\\u0151': 'o',
-	  '\\\\u0154': 'R',  '\\\\u0156': 'R', '\\\\u0158': 'R',
-	  '\\\\u0155': 'r',  '\\\\u0157': 'r', '\\\\u0159': 'r',
-	  '\\\\u015a': 'S',  '\\\\u015c': 'S', '\\\\u015e': 'S', '\\\\u0160': 'S',
-	  '\\\\u015b': 's',  '\\\\u015d': 's', '\\\\u015f': 's', '\\\\u0161': 's',
-	  '\\\\u0162': 'T',  '\\\\u0164': 'T', '\\\\u0166': 'T',
-	  '\\\\u0163': 't',  '\\\\u0165': 't', '\\\\u0167': 't',
-	  '\\\\u0168': 'U',  '\\\\u016a': 'U', '\\\\u016c': 'U', '\\\\u016e': 'U', '\\\\u0170': 'U', '\\\\u0172': 'U',
-	  '\\\\u0169': 'u',  '\\\\u016b': 'u', '\\\\u016d': 'u', '\\\\u016f': 'u', '\\\\u0171': 'u', '\\\\u0173': 'u',
-	  '\\\\u0174': 'W',  '\\\\u0175': 'w',
-	  '\\\\u0176': 'Y',  '\\\\u0177': 'y', '\\\\u0178': 'Y',
-	  '\\\\u0179': 'Z',  '\\\\u017b': 'Z', '\\\\u017d': 'Z',
-	  '\\\\u017a': 'z',  '\\\\u017c': 'z', '\\\\u017e': 'z',
-	  '\\\\u0132': 'IJ', '\\\\u0133': 'ij',
-	  '\\\\u0152': 'Oe', '\\\\u0153': 'oe',
-	  '\\\\u0149': \\"'n\\", '\\\\u017f': 's'
+	  '\\\\u0100': 'A',
+	  '\\\\u0102': 'A',
+	  '\\\\u0104': 'A',
+	  '\\\\u0101': 'a',
+	  '\\\\u0103': 'a',
+	  '\\\\u0105': 'a',
+	  '\\\\u0106': 'C',
+	  '\\\\u0108': 'C',
+	  '\\\\u010a': 'C',
+	  '\\\\u010c': 'C',
+	  '\\\\u0107': 'c',
+	  '\\\\u0109': 'c',
+	  '\\\\u010b': 'c',
+	  '\\\\u010d': 'c',
+	  '\\\\u010e': 'D',
+	  '\\\\u0110': 'D',
+	  '\\\\u010f': 'd',
+	  '\\\\u0111': 'd',
+	  '\\\\u0112': 'E',
+	  '\\\\u0114': 'E',
+	  '\\\\u0116': 'E',
+	  '\\\\u0118': 'E',
+	  '\\\\u011a': 'E',
+	  '\\\\u0113': 'e',
+	  '\\\\u0115': 'e',
+	  '\\\\u0117': 'e',
+	  '\\\\u0119': 'e',
+	  '\\\\u011b': 'e',
+	  '\\\\u011c': 'G',
+	  '\\\\u011e': 'G',
+	  '\\\\u0120': 'G',
+	  '\\\\u0122': 'G',
+	  '\\\\u011d': 'g',
+	  '\\\\u011f': 'g',
+	  '\\\\u0121': 'g',
+	  '\\\\u0123': 'g',
+	  '\\\\u0124': 'H',
+	  '\\\\u0126': 'H',
+	  '\\\\u0125': 'h',
+	  '\\\\u0127': 'h',
+	  '\\\\u0128': 'I',
+	  '\\\\u012a': 'I',
+	  '\\\\u012c': 'I',
+	  '\\\\u012e': 'I',
+	  '\\\\u0130': 'I',
+	  '\\\\u0129': 'i',
+	  '\\\\u012b': 'i',
+	  '\\\\u012d': 'i',
+	  '\\\\u012f': 'i',
+	  '\\\\u0131': 'i',
+	  '\\\\u0134': 'J',
+	  '\\\\u0135': 'j',
+	  '\\\\u0136': 'K',
+	  '\\\\u0137': 'k',
+	  '\\\\u0138': 'k',
+	  '\\\\u0139': 'L',
+	  '\\\\u013b': 'L',
+	  '\\\\u013d': 'L',
+	  '\\\\u013f': 'L',
+	  '\\\\u0141': 'L',
+	  '\\\\u013a': 'l',
+	  '\\\\u013c': 'l',
+	  '\\\\u013e': 'l',
+	  '\\\\u0140': 'l',
+	  '\\\\u0142': 'l',
+	  '\\\\u0143': 'N',
+	  '\\\\u0145': 'N',
+	  '\\\\u0147': 'N',
+	  '\\\\u014a': 'N',
+	  '\\\\u0144': 'n',
+	  '\\\\u0146': 'n',
+	  '\\\\u0148': 'n',
+	  '\\\\u014b': 'n',
+	  '\\\\u014c': 'O',
+	  '\\\\u014e': 'O',
+	  '\\\\u0150': 'O',
+	  '\\\\u014d': 'o',
+	  '\\\\u014f': 'o',
+	  '\\\\u0151': 'o',
+	  '\\\\u0154': 'R',
+	  '\\\\u0156': 'R',
+	  '\\\\u0158': 'R',
+	  '\\\\u0155': 'r',
+	  '\\\\u0157': 'r',
+	  '\\\\u0159': 'r',
+	  '\\\\u015a': 'S',
+	  '\\\\u015c': 'S',
+	  '\\\\u015e': 'S',
+	  '\\\\u0160': 'S',
+	  '\\\\u015b': 's',
+	  '\\\\u015d': 's',
+	  '\\\\u015f': 's',
+	  '\\\\u0161': 's',
+	  '\\\\u0162': 'T',
+	  '\\\\u0164': 'T',
+	  '\\\\u0166': 'T',
+	  '\\\\u0163': 't',
+	  '\\\\u0165': 't',
+	  '\\\\u0167': 't',
+	  '\\\\u0168': 'U',
+	  '\\\\u016a': 'U',
+	  '\\\\u016c': 'U',
+	  '\\\\u016e': 'U',
+	  '\\\\u0170': 'U',
+	  '\\\\u0172': 'U',
+	  '\\\\u0169': 'u',
+	  '\\\\u016b': 'u',
+	  '\\\\u016d': 'u',
+	  '\\\\u016f': 'u',
+	  '\\\\u0171': 'u',
+	  '\\\\u0173': 'u',
+	  '\\\\u0174': 'W',
+	  '\\\\u0175': 'w',
+	  '\\\\u0176': 'Y',
+	  '\\\\u0177': 'y',
+	  '\\\\u0178': 'Y',
+	  '\\\\u0179': 'Z',
+	  '\\\\u017b': 'Z',
+	  '\\\\u017d': 'Z',
+	  '\\\\u017a': 'z',
+	  '\\\\u017c': 'z',
+	  '\\\\u017e': 'z',
+	  '\\\\u0132': 'IJ',
+	  '\\\\u0133': 'ij',
+	  '\\\\u0152': 'Oe',
+	  '\\\\u0153': 'oe',
+	  '\\\\u0149': \\"'n\\",
+	  '\\\\u017f': 's'
 	};
-
 	/**
 	 * Used by \`_.deburr\` to convert Latin-1 Supplement and Latin Extended-A
 	 * letters to basic Latin letters.
@@ -2299,28 +2721,28 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {string} letter The matched letter to deburr.
 	 * @returns {string} Returns the deburred letter.
 	 */
-	var deburrLetter = _basePropertyOf(deburredLetters);
 
+	var deburrLetter = _basePropertyOf(deburredLetters);
 	var _deburrLetter = deburrLetter;
 
 	/** Used to match Latin Unicode letters (excluding mathematical operators). */
-	var reLatin = /[\\\\xc0-\\\\xd6\\\\xd8-\\\\xf6\\\\xf8-\\\\xff\\\\u0100-\\\\u017f]/g;
 
+	var reLatin = /[\\\\xc0-\\\\xd6\\\\xd8-\\\\xf6\\\\xf8-\\\\xff\\\\u0100-\\\\u017f]/g;
 	/** Used to compose unicode character classes. */
+
 	var rsComboMarksRange$2 = '\\\\\\\\u0300-\\\\\\\\u036f',
 	    reComboHalfMarksRange$2 = '\\\\\\\\ufe20-\\\\\\\\ufe2f',
 	    rsComboSymbolsRange$2 = '\\\\\\\\u20d0-\\\\\\\\u20ff',
 	    rsComboRange$2 = rsComboMarksRange$2 + reComboHalfMarksRange$2 + rsComboSymbolsRange$2;
-
 	/** Used to compose unicode capture groups. */
-	var rsCombo$1 = '[' + rsComboRange$2 + ']';
 
+	var rsCombo$1 = '[' + rsComboRange$2 + ']';
 	/**
 	 * Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks) and
 	 * [combining diacritical marks for symbols](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks_for_Symbols).
 	 */
-	var reComboMark = RegExp(rsCombo$1, 'g');
 
+	var reComboMark = RegExp(rsCombo$1, 'g');
 	/**
 	 * Deburrs \`string\` by converting
 	 * [Latin-1 Supplement](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
@@ -2339,6 +2761,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * _.deburr('déjà vu');
 	 * // => 'deja vu'
 	 */
+
 	function deburr(string) {
 	  string = toString_1(string);
 	  return string && string.replace(reLatin, _deburrLetter).replace(reComboMark, '');
@@ -2348,7 +2771,6 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	/** Used to match words composed of alphanumeric characters. */
 	var reAsciiWord = /[^\\\\x00-\\\\x2f\\\\x3a-\\\\x40\\\\x5b-\\\\x60\\\\x7b-\\\\x7f]+/g;
-
 	/**
 	 * Splits an ASCII \`string\` into an array of its words.
 	 *
@@ -2356,6 +2778,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {string} The string to inspect.
 	 * @returns {Array} Returns the words of \`string\`.
 	 */
+
 	function asciiWords(string) {
 	  return string.match(reAsciiWord) || [];
 	}
@@ -2364,7 +2787,6 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	/** Used to detect strings that need a more robust regexp to match words. */
 	var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
-
 	/**
 	 * Checks if \`string\` contains a word composed of Unicode symbols.
 	 *
@@ -2372,6 +2794,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {string} string The string to inspect.
 	 * @returns {boolean} Returns \`true\` if a word is found, else \`false\`.
 	 */
+
 	function hasUnicodeWord(string) {
 	  return reHasUnicodeWord.test(string);
 	}
@@ -2393,8 +2816,8 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	    rsUpperRange = 'A-Z\\\\\\\\xc0-\\\\\\\\xd6\\\\\\\\xd8-\\\\\\\\xde',
 	    rsVarRange$2 = '\\\\\\\\ufe0e\\\\\\\\ufe0f',
 	    rsBreakRange = rsMathOpRange + rsNonCharRange + rsPunctuationRange + rsSpaceRange;
-
 	/** Used to compose unicode capture groups. */
+
 	var rsApos = \\"['\\\\u2019]\\",
 	    rsBreak = '[' + rsBreakRange + ']',
 	    rsCombo$2 = '[' + rsComboRange$3 + ']',
@@ -2409,8 +2832,8 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	    rsSurrPair$1 = '[\\\\\\\\ud800-\\\\\\\\udbff][\\\\\\\\udc00-\\\\\\\\udfff]',
 	    rsUpper = '[' + rsUpperRange + ']',
 	    rsZWJ$2 = '\\\\\\\\u200d';
-
 	/** Used to compose unicode regexes. */
+
 	var rsMiscLower = '(?:' + rsLower + '|' + rsMisc + ')',
 	    rsMiscUpper = '(?:' + rsUpper + '|' + rsMisc + ')',
 	    rsOptContrLower = '(?:' + rsApos + '(?:d|ll|m|re|s|t|ve))?',
@@ -2422,19 +2845,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	    rsOrdUpper = '\\\\\\\\d*(?:1ST|2ND|3RD|(?![123])\\\\\\\\dTH)(?=\\\\\\\\b|[a-z_])',
 	    rsSeq$1 = rsOptVar$1 + reOptMod$1 + rsOptJoin$1,
 	    rsEmoji = '(?:' + [rsDingbat, rsRegional$1, rsSurrPair$1].join('|') + ')' + rsSeq$1;
-
 	/** Used to match complex or compound words. */
-	var reUnicodeWord = RegExp([
-	  rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
-	  rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')',
-	  rsUpper + '?' + rsMiscLower + '+' + rsOptContrLower,
-	  rsUpper + '+' + rsOptContrUpper,
-	  rsOrdUpper,
-	  rsOrdLower,
-	  rsDigits,
-	  rsEmoji
-	].join('|'), 'g');
 
+	var reUnicodeWord = RegExp([rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')', rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')', rsUpper + '?' + rsMiscLower + '+' + rsOptContrLower, rsUpper + '+' + rsOptContrUpper, rsOrdUpper, rsOrdLower, rsDigits, rsEmoji].join('|'), 'g');
 	/**
 	 * Splits a Unicode \`string\` into an array of its words.
 	 *
@@ -2442,6 +2855,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {string} The string to inspect.
 	 * @returns {Array} Returns the words of \`string\`.
 	 */
+
 	function unicodeWords(string) {
 	  return string.match(reUnicodeWord) || [];
 	}
@@ -2467,6 +2881,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * _.words('fred, barney, & pebbles', /[^, ]+/g);
 	 * // => ['fred', 'barney', '&', 'pebbles']
 	 */
+
 	function words(string, pattern, guard) {
 	  string = toString_1(string);
 	  pattern = guard ? undefined : pattern;
@@ -2474,17 +2889,18 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  if (pattern === undefined) {
 	    return _hasUnicodeWord(string) ? _unicodeWords(string) : _asciiWords(string);
 	  }
+
 	  return string.match(pattern) || [];
 	}
 
 	var words_1 = words;
 
 	/** Used to compose unicode capture groups. */
+
 	var rsApos$1 = \\"['\\\\u2019]\\";
-
 	/** Used to match apostrophes. */
-	var reApos = RegExp(rsApos$1, 'g');
 
+	var reApos = RegExp(rsApos$1, 'g');
 	/**
 	 * Creates a function like \`_.camelCase\`.
 	 *
@@ -2492,8 +2908,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {Function} callback The function to combine each word.
 	 * @returns {Function} Returns the new compounder function.
 	 */
+
 	function createCompounder(callback) {
-	  return function(string) {
+	  return function (string) {
 	    return _arrayReduce(words_1(deburr_1(string).replace(reApos, '')), callback, '');
 	  };
 	}
@@ -2520,11 +2937,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * _.camelCase('__FOO_BAR__');
 	 * // => 'fooBar'
 	 */
-	var camelCase = _createCompounder(function(result, word, index) {
+
+	var camelCase = _createCompounder(function (result, word, index) {
 	  word = word.toLowerCase();
 	  return result + (index ? capitalize_1(word) : word);
 	});
-
 	var camelCase_1 = camelCase;
 
 	function makeCamelCase(string) {

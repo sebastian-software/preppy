@@ -13,9 +13,12 @@ var reactIntl = require('react-intl');
 var Header = _interopDefault(require('components/Header'));
 
 function MyPage() {
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Header, null, \\"Title\\"), /*#__PURE__*/React.createElement(\\"button\\", null, /*#__PURE__*/React.createElement(reactIntl.FormattedMessage, {
-    id: \\"press-button\\"
-  })));
+  return <>
+      <Header>Title</Header>
+      <button>
+        <reactIntl.FormattedMessage id=\\"press-button\\" />
+      </button>
+    </>;
 }
 
 exports.MyPage = MyPage;
@@ -30,9 +33,12 @@ import { FormattedMessage } from 'react-intl';
 import Header from 'components/Header';
 
 function MyPage() {
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Header, null, \\"Title\\"), /*#__PURE__*/React.createElement(\\"button\\", null, /*#__PURE__*/React.createElement(FormattedMessage, {
-    id: \\"press-button\\"
-  })));
+  return <>
+      <Header>Title</Header>
+      <button>
+        <FormattedMessage id=\\"press-button\\" />
+      </button>
+    </>;
 }
 
 export { MyPage };
@@ -58,9 +64,12 @@ exports[`Publish Test File via Typescript: umd 1`] = `
   Header = Header && Object.prototype.hasOwnProperty.call(Header, 'default') ? Header['default'] : Header;
 
   function MyPage() {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Header, null, \\"Title\\"), /*#__PURE__*/React.createElement(\\"button\\", null, /*#__PURE__*/React.createElement(reactIntl.FormattedMessage, {
-      id: \\"press-button\\"
-    })));
+    return <>
+        <Header>Title</Header>
+        <button>
+          <reactIntl.FormattedMessage id=\\"press-button\\" />
+        </button>
+      </>;
   }
 
   exports.MyPage = MyPage;

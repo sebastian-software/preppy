@@ -32,9 +32,9 @@
   "scripts": {
     "lint": "eslint '**/*.js'",
     "format": "prettier --write '**/*.{json,md}' && effective-prettier '**/*.{js,jsx,ts,tsx}'",
-    "release": "git push && release-it --github.release --npm.publish --non-interactive",
-    "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
-    "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
+    "release": "git push && release-it patch",
+    "release:minor": "git push && release-it minor",
+    "release:major": "git push && release-it major",
     "test": "npm run prepare && jest",
     "prepare": "rimraf bin && babel-node src/cli.js"
   },
@@ -111,6 +111,7 @@
     "p-queue": "^6.4.0",
     "pify": "^5.0.0",
     "prettier": "^2.0.5",
+    "release-it": "^13.5.8",
     "rimraf": "^3.0.2",
     "typescript": "^3.8.3"
   }

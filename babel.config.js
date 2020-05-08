@@ -14,17 +14,6 @@ module.exports = (api) => {
   return {
     sourceMaps: true,
     plugins: [
-      // This makes fast-async more compatible somehow.
-      // Otherwise we got some crazy "Duplicate Declarations" which are
-      // unfortunately never reproducable with pure Babel.
-      "@babel/plugin-transform-block-scoping",
-      "module:fast-async",
-      [
-        "@babel/proposal-class-properties",
-        {
-          loose: true
-        }
-      ],
       [
         "@babel/proposal-object-rest-spread",
         {
@@ -35,18 +24,16 @@ module.exports = (api) => {
       [
         "babel-plugin-lodash",
         {
-          id: [ "lodash", "async", "rambda", "recompose" ]
+          id: [ "lodash" ]
         }
       ],
-      isUmd
-        ? null
-        : [
-            "@babel/transform-runtime",
-            {
-              helpers: true,
-              regenerator: false
-            }
-          ]
+      [
+        "@babel/transform-runtime",
+        {
+          helpers: true,
+          regenerator: false
+        }
+      ]
     ].filter(Boolean),
     presets: [
       [
@@ -56,7 +43,7 @@ module.exports = (api) => {
           useBuiltIns: "usage",
           corejs: 3,
           targets: {
-            node: 8
+            node: 10
           },
           loose: true,
           modules
@@ -69,13 +56,6 @@ module.exports = (api) => {
           // legacy type assertion supported in earlier versions.
           allExtensions: true,
           isTSX: true
-        }
-      ],
-      [
-        "@babel/react",
-        {
-          useBuiltIns: "usage",
-          corejs: 3
         }
       ]
     ]

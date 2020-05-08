@@ -2213,26 +2213,13 @@ exports.default = PQueue;
 
 var Queue = unwrapExports(dist);
 
-function helper() {
-  return new Promise(function ($return, $error) {
-    console.log(\\"Async helper\\");
-    return $return();
-  });
+async function helper() {
+  console.log(\\"Async helper\\");
 }
 
-function main() {
-  return new Promise(function ($return, $error) {
-    var queue;
-    queue = new Queue();
-    return Promise.resolve(helper()).then(function ($await_1) {
-      try {
-        queue.add($await_1);
-        return $return();
-      } catch ($boundEx) {
-        return $error($boundEx);
-      }
-    }, $error);
-  });
+async function main() {
+  const queue = new Queue();
+  queue.add(await helper());
 }
 
 main();
@@ -4451,26 +4438,13 @@ exports.default = PQueue;
 
 var Queue = unwrapExports(dist);
 
-function helper() {
-  return new Promise(function ($return, $error) {
-    console.log(\\"Async helper\\");
-    return $return();
-  });
+async function helper() {
+  console.log(\\"Async helper\\");
 }
 
-function main() {
-  return new Promise(function ($return, $error) {
-    var queue;
-    queue = new Queue();
-    return Promise.resolve(helper()).then(function ($await_1) {
-      try {
-        queue.add($await_1);
-        return $return();
-      } catch ($boundEx) {
-        return $error($boundEx);
-      }
-    }, $error);
-  });
+async function main() {
+  const queue = new Queue();
+  queue.add(await helper());
 }
 
 main();
@@ -6694,26 +6668,13 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	var Queue = unwrapExports(dist);
 
-	function helper() {
-	  return new Promise(function ($return, $error) {
-	    console.log(\\"Async helper\\");
-	    return $return();
-	  });
+	async function helper() {
+	  console.log(\\"Async helper\\");
 	}
 
-	function main() {
-	  return new Promise(function ($return, $error) {
-	    var queue;
-	    queue = new Queue();
-	    return Promise.resolve(helper()).then(function ($await_1) {
-	      try {
-	        queue.add($await_1);
-	        return $return();
-	      } catch ($boundEx) {
-	        return $error($boundEx);
-	      }
-	    }, $error);
-	  });
+	async function main() {
+	  const queue = new Queue();
+	  queue.add(await helper());
 	}
 
 	main();

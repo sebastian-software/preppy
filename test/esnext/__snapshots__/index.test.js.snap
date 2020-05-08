@@ -6,7 +6,6 @@ exports[`Publish Test File via Babel: cjs 1`] = `
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-require('core-js/modules/es.array.iterator');
 require('core-js/modules/es.promise');
 var _camelCase = _interopDefault(require('lodash/camelCase'));
 
@@ -19,7 +18,7 @@ new Promise((resolve, reject) => {
 }).then(first => {
   console.log(\\"Promise:\\", first);
 });
-var CONSTANT = 123;
+const CONSTANT = 123;
 console.log(\\"Constant:\\", CONSTANT);
 var myArray = [1, 2, 3];
 console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
@@ -32,9 +31,11 @@ console.log(\\"Supports Set:\\", mySet.add(4));
 /* eslint-disable no-shadow */
 
 
-var testVariable = \\"outer\\";
-var _testVariable = \\"inner\\";
-console.log(\\"X Value from inner scope:\\", _testVariable);
+let testVariable = \\"outer\\";
+{
+  let testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", testVariable);
+}
 console.log(\\"X Value from outer scope:\\", testVariable);
 var source = {
   first: 1,
@@ -67,16 +68,9 @@ class SecondClass extends MyClass() {
 
 console.log(\\"Initialized class:\\", new MyClass());
 
-function helper() {
-  return new Promise(function ($return, $error) {
-    return Promise.resolve(PromiseHelper()).then(function ($await_1) {
-      try {
-        return $return(42);
-      } catch ($boundEx) {
-        return $error($boundEx);
-      }
-    }, $error);
-  });
+async function helper() {
+  await PromiseHelper();
+  return 42;
 }
 
 helper();
@@ -86,7 +80,6 @@ helper();
 
 exports[`Publish Test File via Babel: esm 1`] = `
 "/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
-import 'core-js/modules/es.array.iterator';
 import 'core-js/modules/es.promise';
 import _camelCase from 'lodash/camelCase';
 
@@ -99,7 +92,7 @@ new Promise((resolve, reject) => {
 }).then(first => {
   console.log(\\"Promise:\\", first);
 });
-var CONSTANT = 123;
+const CONSTANT = 123;
 console.log(\\"Constant:\\", CONSTANT);
 var myArray = [1, 2, 3];
 console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
@@ -112,9 +105,11 @@ console.log(\\"Supports Set:\\", mySet.add(4));
 /* eslint-disable no-shadow */
 
 
-var testVariable = \\"outer\\";
-var _testVariable = \\"inner\\";
-console.log(\\"X Value from inner scope:\\", _testVariable);
+let testVariable = \\"outer\\";
+{
+  let testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", testVariable);
+}
 console.log(\\"X Value from outer scope:\\", testVariable);
 var source = {
   first: 1,
@@ -147,16 +142,9 @@ class SecondClass extends MyClass() {
 
 console.log(\\"Initialized class:\\", new MyClass());
 
-function helper() {
-  return new Promise(function ($return, $error) {
-    return Promise.resolve(PromiseHelper()).then(function ($await_1) {
-      try {
-        return $return(42);
-      } catch ($boundEx) {
-        return $error($boundEx);
-      }
-    }, $error);
-  });
+async function helper() {
+  await PromiseHelper();
+  return 42;
 }
 
 helper();
@@ -167,10 +155,10 @@ helper();
 exports[`Publish Test File via Babel: umd 1`] = `
 "/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('core-js/modules/es.array.iterator'), require('core-js/modules/es.promise'), require('lodash/camelCase')) :
-  typeof define === 'function' && define.amd ? define(['core-js/modules/es.array.iterator', 'core-js/modules/es.promise', 'lodash/camelCase'], factory) :
-  (global = global || self, factory(null, null, global._camelCase));
-}(this, (function (es_array_iterator, es_promise, _camelCase) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('core-js/modules/es.promise'), require('lodash/camelCase')) :
+  typeof define === 'function' && define.amd ? define(['core-js/modules/es.promise', 'lodash/camelCase'], factory) :
+  (global = global || self, factory(null, global._camelCase));
+}(this, (function (es_promise, _camelCase) { 'use strict';
 
   _camelCase = _camelCase && Object.prototype.hasOwnProperty.call(_camelCase, 'default') ? _camelCase['default'] : _camelCase;
 
@@ -183,7 +171,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
   }).then(first => {
     console.log(\\"Promise:\\", first);
   });
-  var CONSTANT = 123;
+  const CONSTANT = 123;
   console.log(\\"Constant:\\", CONSTANT);
   var myArray = [1, 2, 3];
   console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
@@ -196,9 +184,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
   /* eslint-disable no-shadow */
 
 
-  var testVariable = \\"outer\\";
-  var _testVariable = \\"inner\\";
-  console.log(\\"X Value from inner scope:\\", _testVariable);
+  let testVariable = \\"outer\\";
+  {
+    let testVariable = \\"inner\\";
+    console.log(\\"X Value from inner scope:\\", testVariable);
+  }
   console.log(\\"X Value from outer scope:\\", testVariable);
   var source = {
     first: 1,
@@ -231,16 +221,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
   console.log(\\"Initialized class:\\", new MyClass());
 
-  function helper() {
-    return new Promise(function ($return, $error) {
-      return Promise.resolve(PromiseHelper()).then(function ($await_1) {
-        try {
-          return $return(42);
-        } catch ($boundEx) {
-          return $error($boundEx);
-        }
-      }, $error);
-    });
+  async function helper() {
+    await PromiseHelper();
+    return 42;
   }
 
   helper();

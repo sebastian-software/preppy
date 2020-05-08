@@ -10,7 +10,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var _snakeCase = _interopDefault(require('lodash/snakeCase'));
 
-var realWords = \\"Eine dicke Kuh lacht\\";
+const realWords = \\"Eine dicke Kuh lacht\\";
 
 console.log(\\"Magic:\\", _snakeCase(realWords));
 //# sourceMappingURL=first-cli.js.map
@@ -27,7 +27,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var _camelCase = _interopDefault(require('lodash/camelCase'));
 
-var realWords = \\"Eine dicke Kuh lacht\\";
+const realWords = \\"Eine dicke Kuh lacht\\";
 
 console.log(\\"Magic:\\", _camelCase(realWords));
 //# sourceMappingURL=second-cli.js.map

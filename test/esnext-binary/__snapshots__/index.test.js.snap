@@ -10,7 +10,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var _snakeCase = _interopDefault(require('lodash/snakeCase'));
 
-var realWords = \\"Eine dicke Kuh lacht\\";
+const realWords = \\"Eine dicke Kuh lacht\\";
 
 console.log(\\"Magic:\\", _snakeCase(realWords));
 //# sourceMappingURL=mycli.js.map

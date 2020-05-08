@@ -35,7 +35,7 @@
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
-    "test": "jest",
+    "test": "npm run prepare && jest",
     "prepare": "rimraf bin && babel-node src/cli.js"
   },
   "jest": {
@@ -107,7 +107,6 @@
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "execa": "^4.0.0",
-    "fast-async": "^7.0.6",
     "jest": "^26.0.1",
     "p-queue": "^6.4.0",
     "pify": "^5.0.0",

@@ -32,9 +32,9 @@
   "scripts": {
     "lint": "eslint '**/*.js'",
     "format": "prettier --write '**/*.{json,md}' && effective-prettier '**/*.{js,jsx,ts,tsx}'",
-    "release": "git push && release-it patch",
-    "release:minor": "git push && release-it minor",
-    "release:major": "git push && release-it major",
+    "release": "git push && release-it --ci patch",
+    "release:minor": "git push && release-it --ci minor",
+    "release:major": "git push && release-it --ci major",
     "test": "npm run prepare && jest",
     "prepare": "rimraf bin && babel-node src/cli.js"
   },

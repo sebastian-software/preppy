@@ -98,7 +98,7 @@
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "@babel/preset-typescript": "^7.10.1",
-    "@effective/eslint-config": "^3.2.7",
+    "@effective/eslint-config": "^3.3.0",
     "@effective/prettier": "^3.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^26.0.1",
@@ -111,6 +111,7 @@
     "p-queue": "^6.4.0",
     "pify": "^5.0.0",
     "prettier": "^2.0.5",
+    "react": "^16.13.1",
     "release-it": "^13.6.2",
     "rimraf": "^3.0.2",
     "typescript": "^3.9.3"

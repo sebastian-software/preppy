@@ -31,7 +31,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "lint": "eslint '**/*.js'",
-    "format": "prettier --write '**/*.{json,md}' && effective-prettier '**/*.{js,jsx,ts,tsx}'",
+    "format": "effective-prettier '**/*.{js,jsx,ts,tsx,json,md}'",
     "release": "git push && release-it --ci patch",
     "release:minor": "git push && release-it --ci minor",
     "release:major": "git push && release-it --ci major",

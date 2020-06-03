@@ -65,7 +65,7 @@ class MyClass {
   };
 
   helper(x) {
-    console.log(\\"Called helper: \\" + x);
+    console.log(\`Called helper: \${x}\`);
   }
 
 }
@@ -156,7 +156,7 @@ class MyClass {
   };
 
   helper(x) {
-    console.log(\\"Called helper: \\" + x);
+    console.log(\`Called helper: \${x}\`);
   }
 
 }
@@ -275,7 +275,7 @@ exports[`Publish Test File via Typescript: umd 1`] = `
     };
 
     helper(x) {
-      console.log(\\"Called helper: \\" + x);
+      console.log(\`Called helper: \${x}\`);
     }
 
   }

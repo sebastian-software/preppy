@@ -4,7 +4,7 @@ let ts
 try {
   // eslint-disable-next-line global-require
   ts = require("typescript")
-} catch (importError) {
+} catch {
   // ignore failures here (typescript = optional)
 }
 

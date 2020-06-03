@@ -16,7 +16,7 @@ test("Binary from ESNext", async () => {
   await lazyDelete(resolve(__dirname, "./bin"))
 
   await preppy({
-    cwd: __dirname,
+    cwd: __dirname
   })
 
   expect(await lazyRead(resolve(__dirname, "bin/mycli.js"), "utf8")).toMatchSnapshot("cli")

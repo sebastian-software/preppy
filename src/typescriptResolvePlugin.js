@@ -7,7 +7,7 @@ let ts
 try {
   // eslint-disable-next-line global-require
   ts = require("typescript")
-} catch (importError) {
+} catch {
   // ignore failures here (typescript = optional)
 }
 
@@ -15,7 +15,7 @@ const resolveHost = {
   directoryExists(dirPath) {
     try {
       return statSync(dirPath).isDirectory()
-    } catch (err) {
+    } catch {
       /* istanbul ignore next */
       return false
     }
@@ -24,7 +24,7 @@ const resolveHost = {
   fileExists(filePath) {
     try {
       return statSync(filePath).isFile()
-    } catch (err) {
+    } catch {
       /* istanbul ignore next */
       return false
     }

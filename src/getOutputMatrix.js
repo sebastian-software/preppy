@@ -27,18 +27,18 @@ export default function getOutputMatrix(opts, pkg) {
     /* eslint-disable dot-notation */
 
     // Library Targets
-    matrix.main = pkg["main"] || null
-    matrix.module = pkg["module"] || pkg["jsnext:main"] || null
+    matrix.main = pkg.main || null
+    matrix.module = pkg.module || pkg["jsnext:main"] || null
 
     // Browser Targets
-    matrix.umd = pkg["umd"] || pkg["unpkg"] || null
-    matrix.browser = pkg["browser"] || null
+    matrix.umd = pkg.umd || pkg.unpkg || null
+    matrix.browser = pkg.browser || null
 
     // Binary Target (supports multiple binaries)
     matrix.binaries = typeof pkg.bin === "object" ? pkg.bin : null
 
     // Types Target (TypeScript)
-    matrix.types = pkg["types"] || null
+    matrix.types = pkg.types || null
   }
 
   return matrix

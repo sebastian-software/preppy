@@ -15,7 +15,7 @@ jest.setTimeout(20000)
 test("Publish Test File via Babel", async () => {
   await lazyDelete(resolve(__dirname, "./dist"))
   await preppy({
-    cwd: __dirname,
+    cwd: __dirname
   })
 
   expect(await lazyRead(resolve(__dirname, "dist/index.cjs.min.js"), "utf8")).toMatchSnapshot(

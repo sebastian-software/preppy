@@ -16,7 +16,7 @@ test("Publish Test File via Babel", async () => {
 
   await expect(
     preppy({
-      cwd: __dirname,
+      cwd: __dirname
     })
-  ).rejects.toThrow("SyntaxError: src/index.js: Unexpected token, expected \";\" (2:17)")
+  ).rejects.toThrow('SyntaxError: src/index.js: Unexpected token, expected ";" (2:17)')
 })

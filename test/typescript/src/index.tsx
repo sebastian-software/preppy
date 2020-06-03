@@ -59,7 +59,7 @@ export class MyClass {
   }
 
   helper(x: string) {
-    console.log("Called helper: " + x)
+    console.log(`Called helper: ${x}`)
   }
 }
 

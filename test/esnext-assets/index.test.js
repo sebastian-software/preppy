@@ -16,7 +16,7 @@ test("Publish Test File via Babel", async () => {
   await lazyDelete(resolve(__dirname, "./dist"))
 
   await preppy({
-    cwd: __dirname,
+    cwd: __dirname
   })
 
   expect(await lazyRead(resolve(__dirname, "dist/index.cjs.js"), "utf8")).toMatchSnapshot(

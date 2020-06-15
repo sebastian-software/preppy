@@ -1879,7 +1879,6 @@ var lowerBound_1 = createCommonjsModule(function (module, exports) {
 
   exports.default = lowerBound;
 });
-unwrapExports(lowerBound_1);
 
 var priorityQueue = createCommonjsModule(function (module, exports) {
 
@@ -1935,7 +1934,6 @@ var priorityQueue = createCommonjsModule(function (module, exports) {
 
   exports.default = PriorityQueue;
 });
-unwrapExports(priorityQueue);
 
 var dist = createCommonjsModule(function (module, exports) {
 
@@ -2391,7 +2389,7 @@ var dist = createCommonjsModule(function (module, exports) {
 
   exports.default = PQueue;
 });
-var Queue = unwrapExports(dist);
+var Queue = /*@__PURE__*/unwrapExports(dist);
 
 async function helper() {
   console.log(\\"Async helper\\");
@@ -4284,7 +4282,6 @@ var lowerBound_1 = createCommonjsModule(function (module, exports) {
 
   exports.default = lowerBound;
 });
-unwrapExports(lowerBound_1);
 
 var priorityQueue = createCommonjsModule(function (module, exports) {
 
@@ -4340,7 +4337,6 @@ var priorityQueue = createCommonjsModule(function (module, exports) {
 
   exports.default = PriorityQueue;
 });
-unwrapExports(priorityQueue);
 
 var dist = createCommonjsModule(function (module, exports) {
 
@@ -4796,7 +4792,7 @@ var dist = createCommonjsModule(function (module, exports) {
 
   exports.default = PQueue;
 });
-var Queue = unwrapExports(dist);
+var Queue = /*@__PURE__*/unwrapExports(dist);
 
 async function helper() {
   console.log(\\"Async helper\\");
@@ -6694,7 +6690,6 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	  exports.default = lowerBound;
 	});
-	unwrapExports(lowerBound_1);
 
 	var priorityQueue = createCommonjsModule(function (module, exports) {
 
@@ -6750,7 +6745,6 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	  exports.default = PriorityQueue;
 	});
-	unwrapExports(priorityQueue);
 
 	var dist = createCommonjsModule(function (module, exports) {
 
@@ -7206,7 +7200,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	  exports.default = PQueue;
 	});
-	var Queue = unwrapExports(dist);
+	var Queue = /*@__PURE__*/unwrapExports(dist);
 
 	async function helper() {
 	  console.log(\\"Async helper\\");

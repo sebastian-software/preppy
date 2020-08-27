@@ -76,7 +76,7 @@
     "node-notifier": "^8.0.0",
     "ora": "^5.0.0",
     "pretty-bytes": "^5.3.0",
-    "rollup": "2.23.1",
+    "rollup": "^2.23.1",
     "rollup-plugin-advanced-run": "^2.0.0",
     "rollup-plugin-executable": "^1.6.0",
     "rollup-plugin-rebase": "^3.5.4",

@@ -85,7 +85,7 @@
     "strip-bom": "^4.0.0",
     "strip-json-comments": "^3.1.1",
     "to-regex": "^3.0.2",
-    "universalify": "^1.0.0",
+    "universalify": "^2.0.0",
     "update-notifier": "^4.1.1"
   },
   "devDependencies": {
@@ -108,7 +108,7 @@
     "eslint": "^7.7.0",
     "execa": "^4.0.3",
     "jest": "^26.4.2",
-    "p-queue": "^6.4.0",
+    "p-queue": "^6.6.1",
     "pify": "^5.0.0",
     "prettier": "^2.1.1",
     "react": "^16.13.1",

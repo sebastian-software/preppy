@@ -1888,12 +1888,7 @@ var priorityQueue = createCommonjsModule(function (module, exports) {
 
   class PriorityQueue {
     constructor() {
-      Object.defineProperty(this, \\"_queue\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: []
-      });
+      this._queue = [];
     }
 
     enqueue(run, options) {
@@ -1953,109 +1948,11 @@ var dist = createCommonjsModule(function (module, exports) {
       var _a, _b, _c, _d;
 
       super();
-      Object.defineProperty(this, \\"_carryoverConcurrencyCount\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_isIntervalIgnored\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_intervalCount\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: 0
-      });
-      Object.defineProperty(this, \\"_intervalCap\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_interval\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_intervalEnd\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: 0
-      });
-      Object.defineProperty(this, \\"_intervalId\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_timeoutId\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_queue\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_queueClass\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_pendingCount\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: 0
-      }); // The \`!\` is needed because of https://github.com/microsoft/TypeScript/issues/32194
-
-      Object.defineProperty(this, \\"_concurrency\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_isPaused\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_resolveEmpty\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: empty
-      });
-      Object.defineProperty(this, \\"_resolveIdle\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: empty
-      });
-      Object.defineProperty(this, \\"_timeout\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_throwOnTimeout\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      }); // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      this._intervalCount = 0;
+      this._intervalEnd = 0;
+      this._pendingCount = 0;
+      this._resolveEmpty = empty;
+      this._resolveIdle = empty; // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 
       options = Object.assign({
         carryoverConcurrencyCount: false,
@@ -2098,6 +1995,8 @@ var dist = createCommonjsModule(function (module, exports) {
       this._pendingCount--;
 
       this._tryToStartAnother();
+
+      this.emit('next');
     }
 
     _resolvePromises() {
@@ -2254,6 +2153,8 @@ var dist = createCommonjsModule(function (module, exports) {
         this._queue.enqueue(run, options);
 
         this._tryToStartAnother();
+
+        this.emit('add');
       });
     }
     /**
@@ -2354,6 +2255,7 @@ var dist = createCommonjsModule(function (module, exports) {
 
 
     sizeBy(options) {
+      // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
       return this._queue.filter(options).length;
     }
     /**
@@ -4291,12 +4193,7 @@ var priorityQueue = createCommonjsModule(function (module, exports) {
 
   class PriorityQueue {
     constructor() {
-      Object.defineProperty(this, \\"_queue\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: []
-      });
+      this._queue = [];
     }
 
     enqueue(run, options) {
@@ -4356,109 +4253,11 @@ var dist = createCommonjsModule(function (module, exports) {
       var _a, _b, _c, _d;
 
       super();
-      Object.defineProperty(this, \\"_carryoverConcurrencyCount\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_isIntervalIgnored\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_intervalCount\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: 0
-      });
-      Object.defineProperty(this, \\"_intervalCap\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_interval\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_intervalEnd\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: 0
-      });
-      Object.defineProperty(this, \\"_intervalId\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_timeoutId\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_queue\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_queueClass\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_pendingCount\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: 0
-      }); // The \`!\` is needed because of https://github.com/microsoft/TypeScript/issues/32194
-
-      Object.defineProperty(this, \\"_concurrency\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_isPaused\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_resolveEmpty\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: empty
-      });
-      Object.defineProperty(this, \\"_resolveIdle\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: empty
-      });
-      Object.defineProperty(this, \\"_timeout\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_throwOnTimeout\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      }); // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      this._intervalCount = 0;
+      this._intervalEnd = 0;
+      this._pendingCount = 0;
+      this._resolveEmpty = empty;
+      this._resolveIdle = empty; // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 
       options = Object.assign({
         carryoverConcurrencyCount: false,
@@ -4501,6 +4300,8 @@ var dist = createCommonjsModule(function (module, exports) {
       this._pendingCount--;
 
       this._tryToStartAnother();
+
+      this.emit('next');
     }
 
     _resolvePromises() {
@@ -4657,6 +4458,8 @@ var dist = createCommonjsModule(function (module, exports) {
         this._queue.enqueue(run, options);
 
         this._tryToStartAnother();
+
+        this.emit('add');
       });
     }
     /**
@@ -4757,6 +4560,7 @@ var dist = createCommonjsModule(function (module, exports) {
 
 
     sizeBy(options) {
+      // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
       return this._queue.filter(options).length;
     }
     /**
@@ -6699,12 +6503,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	  class PriorityQueue {
 	    constructor() {
-	      Object.defineProperty(this, \\"_queue\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: []
-	      });
+	      this._queue = [];
 	    }
 
 	    enqueue(run, options) {
@@ -6764,109 +6563,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	      var _a, _b, _c, _d;
 
 	      super();
-	      Object.defineProperty(this, \\"_carryoverConcurrencyCount\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      });
-	      Object.defineProperty(this, \\"_isIntervalIgnored\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      });
-	      Object.defineProperty(this, \\"_intervalCount\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: 0
-	      });
-	      Object.defineProperty(this, \\"_intervalCap\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      });
-	      Object.defineProperty(this, \\"_interval\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      });
-	      Object.defineProperty(this, \\"_intervalEnd\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: 0
-	      });
-	      Object.defineProperty(this, \\"_intervalId\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      });
-	      Object.defineProperty(this, \\"_timeoutId\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      });
-	      Object.defineProperty(this, \\"_queue\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      });
-	      Object.defineProperty(this, \\"_queueClass\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      });
-	      Object.defineProperty(this, \\"_pendingCount\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: 0
-	      }); // The \`!\` is needed because of https://github.com/microsoft/TypeScript/issues/32194
-
-	      Object.defineProperty(this, \\"_concurrency\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      });
-	      Object.defineProperty(this, \\"_isPaused\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      });
-	      Object.defineProperty(this, \\"_resolveEmpty\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: empty
-	      });
-	      Object.defineProperty(this, \\"_resolveIdle\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: empty
-	      });
-	      Object.defineProperty(this, \\"_timeout\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      });
-	      Object.defineProperty(this, \\"_throwOnTimeout\\", {
-	        enumerable: true,
-	        configurable: true,
-	        writable: true,
-	        value: void 0
-	      }); // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+	      this._intervalCount = 0;
+	      this._intervalEnd = 0;
+	      this._pendingCount = 0;
+	      this._resolveEmpty = empty;
+	      this._resolveIdle = empty; // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 
 	      options = Object.assign({
 	        carryoverConcurrencyCount: false,
@@ -6909,6 +6610,8 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	      this._pendingCount--;
 
 	      this._tryToStartAnother();
+
+	      this.emit('next');
 	    }
 
 	    _resolvePromises() {
@@ -7065,6 +6768,8 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	        this._queue.enqueue(run, options);
 
 	        this._tryToStartAnother();
+
+	        this.emit('add');
 	      });
 	    }
 	    /**
@@ -7165,6 +6870,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 
 	    sizeBy(options) {
+	      // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
 	      return this._queue.filter(options).length;
 	    }
 	    /**

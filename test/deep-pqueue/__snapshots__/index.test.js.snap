@@ -6,7 +6,7 @@ exports[`Publish Test File via Babel: cjs 1`] = `
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function unwrapExports (x) {
+function getDefaultExportFromCjs (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
 
@@ -2389,7 +2389,7 @@ var dist = createCommonjsModule(function (module, exports) {
 
   exports.default = PQueue;
 });
-var Queue = /*@__PURE__*/unwrapExports(dist);
+var Queue = /*@__PURE__*/getDefaultExportFromCjs(dist);
 
 async function helper() {
   console.log(\\"Async helper\\");
@@ -2409,7 +2409,7 @@ exports[`Publish Test File via Babel: esm 1`] = `
 "/*! deep-pqueue v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function unwrapExports (x) {
+function getDefaultExportFromCjs (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
 
@@ -4792,7 +4792,7 @@ var dist = createCommonjsModule(function (module, exports) {
 
   exports.default = PQueue;
 });
-var Queue = /*@__PURE__*/unwrapExports(dist);
+var Queue = /*@__PURE__*/getDefaultExportFromCjs(dist);
 
 async function helper() {
   console.log(\\"Async helper\\");
@@ -4817,7 +4817,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-	function unwrapExports (x) {
+	function getDefaultExportFromCjs (x) {
 		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 	}
 
@@ -7200,7 +7200,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	  exports.default = PQueue;
 	});
-	var Queue = /*@__PURE__*/unwrapExports(dist);
+	var Queue = /*@__PURE__*/getDefaultExportFromCjs(dist);
 
 	async function helper() {
 	  console.log(\\"Async helper\\");

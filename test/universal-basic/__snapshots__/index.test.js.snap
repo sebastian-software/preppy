@@ -16,7 +16,7 @@ exports[`Publish Test File via Babel as Universal: browser-umd 1`] = `
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global['universal-basic'] = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global['universal-basic'] = factory());
 }(this, (function () { 'use strict';
 
   function browser () {

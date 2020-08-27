@@ -141,7 +141,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(global = global || self, factory(global['deep-basic'] = {}));
+	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['deep-basic'] = {}));
 }(this, (function (exports) { 'use strict';
 
 	const BYTE_UNITS = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];

@@ -216,7 +216,7 @@ exports[`Publish Test File via Typescript: umd 1`] = `
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es.promise'), require('lodash/camelCase')) :
   typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es.promise', 'lodash/camelCase'], factory) :
-  (global = global || self, factory(global.typescript = {}, null, global._camelCase));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.typescript = {}, null, global._camelCase));
 }(this, (function (exports, es_promise, _camelCase) { 'use strict';
 
   _camelCase = _camelCase && Object.prototype.hasOwnProperty.call(_camelCase, 'default') ? _camelCase['default'] : _camelCase;

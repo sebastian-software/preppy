@@ -43,7 +43,7 @@ console.log(\\"Initialized class:\\",new r),async function(){await PromiseHelper
 
 exports[`Publish Test File via Babel: umd 1`] = `
 "/*! esnext-min v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
-!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"core-js/modules/es.promise\\"),require(\\"lodash/camelCase\\")):\\"function\\"==typeof define&&define.amd?define([\\"core-js/modules/es.promise\\",\\"lodash/camelCase\\"],o):o(null,(e=e||self)._camelCase)}(this,(function(e,o){\\"use strict\\"
+!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"core-js/modules/es.promise\\"),require(\\"lodash/camelCase\\")):\\"function\\"==typeof define&&define.amd?define([\\"core-js/modules/es.promise\\",\\"lodash/camelCase\\"],o):o(null,(e=\\"undefined\\"!=typeof globalThis?globalThis:e||self)._camelCase)}(this,(function(e,o){\\"use strict\\"
 o=o&&Object.prototype.hasOwnProperty.call(o,\\"default\\")?o.default:o,console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===o(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",!0),new Promise((e,o)=>{e(\\"resolved\\")}).then(e=>{console.log(\\"Promise:\\",e)})
 console.log(\\"Constant:\\",123)
 var l=[1,2,3]

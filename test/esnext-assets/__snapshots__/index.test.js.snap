@@ -35,7 +35,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('./bXipeBrs.png'), require('./bsdudxaF.md'), require('./ABCYSDdq.css')) :
 	typeof define === 'function' && define.amd ? define(['./bXipeBrs.png', './bsdudxaF.md', './ABCYSDdq.css'], factory) :
-	(global = global || self, factory(global.imageUrl, global.contentUrl, global.styleUrl));
+	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.imageUrl, global.contentUrl, global.styleUrl));
 }(this, (function (imageUrl, contentUrl, styleUrl) { 'use strict';
 
 	imageUrl = imageUrl && Object.prototype.hasOwnProperty.call(imageUrl, 'default') ? imageUrl['default'] : imageUrl;

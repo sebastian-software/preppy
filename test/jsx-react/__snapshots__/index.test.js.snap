@@ -51,7 +51,7 @@ exports[`Publish Test File via Babel xx: umd 1`] = `
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-intl'), require('components/Header')) :
   typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-intl', 'components/Header'], factory) :
-  (global = global || self, factory(global['jsx-react'] = {}, global.React, global.reactIntl, global.Header));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['jsx-react'] = {}, global.React, global.reactIntl, global.Header));
 }(this, (function (exports, React, reactIntl, Header) { 'use strict';
 
   React = React && Object.prototype.hasOwnProperty.call(React, 'default') ? React['default'] : React;

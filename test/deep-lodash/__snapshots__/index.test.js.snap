@@ -1971,7 +1971,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(global = global || self, factory(global['deep-lodash'] = {}));
+	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['deep-lodash'] = {}));
 }(this, (function (exports) { 'use strict';
 
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};

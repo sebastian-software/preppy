@@ -7,7 +7,9 @@ exports[`Publish Test File via Babel: cjs 1`] = `
 Object.defineProperty(exports, '__esModule', { value: true });
 
 const BYTE_UNITS = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+const BIBYTE_UNITS = ['B', 'kiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 const BIT_UNITS = ['b', 'kbit', 'Mbit', 'Gbit', 'Tbit', 'Pbit', 'Ebit', 'Zbit', 'Ybit'];
+const BIBIT_UNITS = ['b', 'kibit', 'Mibit', 'Gibit', 'Tibit', 'Pibit', 'Eibit', 'Zibit', 'Yibit'];
 /*
 Formats the given number using \`Number#toLocaleString\`.
 - If locale is a string, the value is expected to be a locale-key (for example: \`de\`).
@@ -33,9 +35,10 @@ var prettyBytes = (number, options) => {
   }
 
   options = Object.assign({
-    bits: false
+    bits: false,
+    binary: false
   }, options);
-  const UNITS = options.bits ? BIT_UNITS : BYTE_UNITS;
+  const UNITS = options.bits ? options.binary ? BIBIT_UNITS : BIT_UNITS : options.binary ? BIBYTE_UNITS : BYTE_UNITS;
 
   if (options.signed && number === 0) {
     return ' 0 ' + UNITS[0];
@@ -53,9 +56,9 @@ var prettyBytes = (number, options) => {
     return prefix + numberString + ' ' + UNITS[0];
   }
 
-  const exponent = Math.min(Math.floor(Math.log10(number) / 3), UNITS.length - 1); // eslint-disable-next-line unicorn/prefer-exponentiation-operator
+  const exponent = Math.min(Math.floor(options.binary ? Math.log(number) / Math.log(1024) : Math.log10(number) / 3), UNITS.length - 1); // eslint-disable-next-line unicorn/prefer-exponentiation-operator
 
-  number = Number((number / Math.pow(1000, exponent)).toPrecision(3));
+  number = Number((number / Math.pow(options.binary ? 1024 : 1000, exponent)).toPrecision(3));
   const numberString = toLocaleString(number, options.locale);
   const unit = UNITS[exponent];
   return prefix + numberString + ' ' + unit;
@@ -73,7 +76,9 @@ exports.makePretty = makePretty;
 exports[`Publish Test File via Babel: esm 1`] = `
 "/*! deep-basic v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 const BYTE_UNITS = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+const BIBYTE_UNITS = ['B', 'kiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 const BIT_UNITS = ['b', 'kbit', 'Mbit', 'Gbit', 'Tbit', 'Pbit', 'Ebit', 'Zbit', 'Ybit'];
+const BIBIT_UNITS = ['b', 'kibit', 'Mibit', 'Gibit', 'Tibit', 'Pibit', 'Eibit', 'Zibit', 'Yibit'];
 /*
 Formats the given number using \`Number#toLocaleString\`.
 - If locale is a string, the value is expected to be a locale-key (for example: \`de\`).
@@ -99,9 +104,10 @@ var prettyBytes = (number, options) => {
   }
 
   options = Object.assign({
-    bits: false
+    bits: false,
+    binary: false
   }, options);
-  const UNITS = options.bits ? BIT_UNITS : BYTE_UNITS;
+  const UNITS = options.bits ? options.binary ? BIBIT_UNITS : BIT_UNITS : options.binary ? BIBYTE_UNITS : BYTE_UNITS;
 
   if (options.signed && number === 0) {
     return ' 0 ' + UNITS[0];
@@ -119,9 +125,9 @@ var prettyBytes = (number, options) => {
     return prefix + numberString + ' ' + UNITS[0];
   }
 
-  const exponent = Math.min(Math.floor(Math.log10(number) / 3), UNITS.length - 1); // eslint-disable-next-line unicorn/prefer-exponentiation-operator
+  const exponent = Math.min(Math.floor(options.binary ? Math.log(number) / Math.log(1024) : Math.log10(number) / 3), UNITS.length - 1); // eslint-disable-next-line unicorn/prefer-exponentiation-operator
 
-  number = Number((number / Math.pow(1000, exponent)).toPrecision(3));
+  number = Number((number / Math.pow(options.binary ? 1024 : 1000, exponent)).toPrecision(3));
   const numberString = toLocaleString(number, options.locale);
   const unit = UNITS[exponent];
   return prefix + numberString + ' ' + unit;
@@ -145,7 +151,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 }(this, (function (exports) { 'use strict';
 
 	const BYTE_UNITS = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+	const BIBYTE_UNITS = ['B', 'kiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 	const BIT_UNITS = ['b', 'kbit', 'Mbit', 'Gbit', 'Tbit', 'Pbit', 'Ebit', 'Zbit', 'Ybit'];
+	const BIBIT_UNITS = ['b', 'kibit', 'Mibit', 'Gibit', 'Tibit', 'Pibit', 'Eibit', 'Zibit', 'Yibit'];
 	/*
 	Formats the given number using \`Number#toLocaleString\`.
 	- If locale is a string, the value is expected to be a locale-key (for example: \`de\`).
@@ -171,9 +179,10 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  }
 
 	  options = Object.assign({
-	    bits: false
+	    bits: false,
+	    binary: false
 	  }, options);
-	  const UNITS = options.bits ? BIT_UNITS : BYTE_UNITS;
+	  const UNITS = options.bits ? options.binary ? BIBIT_UNITS : BIT_UNITS : options.binary ? BIBYTE_UNITS : BYTE_UNITS;
 
 	  if (options.signed && number === 0) {
 	    return ' 0 ' + UNITS[0];
@@ -191,9 +200,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	    return prefix + numberString + ' ' + UNITS[0];
 	  }
 
-	  const exponent = Math.min(Math.floor(Math.log10(number) / 3), UNITS.length - 1); // eslint-disable-next-line unicorn/prefer-exponentiation-operator
+	  const exponent = Math.min(Math.floor(options.binary ? Math.log(number) / Math.log(1024) : Math.log10(number) / 3), UNITS.length - 1); // eslint-disable-next-line unicorn/prefer-exponentiation-operator
 
-	  number = Number((number / Math.pow(1000, exponent)).toPrecision(3));
+	  number = Number((number / Math.pow(options.binary ? 1024 : 1000, exponent)).toPrecision(3));
 	  const numberString = toLocaleString(number, options.locale);
 	  const unit = UNITS[exponent];
 	  return prefix + numberString + ' ' + unit;

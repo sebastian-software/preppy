@@ -3,8 +3,8 @@
 exports[`Publish Test File via Babel: cjs 1`] = `
 "/*! esnext-min v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 \\"use strict\\"
-require(\\"core-js/modules/es.promise\\")
-var e,o=(e=require(\\"lodash/camelCase\\"))&&\\"object\\"==typeof e&&\\"default\\"in e?e.default:e
+function e(e){return e&&\\"object\\"==typeof e&&\\"default\\"in e?e.default:e}require(\\"core-js/modules/es.promise\\")
+var o=e(require(\\"lodash/camelCase\\"))
 console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===o(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",!0),new Promise((e,o)=>{e(\\"resolved\\")}).then(e=>{console.log(\\"Promise:\\",e)})
 console.log(\\"Constant:\\",123)
 var l=[1,2,3]
@@ -44,18 +44,19 @@ console.log(\\"Initialized class:\\",new r),async function(){await PromiseHelper
 exports[`Publish Test File via Babel: umd 1`] = `
 "/*! esnext-min v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 !function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"core-js/modules/es.promise\\"),require(\\"lodash/camelCase\\")):\\"function\\"==typeof define&&define.amd?define([\\"core-js/modules/es.promise\\",\\"lodash/camelCase\\"],o):o(null,(e=\\"undefined\\"!=typeof globalThis?globalThis:e||self)._camelCase)}(this,(function(e,o){\\"use strict\\"
-o=o&&Object.prototype.hasOwnProperty.call(o,\\"default\\")?o.default:o,console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===o(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",!0),new Promise((e,o)=>{e(\\"resolved\\")}).then(e=>{console.log(\\"Promise:\\",e)})
+function l(e){return e&&\\"object\\"==typeof e&&\\"default\\"in e?e.default:e}var s=l(o)
+console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===s(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",!0),new Promise((e,o)=>{e(\\"resolved\\")}).then(e=>{console.log(\\"Promise:\\",e)})
 console.log(\\"Constant:\\",123)
-var l=[1,2,3]
-console.log(\\"Supports Array.includes?:\\",l.includes&&l.includes(2))
-var s=new Set(l)
-console.log(\\"Supports Set:\\",s.add(4)),function(e=!0){console.log(\\"Supports default parameters:\\",e)}()
+var n=[1,2,3]
+console.log(\\"Supports Array.includes?:\\",n.includes&&n.includes(2))
+var r=new Set(n)
+console.log(\\"Supports Set:\\",r.add(4)),function(e=!0){console.log(\\"Supports default parameters:\\",e)}()
 {let e=\\"inner\\"
 console.log(\\"X Value from inner scope:\\",e)}console.log(\\"X Value from outer scope:\\",\\"outer\\")
-var n=Object.assign({third:3},{first:1,second:2})
-console.log(\\"Destructed:\\",n)
-class r{constructor(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}helper(){console.log(\\"Called helper\\")}}r()
-console.log(\\"Initialized class:\\",new r),async function(){await PromiseHelper()}()}))
+var t=Object.assign({third:3},{first:1,second:2})
+console.log(\\"Destructed:\\",t)
+class c{constructor(){console.log(\\"Called constructor\\"),this.helper(),this.instanceProperty=3}helper(){console.log(\\"Called helper\\")}}c()
+console.log(\\"Initialized class:\\",new c),async function(){await PromiseHelper()}()}))
 //# sourceMappingURL=index.umd.min.js.map
 "
 `;

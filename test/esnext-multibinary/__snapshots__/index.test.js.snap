@@ -6,13 +6,15 @@ exports[`Multi Binary from ESNext: first 1`] = `
 /*! esnext-multibinary v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var _snakeCase = require('lodash/snakeCase');
 
-var _snakeCase = _interopDefault(require('lodash/snakeCase'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+
+var _snakeCase__default = /*#__PURE__*/_interopDefaultLegacy(_snakeCase);
 
 const realWords = \\"Eine dicke Kuh lacht\\";
 
-console.log(\\"Magic:\\", _snakeCase(realWords));
+console.log(\\"Magic:\\", _snakeCase__default(realWords));
 //# sourceMappingURL=first-cli.js.map
 "
 `;
@@ -23,13 +25,15 @@ exports[`Multi Binary from ESNext: second 1`] = `
 /*! esnext-multibinary v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var _camelCase = require('lodash/camelCase');
 
-var _camelCase = _interopDefault(require('lodash/camelCase'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+
+var _camelCase__default = /*#__PURE__*/_interopDefaultLegacy(_camelCase);
 
 const realWords = \\"Eine dicke Kuh lacht\\";
 
-console.log(\\"Magic:\\", _camelCase(realWords));
+console.log(\\"Magic:\\", _camelCase__default(realWords));
 //# sourceMappingURL=second-cli.js.map
 "
 `;

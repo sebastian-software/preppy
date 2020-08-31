@@ -6,17 +6,20 @@ exports[`Publish Test File via Babel xx: cjs 1`] = `
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var React = _interopDefault(require('react'));
+var React = require('react');
 var reactIntl = require('react-intl');
-var Header = _interopDefault(require('components/Header'));
+var Header = require('components/Header');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+
+var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var Header__default = /*#__PURE__*/_interopDefaultLegacy(Header);
 
 /* eslint-disable import/no-unresolved */
 function MyPage() {
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Header, null, \\"Title\\"), /*#__PURE__*/React.createElement(\\"button\\", {
+  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Header__default, null, \\"Title\\"), /*#__PURE__*/React__default.createElement(\\"button\\", {
     type: \\"submit\\"
-  }, /*#__PURE__*/React.createElement(reactIntl.FormattedMessage, {
+  }, /*#__PURE__*/React__default.createElement(reactIntl.FormattedMessage, {
     id: \\"press-button\\"
   })));
 }
@@ -54,14 +57,16 @@ exports[`Publish Test File via Babel xx: umd 1`] = `
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['jsx-react'] = {}, global.React, global.reactIntl, global.Header));
 }(this, (function (exports, React, reactIntl, Header) { 'use strict';
 
-  React = React && Object.prototype.hasOwnProperty.call(React, 'default') ? React['default'] : React;
-  Header = Header && Object.prototype.hasOwnProperty.call(Header, 'default') ? Header['default'] : Header;
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+
+  var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+  var Header__default = /*#__PURE__*/_interopDefaultLegacy(Header);
 
   /* eslint-disable import/no-unresolved */
   function MyPage() {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Header, null, \\"Title\\"), /*#__PURE__*/React.createElement(\\"button\\", {
+    return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Header__default, null, \\"Title\\"), /*#__PURE__*/React__default.createElement(\\"button\\", {
       type: \\"submit\\"
-    }, /*#__PURE__*/React.createElement(reactIntl.FormattedMessage, {
+    }, /*#__PURE__*/React__default.createElement(reactIntl.FormattedMessage, {
       id: \\"press-button\\"
     })));
   }

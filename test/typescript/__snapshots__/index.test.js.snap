@@ -6,17 +6,19 @@ exports[`Publish Test File via Typescript: cjs 1`] = `
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 require('core-js/modules/es.promise');
-var _camelCase = _interopDefault(require('lodash/camelCase'));
+var _camelCase = require('lodash/camelCase');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+
+var _camelCase__default = /*#__PURE__*/_interopDefaultLegacy(_camelCase);
 
 /**
  * Values of fields in the form
  */
 const something = 42;
 
-console.log(\\"CherryPick Import Lodash:\\", _camelCase(\\"hello world\\") === \\"helloWorld\\");
+console.log(\\"CherryPick Import Lodash:\\", _camelCase__default(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Imported JS from other file:\\", something);
 console.log(\\"Package\\", \\"typescript\\");
 console.log(\\"Target\\", \\"lib\\");
@@ -219,14 +221,16 @@ exports[`Publish Test File via Typescript: umd 1`] = `
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.typescript = {}, null, global._camelCase));
 }(this, (function (exports, es_promise, _camelCase) { 'use strict';
 
-  _camelCase = _camelCase && Object.prototype.hasOwnProperty.call(_camelCase, 'default') ? _camelCase['default'] : _camelCase;
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+
+  var _camelCase__default = /*#__PURE__*/_interopDefaultLegacy(_camelCase);
 
   /**
    * Values of fields in the form
    */
   const something = 42;
 
-  console.log(\\"CherryPick Import Lodash:\\", _camelCase(\\"hello world\\") === \\"helloWorld\\");
+  console.log(\\"CherryPick Import Lodash:\\", _camelCase__default(\\"hello world\\") === \\"helloWorld\\");
   console.log(\\"Imported JS from other file:\\", something);
   console.log(\\"Package\\", \\"typescript\\");
   console.log(\\"Target\\", \\"lib\\");

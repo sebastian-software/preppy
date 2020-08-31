@@ -13,6 +13,10 @@ export default function getRollupOutputOptions({
     format,
     name,
     banner: target === "cli" ? `${shebang}\n\n${banner}` : banner,
+
+    // See also: https://github.com/rollup/rollup/issues/3748
+    externalLiveBindings: false,
+
     sourcemap: true,
     file: join(root, output)
   }

@@ -31,7 +31,7 @@ const resolveHost = {
   }
 }
 
-const extensions = new Set([ ".ts", ".tsx" ])
+const extensions = new Set([".ts", ".tsx"])
 const compilerOptions = {}
 
 export default () => ({
@@ -49,6 +49,10 @@ export default () => ({
     }
 
     const fixedImporter = importer.split("\\").join("/")
+
+    if (!ts) {
+      throw new Error("Please install package 'typescript'")
+    }
 
     const result = ts.nodeModuleNameResolver(
       importee,

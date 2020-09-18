@@ -65,6 +65,7 @@ export default function extractTypes({ input, root, output, verbose, tsConfig })
     declarationDir: join(root, outputDir),
     emitDeclarationOnly: true,
     jsx: "preserve",
+    noEmit: false,
     moduleResolution: ts.ModuleResolutionKind.NodeJs
   }
 

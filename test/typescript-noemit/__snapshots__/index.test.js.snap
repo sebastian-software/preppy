@@ -1,0 +1,316 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Publish Test File via Typescript: cjs 1`] = `
+"/*! typescript-noemit v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+require('core-js/modules/es.promise');
+var _camelCase = require('lodash/camelCase');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+
+var _camelCase__default = /*#__PURE__*/_interopDefaultLegacy(_camelCase);
+
+/**
+ * Values of fields in the form
+ */
+const something = 42;
+
+console.log(\\"CherryPick Import Lodash:\\", _camelCase__default(\\"hello world\\") === \\"helloWorld\\");
+console.log(\\"Imported JS from other file:\\", something);
+console.log(\\"Package\\", \\"typescript-noemit\\");
+console.log(\\"Target\\", \\"lib\\");
+console.log(\\"ES2016 Enabled:\\", 2 ** 2 === 4);
+new Promise((resolve, reject) => {
+  resolve(\\"resolved\\");
+}).then(first => {
+  console.log(\\"Promise:\\", first);
+});
+const CONSTANT = 123;
+console.log(\\"Constant:\\", CONSTANT);
+var myArray = [1, 2, 3];
+console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+var mySet = new Set(myArray);
+console.log(\\"Supports Set:\\", mySet.add(4));
+
+(function (supportsDefault = true) {
+  console.log(\\"Supports default parameters:\\", supportsDefault);
+})();
+/* eslint-disable no-shadow */
+
+
+let testVariable = \\"outer\\";
+{
+  let testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", testVariable);
+}
+console.log(\\"X Value from outer scope:\\", testVariable);
+var source = {
+  first: 1,
+  second: 2
+};
+var destructed = Object.assign({
+  third: 3
+}, source);
+console.log(\\"Destructed:\\", destructed);
+class MyClass {
+  constructor() {
+    console.log(\\"Called constructor\\");
+    this.helper();
+    this.instanceProperty = 3;
+  }
+
+  onClick = () => {
+    console.log(\\"Clickedx\\");
+  };
+
+  helper(x) {
+    console.log(\`Called helper: \${x}\`);
+  }
+
+}
+
+class SecondClass extends MyClass() {
+  constructor() {
+    super(100);
+  }
+
+}
+
+console.log(\\"Initialized class:\\", new MyClass());
+
+async function helper() {
+  await PromiseHelper();
+  return 42;
+}
+
+helper();
+const setValues = values => {
+  setState({
+    values
+  }, () => true);
+};
+
+exports.MyClass = MyClass;
+exports.setValues = setValues;
+//# sourceMappingURL=index.cjs.js.map
+"
+`;
+
+exports[`Publish Test File via Typescript: esm 1`] = `
+"/*! typescript-noemit v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+import 'core-js/modules/es.promise';
+import _camelCase from 'lodash/camelCase';
+
+/**
+ * Values of fields in the form
+ */
+const something = 42;
+
+console.log(\\"CherryPick Import Lodash:\\", _camelCase(\\"hello world\\") === \\"helloWorld\\");
+console.log(\\"Imported JS from other file:\\", something);
+console.log(\\"Package\\", \\"typescript-noemit\\");
+console.log(\\"Target\\", \\"lib\\");
+console.log(\\"ES2016 Enabled:\\", 2 ** 2 === 4);
+new Promise((resolve, reject) => {
+  resolve(\\"resolved\\");
+}).then(first => {
+  console.log(\\"Promise:\\", first);
+});
+const CONSTANT = 123;
+console.log(\\"Constant:\\", CONSTANT);
+var myArray = [1, 2, 3];
+console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+var mySet = new Set(myArray);
+console.log(\\"Supports Set:\\", mySet.add(4));
+
+(function (supportsDefault = true) {
+  console.log(\\"Supports default parameters:\\", supportsDefault);
+})();
+/* eslint-disable no-shadow */
+
+
+let testVariable = \\"outer\\";
+{
+  let testVariable = \\"inner\\";
+  console.log(\\"X Value from inner scope:\\", testVariable);
+}
+console.log(\\"X Value from outer scope:\\", testVariable);
+var source = {
+  first: 1,
+  second: 2
+};
+var destructed = Object.assign({
+  third: 3
+}, source);
+console.log(\\"Destructed:\\", destructed);
+class MyClass {
+  constructor() {
+    console.log(\\"Called constructor\\");
+    this.helper();
+    this.instanceProperty = 3;
+  }
+
+  onClick = () => {
+    console.log(\\"Clickedx\\");
+  };
+
+  helper(x) {
+    console.log(\`Called helper: \${x}\`);
+  }
+
+}
+
+class SecondClass extends MyClass() {
+  constructor() {
+    super(100);
+  }
+
+}
+
+console.log(\\"Initialized class:\\", new MyClass());
+
+async function helper() {
+  await PromiseHelper();
+  return 42;
+}
+
+helper();
+const setValues = values => {
+  setState({
+    values
+  }, () => true);
+};
+
+export { MyClass, setValues };
+//# sourceMappingURL=index.esm.js.map
+"
+`;
+
+exports[`Publish Test File via Typescript: types-main 1`] = `
+"import { FormValues } from \\"./types\\";
+export declare class MyClass {
+    constructor();
+    onClick: () => void;
+    helper(x: string): void;
+}
+export declare const setValues: (values: FormValues) => void;
+//# sourceMappingURL=index.d.ts.map"
+`;
+
+exports[`Publish Test File via Typescript: types-main-map 1`] = `"{\\"version\\":3,\\"file\\":\\"index.d.ts\\",\\"sourceRoot\\":\\"\\",\\"sources\\":[\\"../src/index.tsx\\"],\\"names\\":[],\\"mappings\\":\\"AASA,OAAO,EAAE,UAAU,EAAa,MAAM,SAAS,CAAA;AAwC/C,qBAAa,OAAO;;IAOlB,OAAO,aAEN;IAED,MAAM,CAAC,CAAC,EAAE,MAAM;CAGjB;AAkBD,eAAO,MAAM,SAAS,WAAY,UAAU,SAE3C,CAAA\\"}"`;
+
+exports[`Publish Test File via Typescript: types-sub 1`] = `
+"/**
+ * Values of fields in the form
+ */
+export interface FormValues {
+    [field: string]: any;
+}
+export declare const something = 42;
+//# sourceMappingURL=types.d.ts.map"
+`;
+
+exports[`Publish Test File via Typescript: umd 1`] = `
+"/*! typescript-noemit v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es.promise'), require('lodash/camelCase')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es.promise', 'lodash/camelCase'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['typescript-noemit'] = {}, null, global._camelCase));
+}(this, (function (exports, es_promise, _camelCase) { 'use strict';
+
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+
+  var _camelCase__default = /*#__PURE__*/_interopDefaultLegacy(_camelCase);
+
+  /**
+   * Values of fields in the form
+   */
+  const something = 42;
+
+  console.log(\\"CherryPick Import Lodash:\\", _camelCase__default(\\"hello world\\") === \\"helloWorld\\");
+  console.log(\\"Imported JS from other file:\\", something);
+  console.log(\\"Package\\", \\"typescript-noemit\\");
+  console.log(\\"Target\\", \\"lib\\");
+  console.log(\\"ES2016 Enabled:\\", 2 ** 2 === 4);
+  new Promise((resolve, reject) => {
+    resolve(\\"resolved\\");
+  }).then(first => {
+    console.log(\\"Promise:\\", first);
+  });
+  const CONSTANT = 123;
+  console.log(\\"Constant:\\", CONSTANT);
+  var myArray = [1, 2, 3];
+  console.log(\\"Supports Array.includes?:\\", myArray.includes && myArray.includes(2));
+  var mySet = new Set(myArray);
+  console.log(\\"Supports Set:\\", mySet.add(4));
+
+  (function (supportsDefault = true) {
+    console.log(\\"Supports default parameters:\\", supportsDefault);
+  })();
+  /* eslint-disable no-shadow */
+
+
+  let testVariable = \\"outer\\";
+  {
+    let testVariable = \\"inner\\";
+    console.log(\\"X Value from inner scope:\\", testVariable);
+  }
+  console.log(\\"X Value from outer scope:\\", testVariable);
+  var source = {
+    first: 1,
+    second: 2
+  };
+  var destructed = Object.assign({
+    third: 3
+  }, source);
+  console.log(\\"Destructed:\\", destructed);
+  class MyClass {
+    constructor() {
+      console.log(\\"Called constructor\\");
+      this.helper();
+      this.instanceProperty = 3;
+    }
+
+    onClick = () => {
+      console.log(\\"Clickedx\\");
+    };
+
+    helper(x) {
+      console.log(\`Called helper: \${x}\`);
+    }
+
+  }
+
+  class SecondClass extends MyClass() {
+    constructor() {
+      super(100);
+    }
+
+  }
+
+  console.log(\\"Initialized class:\\", new MyClass());
+
+  async function helper() {
+    await PromiseHelper();
+    return 42;
+  }
+
+  helper();
+  const setValues = values => {
+    setState({
+      values
+    }, () => true);
+  };
+
+  exports.MyClass = MyClass;
+  exports.setValues = setValues;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+//# sourceMappingURL=index.umd.js.map
+"
+`;

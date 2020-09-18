@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src",
+    "noEmit": true
+  },
+  "extends": "./tsconfig.base.json"
+}

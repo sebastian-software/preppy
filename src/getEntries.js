@@ -101,13 +101,21 @@ export default function getEntries(options) {
       // The first existing file wins.
       const binaryEntry = [
         `src/${name}.js`,
+        `src/${name}.jsx`,
         `src/${name}.ts`,
+        `src/${name}.tsx`,
         `src/cli/${name}.js`,
+        `src/cli/${name}.jsx`,
         `src/cli/${name}.ts`,
+        `src/cli/${name}.tsx`,
         "src/cli.js",
+        "src/cli.jsx",
         "src/cli.ts",
+        "src/cli.tsx",
         "src/cli/index.js",
-        "src/cli/index.ts"
+        "src/cli/index.jsx",
+        "src/cli/index.ts",
+        "src/cli/index.tsx"
       ]
         .map(addRoot)
         .filter(existsSync)[0]

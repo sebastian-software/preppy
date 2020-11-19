@@ -5,16 +5,14 @@
 <img src="https://raw.githubusercontent.com/sebastian-software/preppy/master/demo.gif?raw=true" alt="Demo of Preppy" />
 
 <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm]<br/>
-[![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Code Coverage][codecov-img]][codecov] [![Dependencies][deps-img]][deps]
+[![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Code Coverage][codecov-img]][codecov]
 
 [sponsor]: https://www.sebastian-software.de
-[deps]: https://david-dm.org/sebastian-software/preppy
 [npm]: https://www.npmjs.com/package/preppy
 [travis]: https://travis-ci.org/sebastian-software/preppy
 [appveyor]: https://ci.appveyor.com/project/swernerx/preppy/branch/master
 [codecov]: https://codecov.io/gh/sebastian-software/preppy
 [sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/692446
-[deps-img]: https://badgen.net/david/dep/sebastian-software/preppy
 [npm-downloads-img]: https://badgen.net/npm/dm/preppy
 [npm-version-img]: https://badgen.net/npm/v/preppy
 [travis-img]: https://badgen.net/travis/sebastian-software/preppy?label=unix%20build

@@ -19,15 +19,16 @@ export default () => ({
     const tree = this.parse(code)
     walk(tree, {
       enter(node) {
-        if (node.type === "JSXMemberExpression" || node.type === "JSXIdentifier") {
-          const name = getJsxName(node)
+        if (node.type === "JSXOpeningElement" || node.type === "JSXClosingElement") {
+          const name = getJsxName(node.name)
           const tagId = idsByName.get(name) || `PREPPY_JSX_ID_${nextId += 1}`
 
           // overwrite all JSX tags with artificial tag ids so that we can find them again later
-          magicString.overwrite(node.start, node.end, tagId)
+          magicString.overwrite(node.name.start, node.name.end, tagId)
           idsByName.set(name, tagId)
-
-          // if this is a JSXMemberExpression, do not treat the children as separate identifiers
+        }
+        // do not treat the children as separate identifiers
+        else if (node.type === "JSXMemberExpression") {
           this.skip()
         }
       }

@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Expand Extensions 1`] = `
+Array [
+  "src/index.js",
+  "src/index.jsx",
+  "src/index.ts",
+  "src/index.tsx",
+]
+`;

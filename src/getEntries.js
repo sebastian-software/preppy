@@ -10,6 +10,18 @@ function isEmpty(obj) {
   return true
 }
 
+const SOURCE_EXTENSIONS = [ ".js", ".jsx", ".ts", ".tsx" ]
+
+export function expandExtensions(fileList) {
+  const result = []
+  fileList.forEach((name) => {
+    SOURCE_EXTENSIONS.forEach((ext) => {
+      result.push(`${name}${ext}`)
+    })
+  })
+  return result
+}
+
 export default function getEntries(options) {
   const entries = {}
 
@@ -24,9 +36,7 @@ export default function getEntries(options) {
     }
     entries.library = options.entryLib
   } else if (!hasInputs) {
-    entries.library = [ "src/index.js", "src/index.jsx", "src/index.ts", "src/index.tsx" ]
-      .map(addRoot)
-      .filter(existsSync)[0]
+    entries.library = expandExtensions([ "src/index" ]).map(addRoot).filter(existsSync)[0]
   }
 
   if (options.entryNode) {
@@ -35,24 +45,12 @@ export default function getEntries(options) {
     }
     entries.node = options.entryNode
   } else if (!hasInputs) {
-    entries.node = [
-      "src/node.js",
-      "src/node.jsx",
-      "src/node.ts",
-      "src/node.tsx",
-      "src/server.js",
-      "src/server.jsx",
-      "src/server.ts",
-      "src/server.tsx",
-      "src/node/index.js",
-      "src/node/index.jsx",
-      "src/node/index.ts",
-      "src/node/index.tsx",
-      "src/server/index.js",
-      "src/server/index.jsx",
-      "src/server/index.ts",
-      "src/server/index.tsx"
-    ]
+    entries.node = expandExtensions([
+      "src/node",
+      "src/server",
+      "src/node/index",
+      "src/server/index"
+    ])
       .map(addRoot)
       .filter(existsSync)[0]
   }
@@ -63,24 +61,12 @@ export default function getEntries(options) {
     }
     entries.browser = options.entryBrowser
   } else if (!hasInputs) {
-    entries.browser = [
-      "src/client.js",
-      "src/client.jsx",
-      "src/client.ts",
-      "src/client.tsx",
-      "src/browser.js",
-      "src/browser.jsx",
-      "src/browser.ts",
-      "src/browser.tsx",
-      "src/client/index.js",
-      "src/client/index.jsx",
-      "src/client/index.ts",
-      "src/client/index.tsx",
-      "src/browser/index.js",
-      "src/browser/index.jsx",
-      "src/browser/index.ts",
-      "src/browser/index.tsx"
-    ]
+    entries.browser = expandExtensions([
+      "src/client",
+      "src/browser",
+      "src/client/index",
+      "src/browser/index"
+    ])
       .map(addRoot)
       .filter(existsSync)[0]
   }
@@ -97,26 +83,14 @@ export default function getEntries(options) {
     const binaryNames = Object.keys(options.output.binaries)
 
     binaryNames.forEach((name) => {
-      // Check existance of all these files in priority of there order here.
+      // Check existence of all these files in priority of there order here.
       // The first existing file wins.
-      const binaryEntry = [
-        `src/${name}.js`,
-        `src/${name}.jsx`,
-        `src/${name}.ts`,
-        `src/${name}.tsx`,
-        `src/cli/${name}.js`,
-        `src/cli/${name}.jsx`,
-        `src/cli/${name}.ts`,
-        `src/cli/${name}.tsx`,
-        "src/cli.js",
-        "src/cli.jsx",
-        "src/cli.ts",
-        "src/cli.tsx",
-        "src/cli/index.js",
-        "src/cli/index.jsx",
-        "src/cli/index.ts",
-        "src/cli/index.tsx"
-      ]
+      const binaryEntry = expandExtensions([
+        `src/${name}`,
+        `src/cli/${name}`,
+        "src/cli",
+        "src/cli/index"
+      ])
         .map(addRoot)
         .filter(existsSync)[0]
 

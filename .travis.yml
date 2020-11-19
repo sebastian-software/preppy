@@ -2,12 +2,9 @@ language: node_js
 node_js:
 - 10
 - 12
+- 14
 matrix:
   fast_finish: true
-notifications:
-  email: false
-  slack:
-    secure: BISm07WlmcRYxD4n+dAjmQ7RfDkV2iXpt7pTY/VfWVfMmbAMCaiqcQCTBngcw8ILvAnAOz4lS6fAyTsuMR/YESMZeslMZHHZjhYnqPZc/etk8zJHNpeV+ISaKrUEI2NSueKZ9A2UFdRlP3TJjAPOetbwY1A+iqy0FbCcLBEvyJ1zJRuYdqHXD08DCVF1cp1pinjZj94H7K/CkpZ2aNldkP/WTZVgchCTsw+3T60b8Yz/nCbrRqD77ckUdmyVk/wxFK7VpEjHO/uEqC1C7B+h/aGpVueQJ6vV53qmKJzESx5YJ7EdwS6YiAUB8CFc96qzYMNigAPLktzHHLWzp4SxJcinooGDKxOJ0bCGF6Ew+VOpy5JWLTDKi+kjF5Cm8NZaBOM9fEG0liPmmZz00S4usxDR9b6HRq+dBKy7+Z14JI/P+vlAE6JsMNB/ky9GpkYNhA6OibQ5kQK7Dnety0M9CjAiI12MbvqHo15SPMZvXNhdR0A5BssP9IUp3ABi94Exoy00pHdcQ2rx1I4xyw3PkoXX3/bd3bHfG/Ni+8OQkhGH5L8pAgp8Bd5Vwgbo413+hA9u+Kmmm1J+H8XMzzdCnMW6n/+6JVUuUX7bnh2UhxKjdnFo2A9mxOgW99a/Ao1qE1x/p4YTxcu7iO8WKXDU5PEbaCH/lvWiCdy5IaBMxwA=
 cache:
   directories:
   - "$HOME/.npm"

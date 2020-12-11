@@ -6,22 +6,9 @@ exports[`Publish Test File via Babel: cjs 1`] = `
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function getDefaultExportFromCjs (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, basedir, module) {
-	return module = {
-		path: basedir,
-		exports: {},
-		require: function (path, base) {
-			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-		}
-	}, fn(module, module.exports), module.exports;
-}
-
-function commonjsRequire () {
-	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
 }
 
 var check = function (it) {
@@ -29,7 +16,7 @@ var check = function (it) {
 }; // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 
 
-var global_1 = // eslint-disable-next-line no-undef
+var global$1 = // eslint-disable-next-line no-undef
 check(typeof globalThis == 'object' && globalThis) || check(typeof window == 'object' && window) || check(typeof self == 'object' && self) || check(typeof commonjsGlobal == 'object' && commonjsGlobal) || // eslint-disable-next-line no-new-func
 function () {
   return this;
@@ -126,7 +113,7 @@ var has = function (it, key) {
   return hasOwnProperty.call(it, key);
 };
 
-var document = global_1.document; // typeof document.createElement is 'object' in old IE
+var document = global$1.document; // typeof document.createElement is 'object' in old IE
 
 var EXISTS = isObject(document) && isObject(document.createElement);
 
@@ -196,16 +183,16 @@ var createNonEnumerableProperty = descriptors ? function (object, key, value) {
 
 var setGlobal = function (key, value) {
   try {
-    createNonEnumerableProperty(global_1, key, value);
+    createNonEnumerableProperty(global$1, key, value);
   } catch (error) {
-    global_1[key] = value;
+    global$1[key] = value;
   }
 
   return value;
 };
 
 var SHARED = '__core-js_shared__';
-var store = global_1[SHARED] || setGlobal(SHARED, {});
+var store = global$1[SHARED] || setGlobal(SHARED, {});
 var sharedStore = store;
 
 var functionToString = Function.toString; // this helper broken in \`3.4.1-3.4.4\`, so we can't use \`shared\` helper
@@ -218,14 +205,14 @@ if (typeof sharedStore.inspectSource != 'function') {
 
 var inspectSource = sharedStore.inspectSource;
 
-var WeakMap = global_1.WeakMap;
+var WeakMap = global$1.WeakMap;
 var nativeWeakMap = typeof WeakMap === 'function' && /native code/.test(inspectSource(WeakMap));
 
 var shared = createCommonjsModule(function (module) {
   (module.exports = function (key, value) {
     return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.7.0',
+    version: '3.8.1',
     mode:  'global',
     copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
   });
@@ -246,7 +233,7 @@ var sharedKey = function (key) {
 
 var hiddenKeys = {};
 
-var WeakMap$1 = global_1.WeakMap;
+var WeakMap$1 = global$1.WeakMap;
 var set, get, has$1;
 
 var enforce = function (it) {
@@ -333,7 +320,7 @@ var redefine = createCommonjsModule(function (module) {
       }
     }
 
-    if (O === global_1) {
+    if (O === global$1) {
       if (simple) O[key] = value;else setGlobal(key, value);
       return;
     } else if (!unsafe) {
@@ -348,14 +335,14 @@ var redefine = createCommonjsModule(function (module) {
   });
 });
 
-var path = global_1;
+var path = global$1;
 
 var aFunction = function (variable) {
   return typeof variable == 'function' ? variable : undefined;
 };
 
 var getBuiltIn = function (namespace, method) {
-  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global_1[namespace]) : path[namespace] && path[namespace][method] || global_1[namespace] && global_1[namespace][method];
+  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global$1[namespace]) : path[namespace] && path[namespace][method] || global$1[namespace] && global$1[namespace][method];
 };
 
 var ceil = Math.ceil;
@@ -504,11 +491,11 @@ var _export = function (options, source) {
   var FORCED, target, key, targetProperty, sourceProperty, descriptor;
 
   if (GLOBAL) {
-    target = global_1;
+    target = global$1;
   } else if (STATIC) {
-    target = global_1[TARGET] || setGlobal(TARGET, {});
+    target = global$1[TARGET] || setGlobal(TARGET, {});
   } else {
-    target = (global_1[TARGET] || {}).prototype;
+    target = (global$1[TARGET] || {}).prototype;
   }
 
   if (target) for (key in source) {
@@ -536,7 +523,7 @@ var _export = function (options, source) {
   }
 };
 
-var nativePromiseConstructor = global_1.Promise;
+var nativePromiseConstructor = global$1.Promise;
 
 var redefineAll = function (target, src, options) {
   for (var key in src) redefine(target, key, src[key], options);
@@ -555,7 +542,7 @@ var useSymbolAsUid = nativeSymbol // eslint-disable-next-line no-undef
 && typeof Symbol.iterator == 'symbol';
 
 var WellKnownSymbolsStore = shared('wks');
-var Symbol$1 = global_1.Symbol;
+var Symbol$1 = global$1.Symbol;
 var createWellKnownSymbol = useSymbolAsUid ? Symbol$1 : Symbol$1 && Symbol$1.withoutSetter || uid;
 
 var wellKnownSymbol = function (name) {
@@ -823,14 +810,14 @@ var engineUserAgent = getBuiltIn('navigator', 'userAgent') || '';
 
 var engineIsIos = /(iphone|ipod|ipad).*applewebkit/i.test(engineUserAgent);
 
-var engineIsNode = classofRaw(global_1.process) == 'process';
+var engineIsNode = classofRaw(global$1.process) == 'process';
 
-var location = global_1.location;
-var set$1 = global_1.setImmediate;
-var clear = global_1.clearImmediate;
-var process = global_1.process;
-var MessageChannel = global_1.MessageChannel;
-var Dispatch = global_1.Dispatch;
+var location = global$1.location;
+var set$1 = global$1.setImmediate;
+var clear = global$1.clearImmediate;
+var process = global$1.process;
+var MessageChannel = global$1.MessageChannel;
+var Dispatch = global$1.Dispatch;
 var counter = 0;
 var queue = {};
 var ONREADYSTATECHANGE = 'onreadystatechange';
@@ -857,7 +844,7 @@ var listener = function (event) {
 
 var post = function (id) {
   // old engines have not location.origin
-  global_1.postMessage(id + '', location.protocol + '//' + location.host);
+  global$1.postMessage(id + '', location.protocol + '//' + location.host);
 }; // Node.js 0.9+ & IE10+ has setImmediate, otherwise:
 
 
@@ -899,9 +886,9 @@ if (!set$1 || !clear) {
     channel.port1.onmessage = listener;
     defer = functionBindContext(port.postMessage, port, 1); // Browsers with postMessage, skip WebWorkers
     // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
-  } else if (global_1.addEventListener && typeof postMessage == 'function' && !global_1.importScripts && location && location.protocol !== 'file:' && !fails(post)) {
+  } else if (global$1.addEventListener && typeof postMessage == 'function' && !global$1.importScripts && location && location.protocol !== 'file:' && !fails(post)) {
     defer = post;
-    global_1.addEventListener('message', listener, false); // IE8-
+    global$1.addEventListener('message', listener, false); // IE8-
   } else if (ONREADYSTATECHANGE in documentCreateElement('script')) {
     defer = function (id) {
       html.appendChild(documentCreateElement('script'))[ONREADYSTATECHANGE] = function () {
@@ -924,12 +911,12 @@ var task = {
 
 var getOwnPropertyDescriptor$2 = objectGetOwnPropertyDescriptor.f;
 var macrotask = task.set;
-var MutationObserver = global_1.MutationObserver || global_1.WebKitMutationObserver;
-var document$1 = global_1.document;
-var process$1 = global_1.process;
-var Promise$1 = global_1.Promise; // Node.js 11 shows ExperimentalWarning on getting \`queueMicrotask\`
+var MutationObserver = global$1.MutationObserver || global$1.WebKitMutationObserver;
+var document$1 = global$1.document;
+var process$1 = global$1.process;
+var Promise$1 = global$1.Promise; // Node.js 11 shows ExperimentalWarning on getting \`queueMicrotask\`
 
-var queueMicrotaskDescriptor = getOwnPropertyDescriptor$2(global_1, 'queueMicrotask');
+var queueMicrotaskDescriptor = getOwnPropertyDescriptor$2(global$1, 'queueMicrotask');
 var queueMicrotask = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
 var flush, head, last, notify, toggle, node, promise, then; // modern engines have queueMicrotask method
 
@@ -988,7 +975,7 @@ if (!queueMicrotask) {
   } else {
     notify = function () {
       // strange IE + webpack dev server bug - use .call(global)
-      macrotask.call(global_1, flush);
+      macrotask.call(global$1, flush);
     };
   }
 }
@@ -1038,7 +1025,7 @@ var promiseResolve = function (C, x) {
 };
 
 var hostReportErrors = function (a, b) {
-  var console = global_1.console;
+  var console = global$1.console;
 
   if (console && console.error) {
     arguments.length === 1 ? console.error(a) : console.error(a, b);
@@ -1059,7 +1046,7 @@ var perform = function (exec) {
   }
 };
 
-var process$2 = global_1.process;
+var process$2 = global$1.process;
 var versions = process$2 && process$2.versions;
 var v8 = versions && versions.v8;
 var match, version;
@@ -1085,13 +1072,13 @@ var getInternalState = internalState.get;
 var setInternalState = internalState.set;
 var getInternalPromiseState = internalState.getterFor(PROMISE);
 var PromiseConstructor = nativePromiseConstructor;
-var TypeError$1 = global_1.TypeError;
-var document$2 = global_1.document;
-var process$3 = global_1.process;
+var TypeError$1 = global$1.TypeError;
+var document$2 = global$1.document;
+var process$3 = global$1.process;
 var $fetch = getBuiltIn('fetch');
 var newPromiseCapability$1 = newPromiseCapability.f;
 var newGenericPromiseCapability = newPromiseCapability$1;
-var DISPATCH_EVENT = !!(document$2 && document$2.createEvent && global_1.dispatchEvent);
+var DISPATCH_EVENT = !!(document$2 && document$2.createEvent && global$1.dispatchEvent);
 var NATIVE_REJECTION_EVENT = typeof PromiseRejectionEvent == 'function';
 var UNHANDLED_REJECTION = 'unhandledrejection';
 var REJECTION_HANDLED = 'rejectionhandled';
@@ -1204,17 +1191,17 @@ var dispatchEvent = function (name, promise, reason) {
     event.promise = promise;
     event.reason = reason;
     event.initEvent(name, false, true);
-    global_1.dispatchEvent(event);
+    global$1.dispatchEvent(event);
   } else event = {
     promise: promise,
     reason: reason
   };
 
-  if (!NATIVE_REJECTION_EVENT && (handler = global_1['on' + name])) handler(event);else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
+  if (!NATIVE_REJECTION_EVENT && (handler = global$1['on' + name])) handler(event);else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
 };
 
 var onUnhandled = function (state) {
-  task$1.call(global_1, function () {
+  task$1.call(global$1, function () {
     var promise = state.facade;
     var value = state.value;
     var IS_UNHANDLED = isUnhandled(state);
@@ -1238,7 +1225,7 @@ var isUnhandled = function (state) {
 };
 
 var onHandleUnhandled = function (state) {
-  task$1.call(global_1, function () {
+  task$1.call(global$1, function () {
     var promise = state.facade;
 
     if (engineIsNode) {
@@ -1379,7 +1366,7 @@ if (FORCED) {
       fetch: function fetch(input
       /* , init */
       ) {
-        return promiseResolve(PromiseConstructor, $fetch.apply(global_1, arguments));
+        return promiseResolve(PromiseConstructor, $fetch.apply(global$1, arguments));
       }
     });
   }
@@ -1884,459 +1871,448 @@ var TimeoutError_1 = TimeoutError;
 pTimeout_1.default = _default;
 pTimeout_1.TimeoutError = TimeoutError_1;
 
-var lowerBound_1 = createCommonjsModule(function (module, exports) {
+// Used to compute insertion index to keep queue sorted after insertion
 
-  Object.defineProperty(exports, \\"__esModule\\", {
-    value: true
-  }); // Port of lower_bound from https://en.cppreference.com/w/cpp/algorithm/lower_bound
-  // Used to compute insertion index to keep queue sorted after insertion
+function lowerBound(array, value, comparator) {
+  let first = 0;
+  let count = array.length;
 
-  function lowerBound(array, value, comparator) {
-    let first = 0;
-    let count = array.length;
+  while (count > 0) {
+    const step = count / 2 | 0;
+    let it = first + step;
 
-    while (count > 0) {
-      const step = count / 2 | 0;
-      let it = first + step;
+    if (comparator(array[it], value) <= 0) {
+      first = ++it;
+      count -= step + 1;
+    } else {
+      count = step;
+    }
+  }
 
-      if (comparator(array[it], value) <= 0) {
-        first = ++it;
-        count -= step + 1;
+  return first;
+}
+
+var _default$1 = lowerBound;
+var lowerBound_1 = /*#__PURE__*/Object.defineProperty({
+  default: _default$1
+}, '__esModule', {
+  value: true
+});
+
+class PriorityQueue {
+  constructor() {
+    this._queue = [];
+  }
+
+  enqueue(run, options) {
+    options = Object.assign({
+      priority: 0
+    }, options);
+    const element = {
+      priority: options.priority,
+      run
+    };
+
+    if (this.size && this._queue[this.size - 1].priority >= options.priority) {
+      this._queue.push(element);
+
+      return;
+    }
+
+    const index = lowerBound_1.default(this._queue, element, (a, b) => b.priority - a.priority);
+
+    this._queue.splice(index, 0, element);
+  }
+
+  dequeue() {
+    const item = this._queue.shift();
+
+    return item === null || item === void 0 ? void 0 : item.run;
+  }
+
+  filter(options) {
+    return this._queue.filter(element => element.priority === options.priority).map(element => element.run);
+  }
+
+  get size() {
+    return this._queue.length;
+  }
+
+}
+
+var _default$2 = PriorityQueue;
+var priorityQueue = /*#__PURE__*/Object.defineProperty({
+  default: _default$2
+}, '__esModule', {
+  value: true
+});
+
+const empty = () => {};
+
+const timeoutError = new pTimeout_1.TimeoutError();
+/**
+Promise queue with concurrency control.
+*/
+
+class PQueue extends eventemitter3 {
+  constructor(options) {
+    var _a, _b, _c, _d;
+
+    super();
+    this._intervalCount = 0;
+    this._intervalEnd = 0;
+    this._pendingCount = 0;
+    this._resolveEmpty = empty;
+    this._resolveIdle = empty; // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+
+    options = Object.assign({
+      carryoverConcurrencyCount: false,
+      intervalCap: Infinity,
+      interval: 0,
+      concurrency: Infinity,
+      autoStart: true,
+      queueClass: priorityQueue.default
+    }, options);
+
+    if (!(typeof options.intervalCap === 'number' && options.intervalCap >= 1)) {
+      throw new TypeError(\`Expected \\\\\`intervalCap\\\\\` to be a number from 1 and up, got \\\\\`\${(_b = (_a = options.intervalCap) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : ''}\\\\\` (\${typeof options.intervalCap})\`);
+    }
+
+    if (options.interval === undefined || !(Number.isFinite(options.interval) && options.interval >= 0)) {
+      throw new TypeError(\`Expected \\\\\`interval\\\\\` to be a finite number >= 0, got \\\\\`\${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\\\\\` (\${typeof options.interval})\`);
+    }
+
+    this._carryoverConcurrencyCount = options.carryoverConcurrencyCount;
+    this._isIntervalIgnored = options.intervalCap === Infinity || options.interval === 0;
+    this._intervalCap = options.intervalCap;
+    this._interval = options.interval;
+    this._queue = new options.queueClass();
+    this._queueClass = options.queueClass;
+    this.concurrency = options.concurrency;
+    this._timeout = options.timeout;
+    this._throwOnTimeout = options.throwOnTimeout === true;
+    this._isPaused = options.autoStart === false;
+  }
+
+  get _doesIntervalAllowAnother() {
+    return this._isIntervalIgnored || this._intervalCount < this._intervalCap;
+  }
+
+  get _doesConcurrentAllowAnother() {
+    return this._pendingCount < this._concurrency;
+  }
+
+  _next() {
+    this._pendingCount--;
+
+    this._tryToStartAnother();
+
+    this.emit('next');
+  }
+
+  _resolvePromises() {
+    this._resolveEmpty();
+
+    this._resolveEmpty = empty;
+
+    if (this._pendingCount === 0) {
+      this._resolveIdle();
+
+      this._resolveIdle = empty;
+      this.emit('idle');
+    }
+  }
+
+  _onResumeInterval() {
+    this._onInterval();
+
+    this._initializeIntervalIfNeeded();
+
+    this._timeoutId = undefined;
+  }
+
+  _isIntervalPaused() {
+    const now = Date.now();
+
+    if (this._intervalId === undefined) {
+      const delay = this._intervalEnd - now;
+
+      if (delay < 0) {
+        // Act as the interval was done
+        // We don't need to resume it here because it will be resumed on line 160
+        this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
       } else {
-        count = step;
+        // Act as the interval is pending
+        if (this._timeoutId === undefined) {
+          this._timeoutId = setTimeout(() => {
+            this._onResumeInterval();
+          }, delay);
+        }
+
+        return true;
       }
     }
 
-    return first;
+    return false;
   }
 
-  exports.default = lowerBound;
-});
-
-var priorityQueue = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, \\"__esModule\\", {
-    value: true
-  });
-
-  class PriorityQueue {
-    constructor() {
-      this._queue = [];
-    }
-
-    enqueue(run, options) {
-      options = Object.assign({
-        priority: 0
-      }, options);
-      const element = {
-        priority: options.priority,
-        run
-      };
-
-      if (this.size && this._queue[this.size - 1].priority >= options.priority) {
-        this._queue.push(element);
-
-        return;
+  _tryToStartAnother() {
+    if (this._queue.size === 0) {
+      // We can clear the interval (\\"pause\\")
+      // Because we can redo it later (\\"resume\\")
+      if (this._intervalId) {
+        clearInterval(this._intervalId);
       }
 
-      const index = lowerBound_1.default(this._queue, element, (a, b) => b.priority - a.priority);
+      this._intervalId = undefined;
 
-      this._queue.splice(index, 0, element);
+      this._resolvePromises();
+
+      return false;
     }
 
-    dequeue() {
-      const item = this._queue.shift();
+    if (!this._isPaused) {
+      const canInitializeInterval = !this._isIntervalPaused();
 
-      return item === null || item === void 0 ? void 0 : item.run;
+      if (this._doesIntervalAllowAnother && this._doesConcurrentAllowAnother) {
+        const job = this._queue.dequeue();
+
+        if (!job) {
+          return false;
+        }
+
+        this.emit('active');
+        job();
+
+        if (canInitializeInterval) {
+          this._initializeIntervalIfNeeded();
+        }
+
+        return true;
+      }
     }
 
-    filter(options) {
-      return this._queue.filter(element => element.priority === options.priority).map(element => element.run);
-    }
-
-    get size() {
-      return this._queue.length;
-    }
-
+    return false;
   }
 
-  exports.default = PriorityQueue;
-});
+  _initializeIntervalIfNeeded() {
+    if (this._isIntervalIgnored || this._intervalId !== undefined) {
+      return;
+    }
 
-var dist = createCommonjsModule(function (module, exports) {
+    this._intervalId = setInterval(() => {
+      this._onInterval();
+    }, this._interval);
+    this._intervalEnd = Date.now() + this._interval;
+  }
 
-  Object.defineProperty(exports, \\"__esModule\\", {
-    value: true
-  }); // eslint-disable-next-line @typescript-eslint/no-empty-function
+  _onInterval() {
+    if (this._intervalCount === 0 && this._pendingCount === 0 && this._intervalId) {
+      clearInterval(this._intervalId);
+      this._intervalId = undefined;
+    }
 
-  const empty = () => {};
+    this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
 
-  const timeoutError = new pTimeout_1.TimeoutError();
+    this._processQueue();
+  }
   /**
-  Promise queue with concurrency control.
+  Executes all queued functions until it reaches the limit.
   */
 
-  class PQueue extends eventemitter3 {
-    constructor(options) {
-      var _a, _b, _c, _d;
 
-      super();
-      this._intervalCount = 0;
-      this._intervalEnd = 0;
-      this._pendingCount = 0;
-      this._resolveEmpty = empty;
-      this._resolveIdle = empty; // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  _processQueue() {
+    // eslint-disable-next-line no-empty
+    while (this._tryToStartAnother()) {}
+  }
 
-      options = Object.assign({
-        carryoverConcurrencyCount: false,
-        intervalCap: Infinity,
-        interval: 0,
-        concurrency: Infinity,
-        autoStart: true,
-        queueClass: priorityQueue.default
-      }, options);
+  get concurrency() {
+    return this._concurrency;
+  }
 
-      if (!(typeof options.intervalCap === 'number' && options.intervalCap >= 1)) {
-        throw new TypeError(\`Expected \\\\\`intervalCap\\\\\` to be a number from 1 and up, got \\\\\`\${(_b = (_a = options.intervalCap) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : ''}\\\\\` (\${typeof options.intervalCap})\`);
-      }
-
-      if (options.interval === undefined || !(Number.isFinite(options.interval) && options.interval >= 0)) {
-        throw new TypeError(\`Expected \\\\\`interval\\\\\` to be a finite number >= 0, got \\\\\`\${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\\\\\` (\${typeof options.interval})\`);
-      }
-
-      this._carryoverConcurrencyCount = options.carryoverConcurrencyCount;
-      this._isIntervalIgnored = options.intervalCap === Infinity || options.interval === 0;
-      this._intervalCap = options.intervalCap;
-      this._interval = options.interval;
-      this._queue = new options.queueClass();
-      this._queueClass = options.queueClass;
-      this.concurrency = options.concurrency;
-      this._timeout = options.timeout;
-      this._throwOnTimeout = options.throwOnTimeout === true;
-      this._isPaused = options.autoStart === false;
+  set concurrency(newConcurrency) {
+    if (!(typeof newConcurrency === 'number' && newConcurrency >= 1)) {
+      throw new TypeError(\`Expected \\\\\`concurrency\\\\\` to be a number from 1 and up, got \\\\\`\${newConcurrency}\\\\\` (\${typeof newConcurrency})\`);
     }
 
-    get _doesIntervalAllowAnother() {
-      return this._isIntervalIgnored || this._intervalCount < this._intervalCap;
-    }
+    this._concurrency = newConcurrency;
 
-    get _doesConcurrentAllowAnother() {
-      return this._pendingCount < this._concurrency;
-    }
+    this._processQueue();
+  }
+  /**
+  Adds a sync or async task to the queue. Always returns a promise.
+  */
 
-    _next() {
-      this._pendingCount--;
+
+  async add(fn, options = {}) {
+    return new Promise((resolve, reject) => {
+      const run = async () => {
+        this._pendingCount++;
+        this._intervalCount++;
+
+        try {
+          const operation = this._timeout === undefined && options.timeout === undefined ? fn() : pTimeout_1.default(Promise.resolve(fn()), options.timeout === undefined ? this._timeout : options.timeout, () => {
+            if (options.throwOnTimeout === undefined ? this._throwOnTimeout : options.throwOnTimeout) {
+              reject(timeoutError);
+            }
+
+            return undefined;
+          });
+          resolve(await operation);
+        } catch (error) {
+          reject(error);
+        }
+
+        this._next();
+      };
+
+      this._queue.enqueue(run, options);
 
       this._tryToStartAnother();
 
-      this.emit('next');
-    }
-
-    _resolvePromises() {
-      this._resolveEmpty();
-
-      this._resolveEmpty = empty;
-
-      if (this._pendingCount === 0) {
-        this._resolveIdle();
-
-        this._resolveIdle = empty;
-        this.emit('idle');
-      }
-    }
-
-    _onResumeInterval() {
-      this._onInterval();
-
-      this._initializeIntervalIfNeeded();
-
-      this._timeoutId = undefined;
-    }
-
-    _isIntervalPaused() {
-      const now = Date.now();
-
-      if (this._intervalId === undefined) {
-        const delay = this._intervalEnd - now;
-
-        if (delay < 0) {
-          // Act as the interval was done
-          // We don't need to resume it here because it will be resumed on line 160
-          this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-        } else {
-          // Act as the interval is pending
-          if (this._timeoutId === undefined) {
-            this._timeoutId = setTimeout(() => {
-              this._onResumeInterval();
-            }, delay);
-          }
-
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    _tryToStartAnother() {
-      if (this._queue.size === 0) {
-        // We can clear the interval (\\"pause\\")
-        // Because we can redo it later (\\"resume\\")
-        if (this._intervalId) {
-          clearInterval(this._intervalId);
-        }
-
-        this._intervalId = undefined;
-
-        this._resolvePromises();
-
-        return false;
-      }
-
-      if (!this._isPaused) {
-        const canInitializeInterval = !this._isIntervalPaused();
-
-        if (this._doesIntervalAllowAnother && this._doesConcurrentAllowAnother) {
-          const job = this._queue.dequeue();
-
-          if (!job) {
-            return false;
-          }
-
-          this.emit('active');
-          job();
-
-          if (canInitializeInterval) {
-            this._initializeIntervalIfNeeded();
-          }
-
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    _initializeIntervalIfNeeded() {
-      if (this._isIntervalIgnored || this._intervalId !== undefined) {
-        return;
-      }
-
-      this._intervalId = setInterval(() => {
-        this._onInterval();
-      }, this._interval);
-      this._intervalEnd = Date.now() + this._interval;
-    }
-
-    _onInterval() {
-      if (this._intervalCount === 0 && this._pendingCount === 0 && this._intervalId) {
-        clearInterval(this._intervalId);
-        this._intervalId = undefined;
-      }
-
-      this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-
-      this._processQueue();
-    }
-    /**
-    Executes all queued functions until it reaches the limit.
-    */
+      this.emit('add');
+    });
+  }
+  /**
+  Same as \`.add()\`, but accepts an array of sync or async functions.
+   @returns A promise that resolves when all functions are resolved.
+  */
 
 
-    _processQueue() {
-      // eslint-disable-next-line no-empty
-      while (this._tryToStartAnother()) {}
-    }
-
-    get concurrency() {
-      return this._concurrency;
-    }
-
-    set concurrency(newConcurrency) {
-      if (!(typeof newConcurrency === 'number' && newConcurrency >= 1)) {
-        throw new TypeError(\`Expected \\\\\`concurrency\\\\\` to be a number from 1 and up, got \\\\\`\${newConcurrency}\\\\\` (\${typeof newConcurrency})\`);
-      }
-
-      this._concurrency = newConcurrency;
-
-      this._processQueue();
-    }
-    /**
-    Adds a sync or async task to the queue. Always returns a promise.
-    */
+  async addAll(functions, options) {
+    return Promise.all(functions.map(async function_ => this.add(function_, options)));
+  }
+  /**
+  Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via \`options.autoStart = false\` or by \`.pause()\` method.)
+  */
 
 
-    async add(fn, options = {}) {
-      return new Promise((resolve, reject) => {
-        const run = async () => {
-          this._pendingCount++;
-          this._intervalCount++;
-
-          try {
-            const operation = this._timeout === undefined && options.timeout === undefined ? fn() : pTimeout_1.default(Promise.resolve(fn()), options.timeout === undefined ? this._timeout : options.timeout, () => {
-              if (options.throwOnTimeout === undefined ? this._throwOnTimeout : options.throwOnTimeout) {
-                reject(timeoutError);
-              }
-
-              return undefined;
-            });
-            resolve(await operation);
-          } catch (error) {
-            reject(error);
-          }
-
-          this._next();
-        };
-
-        this._queue.enqueue(run, options);
-
-        this._tryToStartAnother();
-
-        this.emit('add');
-      });
-    }
-    /**
-    Same as \`.add()\`, but accepts an array of sync or async functions.
-     @returns A promise that resolves when all functions are resolved.
-    */
-
-
-    async addAll(functions, options) {
-      return Promise.all(functions.map(async function_ => this.add(function_, options)));
-    }
-    /**
-    Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via \`options.autoStart = false\` or by \`.pause()\` method.)
-    */
-
-
-    start() {
-      if (!this._isPaused) {
-        return this;
-      }
-
-      this._isPaused = false;
-
-      this._processQueue();
-
+  start() {
+    if (!this._isPaused) {
       return this;
     }
-    /**
-    Put queue execution on hold.
-    */
+
+    this._isPaused = false;
+
+    this._processQueue();
+
+    return this;
+  }
+  /**
+  Put queue execution on hold.
+  */
 
 
-    pause() {
-      this._isPaused = true;
-    }
-    /**
-    Clear the queue.
-    */
+  pause() {
+    this._isPaused = true;
+  }
+  /**
+  Clear the queue.
+  */
 
 
-    clear() {
-      this._queue = new this._queueClass();
-    }
-    /**
-    Can be called multiple times. Useful if you for example add additional items at a later time.
-     @returns A promise that settles when the queue becomes empty.
-    */
+  clear() {
+    this._queue = new this._queueClass();
+  }
+  /**
+  Can be called multiple times. Useful if you for example add additional items at a later time.
+   @returns A promise that settles when the queue becomes empty.
+  */
 
 
-    async onEmpty() {
-      // Instantly resolve if the queue is empty
-      if (this._queue.size === 0) {
-        return;
-      }
-
-      return new Promise(resolve => {
-        const existingResolve = this._resolveEmpty;
-
-        this._resolveEmpty = () => {
-          existingResolve();
-          resolve();
-        };
-      });
-    }
-    /**
-    The difference with \`.onEmpty\` is that \`.onIdle\` guarantees that all work from the queue has finished. \`.onEmpty\` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
-     @returns A promise that settles when the queue becomes empty, and all promises have completed; \`queue.size === 0 && queue.pending === 0\`.
-    */
-
-
-    async onIdle() {
-      // Instantly resolve if none pending and if nothing else is queued
-      if (this._pendingCount === 0 && this._queue.size === 0) {
-        return;
-      }
-
-      return new Promise(resolve => {
-        const existingResolve = this._resolveIdle;
-
-        this._resolveIdle = () => {
-          existingResolve();
-          resolve();
-        };
-      });
-    }
-    /**
-    Size of the queue.
-    */
-
-
-    get size() {
-      return this._queue.size;
-    }
-    /**
-    Size of the queue, filtered by the given options.
-     For example, this can be used to find the number of items remaining in the queue with a specific priority level.
-    */
-
-
-    sizeBy(options) {
-      // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
-      return this._queue.filter(options).length;
-    }
-    /**
-    Number of pending promises.
-    */
-
-
-    get pending() {
-      return this._pendingCount;
-    }
-    /**
-    Whether the queue is currently paused.
-    */
-
-
-    get isPaused() {
-      return this._isPaused;
+  async onEmpty() {
+    // Instantly resolve if the queue is empty
+    if (this._queue.size === 0) {
+      return;
     }
 
-    get timeout() {
-      return this._timeout;
+    return new Promise(resolve => {
+      const existingResolve = this._resolveEmpty;
+
+      this._resolveEmpty = () => {
+        existingResolve();
+        resolve();
+      };
+    });
+  }
+  /**
+  The difference with \`.onEmpty\` is that \`.onIdle\` guarantees that all work from the queue has finished. \`.onEmpty\` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
+   @returns A promise that settles when the queue becomes empty, and all promises have completed; \`queue.size === 0 && queue.pending === 0\`.
+  */
+
+
+  async onIdle() {
+    // Instantly resolve if none pending and if nothing else is queued
+    if (this._pendingCount === 0 && this._queue.size === 0) {
+      return;
     }
-    /**
-    Set the timeout for future operations.
-    */
+
+    return new Promise(resolve => {
+      const existingResolve = this._resolveIdle;
+
+      this._resolveIdle = () => {
+        existingResolve();
+        resolve();
+      };
+    });
+  }
+  /**
+  Size of the queue.
+  */
 
 
-    set timeout(milliseconds) {
-      this._timeout = milliseconds;
-    }
+  get size() {
+    return this._queue.size;
+  }
+  /**
+  Size of the queue, filtered by the given options.
+   For example, this can be used to find the number of items remaining in the queue with a specific priority level.
+  */
 
+
+  sizeBy(options) {
+    // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
+    return this._queue.filter(options).length;
+  }
+  /**
+  Number of pending promises.
+  */
+
+
+  get pending() {
+    return this._pendingCount;
+  }
+  /**
+  Whether the queue is currently paused.
+  */
+
+
+  get isPaused() {
+    return this._isPaused;
   }
 
-  exports.default = PQueue;
-});
-var Queue = /*@__PURE__*/getDefaultExportFromCjs(dist);
+  get timeout() {
+    return this._timeout;
+  }
+  /**
+  Set the timeout for future operations.
+  */
+
+
+  set timeout(milliseconds) {
+    this._timeout = milliseconds;
+  }
+
+}
+
+var _default$3 = PQueue;
 
 async function helper() {
   console.log(\\"Async helper\\");
 }
 
 async function main() {
-  const queue = new Queue();
+  const queue = new _default$3();
   queue.add(await helper());
 }
 
@@ -2349,22 +2325,9 @@ exports[`Publish Test File via Babel: esm 1`] = `
 "/*! deep-pqueue v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function getDefaultExportFromCjs (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, basedir, module) {
-	return module = {
-		path: basedir,
-		exports: {},
-		require: function (path, base) {
-			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-		}
-	}, fn(module, module.exports), module.exports;
-}
-
-function commonjsRequire () {
-	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
 }
 
 var check = function (it) {
@@ -2372,7 +2335,7 @@ var check = function (it) {
 }; // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 
 
-var global_1 = // eslint-disable-next-line no-undef
+var global$1 = // eslint-disable-next-line no-undef
 check(typeof globalThis == 'object' && globalThis) || check(typeof window == 'object' && window) || check(typeof self == 'object' && self) || check(typeof commonjsGlobal == 'object' && commonjsGlobal) || // eslint-disable-next-line no-new-func
 function () {
   return this;
@@ -2469,7 +2432,7 @@ var has = function (it, key) {
   return hasOwnProperty.call(it, key);
 };
 
-var document = global_1.document; // typeof document.createElement is 'object' in old IE
+var document = global$1.document; // typeof document.createElement is 'object' in old IE
 
 var EXISTS = isObject(document) && isObject(document.createElement);
 
@@ -2539,16 +2502,16 @@ var createNonEnumerableProperty = descriptors ? function (object, key, value) {
 
 var setGlobal = function (key, value) {
   try {
-    createNonEnumerableProperty(global_1, key, value);
+    createNonEnumerableProperty(global$1, key, value);
   } catch (error) {
-    global_1[key] = value;
+    global$1[key] = value;
   }
 
   return value;
 };
 
 var SHARED = '__core-js_shared__';
-var store = global_1[SHARED] || setGlobal(SHARED, {});
+var store = global$1[SHARED] || setGlobal(SHARED, {});
 var sharedStore = store;
 
 var functionToString = Function.toString; // this helper broken in \`3.4.1-3.4.4\`, so we can't use \`shared\` helper
@@ -2561,14 +2524,14 @@ if (typeof sharedStore.inspectSource != 'function') {
 
 var inspectSource = sharedStore.inspectSource;
 
-var WeakMap = global_1.WeakMap;
+var WeakMap = global$1.WeakMap;
 var nativeWeakMap = typeof WeakMap === 'function' && /native code/.test(inspectSource(WeakMap));
 
 var shared = createCommonjsModule(function (module) {
   (module.exports = function (key, value) {
     return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.7.0',
+    version: '3.8.1',
     mode:  'global',
     copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
   });
@@ -2589,7 +2552,7 @@ var sharedKey = function (key) {
 
 var hiddenKeys = {};
 
-var WeakMap$1 = global_1.WeakMap;
+var WeakMap$1 = global$1.WeakMap;
 var set, get, has$1;
 
 var enforce = function (it) {
@@ -2676,7 +2639,7 @@ var redefine = createCommonjsModule(function (module) {
       }
     }
 
-    if (O === global_1) {
+    if (O === global$1) {
       if (simple) O[key] = value;else setGlobal(key, value);
       return;
     } else if (!unsafe) {
@@ -2691,14 +2654,14 @@ var redefine = createCommonjsModule(function (module) {
   });
 });
 
-var path = global_1;
+var path = global$1;
 
 var aFunction = function (variable) {
   return typeof variable == 'function' ? variable : undefined;
 };
 
 var getBuiltIn = function (namespace, method) {
-  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global_1[namespace]) : path[namespace] && path[namespace][method] || global_1[namespace] && global_1[namespace][method];
+  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global$1[namespace]) : path[namespace] && path[namespace][method] || global$1[namespace] && global$1[namespace][method];
 };
 
 var ceil = Math.ceil;
@@ -2847,11 +2810,11 @@ var _export = function (options, source) {
   var FORCED, target, key, targetProperty, sourceProperty, descriptor;
 
   if (GLOBAL) {
-    target = global_1;
+    target = global$1;
   } else if (STATIC) {
-    target = global_1[TARGET] || setGlobal(TARGET, {});
+    target = global$1[TARGET] || setGlobal(TARGET, {});
   } else {
-    target = (global_1[TARGET] || {}).prototype;
+    target = (global$1[TARGET] || {}).prototype;
   }
 
   if (target) for (key in source) {
@@ -2879,7 +2842,7 @@ var _export = function (options, source) {
   }
 };
 
-var nativePromiseConstructor = global_1.Promise;
+var nativePromiseConstructor = global$1.Promise;
 
 var redefineAll = function (target, src, options) {
   for (var key in src) redefine(target, key, src[key], options);
@@ -2898,7 +2861,7 @@ var useSymbolAsUid = nativeSymbol // eslint-disable-next-line no-undef
 && typeof Symbol.iterator == 'symbol';
 
 var WellKnownSymbolsStore = shared('wks');
-var Symbol$1 = global_1.Symbol;
+var Symbol$1 = global$1.Symbol;
 var createWellKnownSymbol = useSymbolAsUid ? Symbol$1 : Symbol$1 && Symbol$1.withoutSetter || uid;
 
 var wellKnownSymbol = function (name) {
@@ -3166,14 +3129,14 @@ var engineUserAgent = getBuiltIn('navigator', 'userAgent') || '';
 
 var engineIsIos = /(iphone|ipod|ipad).*applewebkit/i.test(engineUserAgent);
 
-var engineIsNode = classofRaw(global_1.process) == 'process';
+var engineIsNode = classofRaw(global$1.process) == 'process';
 
-var location = global_1.location;
-var set$1 = global_1.setImmediate;
-var clear = global_1.clearImmediate;
-var process = global_1.process;
-var MessageChannel = global_1.MessageChannel;
-var Dispatch = global_1.Dispatch;
+var location = global$1.location;
+var set$1 = global$1.setImmediate;
+var clear = global$1.clearImmediate;
+var process = global$1.process;
+var MessageChannel = global$1.MessageChannel;
+var Dispatch = global$1.Dispatch;
 var counter = 0;
 var queue = {};
 var ONREADYSTATECHANGE = 'onreadystatechange';
@@ -3200,7 +3163,7 @@ var listener = function (event) {
 
 var post = function (id) {
   // old engines have not location.origin
-  global_1.postMessage(id + '', location.protocol + '//' + location.host);
+  global$1.postMessage(id + '', location.protocol + '//' + location.host);
 }; // Node.js 0.9+ & IE10+ has setImmediate, otherwise:
 
 
@@ -3242,9 +3205,9 @@ if (!set$1 || !clear) {
     channel.port1.onmessage = listener;
     defer = functionBindContext(port.postMessage, port, 1); // Browsers with postMessage, skip WebWorkers
     // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
-  } else if (global_1.addEventListener && typeof postMessage == 'function' && !global_1.importScripts && location && location.protocol !== 'file:' && !fails(post)) {
+  } else if (global$1.addEventListener && typeof postMessage == 'function' && !global$1.importScripts && location && location.protocol !== 'file:' && !fails(post)) {
     defer = post;
-    global_1.addEventListener('message', listener, false); // IE8-
+    global$1.addEventListener('message', listener, false); // IE8-
   } else if (ONREADYSTATECHANGE in documentCreateElement('script')) {
     defer = function (id) {
       html.appendChild(documentCreateElement('script'))[ONREADYSTATECHANGE] = function () {
@@ -3267,12 +3230,12 @@ var task = {
 
 var getOwnPropertyDescriptor$2 = objectGetOwnPropertyDescriptor.f;
 var macrotask = task.set;
-var MutationObserver = global_1.MutationObserver || global_1.WebKitMutationObserver;
-var document$1 = global_1.document;
-var process$1 = global_1.process;
-var Promise$1 = global_1.Promise; // Node.js 11 shows ExperimentalWarning on getting \`queueMicrotask\`
+var MutationObserver = global$1.MutationObserver || global$1.WebKitMutationObserver;
+var document$1 = global$1.document;
+var process$1 = global$1.process;
+var Promise$1 = global$1.Promise; // Node.js 11 shows ExperimentalWarning on getting \`queueMicrotask\`
 
-var queueMicrotaskDescriptor = getOwnPropertyDescriptor$2(global_1, 'queueMicrotask');
+var queueMicrotaskDescriptor = getOwnPropertyDescriptor$2(global$1, 'queueMicrotask');
 var queueMicrotask = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
 var flush, head, last, notify, toggle, node, promise, then; // modern engines have queueMicrotask method
 
@@ -3331,7 +3294,7 @@ if (!queueMicrotask) {
   } else {
     notify = function () {
       // strange IE + webpack dev server bug - use .call(global)
-      macrotask.call(global_1, flush);
+      macrotask.call(global$1, flush);
     };
   }
 }
@@ -3381,7 +3344,7 @@ var promiseResolve = function (C, x) {
 };
 
 var hostReportErrors = function (a, b) {
-  var console = global_1.console;
+  var console = global$1.console;
 
   if (console && console.error) {
     arguments.length === 1 ? console.error(a) : console.error(a, b);
@@ -3402,7 +3365,7 @@ var perform = function (exec) {
   }
 };
 
-var process$2 = global_1.process;
+var process$2 = global$1.process;
 var versions = process$2 && process$2.versions;
 var v8 = versions && versions.v8;
 var match, version;
@@ -3428,13 +3391,13 @@ var getInternalState = internalState.get;
 var setInternalState = internalState.set;
 var getInternalPromiseState = internalState.getterFor(PROMISE);
 var PromiseConstructor = nativePromiseConstructor;
-var TypeError$1 = global_1.TypeError;
-var document$2 = global_1.document;
-var process$3 = global_1.process;
+var TypeError$1 = global$1.TypeError;
+var document$2 = global$1.document;
+var process$3 = global$1.process;
 var $fetch = getBuiltIn('fetch');
 var newPromiseCapability$1 = newPromiseCapability.f;
 var newGenericPromiseCapability = newPromiseCapability$1;
-var DISPATCH_EVENT = !!(document$2 && document$2.createEvent && global_1.dispatchEvent);
+var DISPATCH_EVENT = !!(document$2 && document$2.createEvent && global$1.dispatchEvent);
 var NATIVE_REJECTION_EVENT = typeof PromiseRejectionEvent == 'function';
 var UNHANDLED_REJECTION = 'unhandledrejection';
 var REJECTION_HANDLED = 'rejectionhandled';
@@ -3547,17 +3510,17 @@ var dispatchEvent = function (name, promise, reason) {
     event.promise = promise;
     event.reason = reason;
     event.initEvent(name, false, true);
-    global_1.dispatchEvent(event);
+    global$1.dispatchEvent(event);
   } else event = {
     promise: promise,
     reason: reason
   };
 
-  if (!NATIVE_REJECTION_EVENT && (handler = global_1['on' + name])) handler(event);else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
+  if (!NATIVE_REJECTION_EVENT && (handler = global$1['on' + name])) handler(event);else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
 };
 
 var onUnhandled = function (state) {
-  task$1.call(global_1, function () {
+  task$1.call(global$1, function () {
     var promise = state.facade;
     var value = state.value;
     var IS_UNHANDLED = isUnhandled(state);
@@ -3581,7 +3544,7 @@ var isUnhandled = function (state) {
 };
 
 var onHandleUnhandled = function (state) {
-  task$1.call(global_1, function () {
+  task$1.call(global$1, function () {
     var promise = state.facade;
 
     if (engineIsNode) {
@@ -3722,7 +3685,7 @@ if (FORCED) {
       fetch: function fetch(input
       /* , init */
       ) {
-        return promiseResolve(PromiseConstructor, $fetch.apply(global_1, arguments));
+        return promiseResolve(PromiseConstructor, $fetch.apply(global$1, arguments));
       }
     });
   }
@@ -4227,459 +4190,448 @@ var TimeoutError_1 = TimeoutError;
 pTimeout_1.default = _default;
 pTimeout_1.TimeoutError = TimeoutError_1;
 
-var lowerBound_1 = createCommonjsModule(function (module, exports) {
+// Used to compute insertion index to keep queue sorted after insertion
 
-  Object.defineProperty(exports, \\"__esModule\\", {
-    value: true
-  }); // Port of lower_bound from https://en.cppreference.com/w/cpp/algorithm/lower_bound
-  // Used to compute insertion index to keep queue sorted after insertion
+function lowerBound(array, value, comparator) {
+  let first = 0;
+  let count = array.length;
 
-  function lowerBound(array, value, comparator) {
-    let first = 0;
-    let count = array.length;
+  while (count > 0) {
+    const step = count / 2 | 0;
+    let it = first + step;
 
-    while (count > 0) {
-      const step = count / 2 | 0;
-      let it = first + step;
+    if (comparator(array[it], value) <= 0) {
+      first = ++it;
+      count -= step + 1;
+    } else {
+      count = step;
+    }
+  }
 
-      if (comparator(array[it], value) <= 0) {
-        first = ++it;
-        count -= step + 1;
+  return first;
+}
+
+var _default$1 = lowerBound;
+var lowerBound_1 = /*#__PURE__*/Object.defineProperty({
+  default: _default$1
+}, '__esModule', {
+  value: true
+});
+
+class PriorityQueue {
+  constructor() {
+    this._queue = [];
+  }
+
+  enqueue(run, options) {
+    options = Object.assign({
+      priority: 0
+    }, options);
+    const element = {
+      priority: options.priority,
+      run
+    };
+
+    if (this.size && this._queue[this.size - 1].priority >= options.priority) {
+      this._queue.push(element);
+
+      return;
+    }
+
+    const index = lowerBound_1.default(this._queue, element, (a, b) => b.priority - a.priority);
+
+    this._queue.splice(index, 0, element);
+  }
+
+  dequeue() {
+    const item = this._queue.shift();
+
+    return item === null || item === void 0 ? void 0 : item.run;
+  }
+
+  filter(options) {
+    return this._queue.filter(element => element.priority === options.priority).map(element => element.run);
+  }
+
+  get size() {
+    return this._queue.length;
+  }
+
+}
+
+var _default$2 = PriorityQueue;
+var priorityQueue = /*#__PURE__*/Object.defineProperty({
+  default: _default$2
+}, '__esModule', {
+  value: true
+});
+
+const empty = () => {};
+
+const timeoutError = new pTimeout_1.TimeoutError();
+/**
+Promise queue with concurrency control.
+*/
+
+class PQueue extends eventemitter3 {
+  constructor(options) {
+    var _a, _b, _c, _d;
+
+    super();
+    this._intervalCount = 0;
+    this._intervalEnd = 0;
+    this._pendingCount = 0;
+    this._resolveEmpty = empty;
+    this._resolveIdle = empty; // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+
+    options = Object.assign({
+      carryoverConcurrencyCount: false,
+      intervalCap: Infinity,
+      interval: 0,
+      concurrency: Infinity,
+      autoStart: true,
+      queueClass: priorityQueue.default
+    }, options);
+
+    if (!(typeof options.intervalCap === 'number' && options.intervalCap >= 1)) {
+      throw new TypeError(\`Expected \\\\\`intervalCap\\\\\` to be a number from 1 and up, got \\\\\`\${(_b = (_a = options.intervalCap) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : ''}\\\\\` (\${typeof options.intervalCap})\`);
+    }
+
+    if (options.interval === undefined || !(Number.isFinite(options.interval) && options.interval >= 0)) {
+      throw new TypeError(\`Expected \\\\\`interval\\\\\` to be a finite number >= 0, got \\\\\`\${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\\\\\` (\${typeof options.interval})\`);
+    }
+
+    this._carryoverConcurrencyCount = options.carryoverConcurrencyCount;
+    this._isIntervalIgnored = options.intervalCap === Infinity || options.interval === 0;
+    this._intervalCap = options.intervalCap;
+    this._interval = options.interval;
+    this._queue = new options.queueClass();
+    this._queueClass = options.queueClass;
+    this.concurrency = options.concurrency;
+    this._timeout = options.timeout;
+    this._throwOnTimeout = options.throwOnTimeout === true;
+    this._isPaused = options.autoStart === false;
+  }
+
+  get _doesIntervalAllowAnother() {
+    return this._isIntervalIgnored || this._intervalCount < this._intervalCap;
+  }
+
+  get _doesConcurrentAllowAnother() {
+    return this._pendingCount < this._concurrency;
+  }
+
+  _next() {
+    this._pendingCount--;
+
+    this._tryToStartAnother();
+
+    this.emit('next');
+  }
+
+  _resolvePromises() {
+    this._resolveEmpty();
+
+    this._resolveEmpty = empty;
+
+    if (this._pendingCount === 0) {
+      this._resolveIdle();
+
+      this._resolveIdle = empty;
+      this.emit('idle');
+    }
+  }
+
+  _onResumeInterval() {
+    this._onInterval();
+
+    this._initializeIntervalIfNeeded();
+
+    this._timeoutId = undefined;
+  }
+
+  _isIntervalPaused() {
+    const now = Date.now();
+
+    if (this._intervalId === undefined) {
+      const delay = this._intervalEnd - now;
+
+      if (delay < 0) {
+        // Act as the interval was done
+        // We don't need to resume it here because it will be resumed on line 160
+        this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
       } else {
-        count = step;
+        // Act as the interval is pending
+        if (this._timeoutId === undefined) {
+          this._timeoutId = setTimeout(() => {
+            this._onResumeInterval();
+          }, delay);
+        }
+
+        return true;
       }
     }
 
-    return first;
+    return false;
   }
 
-  exports.default = lowerBound;
-});
-
-var priorityQueue = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, \\"__esModule\\", {
-    value: true
-  });
-
-  class PriorityQueue {
-    constructor() {
-      this._queue = [];
-    }
-
-    enqueue(run, options) {
-      options = Object.assign({
-        priority: 0
-      }, options);
-      const element = {
-        priority: options.priority,
-        run
-      };
-
-      if (this.size && this._queue[this.size - 1].priority >= options.priority) {
-        this._queue.push(element);
-
-        return;
+  _tryToStartAnother() {
+    if (this._queue.size === 0) {
+      // We can clear the interval (\\"pause\\")
+      // Because we can redo it later (\\"resume\\")
+      if (this._intervalId) {
+        clearInterval(this._intervalId);
       }
 
-      const index = lowerBound_1.default(this._queue, element, (a, b) => b.priority - a.priority);
+      this._intervalId = undefined;
 
-      this._queue.splice(index, 0, element);
+      this._resolvePromises();
+
+      return false;
     }
 
-    dequeue() {
-      const item = this._queue.shift();
+    if (!this._isPaused) {
+      const canInitializeInterval = !this._isIntervalPaused();
 
-      return item === null || item === void 0 ? void 0 : item.run;
+      if (this._doesIntervalAllowAnother && this._doesConcurrentAllowAnother) {
+        const job = this._queue.dequeue();
+
+        if (!job) {
+          return false;
+        }
+
+        this.emit('active');
+        job();
+
+        if (canInitializeInterval) {
+          this._initializeIntervalIfNeeded();
+        }
+
+        return true;
+      }
     }
 
-    filter(options) {
-      return this._queue.filter(element => element.priority === options.priority).map(element => element.run);
-    }
-
-    get size() {
-      return this._queue.length;
-    }
-
+    return false;
   }
 
-  exports.default = PriorityQueue;
-});
+  _initializeIntervalIfNeeded() {
+    if (this._isIntervalIgnored || this._intervalId !== undefined) {
+      return;
+    }
 
-var dist = createCommonjsModule(function (module, exports) {
+    this._intervalId = setInterval(() => {
+      this._onInterval();
+    }, this._interval);
+    this._intervalEnd = Date.now() + this._interval;
+  }
 
-  Object.defineProperty(exports, \\"__esModule\\", {
-    value: true
-  }); // eslint-disable-next-line @typescript-eslint/no-empty-function
+  _onInterval() {
+    if (this._intervalCount === 0 && this._pendingCount === 0 && this._intervalId) {
+      clearInterval(this._intervalId);
+      this._intervalId = undefined;
+    }
 
-  const empty = () => {};
+    this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
 
-  const timeoutError = new pTimeout_1.TimeoutError();
+    this._processQueue();
+  }
   /**
-  Promise queue with concurrency control.
+  Executes all queued functions until it reaches the limit.
   */
 
-  class PQueue extends eventemitter3 {
-    constructor(options) {
-      var _a, _b, _c, _d;
 
-      super();
-      this._intervalCount = 0;
-      this._intervalEnd = 0;
-      this._pendingCount = 0;
-      this._resolveEmpty = empty;
-      this._resolveIdle = empty; // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  _processQueue() {
+    // eslint-disable-next-line no-empty
+    while (this._tryToStartAnother()) {}
+  }
 
-      options = Object.assign({
-        carryoverConcurrencyCount: false,
-        intervalCap: Infinity,
-        interval: 0,
-        concurrency: Infinity,
-        autoStart: true,
-        queueClass: priorityQueue.default
-      }, options);
+  get concurrency() {
+    return this._concurrency;
+  }
 
-      if (!(typeof options.intervalCap === 'number' && options.intervalCap >= 1)) {
-        throw new TypeError(\`Expected \\\\\`intervalCap\\\\\` to be a number from 1 and up, got \\\\\`\${(_b = (_a = options.intervalCap) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : ''}\\\\\` (\${typeof options.intervalCap})\`);
-      }
-
-      if (options.interval === undefined || !(Number.isFinite(options.interval) && options.interval >= 0)) {
-        throw new TypeError(\`Expected \\\\\`interval\\\\\` to be a finite number >= 0, got \\\\\`\${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\\\\\` (\${typeof options.interval})\`);
-      }
-
-      this._carryoverConcurrencyCount = options.carryoverConcurrencyCount;
-      this._isIntervalIgnored = options.intervalCap === Infinity || options.interval === 0;
-      this._intervalCap = options.intervalCap;
-      this._interval = options.interval;
-      this._queue = new options.queueClass();
-      this._queueClass = options.queueClass;
-      this.concurrency = options.concurrency;
-      this._timeout = options.timeout;
-      this._throwOnTimeout = options.throwOnTimeout === true;
-      this._isPaused = options.autoStart === false;
+  set concurrency(newConcurrency) {
+    if (!(typeof newConcurrency === 'number' && newConcurrency >= 1)) {
+      throw new TypeError(\`Expected \\\\\`concurrency\\\\\` to be a number from 1 and up, got \\\\\`\${newConcurrency}\\\\\` (\${typeof newConcurrency})\`);
     }
 
-    get _doesIntervalAllowAnother() {
-      return this._isIntervalIgnored || this._intervalCount < this._intervalCap;
-    }
+    this._concurrency = newConcurrency;
 
-    get _doesConcurrentAllowAnother() {
-      return this._pendingCount < this._concurrency;
-    }
+    this._processQueue();
+  }
+  /**
+  Adds a sync or async task to the queue. Always returns a promise.
+  */
 
-    _next() {
-      this._pendingCount--;
+
+  async add(fn, options = {}) {
+    return new Promise((resolve, reject) => {
+      const run = async () => {
+        this._pendingCount++;
+        this._intervalCount++;
+
+        try {
+          const operation = this._timeout === undefined && options.timeout === undefined ? fn() : pTimeout_1.default(Promise.resolve(fn()), options.timeout === undefined ? this._timeout : options.timeout, () => {
+            if (options.throwOnTimeout === undefined ? this._throwOnTimeout : options.throwOnTimeout) {
+              reject(timeoutError);
+            }
+
+            return undefined;
+          });
+          resolve(await operation);
+        } catch (error) {
+          reject(error);
+        }
+
+        this._next();
+      };
+
+      this._queue.enqueue(run, options);
 
       this._tryToStartAnother();
 
-      this.emit('next');
-    }
-
-    _resolvePromises() {
-      this._resolveEmpty();
-
-      this._resolveEmpty = empty;
-
-      if (this._pendingCount === 0) {
-        this._resolveIdle();
-
-        this._resolveIdle = empty;
-        this.emit('idle');
-      }
-    }
-
-    _onResumeInterval() {
-      this._onInterval();
-
-      this._initializeIntervalIfNeeded();
-
-      this._timeoutId = undefined;
-    }
-
-    _isIntervalPaused() {
-      const now = Date.now();
-
-      if (this._intervalId === undefined) {
-        const delay = this._intervalEnd - now;
-
-        if (delay < 0) {
-          // Act as the interval was done
-          // We don't need to resume it here because it will be resumed on line 160
-          this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-        } else {
-          // Act as the interval is pending
-          if (this._timeoutId === undefined) {
-            this._timeoutId = setTimeout(() => {
-              this._onResumeInterval();
-            }, delay);
-          }
-
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    _tryToStartAnother() {
-      if (this._queue.size === 0) {
-        // We can clear the interval (\\"pause\\")
-        // Because we can redo it later (\\"resume\\")
-        if (this._intervalId) {
-          clearInterval(this._intervalId);
-        }
-
-        this._intervalId = undefined;
-
-        this._resolvePromises();
-
-        return false;
-      }
-
-      if (!this._isPaused) {
-        const canInitializeInterval = !this._isIntervalPaused();
-
-        if (this._doesIntervalAllowAnother && this._doesConcurrentAllowAnother) {
-          const job = this._queue.dequeue();
-
-          if (!job) {
-            return false;
-          }
-
-          this.emit('active');
-          job();
-
-          if (canInitializeInterval) {
-            this._initializeIntervalIfNeeded();
-          }
-
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    _initializeIntervalIfNeeded() {
-      if (this._isIntervalIgnored || this._intervalId !== undefined) {
-        return;
-      }
-
-      this._intervalId = setInterval(() => {
-        this._onInterval();
-      }, this._interval);
-      this._intervalEnd = Date.now() + this._interval;
-    }
-
-    _onInterval() {
-      if (this._intervalCount === 0 && this._pendingCount === 0 && this._intervalId) {
-        clearInterval(this._intervalId);
-        this._intervalId = undefined;
-      }
-
-      this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-
-      this._processQueue();
-    }
-    /**
-    Executes all queued functions until it reaches the limit.
-    */
+      this.emit('add');
+    });
+  }
+  /**
+  Same as \`.add()\`, but accepts an array of sync or async functions.
+   @returns A promise that resolves when all functions are resolved.
+  */
 
 
-    _processQueue() {
-      // eslint-disable-next-line no-empty
-      while (this._tryToStartAnother()) {}
-    }
-
-    get concurrency() {
-      return this._concurrency;
-    }
-
-    set concurrency(newConcurrency) {
-      if (!(typeof newConcurrency === 'number' && newConcurrency >= 1)) {
-        throw new TypeError(\`Expected \\\\\`concurrency\\\\\` to be a number from 1 and up, got \\\\\`\${newConcurrency}\\\\\` (\${typeof newConcurrency})\`);
-      }
-
-      this._concurrency = newConcurrency;
-
-      this._processQueue();
-    }
-    /**
-    Adds a sync or async task to the queue. Always returns a promise.
-    */
+  async addAll(functions, options) {
+    return Promise.all(functions.map(async function_ => this.add(function_, options)));
+  }
+  /**
+  Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via \`options.autoStart = false\` or by \`.pause()\` method.)
+  */
 
 
-    async add(fn, options = {}) {
-      return new Promise((resolve, reject) => {
-        const run = async () => {
-          this._pendingCount++;
-          this._intervalCount++;
-
-          try {
-            const operation = this._timeout === undefined && options.timeout === undefined ? fn() : pTimeout_1.default(Promise.resolve(fn()), options.timeout === undefined ? this._timeout : options.timeout, () => {
-              if (options.throwOnTimeout === undefined ? this._throwOnTimeout : options.throwOnTimeout) {
-                reject(timeoutError);
-              }
-
-              return undefined;
-            });
-            resolve(await operation);
-          } catch (error) {
-            reject(error);
-          }
-
-          this._next();
-        };
-
-        this._queue.enqueue(run, options);
-
-        this._tryToStartAnother();
-
-        this.emit('add');
-      });
-    }
-    /**
-    Same as \`.add()\`, but accepts an array of sync or async functions.
-     @returns A promise that resolves when all functions are resolved.
-    */
-
-
-    async addAll(functions, options) {
-      return Promise.all(functions.map(async function_ => this.add(function_, options)));
-    }
-    /**
-    Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via \`options.autoStart = false\` or by \`.pause()\` method.)
-    */
-
-
-    start() {
-      if (!this._isPaused) {
-        return this;
-      }
-
-      this._isPaused = false;
-
-      this._processQueue();
-
+  start() {
+    if (!this._isPaused) {
       return this;
     }
-    /**
-    Put queue execution on hold.
-    */
+
+    this._isPaused = false;
+
+    this._processQueue();
+
+    return this;
+  }
+  /**
+  Put queue execution on hold.
+  */
 
 
-    pause() {
-      this._isPaused = true;
-    }
-    /**
-    Clear the queue.
-    */
+  pause() {
+    this._isPaused = true;
+  }
+  /**
+  Clear the queue.
+  */
 
 
-    clear() {
-      this._queue = new this._queueClass();
-    }
-    /**
-    Can be called multiple times. Useful if you for example add additional items at a later time.
-     @returns A promise that settles when the queue becomes empty.
-    */
+  clear() {
+    this._queue = new this._queueClass();
+  }
+  /**
+  Can be called multiple times. Useful if you for example add additional items at a later time.
+   @returns A promise that settles when the queue becomes empty.
+  */
 
 
-    async onEmpty() {
-      // Instantly resolve if the queue is empty
-      if (this._queue.size === 0) {
-        return;
-      }
-
-      return new Promise(resolve => {
-        const existingResolve = this._resolveEmpty;
-
-        this._resolveEmpty = () => {
-          existingResolve();
-          resolve();
-        };
-      });
-    }
-    /**
-    The difference with \`.onEmpty\` is that \`.onIdle\` guarantees that all work from the queue has finished. \`.onEmpty\` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
-     @returns A promise that settles when the queue becomes empty, and all promises have completed; \`queue.size === 0 && queue.pending === 0\`.
-    */
-
-
-    async onIdle() {
-      // Instantly resolve if none pending and if nothing else is queued
-      if (this._pendingCount === 0 && this._queue.size === 0) {
-        return;
-      }
-
-      return new Promise(resolve => {
-        const existingResolve = this._resolveIdle;
-
-        this._resolveIdle = () => {
-          existingResolve();
-          resolve();
-        };
-      });
-    }
-    /**
-    Size of the queue.
-    */
-
-
-    get size() {
-      return this._queue.size;
-    }
-    /**
-    Size of the queue, filtered by the given options.
-     For example, this can be used to find the number of items remaining in the queue with a specific priority level.
-    */
-
-
-    sizeBy(options) {
-      // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
-      return this._queue.filter(options).length;
-    }
-    /**
-    Number of pending promises.
-    */
-
-
-    get pending() {
-      return this._pendingCount;
-    }
-    /**
-    Whether the queue is currently paused.
-    */
-
-
-    get isPaused() {
-      return this._isPaused;
+  async onEmpty() {
+    // Instantly resolve if the queue is empty
+    if (this._queue.size === 0) {
+      return;
     }
 
-    get timeout() {
-      return this._timeout;
+    return new Promise(resolve => {
+      const existingResolve = this._resolveEmpty;
+
+      this._resolveEmpty = () => {
+        existingResolve();
+        resolve();
+      };
+    });
+  }
+  /**
+  The difference with \`.onEmpty\` is that \`.onIdle\` guarantees that all work from the queue has finished. \`.onEmpty\` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
+   @returns A promise that settles when the queue becomes empty, and all promises have completed; \`queue.size === 0 && queue.pending === 0\`.
+  */
+
+
+  async onIdle() {
+    // Instantly resolve if none pending and if nothing else is queued
+    if (this._pendingCount === 0 && this._queue.size === 0) {
+      return;
     }
-    /**
-    Set the timeout for future operations.
-    */
+
+    return new Promise(resolve => {
+      const existingResolve = this._resolveIdle;
+
+      this._resolveIdle = () => {
+        existingResolve();
+        resolve();
+      };
+    });
+  }
+  /**
+  Size of the queue.
+  */
 
 
-    set timeout(milliseconds) {
-      this._timeout = milliseconds;
-    }
+  get size() {
+    return this._queue.size;
+  }
+  /**
+  Size of the queue, filtered by the given options.
+   For example, this can be used to find the number of items remaining in the queue with a specific priority level.
+  */
 
+
+  sizeBy(options) {
+    // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
+    return this._queue.filter(options).length;
+  }
+  /**
+  Number of pending promises.
+  */
+
+
+  get pending() {
+    return this._pendingCount;
+  }
+  /**
+  Whether the queue is currently paused.
+  */
+
+
+  get isPaused() {
+    return this._isPaused;
   }
 
-  exports.default = PQueue;
-});
-var Queue = /*@__PURE__*/getDefaultExportFromCjs(dist);
+  get timeout() {
+    return this._timeout;
+  }
+  /**
+  Set the timeout for future operations.
+  */
+
+
+  set timeout(milliseconds) {
+    this._timeout = milliseconds;
+  }
+
+}
+
+var _default$3 = PQueue;
 
 async function helper() {
   console.log(\\"Async helper\\");
 }
 
 async function main() {
-  const queue = new Queue();
+  const queue = new _default$3();
   queue.add(await helper());
 }
 
@@ -4697,22 +4649,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-	function getDefaultExportFromCjs (x) {
-		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-	}
-
-	function createCommonjsModule(fn, basedir, module) {
-		return module = {
-			path: basedir,
-			exports: {},
-			require: function (path, base) {
-				return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-			}
-		}, fn(module, module.exports), module.exports;
-	}
-
-	function commonjsRequire () {
-		throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+	function createCommonjsModule(fn) {
+	  var module = { exports: {} };
+		return fn(module, module.exports), module.exports;
 	}
 
 	var check = function (it) {
@@ -4720,7 +4659,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	}; // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 
 
-	var global_1 = // eslint-disable-next-line no-undef
+	var global$1 = // eslint-disable-next-line no-undef
 	check(typeof globalThis == 'object' && globalThis) || check(typeof window == 'object' && window) || check(typeof self == 'object' && self) || check(typeof commonjsGlobal == 'object' && commonjsGlobal) || // eslint-disable-next-line no-new-func
 	function () {
 	  return this;
@@ -4817,7 +4756,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  return hasOwnProperty.call(it, key);
 	};
 
-	var document = global_1.document; // typeof document.createElement is 'object' in old IE
+	var document = global$1.document; // typeof document.createElement is 'object' in old IE
 
 	var EXISTS = isObject(document) && isObject(document.createElement);
 
@@ -4887,16 +4826,16 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	var setGlobal = function (key, value) {
 	  try {
-	    createNonEnumerableProperty(global_1, key, value);
+	    createNonEnumerableProperty(global$1, key, value);
 	  } catch (error) {
-	    global_1[key] = value;
+	    global$1[key] = value;
 	  }
 
 	  return value;
 	};
 
 	var SHARED = '__core-js_shared__';
-	var store = global_1[SHARED] || setGlobal(SHARED, {});
+	var store = global$1[SHARED] || setGlobal(SHARED, {});
 	var sharedStore = store;
 
 	var functionToString = Function.toString; // this helper broken in \`3.4.1-3.4.4\`, so we can't use \`shared\` helper
@@ -4909,14 +4848,14 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	var inspectSource = sharedStore.inspectSource;
 
-	var WeakMap = global_1.WeakMap;
+	var WeakMap = global$1.WeakMap;
 	var nativeWeakMap = typeof WeakMap === 'function' && /native code/.test(inspectSource(WeakMap));
 
 	var shared = createCommonjsModule(function (module) {
 	  (module.exports = function (key, value) {
 	    return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 	  })('versions', []).push({
-	    version: '3.7.0',
+	    version: '3.8.1',
 	    mode:  'global',
 	    copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
 	  });
@@ -4937,7 +4876,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	var hiddenKeys = {};
 
-	var WeakMap$1 = global_1.WeakMap;
+	var WeakMap$1 = global$1.WeakMap;
 	var set, get, has$1;
 
 	var enforce = function (it) {
@@ -5024,7 +4963,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	      }
 	    }
 
-	    if (O === global_1) {
+	    if (O === global$1) {
 	      if (simple) O[key] = value;else setGlobal(key, value);
 	      return;
 	    } else if (!unsafe) {
@@ -5039,14 +4978,14 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  });
 	});
 
-	var path = global_1;
+	var path = global$1;
 
 	var aFunction = function (variable) {
 	  return typeof variable == 'function' ? variable : undefined;
 	};
 
 	var getBuiltIn = function (namespace, method) {
-	  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global_1[namespace]) : path[namespace] && path[namespace][method] || global_1[namespace] && global_1[namespace][method];
+	  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global$1[namespace]) : path[namespace] && path[namespace][method] || global$1[namespace] && global$1[namespace][method];
 	};
 
 	var ceil = Math.ceil;
@@ -5195,11 +5134,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  var FORCED, target, key, targetProperty, sourceProperty, descriptor;
 
 	  if (GLOBAL) {
-	    target = global_1;
+	    target = global$1;
 	  } else if (STATIC) {
-	    target = global_1[TARGET] || setGlobal(TARGET, {});
+	    target = global$1[TARGET] || setGlobal(TARGET, {});
 	  } else {
-	    target = (global_1[TARGET] || {}).prototype;
+	    target = (global$1[TARGET] || {}).prototype;
 	  }
 
 	  if (target) for (key in source) {
@@ -5227,7 +5166,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  }
 	};
 
-	var nativePromiseConstructor = global_1.Promise;
+	var nativePromiseConstructor = global$1.Promise;
 
 	var redefineAll = function (target, src, options) {
 	  for (var key in src) redefine(target, key, src[key], options);
@@ -5246,7 +5185,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	&& typeof Symbol.iterator == 'symbol';
 
 	var WellKnownSymbolsStore = shared('wks');
-	var Symbol$1 = global_1.Symbol;
+	var Symbol$1 = global$1.Symbol;
 	var createWellKnownSymbol = useSymbolAsUid ? Symbol$1 : Symbol$1 && Symbol$1.withoutSetter || uid;
 
 	var wellKnownSymbol = function (name) {
@@ -5514,14 +5453,14 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	var engineIsIos = /(iphone|ipod|ipad).*applewebkit/i.test(engineUserAgent);
 
-	var engineIsNode = classofRaw(global_1.process) == 'process';
+	var engineIsNode = classofRaw(global$1.process) == 'process';
 
-	var location = global_1.location;
-	var set$1 = global_1.setImmediate;
-	var clear = global_1.clearImmediate;
-	var process = global_1.process;
-	var MessageChannel = global_1.MessageChannel;
-	var Dispatch = global_1.Dispatch;
+	var location = global$1.location;
+	var set$1 = global$1.setImmediate;
+	var clear = global$1.clearImmediate;
+	var process = global$1.process;
+	var MessageChannel = global$1.MessageChannel;
+	var Dispatch = global$1.Dispatch;
 	var counter = 0;
 	var queue = {};
 	var ONREADYSTATECHANGE = 'onreadystatechange';
@@ -5548,7 +5487,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	var post = function (id) {
 	  // old engines have not location.origin
-	  global_1.postMessage(id + '', location.protocol + '//' + location.host);
+	  global$1.postMessage(id + '', location.protocol + '//' + location.host);
 	}; // Node.js 0.9+ & IE10+ has setImmediate, otherwise:
 
 
@@ -5590,9 +5529,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	    channel.port1.onmessage = listener;
 	    defer = functionBindContext(port.postMessage, port, 1); // Browsers with postMessage, skip WebWorkers
 	    // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
-	  } else if (global_1.addEventListener && typeof postMessage == 'function' && !global_1.importScripts && location && location.protocol !== 'file:' && !fails(post)) {
+	  } else if (global$1.addEventListener && typeof postMessage == 'function' && !global$1.importScripts && location && location.protocol !== 'file:' && !fails(post)) {
 	    defer = post;
-	    global_1.addEventListener('message', listener, false); // IE8-
+	    global$1.addEventListener('message', listener, false); // IE8-
 	  } else if (ONREADYSTATECHANGE in documentCreateElement('script')) {
 	    defer = function (id) {
 	      html.appendChild(documentCreateElement('script'))[ONREADYSTATECHANGE] = function () {
@@ -5615,12 +5554,12 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	var getOwnPropertyDescriptor$2 = objectGetOwnPropertyDescriptor.f;
 	var macrotask = task.set;
-	var MutationObserver = global_1.MutationObserver || global_1.WebKitMutationObserver;
-	var document$1 = global_1.document;
-	var process$1 = global_1.process;
-	var Promise$1 = global_1.Promise; // Node.js 11 shows ExperimentalWarning on getting \`queueMicrotask\`
+	var MutationObserver = global$1.MutationObserver || global$1.WebKitMutationObserver;
+	var document$1 = global$1.document;
+	var process$1 = global$1.process;
+	var Promise$1 = global$1.Promise; // Node.js 11 shows ExperimentalWarning on getting \`queueMicrotask\`
 
-	var queueMicrotaskDescriptor = getOwnPropertyDescriptor$2(global_1, 'queueMicrotask');
+	var queueMicrotaskDescriptor = getOwnPropertyDescriptor$2(global$1, 'queueMicrotask');
 	var queueMicrotask = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
 	var flush, head, last, notify, toggle, node, promise, then; // modern engines have queueMicrotask method
 
@@ -5679,7 +5618,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  } else {
 	    notify = function () {
 	      // strange IE + webpack dev server bug - use .call(global)
-	      macrotask.call(global_1, flush);
+	      macrotask.call(global$1, flush);
 	    };
 	  }
 	}
@@ -5729,7 +5668,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	};
 
 	var hostReportErrors = function (a, b) {
-	  var console = global_1.console;
+	  var console = global$1.console;
 
 	  if (console && console.error) {
 	    arguments.length === 1 ? console.error(a) : console.error(a, b);
@@ -5750,7 +5689,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  }
 	};
 
-	var process$2 = global_1.process;
+	var process$2 = global$1.process;
 	var versions = process$2 && process$2.versions;
 	var v8 = versions && versions.v8;
 	var match, version;
@@ -5776,13 +5715,13 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	var setInternalState = internalState.set;
 	var getInternalPromiseState = internalState.getterFor(PROMISE);
 	var PromiseConstructor = nativePromiseConstructor;
-	var TypeError$1 = global_1.TypeError;
-	var document$2 = global_1.document;
-	var process$3 = global_1.process;
+	var TypeError$1 = global$1.TypeError;
+	var document$2 = global$1.document;
+	var process$3 = global$1.process;
 	var $fetch = getBuiltIn('fetch');
 	var newPromiseCapability$1 = newPromiseCapability.f;
 	var newGenericPromiseCapability = newPromiseCapability$1;
-	var DISPATCH_EVENT = !!(document$2 && document$2.createEvent && global_1.dispatchEvent);
+	var DISPATCH_EVENT = !!(document$2 && document$2.createEvent && global$1.dispatchEvent);
 	var NATIVE_REJECTION_EVENT = typeof PromiseRejectionEvent == 'function';
 	var UNHANDLED_REJECTION = 'unhandledrejection';
 	var REJECTION_HANDLED = 'rejectionhandled';
@@ -5895,17 +5834,17 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	    event.promise = promise;
 	    event.reason = reason;
 	    event.initEvent(name, false, true);
-	    global_1.dispatchEvent(event);
+	    global$1.dispatchEvent(event);
 	  } else event = {
 	    promise: promise,
 	    reason: reason
 	  };
 
-	  if (!NATIVE_REJECTION_EVENT && (handler = global_1['on' + name])) handler(event);else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
+	  if (!NATIVE_REJECTION_EVENT && (handler = global$1['on' + name])) handler(event);else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
 	};
 
 	var onUnhandled = function (state) {
-	  task$1.call(global_1, function () {
+	  task$1.call(global$1, function () {
 	    var promise = state.facade;
 	    var value = state.value;
 	    var IS_UNHANDLED = isUnhandled(state);
@@ -5929,7 +5868,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	};
 
 	var onHandleUnhandled = function (state) {
-	  task$1.call(global_1, function () {
+	  task$1.call(global$1, function () {
 	    var promise = state.facade;
 
 	    if (engineIsNode) {
@@ -6070,7 +6009,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	      fetch: function fetch(input
 	      /* , init */
 	      ) {
-	        return promiseResolve(PromiseConstructor, $fetch.apply(global_1, arguments));
+	        return promiseResolve(PromiseConstructor, $fetch.apply(global$1, arguments));
 	      }
 	    });
 	  }
@@ -6575,459 +6514,448 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	pTimeout_1.default = _default;
 	pTimeout_1.TimeoutError = TimeoutError_1;
 
-	var lowerBound_1 = createCommonjsModule(function (module, exports) {
+	// Used to compute insertion index to keep queue sorted after insertion
 
-	  Object.defineProperty(exports, \\"__esModule\\", {
-	    value: true
-	  }); // Port of lower_bound from https://en.cppreference.com/w/cpp/algorithm/lower_bound
-	  // Used to compute insertion index to keep queue sorted after insertion
+	function lowerBound(array, value, comparator) {
+	  let first = 0;
+	  let count = array.length;
 
-	  function lowerBound(array, value, comparator) {
-	    let first = 0;
-	    let count = array.length;
+	  while (count > 0) {
+	    const step = count / 2 | 0;
+	    let it = first + step;
 
-	    while (count > 0) {
-	      const step = count / 2 | 0;
-	      let it = first + step;
+	    if (comparator(array[it], value) <= 0) {
+	      first = ++it;
+	      count -= step + 1;
+	    } else {
+	      count = step;
+	    }
+	  }
 
-	      if (comparator(array[it], value) <= 0) {
-	        first = ++it;
-	        count -= step + 1;
+	  return first;
+	}
+
+	var _default$1 = lowerBound;
+	var lowerBound_1 = /*#__PURE__*/Object.defineProperty({
+	  default: _default$1
+	}, '__esModule', {
+	  value: true
+	});
+
+	class PriorityQueue {
+	  constructor() {
+	    this._queue = [];
+	  }
+
+	  enqueue(run, options) {
+	    options = Object.assign({
+	      priority: 0
+	    }, options);
+	    const element = {
+	      priority: options.priority,
+	      run
+	    };
+
+	    if (this.size && this._queue[this.size - 1].priority >= options.priority) {
+	      this._queue.push(element);
+
+	      return;
+	    }
+
+	    const index = lowerBound_1.default(this._queue, element, (a, b) => b.priority - a.priority);
+
+	    this._queue.splice(index, 0, element);
+	  }
+
+	  dequeue() {
+	    const item = this._queue.shift();
+
+	    return item === null || item === void 0 ? void 0 : item.run;
+	  }
+
+	  filter(options) {
+	    return this._queue.filter(element => element.priority === options.priority).map(element => element.run);
+	  }
+
+	  get size() {
+	    return this._queue.length;
+	  }
+
+	}
+
+	var _default$2 = PriorityQueue;
+	var priorityQueue = /*#__PURE__*/Object.defineProperty({
+	  default: _default$2
+	}, '__esModule', {
+	  value: true
+	});
+
+	const empty = () => {};
+
+	const timeoutError = new pTimeout_1.TimeoutError();
+	/**
+	Promise queue with concurrency control.
+	*/
+
+	class PQueue extends eventemitter3 {
+	  constructor(options) {
+	    var _a, _b, _c, _d;
+
+	    super();
+	    this._intervalCount = 0;
+	    this._intervalEnd = 0;
+	    this._pendingCount = 0;
+	    this._resolveEmpty = empty;
+	    this._resolveIdle = empty; // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+
+	    options = Object.assign({
+	      carryoverConcurrencyCount: false,
+	      intervalCap: Infinity,
+	      interval: 0,
+	      concurrency: Infinity,
+	      autoStart: true,
+	      queueClass: priorityQueue.default
+	    }, options);
+
+	    if (!(typeof options.intervalCap === 'number' && options.intervalCap >= 1)) {
+	      throw new TypeError(\`Expected \\\\\`intervalCap\\\\\` to be a number from 1 and up, got \\\\\`\${(_b = (_a = options.intervalCap) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : ''}\\\\\` (\${typeof options.intervalCap})\`);
+	    }
+
+	    if (options.interval === undefined || !(Number.isFinite(options.interval) && options.interval >= 0)) {
+	      throw new TypeError(\`Expected \\\\\`interval\\\\\` to be a finite number >= 0, got \\\\\`\${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\\\\\` (\${typeof options.interval})\`);
+	    }
+
+	    this._carryoverConcurrencyCount = options.carryoverConcurrencyCount;
+	    this._isIntervalIgnored = options.intervalCap === Infinity || options.interval === 0;
+	    this._intervalCap = options.intervalCap;
+	    this._interval = options.interval;
+	    this._queue = new options.queueClass();
+	    this._queueClass = options.queueClass;
+	    this.concurrency = options.concurrency;
+	    this._timeout = options.timeout;
+	    this._throwOnTimeout = options.throwOnTimeout === true;
+	    this._isPaused = options.autoStart === false;
+	  }
+
+	  get _doesIntervalAllowAnother() {
+	    return this._isIntervalIgnored || this._intervalCount < this._intervalCap;
+	  }
+
+	  get _doesConcurrentAllowAnother() {
+	    return this._pendingCount < this._concurrency;
+	  }
+
+	  _next() {
+	    this._pendingCount--;
+
+	    this._tryToStartAnother();
+
+	    this.emit('next');
+	  }
+
+	  _resolvePromises() {
+	    this._resolveEmpty();
+
+	    this._resolveEmpty = empty;
+
+	    if (this._pendingCount === 0) {
+	      this._resolveIdle();
+
+	      this._resolveIdle = empty;
+	      this.emit('idle');
+	    }
+	  }
+
+	  _onResumeInterval() {
+	    this._onInterval();
+
+	    this._initializeIntervalIfNeeded();
+
+	    this._timeoutId = undefined;
+	  }
+
+	  _isIntervalPaused() {
+	    const now = Date.now();
+
+	    if (this._intervalId === undefined) {
+	      const delay = this._intervalEnd - now;
+
+	      if (delay < 0) {
+	        // Act as the interval was done
+	        // We don't need to resume it here because it will be resumed on line 160
+	        this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
 	      } else {
-	        count = step;
+	        // Act as the interval is pending
+	        if (this._timeoutId === undefined) {
+	          this._timeoutId = setTimeout(() => {
+	            this._onResumeInterval();
+	          }, delay);
+	        }
+
+	        return true;
 	      }
 	    }
 
-	    return first;
+	    return false;
 	  }
 
-	  exports.default = lowerBound;
-	});
-
-	var priorityQueue = createCommonjsModule(function (module, exports) {
-
-	  Object.defineProperty(exports, \\"__esModule\\", {
-	    value: true
-	  });
-
-	  class PriorityQueue {
-	    constructor() {
-	      this._queue = [];
-	    }
-
-	    enqueue(run, options) {
-	      options = Object.assign({
-	        priority: 0
-	      }, options);
-	      const element = {
-	        priority: options.priority,
-	        run
-	      };
-
-	      if (this.size && this._queue[this.size - 1].priority >= options.priority) {
-	        this._queue.push(element);
-
-	        return;
+	  _tryToStartAnother() {
+	    if (this._queue.size === 0) {
+	      // We can clear the interval (\\"pause\\")
+	      // Because we can redo it later (\\"resume\\")
+	      if (this._intervalId) {
+	        clearInterval(this._intervalId);
 	      }
 
-	      const index = lowerBound_1.default(this._queue, element, (a, b) => b.priority - a.priority);
+	      this._intervalId = undefined;
 
-	      this._queue.splice(index, 0, element);
+	      this._resolvePromises();
+
+	      return false;
 	    }
 
-	    dequeue() {
-	      const item = this._queue.shift();
+	    if (!this._isPaused) {
+	      const canInitializeInterval = !this._isIntervalPaused();
 
-	      return item === null || item === void 0 ? void 0 : item.run;
+	      if (this._doesIntervalAllowAnother && this._doesConcurrentAllowAnother) {
+	        const job = this._queue.dequeue();
+
+	        if (!job) {
+	          return false;
+	        }
+
+	        this.emit('active');
+	        job();
+
+	        if (canInitializeInterval) {
+	          this._initializeIntervalIfNeeded();
+	        }
+
+	        return true;
+	      }
 	    }
 
-	    filter(options) {
-	      return this._queue.filter(element => element.priority === options.priority).map(element => element.run);
-	    }
-
-	    get size() {
-	      return this._queue.length;
-	    }
-
+	    return false;
 	  }
 
-	  exports.default = PriorityQueue;
-	});
+	  _initializeIntervalIfNeeded() {
+	    if (this._isIntervalIgnored || this._intervalId !== undefined) {
+	      return;
+	    }
 
-	var dist = createCommonjsModule(function (module, exports) {
+	    this._intervalId = setInterval(() => {
+	      this._onInterval();
+	    }, this._interval);
+	    this._intervalEnd = Date.now() + this._interval;
+	  }
 
-	  Object.defineProperty(exports, \\"__esModule\\", {
-	    value: true
-	  }); // eslint-disable-next-line @typescript-eslint/no-empty-function
+	  _onInterval() {
+	    if (this._intervalCount === 0 && this._pendingCount === 0 && this._intervalId) {
+	      clearInterval(this._intervalId);
+	      this._intervalId = undefined;
+	    }
 
-	  const empty = () => {};
+	    this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
 
-	  const timeoutError = new pTimeout_1.TimeoutError();
+	    this._processQueue();
+	  }
 	  /**
-	  Promise queue with concurrency control.
+	  Executes all queued functions until it reaches the limit.
 	  */
 
-	  class PQueue extends eventemitter3 {
-	    constructor(options) {
-	      var _a, _b, _c, _d;
 
-	      super();
-	      this._intervalCount = 0;
-	      this._intervalEnd = 0;
-	      this._pendingCount = 0;
-	      this._resolveEmpty = empty;
-	      this._resolveIdle = empty; // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+	  _processQueue() {
+	    // eslint-disable-next-line no-empty
+	    while (this._tryToStartAnother()) {}
+	  }
 
-	      options = Object.assign({
-	        carryoverConcurrencyCount: false,
-	        intervalCap: Infinity,
-	        interval: 0,
-	        concurrency: Infinity,
-	        autoStart: true,
-	        queueClass: priorityQueue.default
-	      }, options);
+	  get concurrency() {
+	    return this._concurrency;
+	  }
 
-	      if (!(typeof options.intervalCap === 'number' && options.intervalCap >= 1)) {
-	        throw new TypeError(\`Expected \\\\\`intervalCap\\\\\` to be a number from 1 and up, got \\\\\`\${(_b = (_a = options.intervalCap) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : ''}\\\\\` (\${typeof options.intervalCap})\`);
-	      }
-
-	      if (options.interval === undefined || !(Number.isFinite(options.interval) && options.interval >= 0)) {
-	        throw new TypeError(\`Expected \\\\\`interval\\\\\` to be a finite number >= 0, got \\\\\`\${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\\\\\` (\${typeof options.interval})\`);
-	      }
-
-	      this._carryoverConcurrencyCount = options.carryoverConcurrencyCount;
-	      this._isIntervalIgnored = options.intervalCap === Infinity || options.interval === 0;
-	      this._intervalCap = options.intervalCap;
-	      this._interval = options.interval;
-	      this._queue = new options.queueClass();
-	      this._queueClass = options.queueClass;
-	      this.concurrency = options.concurrency;
-	      this._timeout = options.timeout;
-	      this._throwOnTimeout = options.throwOnTimeout === true;
-	      this._isPaused = options.autoStart === false;
+	  set concurrency(newConcurrency) {
+	    if (!(typeof newConcurrency === 'number' && newConcurrency >= 1)) {
+	      throw new TypeError(\`Expected \\\\\`concurrency\\\\\` to be a number from 1 and up, got \\\\\`\${newConcurrency}\\\\\` (\${typeof newConcurrency})\`);
 	    }
 
-	    get _doesIntervalAllowAnother() {
-	      return this._isIntervalIgnored || this._intervalCount < this._intervalCap;
-	    }
+	    this._concurrency = newConcurrency;
 
-	    get _doesConcurrentAllowAnother() {
-	      return this._pendingCount < this._concurrency;
-	    }
+	    this._processQueue();
+	  }
+	  /**
+	  Adds a sync or async task to the queue. Always returns a promise.
+	  */
 
-	    _next() {
-	      this._pendingCount--;
+
+	  async add(fn, options = {}) {
+	    return new Promise((resolve, reject) => {
+	      const run = async () => {
+	        this._pendingCount++;
+	        this._intervalCount++;
+
+	        try {
+	          const operation = this._timeout === undefined && options.timeout === undefined ? fn() : pTimeout_1.default(Promise.resolve(fn()), options.timeout === undefined ? this._timeout : options.timeout, () => {
+	            if (options.throwOnTimeout === undefined ? this._throwOnTimeout : options.throwOnTimeout) {
+	              reject(timeoutError);
+	            }
+
+	            return undefined;
+	          });
+	          resolve(await operation);
+	        } catch (error) {
+	          reject(error);
+	        }
+
+	        this._next();
+	      };
+
+	      this._queue.enqueue(run, options);
 
 	      this._tryToStartAnother();
 
-	      this.emit('next');
-	    }
-
-	    _resolvePromises() {
-	      this._resolveEmpty();
-
-	      this._resolveEmpty = empty;
-
-	      if (this._pendingCount === 0) {
-	        this._resolveIdle();
-
-	        this._resolveIdle = empty;
-	        this.emit('idle');
-	      }
-	    }
-
-	    _onResumeInterval() {
-	      this._onInterval();
-
-	      this._initializeIntervalIfNeeded();
-
-	      this._timeoutId = undefined;
-	    }
-
-	    _isIntervalPaused() {
-	      const now = Date.now();
-
-	      if (this._intervalId === undefined) {
-	        const delay = this._intervalEnd - now;
-
-	        if (delay < 0) {
-	          // Act as the interval was done
-	          // We don't need to resume it here because it will be resumed on line 160
-	          this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-	        } else {
-	          // Act as the interval is pending
-	          if (this._timeoutId === undefined) {
-	            this._timeoutId = setTimeout(() => {
-	              this._onResumeInterval();
-	            }, delay);
-	          }
-
-	          return true;
-	        }
-	      }
-
-	      return false;
-	    }
-
-	    _tryToStartAnother() {
-	      if (this._queue.size === 0) {
-	        // We can clear the interval (\\"pause\\")
-	        // Because we can redo it later (\\"resume\\")
-	        if (this._intervalId) {
-	          clearInterval(this._intervalId);
-	        }
-
-	        this._intervalId = undefined;
-
-	        this._resolvePromises();
-
-	        return false;
-	      }
-
-	      if (!this._isPaused) {
-	        const canInitializeInterval = !this._isIntervalPaused();
-
-	        if (this._doesIntervalAllowAnother && this._doesConcurrentAllowAnother) {
-	          const job = this._queue.dequeue();
-
-	          if (!job) {
-	            return false;
-	          }
-
-	          this.emit('active');
-	          job();
-
-	          if (canInitializeInterval) {
-	            this._initializeIntervalIfNeeded();
-	          }
-
-	          return true;
-	        }
-	      }
-
-	      return false;
-	    }
-
-	    _initializeIntervalIfNeeded() {
-	      if (this._isIntervalIgnored || this._intervalId !== undefined) {
-	        return;
-	      }
-
-	      this._intervalId = setInterval(() => {
-	        this._onInterval();
-	      }, this._interval);
-	      this._intervalEnd = Date.now() + this._interval;
-	    }
-
-	    _onInterval() {
-	      if (this._intervalCount === 0 && this._pendingCount === 0 && this._intervalId) {
-	        clearInterval(this._intervalId);
-	        this._intervalId = undefined;
-	      }
-
-	      this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-
-	      this._processQueue();
-	    }
-	    /**
-	    Executes all queued functions until it reaches the limit.
-	    */
+	      this.emit('add');
+	    });
+	  }
+	  /**
+	  Same as \`.add()\`, but accepts an array of sync or async functions.
+	   @returns A promise that resolves when all functions are resolved.
+	  */
 
 
-	    _processQueue() {
-	      // eslint-disable-next-line no-empty
-	      while (this._tryToStartAnother()) {}
-	    }
-
-	    get concurrency() {
-	      return this._concurrency;
-	    }
-
-	    set concurrency(newConcurrency) {
-	      if (!(typeof newConcurrency === 'number' && newConcurrency >= 1)) {
-	        throw new TypeError(\`Expected \\\\\`concurrency\\\\\` to be a number from 1 and up, got \\\\\`\${newConcurrency}\\\\\` (\${typeof newConcurrency})\`);
-	      }
-
-	      this._concurrency = newConcurrency;
-
-	      this._processQueue();
-	    }
-	    /**
-	    Adds a sync or async task to the queue. Always returns a promise.
-	    */
+	  async addAll(functions, options) {
+	    return Promise.all(functions.map(async function_ => this.add(function_, options)));
+	  }
+	  /**
+	  Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via \`options.autoStart = false\` or by \`.pause()\` method.)
+	  */
 
 
-	    async add(fn, options = {}) {
-	      return new Promise((resolve, reject) => {
-	        const run = async () => {
-	          this._pendingCount++;
-	          this._intervalCount++;
-
-	          try {
-	            const operation = this._timeout === undefined && options.timeout === undefined ? fn() : pTimeout_1.default(Promise.resolve(fn()), options.timeout === undefined ? this._timeout : options.timeout, () => {
-	              if (options.throwOnTimeout === undefined ? this._throwOnTimeout : options.throwOnTimeout) {
-	                reject(timeoutError);
-	              }
-
-	              return undefined;
-	            });
-	            resolve(await operation);
-	          } catch (error) {
-	            reject(error);
-	          }
-
-	          this._next();
-	        };
-
-	        this._queue.enqueue(run, options);
-
-	        this._tryToStartAnother();
-
-	        this.emit('add');
-	      });
-	    }
-	    /**
-	    Same as \`.add()\`, but accepts an array of sync or async functions.
-	     @returns A promise that resolves when all functions are resolved.
-	    */
-
-
-	    async addAll(functions, options) {
-	      return Promise.all(functions.map(async function_ => this.add(function_, options)));
-	    }
-	    /**
-	    Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via \`options.autoStart = false\` or by \`.pause()\` method.)
-	    */
-
-
-	    start() {
-	      if (!this._isPaused) {
-	        return this;
-	      }
-
-	      this._isPaused = false;
-
-	      this._processQueue();
-
+	  start() {
+	    if (!this._isPaused) {
 	      return this;
 	    }
-	    /**
-	    Put queue execution on hold.
-	    */
+
+	    this._isPaused = false;
+
+	    this._processQueue();
+
+	    return this;
+	  }
+	  /**
+	  Put queue execution on hold.
+	  */
 
 
-	    pause() {
-	      this._isPaused = true;
-	    }
-	    /**
-	    Clear the queue.
-	    */
+	  pause() {
+	    this._isPaused = true;
+	  }
+	  /**
+	  Clear the queue.
+	  */
 
 
-	    clear() {
-	      this._queue = new this._queueClass();
-	    }
-	    /**
-	    Can be called multiple times. Useful if you for example add additional items at a later time.
-	     @returns A promise that settles when the queue becomes empty.
-	    */
+	  clear() {
+	    this._queue = new this._queueClass();
+	  }
+	  /**
+	  Can be called multiple times. Useful if you for example add additional items at a later time.
+	   @returns A promise that settles when the queue becomes empty.
+	  */
 
 
-	    async onEmpty() {
-	      // Instantly resolve if the queue is empty
-	      if (this._queue.size === 0) {
-	        return;
-	      }
-
-	      return new Promise(resolve => {
-	        const existingResolve = this._resolveEmpty;
-
-	        this._resolveEmpty = () => {
-	          existingResolve();
-	          resolve();
-	        };
-	      });
-	    }
-	    /**
-	    The difference with \`.onEmpty\` is that \`.onIdle\` guarantees that all work from the queue has finished. \`.onEmpty\` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
-	     @returns A promise that settles when the queue becomes empty, and all promises have completed; \`queue.size === 0 && queue.pending === 0\`.
-	    */
-
-
-	    async onIdle() {
-	      // Instantly resolve if none pending and if nothing else is queued
-	      if (this._pendingCount === 0 && this._queue.size === 0) {
-	        return;
-	      }
-
-	      return new Promise(resolve => {
-	        const existingResolve = this._resolveIdle;
-
-	        this._resolveIdle = () => {
-	          existingResolve();
-	          resolve();
-	        };
-	      });
-	    }
-	    /**
-	    Size of the queue.
-	    */
-
-
-	    get size() {
-	      return this._queue.size;
-	    }
-	    /**
-	    Size of the queue, filtered by the given options.
-	     For example, this can be used to find the number of items remaining in the queue with a specific priority level.
-	    */
-
-
-	    sizeBy(options) {
-	      // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
-	      return this._queue.filter(options).length;
-	    }
-	    /**
-	    Number of pending promises.
-	    */
-
-
-	    get pending() {
-	      return this._pendingCount;
-	    }
-	    /**
-	    Whether the queue is currently paused.
-	    */
-
-
-	    get isPaused() {
-	      return this._isPaused;
+	  async onEmpty() {
+	    // Instantly resolve if the queue is empty
+	    if (this._queue.size === 0) {
+	      return;
 	    }
 
-	    get timeout() {
-	      return this._timeout;
+	    return new Promise(resolve => {
+	      const existingResolve = this._resolveEmpty;
+
+	      this._resolveEmpty = () => {
+	        existingResolve();
+	        resolve();
+	      };
+	    });
+	  }
+	  /**
+	  The difference with \`.onEmpty\` is that \`.onIdle\` guarantees that all work from the queue has finished. \`.onEmpty\` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
+	   @returns A promise that settles when the queue becomes empty, and all promises have completed; \`queue.size === 0 && queue.pending === 0\`.
+	  */
+
+
+	  async onIdle() {
+	    // Instantly resolve if none pending and if nothing else is queued
+	    if (this._pendingCount === 0 && this._queue.size === 0) {
+	      return;
 	    }
-	    /**
-	    Set the timeout for future operations.
-	    */
+
+	    return new Promise(resolve => {
+	      const existingResolve = this._resolveIdle;
+
+	      this._resolveIdle = () => {
+	        existingResolve();
+	        resolve();
+	      };
+	    });
+	  }
+	  /**
+	  Size of the queue.
+	  */
 
 
-	    set timeout(milliseconds) {
-	      this._timeout = milliseconds;
-	    }
+	  get size() {
+	    return this._queue.size;
+	  }
+	  /**
+	  Size of the queue, filtered by the given options.
+	   For example, this can be used to find the number of items remaining in the queue with a specific priority level.
+	  */
 
+
+	  sizeBy(options) {
+	    // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
+	    return this._queue.filter(options).length;
+	  }
+	  /**
+	  Number of pending promises.
+	  */
+
+
+	  get pending() {
+	    return this._pendingCount;
+	  }
+	  /**
+	  Whether the queue is currently paused.
+	  */
+
+
+	  get isPaused() {
+	    return this._isPaused;
 	  }
 
-	  exports.default = PQueue;
-	});
-	var Queue = /*@__PURE__*/getDefaultExportFromCjs(dist);
+	  get timeout() {
+	    return this._timeout;
+	  }
+	  /**
+	  Set the timeout for future operations.
+	  */
+
+
+	  set timeout(milliseconds) {
+	    this._timeout = milliseconds;
+	  }
+
+	}
+
+	var _default$3 = PQueue;
 
 	async function helper() {
 	  console.log(\\"Async helper\\");
 	}
 
 	async function main() {
-	  const queue = new Queue();
+	  const queue = new _default$3();
 	  queue.add(await helper());
 	}
 

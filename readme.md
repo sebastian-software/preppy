@@ -44,11 +44,11 @@ For Preppy itself installation is done by executing one command.
 $ npm install -D preppy
 ```
 
-Dependending on your transpiling needs you need Babel with the requires presets/plugins. This is nothing extra to install typically as you might have these things in-place already. Example:
+Depending on your transpiling needs you need Babel with the requires presets/plugins. This is nothing extra to install typically as you might have these things in-place already. Example:
 
 ```console
 $ npm install -D @babel/plugin-transform-runtime @babel/preset-env @babel/preset-typescript @babel/core
-$ npm install @babel/runtime corejs
+$ npm install @babel/runtime core-js
 ```
 
 ## 🔨 Configure Babel

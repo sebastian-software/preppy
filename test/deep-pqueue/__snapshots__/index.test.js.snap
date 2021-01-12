@@ -44,7 +44,7 @@ var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor; // Nashorn ~ JDK
 var NASHORN_BUG = getOwnPropertyDescriptor && !nativePropertyIsEnumerable.call({
   1: 2
 }, 1); // \`Object.prototype.propertyIsEnumerable\` method implementation
-// https://tc39.github.io/ecma262/#sec-object.prototype.propertyisenumerable
+// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
 
 var f = NASHORN_BUG ? function propertyIsEnumerable(V) {
   var descriptor = getOwnPropertyDescriptor(this, V);
@@ -80,7 +80,7 @@ var indexedObject = fails(function () {
 } : Object;
 
 // \`RequireObjectCoercible\` abstract operation
-// https://tc39.github.io/ecma262/#sec-requireobjectcoercible
+// https://tc39.es/ecma262/#sec-requireobjectcoercible
 var requireObjectCoercible = function (it) {
   if (it == undefined) throw TypeError(\\"Can't call method on \\" + it);
   return it;
@@ -94,7 +94,7 @@ var isObject = function (it) {
   return typeof it === 'object' ? it !== null : typeof it === 'function';
 };
 
-// https://tc39.github.io/ecma262/#sec-toprimitive
+// https://tc39.es/ecma262/#sec-toprimitive
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 
@@ -130,7 +130,7 @@ var ie8DomDefine = !descriptors && !fails(function () {
 });
 
 var nativeGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor; // \`Object.getOwnPropertyDescriptor\` method
-// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
+// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
 
 var f$1 = descriptors ? nativeGetOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
   O = toIndexedObject(O);
@@ -155,7 +155,7 @@ var anObject = function (it) {
 };
 
 var nativeDefineProperty = Object.defineProperty; // \`Object.defineProperty\` method
-// https://tc39.github.io/ecma262/#sec-object.defineproperty
+// https://tc39.es/ecma262/#sec-object.defineproperty
 
 var f$2 = descriptors ? nativeDefineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
@@ -212,9 +212,9 @@ var shared = createCommonjsModule(function (module) {
   (module.exports = function (key, value) {
     return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.8.1',
+    version: '3.8.2',
     mode:  'global',
-    copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
+    copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
   });
 });
 
@@ -347,14 +347,14 @@ var getBuiltIn = function (namespace, method) {
 
 var ceil = Math.ceil;
 var floor = Math.floor; // \`ToInteger\` abstract operation
-// https://tc39.github.io/ecma262/#sec-tointeger
+// https://tc39.es/ecma262/#sec-tointeger
 
 var toInteger = function (argument) {
   return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
 };
 
 var min = Math.min; // \`ToLength\` abstract operation
-// https://tc39.github.io/ecma262/#sec-tolength
+// https://tc39.es/ecma262/#sec-tolength
 
 var toLength = function (argument) {
   return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
@@ -391,10 +391,10 @@ var createMethod = function (IS_INCLUDES) {
 
 var arrayIncludes = {
   // \`Array.prototype.includes\` method
-  // https://tc39.github.io/ecma262/#sec-array.prototype.includes
+  // https://tc39.es/ecma262/#sec-array.prototype.includes
   includes: createMethod(true),
   // \`Array.prototype.indexOf\` method
-  // https://tc39.github.io/ecma262/#sec-array.prototype.indexof
+  // https://tc39.es/ecma262/#sec-array.prototype.indexof
   indexOf: createMethod(false)
 };
 
@@ -420,7 +420,7 @@ var objectKeysInternal = function (object, names) {
 var enumBugKeys = ['constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString', 'valueOf'];
 
 var hiddenKeys$1 = enumBugKeys.concat('length', 'prototype'); // \`Object.getOwnPropertyNames\` method
-// https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+// https://tc39.es/ecma262/#sec-object.getownpropertynames
 
 var f$3 = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return objectKeysInternal(O, hiddenKeys$1);
@@ -796,7 +796,7 @@ var checkCorrectnessOfIteration = function (exec, SKIP_CLOSING) {
 };
 
 var SPECIES$1 = wellKnownSymbol('species'); // \`SpeciesConstructor\` abstract operation
-// https://tc39.github.io/ecma262/#sec-speciesconstructor
+// https://tc39.es/ecma262/#sec-speciesconstructor
 
 var speciesConstructor = function (O, defaultConstructor) {
   var C = anObject(O).constructor;
@@ -909,6 +909,8 @@ var task = {
   clear: clear
 };
 
+var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(engineUserAgent);
+
 var getOwnPropertyDescriptor$2 = objectGetOwnPropertyDescriptor.f;
 var macrotask = task.set;
 var MutationObserver = global$1.MutationObserver || global$1.WebKitMutationObserver;
@@ -940,9 +942,10 @@ if (!queueMicrotask) {
     last = undefined;
     if (parent) parent.enter();
   }; // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
+  // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
 
 
-  if (!engineIsIos && !engineIsNode && MutationObserver && document$1) {
+  if (!engineIsIos && !engineIsNode && !engineIsWebosWebkit && MutationObserver && document$1) {
     toggle = true;
     node = document$1.createTextNode('');
     new MutationObserver(flush).observe(node, {
@@ -1314,7 +1317,7 @@ if (FORCED) {
 
   Internal.prototype = redefineAll(PromiseConstructor.prototype, {
     // \`Promise.prototype.then\` method
-    // https://tc39.github.io/ecma262/#sec-promise.prototype.then
+    // https://tc39.es/ecma262/#sec-promise.prototype.then
     then: function then(onFulfilled, onRejected) {
       var state = getInternalPromiseState(this);
       var reaction = newPromiseCapability$1(speciesConstructor(this, PromiseConstructor));
@@ -1327,7 +1330,7 @@ if (FORCED) {
       return reaction.promise;
     },
     // \`Promise.prototype.catch\` method
-    // https://tc39.github.io/ecma262/#sec-promise.prototype.catch
+    // https://tc39.es/ecma262/#sec-promise.prototype.catch
     'catch': function (onRejected) {
       return this.then(undefined, onRejected);
     }
@@ -1389,7 +1392,7 @@ _export({
   forced: FORCED
 }, {
   // \`Promise.reject\` method
-  // https://tc39.github.io/ecma262/#sec-promise.reject
+  // https://tc39.es/ecma262/#sec-promise.reject
   reject: function reject(r) {
     var capability = newPromiseCapability$1(this);
     capability.reject.call(undefined, r);
@@ -1402,7 +1405,7 @@ _export({
   forced:  FORCED
 }, {
   // \`Promise.resolve\` method
-  // https://tc39.github.io/ecma262/#sec-promise.resolve
+  // https://tc39.es/ecma262/#sec-promise.resolve
   resolve: function resolve(x) {
     return promiseResolve( this, x);
   }
@@ -1413,7 +1416,7 @@ _export({
   forced: INCORRECT_ITERATION
 }, {
   // \`Promise.all\` method
-  // https://tc39.github.io/ecma262/#sec-promise.all
+  // https://tc39.es/ecma262/#sec-promise.all
   all: function all(iterable) {
     var C = this;
     var capability = newPromiseCapability$1(C);
@@ -1442,7 +1445,7 @@ _export({
     return capability.promise;
   },
   // \`Promise.race\` method
-  // https://tc39.github.io/ecma262/#sec-promise.race
+  // https://tc39.es/ecma262/#sec-promise.race
   race: function race(iterable) {
     var C = this;
     var capability = newPromiseCapability$1(C);
@@ -2363,7 +2366,7 @@ var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor; // Nashorn ~ JDK
 var NASHORN_BUG = getOwnPropertyDescriptor && !nativePropertyIsEnumerable.call({
   1: 2
 }, 1); // \`Object.prototype.propertyIsEnumerable\` method implementation
-// https://tc39.github.io/ecma262/#sec-object.prototype.propertyisenumerable
+// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
 
 var f = NASHORN_BUG ? function propertyIsEnumerable(V) {
   var descriptor = getOwnPropertyDescriptor(this, V);
@@ -2399,7 +2402,7 @@ var indexedObject = fails(function () {
 } : Object;
 
 // \`RequireObjectCoercible\` abstract operation
-// https://tc39.github.io/ecma262/#sec-requireobjectcoercible
+// https://tc39.es/ecma262/#sec-requireobjectcoercible
 var requireObjectCoercible = function (it) {
   if (it == undefined) throw TypeError(\\"Can't call method on \\" + it);
   return it;
@@ -2413,7 +2416,7 @@ var isObject = function (it) {
   return typeof it === 'object' ? it !== null : typeof it === 'function';
 };
 
-// https://tc39.github.io/ecma262/#sec-toprimitive
+// https://tc39.es/ecma262/#sec-toprimitive
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 
@@ -2449,7 +2452,7 @@ var ie8DomDefine = !descriptors && !fails(function () {
 });
 
 var nativeGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor; // \`Object.getOwnPropertyDescriptor\` method
-// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
+// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
 
 var f$1 = descriptors ? nativeGetOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
   O = toIndexedObject(O);
@@ -2474,7 +2477,7 @@ var anObject = function (it) {
 };
 
 var nativeDefineProperty = Object.defineProperty; // \`Object.defineProperty\` method
-// https://tc39.github.io/ecma262/#sec-object.defineproperty
+// https://tc39.es/ecma262/#sec-object.defineproperty
 
 var f$2 = descriptors ? nativeDefineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
@@ -2531,9 +2534,9 @@ var shared = createCommonjsModule(function (module) {
   (module.exports = function (key, value) {
     return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.8.1',
+    version: '3.8.2',
     mode:  'global',
-    copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
+    copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
   });
 });
 
@@ -2666,14 +2669,14 @@ var getBuiltIn = function (namespace, method) {
 
 var ceil = Math.ceil;
 var floor = Math.floor; // \`ToInteger\` abstract operation
-// https://tc39.github.io/ecma262/#sec-tointeger
+// https://tc39.es/ecma262/#sec-tointeger
 
 var toInteger = function (argument) {
   return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
 };
 
 var min = Math.min; // \`ToLength\` abstract operation
-// https://tc39.github.io/ecma262/#sec-tolength
+// https://tc39.es/ecma262/#sec-tolength
 
 var toLength = function (argument) {
   return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
@@ -2710,10 +2713,10 @@ var createMethod = function (IS_INCLUDES) {
 
 var arrayIncludes = {
   // \`Array.prototype.includes\` method
-  // https://tc39.github.io/ecma262/#sec-array.prototype.includes
+  // https://tc39.es/ecma262/#sec-array.prototype.includes
   includes: createMethod(true),
   // \`Array.prototype.indexOf\` method
-  // https://tc39.github.io/ecma262/#sec-array.prototype.indexof
+  // https://tc39.es/ecma262/#sec-array.prototype.indexof
   indexOf: createMethod(false)
 };
 
@@ -2739,7 +2742,7 @@ var objectKeysInternal = function (object, names) {
 var enumBugKeys = ['constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString', 'valueOf'];
 
 var hiddenKeys$1 = enumBugKeys.concat('length', 'prototype'); // \`Object.getOwnPropertyNames\` method
-// https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+// https://tc39.es/ecma262/#sec-object.getownpropertynames
 
 var f$3 = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return objectKeysInternal(O, hiddenKeys$1);
@@ -3115,7 +3118,7 @@ var checkCorrectnessOfIteration = function (exec, SKIP_CLOSING) {
 };
 
 var SPECIES$1 = wellKnownSymbol('species'); // \`SpeciesConstructor\` abstract operation
-// https://tc39.github.io/ecma262/#sec-speciesconstructor
+// https://tc39.es/ecma262/#sec-speciesconstructor
 
 var speciesConstructor = function (O, defaultConstructor) {
   var C = anObject(O).constructor;
@@ -3228,6 +3231,8 @@ var task = {
   clear: clear
 };
 
+var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(engineUserAgent);
+
 var getOwnPropertyDescriptor$2 = objectGetOwnPropertyDescriptor.f;
 var macrotask = task.set;
 var MutationObserver = global$1.MutationObserver || global$1.WebKitMutationObserver;
@@ -3259,9 +3264,10 @@ if (!queueMicrotask) {
     last = undefined;
     if (parent) parent.enter();
   }; // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
+  // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
 
 
-  if (!engineIsIos && !engineIsNode && MutationObserver && document$1) {
+  if (!engineIsIos && !engineIsNode && !engineIsWebosWebkit && MutationObserver && document$1) {
     toggle = true;
     node = document$1.createTextNode('');
     new MutationObserver(flush).observe(node, {
@@ -3633,7 +3639,7 @@ if (FORCED) {
 
   Internal.prototype = redefineAll(PromiseConstructor.prototype, {
     // \`Promise.prototype.then\` method
-    // https://tc39.github.io/ecma262/#sec-promise.prototype.then
+    // https://tc39.es/ecma262/#sec-promise.prototype.then
     then: function then(onFulfilled, onRejected) {
       var state = getInternalPromiseState(this);
       var reaction = newPromiseCapability$1(speciesConstructor(this, PromiseConstructor));
@@ -3646,7 +3652,7 @@ if (FORCED) {
       return reaction.promise;
     },
     // \`Promise.prototype.catch\` method
-    // https://tc39.github.io/ecma262/#sec-promise.prototype.catch
+    // https://tc39.es/ecma262/#sec-promise.prototype.catch
     'catch': function (onRejected) {
       return this.then(undefined, onRejected);
     }
@@ -3708,7 +3714,7 @@ _export({
   forced: FORCED
 }, {
   // \`Promise.reject\` method
-  // https://tc39.github.io/ecma262/#sec-promise.reject
+  // https://tc39.es/ecma262/#sec-promise.reject
   reject: function reject(r) {
     var capability = newPromiseCapability$1(this);
     capability.reject.call(undefined, r);
@@ -3721,7 +3727,7 @@ _export({
   forced:  FORCED
 }, {
   // \`Promise.resolve\` method
-  // https://tc39.github.io/ecma262/#sec-promise.resolve
+  // https://tc39.es/ecma262/#sec-promise.resolve
   resolve: function resolve(x) {
     return promiseResolve( this, x);
   }
@@ -3732,7 +3738,7 @@ _export({
   forced: INCORRECT_ITERATION
 }, {
   // \`Promise.all\` method
-  // https://tc39.github.io/ecma262/#sec-promise.all
+  // https://tc39.es/ecma262/#sec-promise.all
   all: function all(iterable) {
     var C = this;
     var capability = newPromiseCapability$1(C);
@@ -3761,7 +3767,7 @@ _export({
     return capability.promise;
   },
   // \`Promise.race\` method
-  // https://tc39.github.io/ecma262/#sec-promise.race
+  // https://tc39.es/ecma262/#sec-promise.race
   race: function race(iterable) {
     var C = this;
     var capability = newPromiseCapability$1(C);
@@ -4687,7 +4693,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	var NASHORN_BUG = getOwnPropertyDescriptor && !nativePropertyIsEnumerable.call({
 	  1: 2
 	}, 1); // \`Object.prototype.propertyIsEnumerable\` method implementation
-	// https://tc39.github.io/ecma262/#sec-object.prototype.propertyisenumerable
+	// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
 
 	var f = NASHORN_BUG ? function propertyIsEnumerable(V) {
 	  var descriptor = getOwnPropertyDescriptor(this, V);
@@ -4723,7 +4729,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	} : Object;
 
 	// \`RequireObjectCoercible\` abstract operation
-	// https://tc39.github.io/ecma262/#sec-requireobjectcoercible
+	// https://tc39.es/ecma262/#sec-requireobjectcoercible
 	var requireObjectCoercible = function (it) {
 	  if (it == undefined) throw TypeError(\\"Can't call method on \\" + it);
 	  return it;
@@ -4737,7 +4743,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  return typeof it === 'object' ? it !== null : typeof it === 'function';
 	};
 
-	// https://tc39.github.io/ecma262/#sec-toprimitive
+	// https://tc39.es/ecma262/#sec-toprimitive
 	// instead of the ES6 spec version, we didn't implement @@toPrimitive case
 	// and the second argument - flag - preferred type is a string
 
@@ -4773,7 +4779,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	});
 
 	var nativeGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor; // \`Object.getOwnPropertyDescriptor\` method
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
 
 	var f$1 = descriptors ? nativeGetOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
 	  O = toIndexedObject(O);
@@ -4798,7 +4804,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	};
 
 	var nativeDefineProperty = Object.defineProperty; // \`Object.defineProperty\` method
-	// https://tc39.github.io/ecma262/#sec-object.defineproperty
+	// https://tc39.es/ecma262/#sec-object.defineproperty
 
 	var f$2 = descriptors ? nativeDefineProperty : function defineProperty(O, P, Attributes) {
 	  anObject(O);
@@ -4855,9 +4861,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  (module.exports = function (key, value) {
 	    return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 	  })('versions', []).push({
-	    version: '3.8.1',
+	    version: '3.8.2',
 	    mode:  'global',
-	    copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
+	    copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 	  });
 	});
 
@@ -4990,14 +4996,14 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	var ceil = Math.ceil;
 	var floor = Math.floor; // \`ToInteger\` abstract operation
-	// https://tc39.github.io/ecma262/#sec-tointeger
+	// https://tc39.es/ecma262/#sec-tointeger
 
 	var toInteger = function (argument) {
 	  return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
 	};
 
 	var min = Math.min; // \`ToLength\` abstract operation
-	// https://tc39.github.io/ecma262/#sec-tolength
+	// https://tc39.es/ecma262/#sec-tolength
 
 	var toLength = function (argument) {
 	  return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
@@ -5034,10 +5040,10 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	var arrayIncludes = {
 	  // \`Array.prototype.includes\` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.includes
+	  // https://tc39.es/ecma262/#sec-array.prototype.includes
 	  includes: createMethod(true),
 	  // \`Array.prototype.indexOf\` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.indexof
+	  // https://tc39.es/ecma262/#sec-array.prototype.indexof
 	  indexOf: createMethod(false)
 	};
 
@@ -5063,7 +5069,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	var enumBugKeys = ['constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString', 'valueOf'];
 
 	var hiddenKeys$1 = enumBugKeys.concat('length', 'prototype'); // \`Object.getOwnPropertyNames\` method
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+	// https://tc39.es/ecma262/#sec-object.getownpropertynames
 
 	var f$3 = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 	  return objectKeysInternal(O, hiddenKeys$1);
@@ -5439,7 +5445,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	};
 
 	var SPECIES$1 = wellKnownSymbol('species'); // \`SpeciesConstructor\` abstract operation
-	// https://tc39.github.io/ecma262/#sec-speciesconstructor
+	// https://tc39.es/ecma262/#sec-speciesconstructor
 
 	var speciesConstructor = function (O, defaultConstructor) {
 	  var C = anObject(O).constructor;
@@ -5552,6 +5558,8 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  clear: clear
 	};
 
+	var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(engineUserAgent);
+
 	var getOwnPropertyDescriptor$2 = objectGetOwnPropertyDescriptor.f;
 	var macrotask = task.set;
 	var MutationObserver = global$1.MutationObserver || global$1.WebKitMutationObserver;
@@ -5583,9 +5591,10 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	    last = undefined;
 	    if (parent) parent.enter();
 	  }; // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
+	  // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
 
 
-	  if (!engineIsIos && !engineIsNode && MutationObserver && document$1) {
+	  if (!engineIsIos && !engineIsNode && !engineIsWebosWebkit && MutationObserver && document$1) {
 	    toggle = true;
 	    node = document$1.createTextNode('');
 	    new MutationObserver(flush).observe(node, {
@@ -5957,7 +5966,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 	  Internal.prototype = redefineAll(PromiseConstructor.prototype, {
 	    // \`Promise.prototype.then\` method
-	    // https://tc39.github.io/ecma262/#sec-promise.prototype.then
+	    // https://tc39.es/ecma262/#sec-promise.prototype.then
 	    then: function then(onFulfilled, onRejected) {
 	      var state = getInternalPromiseState(this);
 	      var reaction = newPromiseCapability$1(speciesConstructor(this, PromiseConstructor));
@@ -5970,7 +5979,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	      return reaction.promise;
 	    },
 	    // \`Promise.prototype.catch\` method
-	    // https://tc39.github.io/ecma262/#sec-promise.prototype.catch
+	    // https://tc39.es/ecma262/#sec-promise.prototype.catch
 	    'catch': function (onRejected) {
 	      return this.then(undefined, onRejected);
 	    }
@@ -6032,7 +6041,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  forced: FORCED
 	}, {
 	  // \`Promise.reject\` method
-	  // https://tc39.github.io/ecma262/#sec-promise.reject
+	  // https://tc39.es/ecma262/#sec-promise.reject
 	  reject: function reject(r) {
 	    var capability = newPromiseCapability$1(this);
 	    capability.reject.call(undefined, r);
@@ -6045,7 +6054,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  forced:  FORCED
 	}, {
 	  // \`Promise.resolve\` method
-	  // https://tc39.github.io/ecma262/#sec-promise.resolve
+	  // https://tc39.es/ecma262/#sec-promise.resolve
 	  resolve: function resolve(x) {
 	    return promiseResolve( this, x);
 	  }
@@ -6056,7 +6065,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  forced: INCORRECT_ITERATION
 	}, {
 	  // \`Promise.all\` method
-	  // https://tc39.github.io/ecma262/#sec-promise.all
+	  // https://tc39.es/ecma262/#sec-promise.all
 	  all: function all(iterable) {
 	    var C = this;
 	    var capability = newPromiseCapability$1(C);
@@ -6085,7 +6094,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	    return capability.promise;
 	  },
 	  // \`Promise.race\` method
-	  // https://tc39.github.io/ecma262/#sec-promise.race
+	  // https://tc39.es/ecma262/#sec-promise.race
 	  race: function race(iterable) {
 	    var C = this;
 	    var capability = newPromiseCapability$1(C);

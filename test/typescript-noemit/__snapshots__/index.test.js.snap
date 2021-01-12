@@ -6,7 +6,7 @@ exports[`Publish Test File via Typescript: cjs 1`] = `
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-require('core-js/modules/es.promise');
+require('core-js/modules/es.promise.js');
 var _camelCase = require('lodash/camelCase');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
@@ -101,7 +101,7 @@ exports.setValues = setValues;
 
 exports[`Publish Test File via Typescript: esm 1`] = `
 "/*! typescript-noemit v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
-import 'core-js/modules/es.promise';
+import 'core-js/modules/es.promise.js';
 import _camelCase from 'lodash/camelCase';
 
 /**
@@ -216,10 +216,10 @@ export declare const something = 42;
 exports[`Publish Test File via Typescript: umd 1`] = `
 "/*! typescript-noemit v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es.promise'), require('lodash/camelCase')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es.promise', 'lodash/camelCase'], factory) :
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es.promise.js'), require('lodash/camelCase')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es.promise.js', 'lodash/camelCase'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['typescript-noemit'] = {}, null, global._camelCase));
-}(this, (function (exports, es_promise, _camelCase) { 'use strict';
+}(this, (function (exports, es_promise_js, _camelCase) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
 

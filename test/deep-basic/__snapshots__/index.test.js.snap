@@ -20,7 +20,7 @@ Formats the given number using \`Number#toLocaleString\`.
 const toLocaleString = (number, locale) => {
   let result = number;
 
-  if (typeof locale === 'string') {
+  if (typeof locale === 'string' || Array.isArray(locale)) {
     result = number.toLocaleString(locale);
   } else if (locale === true) {
     result = number.toLocaleString();
@@ -41,7 +41,7 @@ var prettyBytes = (number, options) => {
   const UNITS = options.bits ? options.binary ? BIBIT_UNITS : BIT_UNITS : options.binary ? BIBYTE_UNITS : BYTE_UNITS;
 
   if (options.signed && number === 0) {
-    return ' 0 ' + UNITS[0];
+    return \` 0 \${UNITS[0]}\`;
   }
 
   const isNegative = number < 0;
@@ -89,7 +89,7 @@ Formats the given number using \`Number#toLocaleString\`.
 const toLocaleString = (number, locale) => {
   let result = number;
 
-  if (typeof locale === 'string') {
+  if (typeof locale === 'string' || Array.isArray(locale)) {
     result = number.toLocaleString(locale);
   } else if (locale === true) {
     result = number.toLocaleString();
@@ -110,7 +110,7 @@ var prettyBytes = (number, options) => {
   const UNITS = options.bits ? options.binary ? BIBIT_UNITS : BIT_UNITS : options.binary ? BIBYTE_UNITS : BYTE_UNITS;
 
   if (options.signed && number === 0) {
-    return ' 0 ' + UNITS[0];
+    return \` 0 \${UNITS[0]}\`;
   }
 
   const isNegative = number < 0;
@@ -164,7 +164,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	const toLocaleString = (number, locale) => {
 	  let result = number;
 
-	  if (typeof locale === 'string') {
+	  if (typeof locale === 'string' || Array.isArray(locale)) {
 	    result = number.toLocaleString(locale);
 	  } else if (locale === true) {
 	    result = number.toLocaleString();
@@ -185,7 +185,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  const UNITS = options.bits ? options.binary ? BIBIT_UNITS : BIT_UNITS : options.binary ? BIBYTE_UNITS : BYTE_UNITS;
 
 	  if (options.signed && number === 0) {
-	    return ' 0 ' + UNITS[0];
+	    return \` 0 \${UNITS[0]}\`;
 	  }
 
 	  const isNegative = number < 0;

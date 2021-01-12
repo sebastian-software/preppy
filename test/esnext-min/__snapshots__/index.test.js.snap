@@ -3,7 +3,7 @@
 exports[`Publish Test File via Babel: cjs 1`] = `
 "/*! esnext-min v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 \\"use strict\\"
-function e(e){return e&&\\"object\\"==typeof e&&\\"default\\"in e?e.default:e}require(\\"core-js/modules/es.promise\\")
+function e(e){return e&&\\"object\\"==typeof e&&\\"default\\"in e?e.default:e}require(\\"core-js/modules/es.promise.js\\")
 var o=e(require(\\"lodash/camelCase\\"))
 console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===o(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",!0),new Promise(((e,o)=>{e(\\"resolved\\")})).then((e=>{console.log(\\"Promise:\\",e)}))
 console.log(\\"Constant:\\",123)
@@ -23,7 +23,7 @@ console.log(\\"Initialized class:\\",new n),async function(){await PromiseHelper
 
 exports[`Publish Test File via Babel: esm 1`] = `
 "/*! esnext-min v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
-import\\"core-js/modules/es.promise\\"
+import\\"core-js/modules/es.promise.js\\"
 import o from\\"lodash/camelCase\\"
 console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===o(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",!0),new Promise(((o,e)=>{o(\\"resolved\\")})).then((o=>{console.log(\\"Promise:\\",o)}))
 console.log(\\"Constant:\\",123)
@@ -43,7 +43,7 @@ console.log(\\"Initialized class:\\",new r),async function(){await PromiseHelper
 
 exports[`Publish Test File via Babel: umd 1`] = `
 "/*! esnext-min v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
-!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"core-js/modules/es.promise\\"),require(\\"lodash/camelCase\\")):\\"function\\"==typeof define&&define.amd?define([\\"core-js/modules/es.promise\\",\\"lodash/camelCase\\"],o):o(null,(e=\\"undefined\\"!=typeof globalThis?globalThis:e||self)._camelCase)}(this,(function(e,o){\\"use strict\\"
+!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(require(\\"core-js/modules/es.promise.js\\"),require(\\"lodash/camelCase\\")):\\"function\\"==typeof define&&define.amd?define([\\"core-js/modules/es.promise.js\\",\\"lodash/camelCase\\"],o):o(null,(e=\\"undefined\\"!=typeof globalThis?globalThis:e||self)._camelCase)}(this,(function(e,o){\\"use strict\\"
 function l(e){return e&&\\"object\\"==typeof e&&\\"default\\"in e?e.default:e}var s=l(o)
 console.log(\\"CherryPick Import Lodash:\\",\\"helloWorld\\"===s(\\"hello world\\")),console.log(\\"Package\\",\\"esnext-min\\"),console.log(\\"Target\\",\\"lib\\"),console.log(\\"ES2016 Enabled:\\",!0),new Promise(((e,o)=>{e(\\"resolved\\")})).then((e=>{console.log(\\"Promise:\\",e)}))
 console.log(\\"Constant:\\",123)

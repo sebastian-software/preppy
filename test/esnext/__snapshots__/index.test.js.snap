@@ -4,7 +4,7 @@ exports[`Publish Test File via Babel: cjs 1`] = `
 "/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 'use strict';
 
-require('core-js/modules/es.promise');
+require('core-js/modules/es.promise.js');
 var _camelCase = require('lodash/camelCase');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
@@ -82,7 +82,7 @@ helper();
 
 exports[`Publish Test File via Babel: esm 1`] = `
 "/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
-import 'core-js/modules/es.promise';
+import 'core-js/modules/es.promise.js';
 import _camelCase from 'lodash/camelCase';
 
 console.log(\\"CherryPick Import Lodash:\\", _camelCase(\\"hello world\\") === \\"helloWorld\\");
@@ -157,10 +157,10 @@ helper();
 exports[`Publish Test File via Babel: umd 1`] = `
 "/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('core-js/modules/es.promise'), require('lodash/camelCase')) :
-  typeof define === 'function' && define.amd ? define(['core-js/modules/es.promise', 'lodash/camelCase'], factory) :
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('core-js/modules/es.promise.js'), require('lodash/camelCase')) :
+  typeof define === 'function' && define.amd ? define(['core-js/modules/es.promise.js', 'lodash/camelCase'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(null, global._camelCase));
-}(this, (function (es_promise, _camelCase) { 'use strict';
+}(this, (function (es_promise_js, _camelCase) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
 

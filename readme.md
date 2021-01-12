@@ -237,7 +237,9 @@ Notes:
 ### Deep Mode
 
 This is a special mode for Preppy. Where it normally targets build steps for libraries this
-so-called _deep_ mode compares to default behavior of **Parcel** or **Webpack**. It inlines code which is defined in `node_modules` as possible. The logic uses information from the `package.json` file and only bundles dependencies which are defined in `devDependencies` and not in `dependencies`. All this combined with the tree-shaking capabilities of the underlying **Rollup** results into monolithic easy to deploy code with minimal external runtime dependencies.
+so-called _deep_ mode compares to default behavior of **Parcel** or **Webpack**. It inlines code which is defined in `node_modules` as much as possible. The logic uses information from the `package.json` file and only bundles dependencies which are defined in `devDependencies` and not in `dependencies`. All this combined with the tree-shaking capabilities of the underlying **Rollup** results into monolithic easy to deploy code with minimal external runtime dependencies. To enable deep mode pass the `--deep` flag on the CLI.
+
+Note: Using this functionality may require a bit of trial and error with the `dependencies` or `devDependecies` listed in the `package.json`. There are a few packages that cause warnings and errors when processed with Preppy's *Rollup* engine. In these cases, these packages usually need to be kept external and remain as a entry oin `dependencies`. From experience, this problem mostly affects packages that have been implemented very close to infrastructural properties of NodeJS.
 
 ### Command Line Interface
 

@@ -21,8 +21,8 @@ test("Multi Binary from ESNext with failing binary", async () => {
       cwd: __dirname,
       exec: true
     })
-  } catch (exept) {
-    failed = exept.failed
+  } catch (error) {
+    failed = error.failed
   }
 
   expect(failed).toBe(true)

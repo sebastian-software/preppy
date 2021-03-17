@@ -18,5 +18,5 @@ test("Publish Test File via Babel", async () => {
     preppy({
       cwd: __dirname
     })
-  ).rejects.toThrow('Unexpected token, expected ";" (2:17)')
+  ).rejects.toThrow('Missing semicolon')
 })

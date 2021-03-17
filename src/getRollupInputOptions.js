@@ -190,7 +190,10 @@ export default function getRollupInputOptions(options) {
       commonjsPlugin({
         include: /node_modules/
       }),
-      replacePlugin(variables),
+      replacePlugin({
+        ...variables,
+        preventAssignment: true
+      }),
       jsonPlugin(),
       babelPlugin({
         // Do not do extensive tests when running in our own test suite

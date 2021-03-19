@@ -191,7 +191,7 @@ export default function getRollupInputOptions(options) {
         include: /node_modules/
       }),
       replacePlugin({
-        ...variables,
+        values: variables,
         preventAssignment: true
       }),
       jsonPlugin(),

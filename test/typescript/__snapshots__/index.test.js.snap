@@ -57,14 +57,14 @@ var destructed = Object.assign({
 console.log(\\"Destructed:\\", destructed);
 class MyClass {
   constructor() {
+    this.onClick = () => {
+      console.log(\\"Clickedx\\");
+    };
+
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;
   }
-
-  onClick = () => {
-    console.log(\\"Clickedx\\");
-  };
 
   helper(x) {
     console.log(\`Called helper: \${x}\`);
@@ -148,14 +148,14 @@ var destructed = Object.assign({
 console.log(\\"Destructed:\\", destructed);
 class MyClass {
   constructor() {
+    this.onClick = () => {
+      console.log(\\"Clickedx\\");
+    };
+
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;
   }
-
-  onClick = () => {
-    console.log(\\"Clickedx\\");
-  };
 
   helper(x) {
     console.log(\`Called helper: \${x}\`);
@@ -269,14 +269,14 @@ exports[`Publish Test File via Typescript: umd 1`] = `
   console.log(\\"Destructed:\\", destructed);
   class MyClass {
     constructor() {
+      this.onClick = () => {
+        console.log(\\"Clickedx\\");
+      };
+
       console.log(\\"Called constructor\\");
       this.helper();
       this.instanceProperty = 3;
     }
-
-    onClick = () => {
-      console.log(\\"Clickedx\\");
-    };
 
     helper(x) {
       console.log(\`Called helper: \${x}\`);

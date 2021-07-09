@@ -9,21 +9,23 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 /** Detect free variable \`global\` from Node.js. */
-var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
-var _freeGlobal = freeGlobal;
+var freeGlobal$1 = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+var _freeGlobal = freeGlobal$1;
 
+var freeGlobal = _freeGlobal;
 /** Detect free variable \`self\`. */
 
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
 /** Used as a reference to the global object. */
 
-var root = _freeGlobal || freeSelf || Function('return this')();
-var _root = root;
+var root$1 = freeGlobal || freeSelf || Function('return this')();
+var _root = root$1;
 
+var root = _root;
 /** Built-in value references. */
 
-var Symbol = _root.Symbol;
-var _Symbol = Symbol;
+var Symbol$3 = root.Symbol;
+var _Symbol = Symbol$3;
 
 /**
  * A specialized version of \`_.map\` for arrays without support for iteratee
@@ -34,7 +36,8 @@ var _Symbol = Symbol;
  * @param {Function} iteratee The function invoked per iteration.
  * @returns {Array} Returns the new mapped array.
  */
-function arrayMap(array, iteratee) {
+
+function arrayMap$1(array, iteratee) {
   var index = -1,
       length = array == null ? 0 : array.length,
       result = Array(length);
@@ -46,7 +49,7 @@ function arrayMap(array, iteratee) {
   return result;
 }
 
-var _arrayMap = arrayMap;
+var _arrayMap = arrayMap$1;
 
 /**
  * Checks if \`value\` is classified as an \`Array\` object.
@@ -71,9 +74,10 @@ var _arrayMap = arrayMap;
  * _.isArray(_.noop);
  * // => false
  */
-var isArray = Array.isArray;
-var isArray_1 = isArray;
+var isArray$1 = Array.isArray;
+var isArray_1 = isArray$1;
 
+var Symbol$2 = _Symbol;
 /** Used for built-in method references. */
 
 var objectProto$1 = Object.prototype;
@@ -89,7 +93,7 @@ var hasOwnProperty = objectProto$1.hasOwnProperty;
 var nativeObjectToString$1 = objectProto$1.toString;
 /** Built-in value references. */
 
-var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
+var symToStringTag$1 = Symbol$2 ? Symbol$2.toStringTag : undefined;
 /**
  * A specialized version of \`baseGetTag\` which ignores \`Symbol.toStringTag\` values.
  *
@@ -98,7 +102,7 @@ var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
  * @returns {string} Returns the raw \`toStringTag\`.
  */
 
-function getRawTag(value) {
+function getRawTag$1(value) {
   var isOwn = hasOwnProperty.call(value, symToStringTag$1),
       tag = value[symToStringTag$1];
 
@@ -120,7 +124,7 @@ function getRawTag(value) {
   return result;
 }
 
-var _getRawTag = getRawTag;
+var _getRawTag = getRawTag$1;
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -139,19 +143,22 @@ var nativeObjectToString = objectProto.toString;
  * @returns {string} Returns the converted string.
  */
 
-function objectToString(value) {
+function objectToString$1(value) {
   return nativeObjectToString.call(value);
 }
 
-var _objectToString = objectToString;
+var _objectToString = objectToString$1;
 
+var Symbol$1 = _Symbol,
+    getRawTag = _getRawTag,
+    objectToString = _objectToString;
 /** \`Object#toString\` result references. */
 
 var nullTag = '[object Null]',
     undefinedTag = '[object Undefined]';
 /** Built-in value references. */
 
-var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
+var symToStringTag = Symbol$1 ? Symbol$1.toStringTag : undefined;
 /**
  * The base implementation of \`getTag\` without fallbacks for buggy environments.
  *
@@ -160,15 +167,15 @@ var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
  * @returns {string} Returns the \`toStringTag\`.
  */
 
-function baseGetTag(value) {
+function baseGetTag$1(value) {
   if (value == null) {
     return value === undefined ? undefinedTag : nullTag;
   }
 
-  return symToStringTag && symToStringTag in Object(value) ? _getRawTag(value) : _objectToString(value);
+  return symToStringTag && symToStringTag in Object(value) ? getRawTag(value) : objectToString(value);
 }
 
-var _baseGetTag = baseGetTag;
+var _baseGetTag = baseGetTag$1;
 
 /**
  * Checks if \`value\` is object-like. A value is object-like if it's not \`null\`
@@ -194,12 +201,15 @@ var _baseGetTag = baseGetTag;
  * _.isObjectLike(null);
  * // => false
  */
-function isObjectLike(value) {
+
+function isObjectLike$1(value) {
   return value != null && typeof value == 'object';
 }
 
-var isObjectLike_1 = isObjectLike;
+var isObjectLike_1 = isObjectLike$1;
 
+var baseGetTag = _baseGetTag,
+    isObjectLike = isObjectLike_1;
 /** \`Object#toString\` result references. */
 
 var symbolTag = '[object Symbol]';
@@ -221,18 +231,22 @@ var symbolTag = '[object Symbol]';
  * // => false
  */
 
-function isSymbol(value) {
-  return typeof value == 'symbol' || isObjectLike_1(value) && _baseGetTag(value) == symbolTag;
+function isSymbol$1(value) {
+  return typeof value == 'symbol' || isObjectLike(value) && baseGetTag(value) == symbolTag;
 }
 
-var isSymbol_1 = isSymbol;
+var isSymbol_1 = isSymbol$1;
 
+var Symbol = _Symbol,
+    arrayMap = _arrayMap,
+    isArray = isArray_1,
+    isSymbol = isSymbol_1;
 /** Used as references for various \`Number\` constants. */
 
 var INFINITY = 1 / 0;
 /** Used to convert symbols to primitives and strings. */
 
-var symbolProto = _Symbol ? _Symbol.prototype : undefined,
+var symbolProto = Symbol ? Symbol.prototype : undefined,
     symbolToString = symbolProto ? symbolProto.toString : undefined;
 /**
  * The base implementation of \`_.toString\` which doesn't convert nullish
@@ -243,18 +257,18 @@ var symbolProto = _Symbol ? _Symbol.prototype : undefined,
  * @returns {string} Returns the string.
  */
 
-function baseToString(value) {
+function baseToString$1(value) {
   // Exit early for strings to avoid a performance hit in some environments.
   if (typeof value == 'string') {
     return value;
   }
 
-  if (isArray_1(value)) {
+  if (isArray(value)) {
     // Recursively convert values (susceptible to call stack limits).
-    return _arrayMap(value, baseToString) + '';
+    return arrayMap(value, baseToString$1) + '';
   }
 
-  if (isSymbol_1(value)) {
+  if (isSymbol(value)) {
     return symbolToString ? symbolToString.call(value) : '';
   }
 
@@ -262,8 +276,9 @@ function baseToString(value) {
   return result == '0' && 1 / value == -INFINITY ? '-0' : result;
 }
 
-var _baseToString = baseToString;
+var _baseToString = baseToString$1;
 
+var baseToString = _baseToString;
 /**
  * Converts \`value\` to a string. An empty string is returned for \`null\`
  * and \`undefined\` values. The sign of \`-0\` is preserved.
@@ -286,11 +301,11 @@ var _baseToString = baseToString;
  * // => '1,2,3'
  */
 
-function toString(value) {
-  return value == null ? '' : _baseToString(value);
+function toString$4(value) {
+  return value == null ? '' : baseToString(value);
 }
 
-var toString_1 = toString;
+var toString_1 = toString$4;
 
 /**
  * The base implementation of \`_.slice\` without an iteratee call guard.
@@ -301,7 +316,8 @@ var toString_1 = toString;
  * @param {number} [end=array.length] The end position.
  * @returns {Array} Returns the slice of \`array\`.
  */
-function baseSlice(array, start, end) {
+
+function baseSlice$1(array, start, end) {
   var index = -1,
       length = array.length;
 
@@ -326,8 +342,9 @@ function baseSlice(array, start, end) {
   return result;
 }
 
-var _baseSlice = baseSlice;
+var _baseSlice = baseSlice$1;
 
+var baseSlice = _baseSlice;
 /**
  * Casts \`array\` to a slice if it's needed.
  *
@@ -338,13 +355,13 @@ var _baseSlice = baseSlice;
  * @returns {Array} Returns the cast slice.
  */
 
-function castSlice(array, start, end) {
+function castSlice$1(array, start, end) {
   var length = array.length;
   end = end === undefined ? length : end;
-  return !start && end >= length ? array : _baseSlice(array, start, end);
+  return !start && end >= length ? array : baseSlice(array, start, end);
 }
 
-var _castSlice = castSlice;
+var _castSlice = castSlice$1;
 
 /** Used to compose unicode character classes. */
 var rsAstralRange$2 = '\\\\\\\\ud800-\\\\\\\\udfff',
@@ -367,11 +384,11 @@ var reHasUnicode = RegExp('[' + rsZWJ$2 + rsAstralRange$2 + rsComboRange$3 + rsV
  * @returns {boolean} Returns \`true\` if a symbol is found, else \`false\`.
  */
 
-function hasUnicode(string) {
+function hasUnicode$2(string) {
   return reHasUnicode.test(string);
 }
 
-var _hasUnicode = hasUnicode;
+var _hasUnicode = hasUnicode$2;
 
 /**
  * Converts an ASCII \`string\` to an array.
@@ -380,11 +397,12 @@ var _hasUnicode = hasUnicode;
  * @param {string} string The string to convert.
  * @returns {Array} Returns the converted array.
  */
-function asciiToArray(string) {
+
+function asciiToArray$1(string) {
   return string.split('');
 }
 
-var _asciiToArray = asciiToArray;
+var _asciiToArray = asciiToArray$1;
 
 /** Used to compose unicode character classes. */
 var rsAstralRange$1 = '\\\\\\\\ud800-\\\\\\\\udfff',
@@ -421,12 +439,15 @@ var reUnicode = RegExp(rsFitz$1 + '(?=' + rsFitz$1 + ')|' + rsSymbol + rsSeq$1, 
  * @returns {Array} Returns the converted array.
  */
 
-function unicodeToArray(string) {
+function unicodeToArray$1(string) {
   return string.match(reUnicode) || [];
 }
 
-var _unicodeToArray = unicodeToArray;
+var _unicodeToArray = unicodeToArray$1;
 
+var asciiToArray = _asciiToArray,
+    hasUnicode$1 = _hasUnicode,
+    unicodeToArray = _unicodeToArray;
 /**
  * Converts \`string\` to an array.
  *
@@ -435,12 +456,16 @@ var _unicodeToArray = unicodeToArray;
  * @returns {Array} Returns the converted array.
  */
 
-function stringToArray(string) {
-  return _hasUnicode(string) ? _unicodeToArray(string) : _asciiToArray(string);
+function stringToArray$1(string) {
+  return hasUnicode$1(string) ? unicodeToArray(string) : asciiToArray(string);
 }
 
-var _stringToArray = stringToArray;
+var _stringToArray = stringToArray$1;
 
+var castSlice = _castSlice,
+    hasUnicode = _hasUnicode,
+    stringToArray = _stringToArray,
+    toString$3 = toString_1;
 /**
  * Creates a function like \`_.lowerFirst\`.
  *
@@ -449,18 +474,19 @@ var _stringToArray = stringToArray;
  * @returns {Function} Returns the new case function.
  */
 
-function createCaseFirst(methodName) {
+function createCaseFirst$1(methodName) {
   return function (string) {
-    string = toString_1(string);
-    var strSymbols = _hasUnicode(string) ? _stringToArray(string) : undefined;
+    string = toString$3(string);
+    var strSymbols = hasUnicode(string) ? stringToArray(string) : undefined;
     var chr = strSymbols ? strSymbols[0] : string.charAt(0);
-    var trailing = strSymbols ? _castSlice(strSymbols, 1).join('') : string.slice(1);
+    var trailing = strSymbols ? castSlice(strSymbols, 1).join('') : string.slice(1);
     return chr[methodName]() + trailing;
   };
 }
 
-var _createCaseFirst = createCaseFirst;
+var _createCaseFirst = createCaseFirst$1;
 
+var createCaseFirst = _createCaseFirst;
 /**
  * Converts the first character of \`string\` to upper case.
  *
@@ -479,9 +505,11 @@ var _createCaseFirst = createCaseFirst;
  * // => 'FRED'
  */
 
-var upperFirst = _createCaseFirst('toUpperCase');
-var upperFirst_1 = upperFirst;
+var upperFirst$1 = createCaseFirst('toUpperCase');
+var upperFirst_1 = upperFirst$1;
 
+var toString$2 = toString_1,
+    upperFirst = upperFirst_1;
 /**
  * Converts the first character of \`string\` to upper case and the remaining
  * to lower case.
@@ -498,11 +526,11 @@ var upperFirst_1 = upperFirst;
  * // => 'Fred'
  */
 
-function capitalize(string) {
-  return upperFirst_1(toString_1(string).toLowerCase());
+function capitalize$1(string) {
+  return upperFirst(toString$2(string).toLowerCase());
 }
 
-var capitalize_1 = capitalize;
+var capitalize_1 = capitalize$1;
 
 /**
  * A specialized version of \`_.reduce\` for arrays without support for
@@ -516,7 +544,8 @@ var capitalize_1 = capitalize;
  *  the initial value.
  * @returns {*} Returns the accumulated value.
  */
-function arrayReduce(array, iteratee, accumulator, initAccum) {
+
+function arrayReduce$1(array, iteratee, accumulator, initAccum) {
   var index = -1,
       length = array == null ? 0 : array.length;
 
@@ -531,7 +560,7 @@ function arrayReduce(array, iteratee, accumulator, initAccum) {
   return accumulator;
 }
 
-var _arrayReduce = arrayReduce;
+var _arrayReduce = arrayReduce$1;
 
 /**
  * The base implementation of \`_.propertyOf\` without support for deep paths.
@@ -540,14 +569,16 @@ var _arrayReduce = arrayReduce;
  * @param {Object} object The object to query.
  * @returns {Function} Returns the new accessor function.
  */
-function basePropertyOf(object) {
+
+function basePropertyOf$1(object) {
   return function (key) {
     return object == null ? undefined : object[key];
   };
 }
 
-var _basePropertyOf = basePropertyOf;
+var _basePropertyOf = basePropertyOf$1;
 
+var basePropertyOf = _basePropertyOf;
 /** Used to map Latin Unicode letters to basic Latin letters. */
 
 var deburredLetters = {
@@ -753,9 +784,11 @@ var deburredLetters = {
  * @returns {string} Returns the deburred letter.
  */
 
-var deburrLetter = _basePropertyOf(deburredLetters);
-var _deburrLetter = deburrLetter;
+var deburrLetter$1 = basePropertyOf(deburredLetters);
+var _deburrLetter = deburrLetter$1;
 
+var deburrLetter = _deburrLetter,
+    toString$1 = toString_1;
 /** Used to match Latin Unicode letters (excluding mathematical operators). */
 
 var reLatin = /[\\\\xc0-\\\\xd6\\\\xd8-\\\\xf6\\\\xf8-\\\\xff\\\\u0100-\\\\u017f]/g;
@@ -793,12 +826,12 @@ var reComboMark = RegExp(rsCombo$1, 'g');
  * // => 'deja vu'
  */
 
-function deburr(string) {
-  string = toString_1(string);
-  return string && string.replace(reLatin, _deburrLetter).replace(reComboMark, '');
+function deburr$1(string) {
+  string = toString$1(string);
+  return string && string.replace(reLatin, deburrLetter).replace(reComboMark, '');
 }
 
-var deburr_1 = deburr;
+var deburr_1 = deburr$1;
 
 /** Used to match words composed of alphanumeric characters. */
 var reAsciiWord = /[^\\\\x00-\\\\x2f\\\\x3a-\\\\x40\\\\x5b-\\\\x60\\\\x7b-\\\\x7f]+/g;
@@ -810,11 +843,11 @@ var reAsciiWord = /[^\\\\x00-\\\\x2f\\\\x3a-\\\\x40\\\\x5b-\\\\x60\\\\x7b-\\\\x7
  * @returns {Array} Returns the words of \`string\`.
  */
 
-function asciiWords(string) {
+function asciiWords$1(string) {
   return string.match(reAsciiWord) || [];
 }
 
-var _asciiWords = asciiWords;
+var _asciiWords = asciiWords$1;
 
 /** Used to detect strings that need a more robust regexp to match words. */
 var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
@@ -826,11 +859,11 @@ var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a
  * @returns {boolean} Returns \`true\` if a word is found, else \`false\`.
  */
 
-function hasUnicodeWord(string) {
+function hasUnicodeWord$1(string) {
   return reHasUnicodeWord.test(string);
 }
 
-var _hasUnicodeWord = hasUnicodeWord;
+var _hasUnicodeWord = hasUnicodeWord$1;
 
 /** Used to compose unicode character classes. */
 var rsAstralRange = '\\\\\\\\ud800-\\\\\\\\udfff',
@@ -887,12 +920,16 @@ var reUnicodeWord = RegExp([rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(
  * @returns {Array} Returns the words of \`string\`.
  */
 
-function unicodeWords(string) {
+function unicodeWords$1(string) {
   return string.match(reUnicodeWord) || [];
 }
 
-var _unicodeWords = unicodeWords;
+var _unicodeWords = unicodeWords$1;
 
+var asciiWords = _asciiWords,
+    hasUnicodeWord = _hasUnicodeWord,
+    toString = toString_1,
+    unicodeWords = _unicodeWords;
 /**
  * Splits \`string\` into an array of its words.
  *
@@ -913,19 +950,22 @@ var _unicodeWords = unicodeWords;
  * // => ['fred', 'barney', '&', 'pebbles']
  */
 
-function words(string, pattern, guard) {
-  string = toString_1(string);
+function words$1(string, pattern, guard) {
+  string = toString(string);
   pattern = guard ? undefined : pattern;
 
   if (pattern === undefined) {
-    return _hasUnicodeWord(string) ? _unicodeWords(string) : _asciiWords(string);
+    return hasUnicodeWord(string) ? unicodeWords(string) : asciiWords(string);
   }
 
   return string.match(pattern) || [];
 }
 
-var words_1 = words;
+var words_1 = words$1;
 
+var arrayReduce = _arrayReduce,
+    deburr = deburr_1,
+    words = words_1;
 /** Used to compose unicode capture groups. */
 
 var rsApos = \\"['\\\\u2019]\\";
@@ -940,14 +980,16 @@ var reApos = RegExp(rsApos, 'g');
  * @returns {Function} Returns the new compounder function.
  */
 
-function createCompounder(callback) {
+function createCompounder$1(callback) {
   return function (string) {
-    return _arrayReduce(words_1(deburr_1(string).replace(reApos, '')), callback, '');
+    return arrayReduce(words(deburr(string).replace(reApos, '')), callback, '');
   };
 }
 
-var _createCompounder = createCompounder;
+var _createCompounder = createCompounder$1;
 
+var capitalize = capitalize_1,
+    createCompounder = _createCompounder;
 /**
  * Converts \`string\` to [camel case](https://en.wikipedia.org/wiki/CamelCase).
  *
@@ -969,9 +1011,9 @@ var _createCompounder = createCompounder;
  * // => 'fooBar'
  */
 
-var camelCase = _createCompounder(function (result, word, index) {
+var camelCase = createCompounder(function (result, word, index) {
   word = word.toLowerCase();
-  return result + (index ? capitalize_1(word) : word);
+  return result + (index ? capitalize(word) : word);
 });
 var camelCase_1 = camelCase;
 
@@ -989,21 +1031,23 @@ exports[`Publish Test File via Babel: esm 1`] = `
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 /** Detect free variable \`global\` from Node.js. */
-var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
-var _freeGlobal = freeGlobal;
+var freeGlobal$1 = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+var _freeGlobal = freeGlobal$1;
 
+var freeGlobal = _freeGlobal;
 /** Detect free variable \`self\`. */
 
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
 /** Used as a reference to the global object. */
 
-var root = _freeGlobal || freeSelf || Function('return this')();
-var _root = root;
+var root$1 = freeGlobal || freeSelf || Function('return this')();
+var _root = root$1;
 
+var root = _root;
 /** Built-in value references. */
 
-var Symbol = _root.Symbol;
-var _Symbol = Symbol;
+var Symbol$3 = root.Symbol;
+var _Symbol = Symbol$3;
 
 /**
  * A specialized version of \`_.map\` for arrays without support for iteratee
@@ -1014,7 +1058,8 @@ var _Symbol = Symbol;
  * @param {Function} iteratee The function invoked per iteration.
  * @returns {Array} Returns the new mapped array.
  */
-function arrayMap(array, iteratee) {
+
+function arrayMap$1(array, iteratee) {
   var index = -1,
       length = array == null ? 0 : array.length,
       result = Array(length);
@@ -1026,7 +1071,7 @@ function arrayMap(array, iteratee) {
   return result;
 }
 
-var _arrayMap = arrayMap;
+var _arrayMap = arrayMap$1;
 
 /**
  * Checks if \`value\` is classified as an \`Array\` object.
@@ -1051,9 +1096,10 @@ var _arrayMap = arrayMap;
  * _.isArray(_.noop);
  * // => false
  */
-var isArray = Array.isArray;
-var isArray_1 = isArray;
+var isArray$1 = Array.isArray;
+var isArray_1 = isArray$1;
 
+var Symbol$2 = _Symbol;
 /** Used for built-in method references. */
 
 var objectProto$1 = Object.prototype;
@@ -1069,7 +1115,7 @@ var hasOwnProperty = objectProto$1.hasOwnProperty;
 var nativeObjectToString$1 = objectProto$1.toString;
 /** Built-in value references. */
 
-var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
+var symToStringTag$1 = Symbol$2 ? Symbol$2.toStringTag : undefined;
 /**
  * A specialized version of \`baseGetTag\` which ignores \`Symbol.toStringTag\` values.
  *
@@ -1078,7 +1124,7 @@ var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
  * @returns {string} Returns the raw \`toStringTag\`.
  */
 
-function getRawTag(value) {
+function getRawTag$1(value) {
   var isOwn = hasOwnProperty.call(value, symToStringTag$1),
       tag = value[symToStringTag$1];
 
@@ -1100,7 +1146,7 @@ function getRawTag(value) {
   return result;
 }
 
-var _getRawTag = getRawTag;
+var _getRawTag = getRawTag$1;
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -1119,19 +1165,22 @@ var nativeObjectToString = objectProto.toString;
  * @returns {string} Returns the converted string.
  */
 
-function objectToString(value) {
+function objectToString$1(value) {
   return nativeObjectToString.call(value);
 }
 
-var _objectToString = objectToString;
+var _objectToString = objectToString$1;
 
+var Symbol$1 = _Symbol,
+    getRawTag = _getRawTag,
+    objectToString = _objectToString;
 /** \`Object#toString\` result references. */
 
 var nullTag = '[object Null]',
     undefinedTag = '[object Undefined]';
 /** Built-in value references. */
 
-var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
+var symToStringTag = Symbol$1 ? Symbol$1.toStringTag : undefined;
 /**
  * The base implementation of \`getTag\` without fallbacks for buggy environments.
  *
@@ -1140,15 +1189,15 @@ var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
  * @returns {string} Returns the \`toStringTag\`.
  */
 
-function baseGetTag(value) {
+function baseGetTag$1(value) {
   if (value == null) {
     return value === undefined ? undefinedTag : nullTag;
   }
 
-  return symToStringTag && symToStringTag in Object(value) ? _getRawTag(value) : _objectToString(value);
+  return symToStringTag && symToStringTag in Object(value) ? getRawTag(value) : objectToString(value);
 }
 
-var _baseGetTag = baseGetTag;
+var _baseGetTag = baseGetTag$1;
 
 /**
  * Checks if \`value\` is object-like. A value is object-like if it's not \`null\`
@@ -1174,12 +1223,15 @@ var _baseGetTag = baseGetTag;
  * _.isObjectLike(null);
  * // => false
  */
-function isObjectLike(value) {
+
+function isObjectLike$1(value) {
   return value != null && typeof value == 'object';
 }
 
-var isObjectLike_1 = isObjectLike;
+var isObjectLike_1 = isObjectLike$1;
 
+var baseGetTag = _baseGetTag,
+    isObjectLike = isObjectLike_1;
 /** \`Object#toString\` result references. */
 
 var symbolTag = '[object Symbol]';
@@ -1201,18 +1253,22 @@ var symbolTag = '[object Symbol]';
  * // => false
  */
 
-function isSymbol(value) {
-  return typeof value == 'symbol' || isObjectLike_1(value) && _baseGetTag(value) == symbolTag;
+function isSymbol$1(value) {
+  return typeof value == 'symbol' || isObjectLike(value) && baseGetTag(value) == symbolTag;
 }
 
-var isSymbol_1 = isSymbol;
+var isSymbol_1 = isSymbol$1;
 
+var Symbol = _Symbol,
+    arrayMap = _arrayMap,
+    isArray = isArray_1,
+    isSymbol = isSymbol_1;
 /** Used as references for various \`Number\` constants. */
 
 var INFINITY = 1 / 0;
 /** Used to convert symbols to primitives and strings. */
 
-var symbolProto = _Symbol ? _Symbol.prototype : undefined,
+var symbolProto = Symbol ? Symbol.prototype : undefined,
     symbolToString = symbolProto ? symbolProto.toString : undefined;
 /**
  * The base implementation of \`_.toString\` which doesn't convert nullish
@@ -1223,18 +1279,18 @@ var symbolProto = _Symbol ? _Symbol.prototype : undefined,
  * @returns {string} Returns the string.
  */
 
-function baseToString(value) {
+function baseToString$1(value) {
   // Exit early for strings to avoid a performance hit in some environments.
   if (typeof value == 'string') {
     return value;
   }
 
-  if (isArray_1(value)) {
+  if (isArray(value)) {
     // Recursively convert values (susceptible to call stack limits).
-    return _arrayMap(value, baseToString) + '';
+    return arrayMap(value, baseToString$1) + '';
   }
 
-  if (isSymbol_1(value)) {
+  if (isSymbol(value)) {
     return symbolToString ? symbolToString.call(value) : '';
   }
 
@@ -1242,8 +1298,9 @@ function baseToString(value) {
   return result == '0' && 1 / value == -INFINITY ? '-0' : result;
 }
 
-var _baseToString = baseToString;
+var _baseToString = baseToString$1;
 
+var baseToString = _baseToString;
 /**
  * Converts \`value\` to a string. An empty string is returned for \`null\`
  * and \`undefined\` values. The sign of \`-0\` is preserved.
@@ -1266,11 +1323,11 @@ var _baseToString = baseToString;
  * // => '1,2,3'
  */
 
-function toString(value) {
-  return value == null ? '' : _baseToString(value);
+function toString$4(value) {
+  return value == null ? '' : baseToString(value);
 }
 
-var toString_1 = toString;
+var toString_1 = toString$4;
 
 /**
  * The base implementation of \`_.slice\` without an iteratee call guard.
@@ -1281,7 +1338,8 @@ var toString_1 = toString;
  * @param {number} [end=array.length] The end position.
  * @returns {Array} Returns the slice of \`array\`.
  */
-function baseSlice(array, start, end) {
+
+function baseSlice$1(array, start, end) {
   var index = -1,
       length = array.length;
 
@@ -1306,8 +1364,9 @@ function baseSlice(array, start, end) {
   return result;
 }
 
-var _baseSlice = baseSlice;
+var _baseSlice = baseSlice$1;
 
+var baseSlice = _baseSlice;
 /**
  * Casts \`array\` to a slice if it's needed.
  *
@@ -1318,13 +1377,13 @@ var _baseSlice = baseSlice;
  * @returns {Array} Returns the cast slice.
  */
 
-function castSlice(array, start, end) {
+function castSlice$1(array, start, end) {
   var length = array.length;
   end = end === undefined ? length : end;
-  return !start && end >= length ? array : _baseSlice(array, start, end);
+  return !start && end >= length ? array : baseSlice(array, start, end);
 }
 
-var _castSlice = castSlice;
+var _castSlice = castSlice$1;
 
 /** Used to compose unicode character classes. */
 var rsAstralRange$2 = '\\\\\\\\ud800-\\\\\\\\udfff',
@@ -1347,11 +1406,11 @@ var reHasUnicode = RegExp('[' + rsZWJ$2 + rsAstralRange$2 + rsComboRange$3 + rsV
  * @returns {boolean} Returns \`true\` if a symbol is found, else \`false\`.
  */
 
-function hasUnicode(string) {
+function hasUnicode$2(string) {
   return reHasUnicode.test(string);
 }
 
-var _hasUnicode = hasUnicode;
+var _hasUnicode = hasUnicode$2;
 
 /**
  * Converts an ASCII \`string\` to an array.
@@ -1360,11 +1419,12 @@ var _hasUnicode = hasUnicode;
  * @param {string} string The string to convert.
  * @returns {Array} Returns the converted array.
  */
-function asciiToArray(string) {
+
+function asciiToArray$1(string) {
   return string.split('');
 }
 
-var _asciiToArray = asciiToArray;
+var _asciiToArray = asciiToArray$1;
 
 /** Used to compose unicode character classes. */
 var rsAstralRange$1 = '\\\\\\\\ud800-\\\\\\\\udfff',
@@ -1401,12 +1461,15 @@ var reUnicode = RegExp(rsFitz$1 + '(?=' + rsFitz$1 + ')|' + rsSymbol + rsSeq$1, 
  * @returns {Array} Returns the converted array.
  */
 
-function unicodeToArray(string) {
+function unicodeToArray$1(string) {
   return string.match(reUnicode) || [];
 }
 
-var _unicodeToArray = unicodeToArray;
+var _unicodeToArray = unicodeToArray$1;
 
+var asciiToArray = _asciiToArray,
+    hasUnicode$1 = _hasUnicode,
+    unicodeToArray = _unicodeToArray;
 /**
  * Converts \`string\` to an array.
  *
@@ -1415,12 +1478,16 @@ var _unicodeToArray = unicodeToArray;
  * @returns {Array} Returns the converted array.
  */
 
-function stringToArray(string) {
-  return _hasUnicode(string) ? _unicodeToArray(string) : _asciiToArray(string);
+function stringToArray$1(string) {
+  return hasUnicode$1(string) ? unicodeToArray(string) : asciiToArray(string);
 }
 
-var _stringToArray = stringToArray;
+var _stringToArray = stringToArray$1;
 
+var castSlice = _castSlice,
+    hasUnicode = _hasUnicode,
+    stringToArray = _stringToArray,
+    toString$3 = toString_1;
 /**
  * Creates a function like \`_.lowerFirst\`.
  *
@@ -1429,18 +1496,19 @@ var _stringToArray = stringToArray;
  * @returns {Function} Returns the new case function.
  */
 
-function createCaseFirst(methodName) {
+function createCaseFirst$1(methodName) {
   return function (string) {
-    string = toString_1(string);
-    var strSymbols = _hasUnicode(string) ? _stringToArray(string) : undefined;
+    string = toString$3(string);
+    var strSymbols = hasUnicode(string) ? stringToArray(string) : undefined;
     var chr = strSymbols ? strSymbols[0] : string.charAt(0);
-    var trailing = strSymbols ? _castSlice(strSymbols, 1).join('') : string.slice(1);
+    var trailing = strSymbols ? castSlice(strSymbols, 1).join('') : string.slice(1);
     return chr[methodName]() + trailing;
   };
 }
 
-var _createCaseFirst = createCaseFirst;
+var _createCaseFirst = createCaseFirst$1;
 
+var createCaseFirst = _createCaseFirst;
 /**
  * Converts the first character of \`string\` to upper case.
  *
@@ -1459,9 +1527,11 @@ var _createCaseFirst = createCaseFirst;
  * // => 'FRED'
  */
 
-var upperFirst = _createCaseFirst('toUpperCase');
-var upperFirst_1 = upperFirst;
+var upperFirst$1 = createCaseFirst('toUpperCase');
+var upperFirst_1 = upperFirst$1;
 
+var toString$2 = toString_1,
+    upperFirst = upperFirst_1;
 /**
  * Converts the first character of \`string\` to upper case and the remaining
  * to lower case.
@@ -1478,11 +1548,11 @@ var upperFirst_1 = upperFirst;
  * // => 'Fred'
  */
 
-function capitalize(string) {
-  return upperFirst_1(toString_1(string).toLowerCase());
+function capitalize$1(string) {
+  return upperFirst(toString$2(string).toLowerCase());
 }
 
-var capitalize_1 = capitalize;
+var capitalize_1 = capitalize$1;
 
 /**
  * A specialized version of \`_.reduce\` for arrays without support for
@@ -1496,7 +1566,8 @@ var capitalize_1 = capitalize;
  *  the initial value.
  * @returns {*} Returns the accumulated value.
  */
-function arrayReduce(array, iteratee, accumulator, initAccum) {
+
+function arrayReduce$1(array, iteratee, accumulator, initAccum) {
   var index = -1,
       length = array == null ? 0 : array.length;
 
@@ -1511,7 +1582,7 @@ function arrayReduce(array, iteratee, accumulator, initAccum) {
   return accumulator;
 }
 
-var _arrayReduce = arrayReduce;
+var _arrayReduce = arrayReduce$1;
 
 /**
  * The base implementation of \`_.propertyOf\` without support for deep paths.
@@ -1520,14 +1591,16 @@ var _arrayReduce = arrayReduce;
  * @param {Object} object The object to query.
  * @returns {Function} Returns the new accessor function.
  */
-function basePropertyOf(object) {
+
+function basePropertyOf$1(object) {
   return function (key) {
     return object == null ? undefined : object[key];
   };
 }
 
-var _basePropertyOf = basePropertyOf;
+var _basePropertyOf = basePropertyOf$1;
 
+var basePropertyOf = _basePropertyOf;
 /** Used to map Latin Unicode letters to basic Latin letters. */
 
 var deburredLetters = {
@@ -1733,9 +1806,11 @@ var deburredLetters = {
  * @returns {string} Returns the deburred letter.
  */
 
-var deburrLetter = _basePropertyOf(deburredLetters);
-var _deburrLetter = deburrLetter;
+var deburrLetter$1 = basePropertyOf(deburredLetters);
+var _deburrLetter = deburrLetter$1;
 
+var deburrLetter = _deburrLetter,
+    toString$1 = toString_1;
 /** Used to match Latin Unicode letters (excluding mathematical operators). */
 
 var reLatin = /[\\\\xc0-\\\\xd6\\\\xd8-\\\\xf6\\\\xf8-\\\\xff\\\\u0100-\\\\u017f]/g;
@@ -1773,12 +1848,12 @@ var reComboMark = RegExp(rsCombo$1, 'g');
  * // => 'deja vu'
  */
 
-function deburr(string) {
-  string = toString_1(string);
-  return string && string.replace(reLatin, _deburrLetter).replace(reComboMark, '');
+function deburr$1(string) {
+  string = toString$1(string);
+  return string && string.replace(reLatin, deburrLetter).replace(reComboMark, '');
 }
 
-var deburr_1 = deburr;
+var deburr_1 = deburr$1;
 
 /** Used to match words composed of alphanumeric characters. */
 var reAsciiWord = /[^\\\\x00-\\\\x2f\\\\x3a-\\\\x40\\\\x5b-\\\\x60\\\\x7b-\\\\x7f]+/g;
@@ -1790,11 +1865,11 @@ var reAsciiWord = /[^\\\\x00-\\\\x2f\\\\x3a-\\\\x40\\\\x5b-\\\\x60\\\\x7b-\\\\x7
  * @returns {Array} Returns the words of \`string\`.
  */
 
-function asciiWords(string) {
+function asciiWords$1(string) {
   return string.match(reAsciiWord) || [];
 }
 
-var _asciiWords = asciiWords;
+var _asciiWords = asciiWords$1;
 
 /** Used to detect strings that need a more robust regexp to match words. */
 var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
@@ -1806,11 +1881,11 @@ var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a
  * @returns {boolean} Returns \`true\` if a word is found, else \`false\`.
  */
 
-function hasUnicodeWord(string) {
+function hasUnicodeWord$1(string) {
   return reHasUnicodeWord.test(string);
 }
 
-var _hasUnicodeWord = hasUnicodeWord;
+var _hasUnicodeWord = hasUnicodeWord$1;
 
 /** Used to compose unicode character classes. */
 var rsAstralRange = '\\\\\\\\ud800-\\\\\\\\udfff',
@@ -1867,12 +1942,16 @@ var reUnicodeWord = RegExp([rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(
  * @returns {Array} Returns the words of \`string\`.
  */
 
-function unicodeWords(string) {
+function unicodeWords$1(string) {
   return string.match(reUnicodeWord) || [];
 }
 
-var _unicodeWords = unicodeWords;
+var _unicodeWords = unicodeWords$1;
 
+var asciiWords = _asciiWords,
+    hasUnicodeWord = _hasUnicodeWord,
+    toString = toString_1,
+    unicodeWords = _unicodeWords;
 /**
  * Splits \`string\` into an array of its words.
  *
@@ -1893,19 +1972,22 @@ var _unicodeWords = unicodeWords;
  * // => ['fred', 'barney', '&', 'pebbles']
  */
 
-function words(string, pattern, guard) {
-  string = toString_1(string);
+function words$1(string, pattern, guard) {
+  string = toString(string);
   pattern = guard ? undefined : pattern;
 
   if (pattern === undefined) {
-    return _hasUnicodeWord(string) ? _unicodeWords(string) : _asciiWords(string);
+    return hasUnicodeWord(string) ? unicodeWords(string) : asciiWords(string);
   }
 
   return string.match(pattern) || [];
 }
 
-var words_1 = words;
+var words_1 = words$1;
 
+var arrayReduce = _arrayReduce,
+    deburr = deburr_1,
+    words = words_1;
 /** Used to compose unicode capture groups. */
 
 var rsApos = \\"['\\\\u2019]\\";
@@ -1920,14 +2002,16 @@ var reApos = RegExp(rsApos, 'g');
  * @returns {Function} Returns the new compounder function.
  */
 
-function createCompounder(callback) {
+function createCompounder$1(callback) {
   return function (string) {
-    return _arrayReduce(words_1(deburr_1(string).replace(reApos, '')), callback, '');
+    return arrayReduce(words(deburr(string).replace(reApos, '')), callback, '');
   };
 }
 
-var _createCompounder = createCompounder;
+var _createCompounder = createCompounder$1;
 
+var capitalize = capitalize_1,
+    createCompounder = _createCompounder;
 /**
  * Converts \`string\` to [camel case](https://en.wikipedia.org/wiki/CamelCase).
  *
@@ -1949,9 +2033,9 @@ var _createCompounder = createCompounder;
  * // => 'fooBar'
  */
 
-var camelCase = _createCompounder(function (result, word, index) {
+var camelCase = createCompounder(function (result, word, index) {
   word = word.toLowerCase();
-  return result + (index ? capitalize_1(word) : word);
+  return result + (index ? capitalize(word) : word);
 });
 var camelCase_1 = camelCase;
 
@@ -1975,21 +2059,23 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 	/** Detect free variable \`global\` from Node.js. */
-	var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
-	var _freeGlobal = freeGlobal;
+	var freeGlobal$1 = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+	var _freeGlobal = freeGlobal$1;
 
+	var freeGlobal = _freeGlobal;
 	/** Detect free variable \`self\`. */
 
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
 	/** Used as a reference to the global object. */
 
-	var root = _freeGlobal || freeSelf || Function('return this')();
-	var _root = root;
+	var root$1 = freeGlobal || freeSelf || Function('return this')();
+	var _root = root$1;
 
+	var root = _root;
 	/** Built-in value references. */
 
-	var Symbol = _root.Symbol;
-	var _Symbol = Symbol;
+	var Symbol$3 = root.Symbol;
+	var _Symbol = Symbol$3;
 
 	/**
 	 * A specialized version of \`_.map\` for arrays without support for iteratee
@@ -2000,7 +2086,8 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {Function} iteratee The function invoked per iteration.
 	 * @returns {Array} Returns the new mapped array.
 	 */
-	function arrayMap(array, iteratee) {
+
+	function arrayMap$1(array, iteratee) {
 	  var index = -1,
 	      length = array == null ? 0 : array.length,
 	      result = Array(length);
@@ -2012,7 +2099,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  return result;
 	}
 
-	var _arrayMap = arrayMap;
+	var _arrayMap = arrayMap$1;
 
 	/**
 	 * Checks if \`value\` is classified as an \`Array\` object.
@@ -2037,9 +2124,10 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * _.isArray(_.noop);
 	 * // => false
 	 */
-	var isArray = Array.isArray;
-	var isArray_1 = isArray;
+	var isArray$1 = Array.isArray;
+	var isArray_1 = isArray$1;
 
+	var Symbol$2 = _Symbol;
 	/** Used for built-in method references. */
 
 	var objectProto$1 = Object.prototype;
@@ -2055,7 +2143,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	var nativeObjectToString$1 = objectProto$1.toString;
 	/** Built-in value references. */
 
-	var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
+	var symToStringTag$1 = Symbol$2 ? Symbol$2.toStringTag : undefined;
 	/**
 	 * A specialized version of \`baseGetTag\` which ignores \`Symbol.toStringTag\` values.
 	 *
@@ -2064,7 +2152,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {string} Returns the raw \`toStringTag\`.
 	 */
 
-	function getRawTag(value) {
+	function getRawTag$1(value) {
 	  var isOwn = hasOwnProperty.call(value, symToStringTag$1),
 	      tag = value[symToStringTag$1];
 
@@ -2086,7 +2174,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  return result;
 	}
 
-	var _getRawTag = getRawTag;
+	var _getRawTag = getRawTag$1;
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -2105,19 +2193,22 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {string} Returns the converted string.
 	 */
 
-	function objectToString(value) {
+	function objectToString$1(value) {
 	  return nativeObjectToString.call(value);
 	}
 
-	var _objectToString = objectToString;
+	var _objectToString = objectToString$1;
 
+	var Symbol$1 = _Symbol,
+	    getRawTag = _getRawTag,
+	    objectToString = _objectToString;
 	/** \`Object#toString\` result references. */
 
 	var nullTag = '[object Null]',
 	    undefinedTag = '[object Undefined]';
 	/** Built-in value references. */
 
-	var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
+	var symToStringTag = Symbol$1 ? Symbol$1.toStringTag : undefined;
 	/**
 	 * The base implementation of \`getTag\` without fallbacks for buggy environments.
 	 *
@@ -2126,15 +2217,15 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {string} Returns the \`toStringTag\`.
 	 */
 
-	function baseGetTag(value) {
+	function baseGetTag$1(value) {
 	  if (value == null) {
 	    return value === undefined ? undefinedTag : nullTag;
 	  }
 
-	  return symToStringTag && symToStringTag in Object(value) ? _getRawTag(value) : _objectToString(value);
+	  return symToStringTag && symToStringTag in Object(value) ? getRawTag(value) : objectToString(value);
 	}
 
-	var _baseGetTag = baseGetTag;
+	var _baseGetTag = baseGetTag$1;
 
 	/**
 	 * Checks if \`value\` is object-like. A value is object-like if it's not \`null\`
@@ -2160,12 +2251,15 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * _.isObjectLike(null);
 	 * // => false
 	 */
-	function isObjectLike(value) {
+
+	function isObjectLike$1(value) {
 	  return value != null && typeof value == 'object';
 	}
 
-	var isObjectLike_1 = isObjectLike;
+	var isObjectLike_1 = isObjectLike$1;
 
+	var baseGetTag = _baseGetTag,
+	    isObjectLike = isObjectLike_1;
 	/** \`Object#toString\` result references. */
 
 	var symbolTag = '[object Symbol]';
@@ -2187,18 +2281,22 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * // => false
 	 */
 
-	function isSymbol(value) {
-	  return typeof value == 'symbol' || isObjectLike_1(value) && _baseGetTag(value) == symbolTag;
+	function isSymbol$1(value) {
+	  return typeof value == 'symbol' || isObjectLike(value) && baseGetTag(value) == symbolTag;
 	}
 
-	var isSymbol_1 = isSymbol;
+	var isSymbol_1 = isSymbol$1;
 
+	var Symbol = _Symbol,
+	    arrayMap = _arrayMap,
+	    isArray = isArray_1,
+	    isSymbol = isSymbol_1;
 	/** Used as references for various \`Number\` constants. */
 
 	var INFINITY = 1 / 0;
 	/** Used to convert symbols to primitives and strings. */
 
-	var symbolProto = _Symbol ? _Symbol.prototype : undefined,
+	var symbolProto = Symbol ? Symbol.prototype : undefined,
 	    symbolToString = symbolProto ? symbolProto.toString : undefined;
 	/**
 	 * The base implementation of \`_.toString\` which doesn't convert nullish
@@ -2209,18 +2307,18 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {string} Returns the string.
 	 */
 
-	function baseToString(value) {
+	function baseToString$1(value) {
 	  // Exit early for strings to avoid a performance hit in some environments.
 	  if (typeof value == 'string') {
 	    return value;
 	  }
 
-	  if (isArray_1(value)) {
+	  if (isArray(value)) {
 	    // Recursively convert values (susceptible to call stack limits).
-	    return _arrayMap(value, baseToString) + '';
+	    return arrayMap(value, baseToString$1) + '';
 	  }
 
-	  if (isSymbol_1(value)) {
+	  if (isSymbol(value)) {
 	    return symbolToString ? symbolToString.call(value) : '';
 	  }
 
@@ -2228,8 +2326,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  return result == '0' && 1 / value == -INFINITY ? '-0' : result;
 	}
 
-	var _baseToString = baseToString;
+	var _baseToString = baseToString$1;
 
+	var baseToString = _baseToString;
 	/**
 	 * Converts \`value\` to a string. An empty string is returned for \`null\`
 	 * and \`undefined\` values. The sign of \`-0\` is preserved.
@@ -2252,11 +2351,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * // => '1,2,3'
 	 */
 
-	function toString(value) {
-	  return value == null ? '' : _baseToString(value);
+	function toString$4(value) {
+	  return value == null ? '' : baseToString(value);
 	}
 
-	var toString_1 = toString;
+	var toString_1 = toString$4;
 
 	/**
 	 * The base implementation of \`_.slice\` without an iteratee call guard.
@@ -2267,7 +2366,8 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {number} [end=array.length] The end position.
 	 * @returns {Array} Returns the slice of \`array\`.
 	 */
-	function baseSlice(array, start, end) {
+
+	function baseSlice$1(array, start, end) {
 	  var index = -1,
 	      length = array.length;
 
@@ -2292,8 +2392,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  return result;
 	}
 
-	var _baseSlice = baseSlice;
+	var _baseSlice = baseSlice$1;
 
+	var baseSlice = _baseSlice;
 	/**
 	 * Casts \`array\` to a slice if it's needed.
 	 *
@@ -2304,13 +2405,13 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {Array} Returns the cast slice.
 	 */
 
-	function castSlice(array, start, end) {
+	function castSlice$1(array, start, end) {
 	  var length = array.length;
 	  end = end === undefined ? length : end;
-	  return !start && end >= length ? array : _baseSlice(array, start, end);
+	  return !start && end >= length ? array : baseSlice(array, start, end);
 	}
 
-	var _castSlice = castSlice;
+	var _castSlice = castSlice$1;
 
 	/** Used to compose unicode character classes. */
 	var rsAstralRange$2 = '\\\\\\\\ud800-\\\\\\\\udfff',
@@ -2333,11 +2434,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {boolean} Returns \`true\` if a symbol is found, else \`false\`.
 	 */
 
-	function hasUnicode(string) {
+	function hasUnicode$2(string) {
 	  return reHasUnicode.test(string);
 	}
 
-	var _hasUnicode = hasUnicode;
+	var _hasUnicode = hasUnicode$2;
 
 	/**
 	 * Converts an ASCII \`string\` to an array.
@@ -2346,11 +2447,12 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {string} string The string to convert.
 	 * @returns {Array} Returns the converted array.
 	 */
-	function asciiToArray(string) {
+
+	function asciiToArray$1(string) {
 	  return string.split('');
 	}
 
-	var _asciiToArray = asciiToArray;
+	var _asciiToArray = asciiToArray$1;
 
 	/** Used to compose unicode character classes. */
 	var rsAstralRange$1 = '\\\\\\\\ud800-\\\\\\\\udfff',
@@ -2387,12 +2489,15 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {Array} Returns the converted array.
 	 */
 
-	function unicodeToArray(string) {
+	function unicodeToArray$1(string) {
 	  return string.match(reUnicode) || [];
 	}
 
-	var _unicodeToArray = unicodeToArray;
+	var _unicodeToArray = unicodeToArray$1;
 
+	var asciiToArray = _asciiToArray,
+	    hasUnicode$1 = _hasUnicode,
+	    unicodeToArray = _unicodeToArray;
 	/**
 	 * Converts \`string\` to an array.
 	 *
@@ -2401,12 +2506,16 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {Array} Returns the converted array.
 	 */
 
-	function stringToArray(string) {
-	  return _hasUnicode(string) ? _unicodeToArray(string) : _asciiToArray(string);
+	function stringToArray$1(string) {
+	  return hasUnicode$1(string) ? unicodeToArray(string) : asciiToArray(string);
 	}
 
-	var _stringToArray = stringToArray;
+	var _stringToArray = stringToArray$1;
 
+	var castSlice = _castSlice,
+	    hasUnicode = _hasUnicode,
+	    stringToArray = _stringToArray,
+	    toString$3 = toString_1;
 	/**
 	 * Creates a function like \`_.lowerFirst\`.
 	 *
@@ -2415,18 +2524,19 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {Function} Returns the new case function.
 	 */
 
-	function createCaseFirst(methodName) {
+	function createCaseFirst$1(methodName) {
 	  return function (string) {
-	    string = toString_1(string);
-	    var strSymbols = _hasUnicode(string) ? _stringToArray(string) : undefined;
+	    string = toString$3(string);
+	    var strSymbols = hasUnicode(string) ? stringToArray(string) : undefined;
 	    var chr = strSymbols ? strSymbols[0] : string.charAt(0);
-	    var trailing = strSymbols ? _castSlice(strSymbols, 1).join('') : string.slice(1);
+	    var trailing = strSymbols ? castSlice(strSymbols, 1).join('') : string.slice(1);
 	    return chr[methodName]() + trailing;
 	  };
 	}
 
-	var _createCaseFirst = createCaseFirst;
+	var _createCaseFirst = createCaseFirst$1;
 
+	var createCaseFirst = _createCaseFirst;
 	/**
 	 * Converts the first character of \`string\` to upper case.
 	 *
@@ -2445,9 +2555,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * // => 'FRED'
 	 */
 
-	var upperFirst = _createCaseFirst('toUpperCase');
-	var upperFirst_1 = upperFirst;
+	var upperFirst$1 = createCaseFirst('toUpperCase');
+	var upperFirst_1 = upperFirst$1;
 
+	var toString$2 = toString_1,
+	    upperFirst = upperFirst_1;
 	/**
 	 * Converts the first character of \`string\` to upper case and the remaining
 	 * to lower case.
@@ -2464,11 +2576,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * // => 'Fred'
 	 */
 
-	function capitalize(string) {
-	  return upperFirst_1(toString_1(string).toLowerCase());
+	function capitalize$1(string) {
+	  return upperFirst(toString$2(string).toLowerCase());
 	}
 
-	var capitalize_1 = capitalize;
+	var capitalize_1 = capitalize$1;
 
 	/**
 	 * A specialized version of \`_.reduce\` for arrays without support for
@@ -2482,7 +2594,8 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 *  the initial value.
 	 * @returns {*} Returns the accumulated value.
 	 */
-	function arrayReduce(array, iteratee, accumulator, initAccum) {
+
+	function arrayReduce$1(array, iteratee, accumulator, initAccum) {
 	  var index = -1,
 	      length = array == null ? 0 : array.length;
 
@@ -2497,7 +2610,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	  return accumulator;
 	}
 
-	var _arrayReduce = arrayReduce;
+	var _arrayReduce = arrayReduce$1;
 
 	/**
 	 * The base implementation of \`_.propertyOf\` without support for deep paths.
@@ -2506,14 +2619,16 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @param {Object} object The object to query.
 	 * @returns {Function} Returns the new accessor function.
 	 */
-	function basePropertyOf(object) {
+
+	function basePropertyOf$1(object) {
 	  return function (key) {
 	    return object == null ? undefined : object[key];
 	  };
 	}
 
-	var _basePropertyOf = basePropertyOf;
+	var _basePropertyOf = basePropertyOf$1;
 
+	var basePropertyOf = _basePropertyOf;
 	/** Used to map Latin Unicode letters to basic Latin letters. */
 
 	var deburredLetters = {
@@ -2719,9 +2834,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {string} Returns the deburred letter.
 	 */
 
-	var deburrLetter = _basePropertyOf(deburredLetters);
-	var _deburrLetter = deburrLetter;
+	var deburrLetter$1 = basePropertyOf(deburredLetters);
+	var _deburrLetter = deburrLetter$1;
 
+	var deburrLetter = _deburrLetter,
+	    toString$1 = toString_1;
 	/** Used to match Latin Unicode letters (excluding mathematical operators). */
 
 	var reLatin = /[\\\\xc0-\\\\xd6\\\\xd8-\\\\xf6\\\\xf8-\\\\xff\\\\u0100-\\\\u017f]/g;
@@ -2759,12 +2876,12 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * // => 'deja vu'
 	 */
 
-	function deburr(string) {
-	  string = toString_1(string);
-	  return string && string.replace(reLatin, _deburrLetter).replace(reComboMark, '');
+	function deburr$1(string) {
+	  string = toString$1(string);
+	  return string && string.replace(reLatin, deburrLetter).replace(reComboMark, '');
 	}
 
-	var deburr_1 = deburr;
+	var deburr_1 = deburr$1;
 
 	/** Used to match words composed of alphanumeric characters. */
 	var reAsciiWord = /[^\\\\x00-\\\\x2f\\\\x3a-\\\\x40\\\\x5b-\\\\x60\\\\x7b-\\\\x7f]+/g;
@@ -2776,11 +2893,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {Array} Returns the words of \`string\`.
 	 */
 
-	function asciiWords(string) {
+	function asciiWords$1(string) {
 	  return string.match(reAsciiWord) || [];
 	}
 
-	var _asciiWords = asciiWords;
+	var _asciiWords = asciiWords$1;
 
 	/** Used to detect strings that need a more robust regexp to match words. */
 	var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
@@ -2792,11 +2909,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {boolean} Returns \`true\` if a word is found, else \`false\`.
 	 */
 
-	function hasUnicodeWord(string) {
+	function hasUnicodeWord$1(string) {
 	  return reHasUnicodeWord.test(string);
 	}
 
-	var _hasUnicodeWord = hasUnicodeWord;
+	var _hasUnicodeWord = hasUnicodeWord$1;
 
 	/** Used to compose unicode character classes. */
 	var rsAstralRange = '\\\\\\\\ud800-\\\\\\\\udfff',
@@ -2853,12 +2970,16 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {Array} Returns the words of \`string\`.
 	 */
 
-	function unicodeWords(string) {
+	function unicodeWords$1(string) {
 	  return string.match(reUnicodeWord) || [];
 	}
 
-	var _unicodeWords = unicodeWords;
+	var _unicodeWords = unicodeWords$1;
 
+	var asciiWords = _asciiWords,
+	    hasUnicodeWord = _hasUnicodeWord,
+	    toString = toString_1,
+	    unicodeWords = _unicodeWords;
 	/**
 	 * Splits \`string\` into an array of its words.
 	 *
@@ -2879,19 +3000,22 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * // => ['fred', 'barney', '&', 'pebbles']
 	 */
 
-	function words(string, pattern, guard) {
-	  string = toString_1(string);
+	function words$1(string, pattern, guard) {
+	  string = toString(string);
 	  pattern = guard ? undefined : pattern;
 
 	  if (pattern === undefined) {
-	    return _hasUnicodeWord(string) ? _unicodeWords(string) : _asciiWords(string);
+	    return hasUnicodeWord(string) ? unicodeWords(string) : asciiWords(string);
 	  }
 
 	  return string.match(pattern) || [];
 	}
 
-	var words_1 = words;
+	var words_1 = words$1;
 
+	var arrayReduce = _arrayReduce,
+	    deburr = deburr_1,
+	    words = words_1;
 	/** Used to compose unicode capture groups. */
 
 	var rsApos = \\"['\\\\u2019]\\";
@@ -2906,14 +3030,16 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * @returns {Function} Returns the new compounder function.
 	 */
 
-	function createCompounder(callback) {
+	function createCompounder$1(callback) {
 	  return function (string) {
-	    return _arrayReduce(words_1(deburr_1(string).replace(reApos, '')), callback, '');
+	    return arrayReduce(words(deburr(string).replace(reApos, '')), callback, '');
 	  };
 	}
 
-	var _createCompounder = createCompounder;
+	var _createCompounder = createCompounder$1;
 
+	var capitalize = capitalize_1,
+	    createCompounder = _createCompounder;
 	/**
 	 * Converts \`string\` to [camel case](https://en.wikipedia.org/wiki/CamelCase).
 	 *
@@ -2935,9 +3061,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
 	 * // => 'fooBar'
 	 */
 
-	var camelCase = _createCompounder(function (result, word, index) {
+	var camelCase = createCompounder(function (result, word, index) {
 	  word = word.toLowerCase();
-	  return result + (index ? capitalize_1(word) : word);
+	  return result + (index ? capitalize(word) : word);
 	});
 	var camelCase_1 = camelCase;
 

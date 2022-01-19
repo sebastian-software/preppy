@@ -8,7 +8,7 @@ exports[`Multi Binary from ESNext: first 1`] = `
 
 var _snakeCase = require('lodash/snakeCase');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e[\\"default\\"] : e; }
 
 var _snakeCase__default = /*#__PURE__*/_interopDefaultLegacy(_snakeCase);
 
@@ -27,7 +27,7 @@ exports[`Multi Binary from ESNext: second 1`] = `
 
 var _camelCase = require('lodash/camelCase');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e[\\"default\\"] : e; }
 
 var _camelCase__default = /*#__PURE__*/_interopDefaultLegacy(_camelCase);
 

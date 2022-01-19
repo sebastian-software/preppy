@@ -6,7 +6,7 @@ function index () {
   console.log(\\"I'm in the Browser\\");
 }
 
-export default index;
+export { index as default };
 //# sourceMappingURL=browser.esm.js.map
 "
 `;
@@ -16,8 +16,8 @@ exports[`Publish Test File via Babel as Universal: browser-umd 1`] = `
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global['universal-folder'] = factory());
-}(this, (function () { 'use strict';
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global[\\"universal-folder\\"] = factory());
+})(this, (function () { 'use strict';
 
   function index () {
     console.log(\\"I'm in the Browser\\");
@@ -25,7 +25,7 @@ exports[`Publish Test File via Babel as Universal: browser-umd 1`] = `
 
   return index;
 
-})));
+}));
 //# sourceMappingURL=browser.umd.js.map
 "
 `;
@@ -64,7 +64,7 @@ function index () {
   console.log(\\"I'm on NodeJS\\");
 }
 
-export default index;
+export { index as default };
 //# sourceMappingURL=node.esm.js.map
 "
 `;

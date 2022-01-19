@@ -9,7 +9,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var _camelCase = require('lodash/camelCase');
 require('core-js/modules/es.promise.js');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e[\\"default\\"] : e; }
 
 var _camelCase__default = /*#__PURE__*/_interopDefaultLegacy(_camelCase);
 
@@ -218,10 +218,10 @@ exports[`Publish Test File via Typescript: umd 1`] = `
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash/camelCase'), require('core-js/modules/es.promise.js')) :
   typeof define === 'function' && define.amd ? define(['exports', 'lodash/camelCase', 'core-js/modules/es.promise.js'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['typescript-noemit'] = {}, global._camelCase));
-}(this, (function (exports, _camelCase) { 'use strict';
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global[\\"typescript-noemit\\"] = {}, global._camelCase));
+})(this, (function (exports, _camelCase) { 'use strict';
 
-  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e['default'] : e; }
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e[\\"default\\"] : e; }
 
   var _camelCase__default = /*#__PURE__*/_interopDefaultLegacy(_camelCase);
 
@@ -310,7 +310,7 @@ exports[`Publish Test File via Typescript: umd 1`] = `
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=index.umd.js.map
 "
 `;

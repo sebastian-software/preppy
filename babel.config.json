@@ -1,5 +1,4 @@
 {
-  "sourceMaps": true,
   "plugins": [
     [
       "babel-plugin-lodash",

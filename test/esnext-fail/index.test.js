@@ -9,7 +9,6 @@ import { preppy } from "../util"
 
 const lazyDelete = pify(rimraf)
 
-
 test("Publish Test File via Babel", async () => {
   await lazyDelete(resolve(__dirname, "./dist"))
 
@@ -17,5 +16,5 @@ test("Publish Test File via Babel", async () => {
     preppy({
       cwd: __dirname
     })
-  ).rejects.toThrow('Missing semicolon')
+  ).rejects.toThrow("Missing semicolon")
 })

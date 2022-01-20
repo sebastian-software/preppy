@@ -33,7 +33,7 @@ export function getTsCompilerOptions(opts) {
   const basePath = ts.getDirectoryPath(file)
   const config = ts.parseJsonConfigFileContent(readResult.config, ts.sys, basePath)
 
-  if (config.errors && config.errors.length) {
+  if (config.errors && config.errors.length > 0) {
     config.errors.forEach((error) => {
       console.error("Error reading tsconfig:", error.messageText)
     })

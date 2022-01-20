@@ -10,7 +10,6 @@ import { preppy } from "../util"
 const lazyRead = pify(readFile)
 const lazyDelete = pify(rimraf)
 
-
 test("Publish Test File via Babel xx", async () => {
   await lazyDelete(resolve(__dirname, "./dist"))
 

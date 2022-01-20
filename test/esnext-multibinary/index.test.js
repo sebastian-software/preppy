@@ -11,7 +11,6 @@ import { preppy } from "../util"
 const lazyRead = pify(readFile)
 const lazyDelete = pify(rimraf)
 
-
 test("Multi Binary from ESNext", async () => {
   await lazyDelete(resolve(__dirname, "./bin"))
   await preppy({

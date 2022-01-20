@@ -10,7 +10,6 @@ import { preppy } from "../util"
 const lazyRead = pify(readFile)
 const lazyDelete = pify(rimraf)
 
-
 test("Binary from ESNext", async () => {
   await lazyDelete(resolve(__dirname, "./bin"))
 

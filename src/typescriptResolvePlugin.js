@@ -31,7 +31,7 @@ const resolveHost = {
   }
 }
 
-const extensions = new Set([".ts", ".tsx"])
+const extensions = new Set([ ".ts", ".tsx" ])
 const compilerOptions = {}
 
 export default () => ({

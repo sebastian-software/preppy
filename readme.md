@@ -4,20 +4,15 @@
 
 <img src="https://raw.githubusercontent.com/sebastian-software/preppy/master/demo.gif?raw=true" alt="Demo of Preppy" />
 
-<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm]<br/>
-[![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Code Coverage][codecov-img]][codecov]
+<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status][github-img]][github]
 
 [sponsor]: https://www.sebastian-software.de
 [npm]: https://www.npmjs.com/package/preppy
-[travis]: https://travis-ci.org/sebastian-software/preppy
-[appveyor]: https://ci.appveyor.com/project/swernerx/preppy/branch/master
-[codecov]: https://codecov.io/gh/sebastian-software/preppy
-[sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/692446
+[sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/c41e54
 [npm-downloads-img]: https://badgen.net/npm/dm/preppy
 [npm-version-img]: https://badgen.net/npm/v/preppy
-[travis-img]: https://badgen.net/travis/sebastian-software/preppy?label=unix%20build
-[appveyor-img]: https://badgen.net/appveyor/ci/swernerx/preppy?label=windows%20build
-[codecov-img]: https://badgen.net/codecov/c/github/sebastian-software/preppy
+[github]: https://github.com/sebastian-software/asset-hash/actions
+[github-img]: https://badgen.net/github/status/sebastian-software/asset-hash?label=tests&icon=github
 
 ## 🥁 Features:
 
@@ -74,8 +69,7 @@ Example `babel.config.json`:
       "@babel/env",
       {
         "useBuiltIns": "usage",
-        "corejs": 3,
-        "loose": true
+        "corejs": 3
       }
     ],
     [
@@ -273,4 +267,4 @@ Options
 
 <img src="https://cdn.rawgit.com/sebastian-software/sebastian-software-brand/0d4ec9d6/sebastiansoftware-en.svg" alt="Logo of Sebastian Software GmbH, Mainz, Germany" width="460" height="160"/>
 
-Copyright 2016-2021<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)
+Copyright 2016-2022<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)

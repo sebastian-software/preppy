@@ -7,7 +7,6 @@ exports[`Publish Test File via Typescript: cjs 1`] = `
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _camelCase = require('lodash/camelCase');
-require('core-js/modules/es.promise.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e[\\"default\\"] : e; }
 
@@ -51,20 +50,21 @@ var source = {
   first: 1,
   second: 2
 };
-var destructed = Object.assign({
-  third: 3
-}, source);
+var destructed = {
+  third: 3,
+  ...source
+};
 console.log(\\"Destructed:\\", destructed);
 class MyClass {
   constructor() {
-    this.onClick = () => {
-      console.log(\\"Clickedx\\");
-    };
-
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;
   }
+
+  onClick = () => {
+    console.log(\\"Clickedx\\");
+  };
 
   helper(x) {
     console.log(\`Called helper: \${x}\`);
@@ -102,7 +102,6 @@ exports.setValues = setValues;
 exports[`Publish Test File via Typescript: esm 1`] = `
 "/*! typescript v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 import _camelCase from 'lodash/camelCase';
-import 'core-js/modules/es.promise.js';
 
 /**
  * Values of fields in the form
@@ -142,20 +141,21 @@ var source = {
   first: 1,
   second: 2
 };
-var destructed = Object.assign({
-  third: 3
-}, source);
+var destructed = {
+  third: 3,
+  ...source
+};
 console.log(\\"Destructed:\\", destructed);
 class MyClass {
   constructor() {
-    this.onClick = () => {
-      console.log(\\"Clickedx\\");
-    };
-
     console.log(\\"Called constructor\\");
     this.helper();
     this.instanceProperty = 3;
   }
+
+  onClick = () => {
+    console.log(\\"Clickedx\\");
+  };
 
   helper(x) {
     console.log(\`Called helper: \${x}\`);
@@ -216,8 +216,8 @@ export declare const something = 42;
 exports[`Publish Test File via Typescript: umd 1`] = `
 "/*! typescript v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash/camelCase'), require('core-js/modules/es.promise.js')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'lodash/camelCase', 'core-js/modules/es.promise.js'], factory) :
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash/camelCase')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'lodash/camelCase'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.typescript = {}, global._camelCase));
 })(this, (function (exports, _camelCase) { 'use strict';
 
@@ -263,20 +263,21 @@ exports[`Publish Test File via Typescript: umd 1`] = `
     first: 1,
     second: 2
   };
-  var destructed = Object.assign({
-    third: 3
-  }, source);
+  var destructed = {
+    third: 3,
+    ...source
+  };
   console.log(\\"Destructed:\\", destructed);
   class MyClass {
     constructor() {
-      this.onClick = () => {
-        console.log(\\"Clickedx\\");
-      };
-
       console.log(\\"Called constructor\\");
       this.helper();
       this.instanceProperty = 3;
     }
+
+    onClick = () => {
+      console.log(\\"Clickedx\\");
+    };
 
     helper(x) {
       console.log(\`Called helper: \${x}\`);

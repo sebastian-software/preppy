@@ -5,7 +5,6 @@ exports[`Publish Test File via Babel: cjs 1`] = `
 'use strict';
 
 var _camelCase = require('lodash/camelCase');
-require('core-js/modules/es.promise.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e[\\"default\\"] : e; }
 
@@ -43,9 +42,10 @@ var source = {
   first: 1,
   second: 2
 };
-var destructed = Object.assign({
-  third: 3
-}, source);
+var destructed = {
+  third: 3,
+  ...source
+};
 console.log(\\"Destructed:\\", destructed);
 
 class MyClass {
@@ -83,7 +83,6 @@ helper();
 exports[`Publish Test File via Babel: esm 1`] = `
 "/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 import _camelCase from 'lodash/camelCase';
-import 'core-js/modules/es.promise.js';
 
 console.log(\\"CherryPick Import Lodash:\\", _camelCase(\\"hello world\\") === \\"helloWorld\\");
 console.log(\\"Package\\", \\"esnext\\");
@@ -117,9 +116,10 @@ var source = {
   first: 1,
   second: 2
 };
-var destructed = Object.assign({
-  third: 3
-}, source);
+var destructed = {
+  third: 3,
+  ...source
+};
 console.log(\\"Destructed:\\", destructed);
 
 class MyClass {
@@ -157,8 +157,8 @@ helper();
 exports[`Publish Test File via Babel: umd 1`] = `
 "/*! esnext v1.0.0 by Sebastian Werner <s.werner@sebastian-software.de> */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('lodash/camelCase'), require('core-js/modules/es.promise.js')) :
-  typeof define === 'function' && define.amd ? define(['lodash/camelCase', 'core-js/modules/es.promise.js'], factory) :
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('lodash/camelCase')) :
+  typeof define === 'function' && define.amd ? define(['lodash/camelCase'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global._camelCase));
 })(this, (function (_camelCase) { 'use strict';
 
@@ -198,9 +198,10 @@ exports[`Publish Test File via Babel: umd 1`] = `
     first: 1,
     second: 2
   };
-  var destructed = Object.assign({
-    third: 3
-  }, source);
+  var destructed = {
+    third: 3,
+    ...source
+  };
   console.log(\\"Destructed:\\", destructed);
 
   class MyClass {

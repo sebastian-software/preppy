@@ -1,0 +1,42 @@
+{
+  "sourceMaps": true,
+  "plugins": [
+    [
+      "babel-plugin-lodash",
+      {
+        "id": [ "lodash" ]
+      }
+    ],
+    [
+      "@babel/transform-runtime",
+      {
+        "helpers": true,
+        "regenerator": false
+      }
+    ]
+  ],
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "exclude": [ "transform-regenerator", "transform-async-to-generator" ],
+        "useBuiltIns": "usage",
+        "corejs": 3,
+        "targets": {
+          "node": 16
+        },
+        "loose": true,
+        "modules": "auto"
+      }
+    ],
+    [
+      "@babel/typescript",
+      {
+        // We like JSX everywhere. No reason why we have to deal with
+        // legacy type assertion supported in earlier versions.
+        "allExtensions": true,
+        "isTSX": true
+      }
+    ]
+  ]
+}

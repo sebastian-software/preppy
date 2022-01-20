@@ -65,7 +65,7 @@
     "rollup": "^2.64.0",
     "rollup-plugin-advanced-run": "^2.0.1",
     "rollup-plugin-executable": "^1.6.3",
-    "rollup-plugin-rebase": "^4.0.0",
+    "rollup-plugin-rebase": "^4.0.1",
     "rollup-plugin-terser": "^7.0.2",
     "stack-trace": "^0.0.10",
     "strip-bom": "^4.0.0",

@@ -11,8 +11,8 @@
 [sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/c41e54
 [npm-downloads-img]: https://badgen.net/npm/dm/preppy
 [npm-version-img]: https://badgen.net/npm/v/preppy
-[github]: https://github.com/sebastian-software/asset-hash/actions
-[github-img]: https://badgen.net/github/status/sebastian-software/asset-hash?label=tests&icon=github
+[github]: https://github.com/sebastian-software/preppy/actions
+[github-img]: https://badgen.net/github/status/sebastian-software/preppy?label=tests&icon=github
 
 ## 🥁 Features:
 

@@ -13,9 +13,7 @@
     "babel"
   ],
   "engines": {
-    "node": ">=10.0.0",
-    "npm": ">=4.0.0",
-    "yarn": ">=1.0.0"
+    "node": ">=16.0.0"
   },
   "bin": {
     "preppy": "bin/preppy"
@@ -37,19 +35,6 @@
     "release:major": "git push && release-it --ci major",
     "test": "npm run prepare && jest",
     "prepare": "rimraf bin && babel-node src/cli.js"
-  },
-  "jest": {
-    "setupFiles": [
-      "./jest.setup.js"
-    ],
-    "testTimeout": 50000,
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/*.test.js"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    }
   },
   "repository": {
     "type": "git",

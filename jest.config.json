@@ -1,0 +1,9 @@
+{
+  "setupFiles": ["./jest.setup.js"],
+  "testTimeout": 50000,
+  "testEnvironment": "node",
+  "testMatch": ["**/*.test.js"],
+  "transform": {
+    "^.+\\.jsx?$": "babel-jest"
+  }
+}

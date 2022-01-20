@@ -56,3 +56,12 @@ exports[`Publish Test File via Babel: umd 1`] = `
 //# sourceMappingURL=index.umd.js.map
 "
 `;
+
+exports[`Publish Test File via Babel: umd 2`] = `
+"body {
+  font-size: 20px;
+  background: url(./CSmzMMQU.woff) top left repeat;
+}
+
+/*# sourceMappingURL=diyFEqKe.css.map */"
+`;

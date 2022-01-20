@@ -27,7 +27,7 @@ test("Publish Test File via Babel", async () => {
   expect(await lazyRead(resolve(__dirname, "dist/index.umd.js"), "utf8")).toMatchSnapshot(
     "umd"
   )
-  expect(await lazyRead(resolve(__dirname, "dist/ABCYSDdq.css"), "utf8")).toMatchSnapshot(
+  expect(await lazyRead(resolve(__dirname, "dist/diyFEqKe.css"), "utf8")).toMatchSnapshot(
     "umd"
   )
 })

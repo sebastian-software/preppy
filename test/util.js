@@ -1,3 +1,5 @@
+import path from "path"
+
 import execa from "execa"
 
 export function preppy(options) {
@@ -6,5 +8,5 @@ export function preppy(options) {
 
   const args = Object.keys(rest).map((key) => `--${key}=${rest[key]}`)
 
-  return execa("../../bin/preppy", args, opts)
+  return execa(path.resolve("./bin/preppy"), args, opts)
 }

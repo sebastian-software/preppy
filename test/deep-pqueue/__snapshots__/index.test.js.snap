@@ -444,19 +444,19 @@ function lowerBound(array, value, comparator) {
   return first;
 }
 
+var __classPrivateFieldGet$1 = undefined && undefined.__classPrivateFieldGet || function (receiver, state, kind, f) {
+  if (kind === \\"a\\" && !f) throw new TypeError(\\"Private accessor was defined without a getter\\");
+  if (typeof state === \\"function\\" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError(\\"Cannot read private member from an object whose class did not declare it\\");
+  return kind === \\"m\\" ? f : kind === \\"a\\" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+
+var _PriorityQueue_queue;
 class PriorityQueue {
   constructor() {
-    Object.defineProperty(this, \\"_queue\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: []
-    });
+    _PriorityQueue_queue.set(this, []);
   }
 
   enqueue(run, options) {
-    var _a;
-
     options = {
       priority: 0,
       ...options
@@ -466,36 +466,57 @@ class PriorityQueue {
       run
     };
 
-    if (this.size && ((_a = this._queue[this.size - 1]) === null || _a === void 0 ? void 0 : _a.priority) >= options.priority) {
-      this._queue.push(element);
+    if (this.size && __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\")[this.size - 1].priority >= options.priority) {
+      __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").push(element);
 
       return;
     }
 
-    const index = lowerBound(this._queue, element, (a, b) => b.priority - a.priority);
+    const index = lowerBound(__classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\"), element, (a, b) => b.priority - a.priority);
 
-    this._queue.splice(index, 0, element);
+    __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").splice(index, 0, element);
   }
 
   dequeue() {
-    const item = this._queue.shift();
+    const item = __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").shift();
 
     return item === null || item === void 0 ? void 0 : item.run;
   }
 
   filter(options) {
-    return this._queue.filter(element => element.priority === options.priority).map(element => element.run);
+    return __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").filter(element => element.priority === options.priority).map(element => element.run);
   }
 
   get size() {
-    return this._queue.length;
+    return __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").length;
   }
 
 }
+_PriorityQueue_queue = new WeakMap();
+
+var __classPrivateFieldSet = undefined && undefined.__classPrivateFieldSet || function (receiver, state, value, kind, f) {
+  if (kind === \\"m\\") throw new TypeError(\\"Private method is not writable\\");
+  if (kind === \\"a\\" && !f) throw new TypeError(\\"Private accessor was defined without a setter\\");
+  if (typeof state === \\"function\\" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError(\\"Cannot write private member to an object whose class did not declare it\\");
+  return kind === \\"a\\" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+};
+
+var __classPrivateFieldGet = undefined && undefined.__classPrivateFieldGet || function (receiver, state, kind, f) {
+  if (kind === \\"a\\" && !f) throw new TypeError(\\"Private accessor was defined without a getter\\");
+  if (typeof state === \\"function\\" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError(\\"Cannot read private member from an object whose class did not declare it\\");
+  return kind === \\"m\\" ? f : kind === \\"a\\" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+
+var _PQueue_instances, _PQueue_carryoverConcurrencyCount, _PQueue_isIntervalIgnored, _PQueue_intervalCount, _PQueue_intervalCap, _PQueue_interval, _PQueue_intervalEnd, _PQueue_intervalId, _PQueue_timeoutId, _PQueue_queue, _PQueue_queueClass, _PQueue_pendingCount, _PQueue_concurrency, _PQueue_isPaused, _PQueue_resolveEmpty, _PQueue_resolveIdle, _PQueue_timeout, _PQueue_throwOnTimeout, _PQueue_doesIntervalAllowAnother_get, _PQueue_doesConcurrentAllowAnother_get, _PQueue_next, _PQueue_resolvePromises, _PQueue_onResumeInterval, _PQueue_isIntervalPaused, _PQueue_tryToStartAnother, _PQueue_initializeIntervalIfNeeded, _PQueue_onInterval, _PQueue_processQueue;
 
 const empty = () => {};
 
 const timeoutError = new TimeoutError();
+/**
+The error thrown by \`queue.add()\` when a job is aborted before it is run. See \`signal\`.
+*/
+
+class AbortError extends Error {}
 /**
 Promise queue with concurrency control.
 */
@@ -505,109 +526,44 @@ class PQueue extends EventEmitter {
     var _a, _b, _c, _d;
 
     super();
-    Object.defineProperty(this, \\"_carryoverConcurrencyCount\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_isIntervalIgnored\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_intervalCount\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: 0
-    });
-    Object.defineProperty(this, \\"_intervalCap\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_interval\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_intervalEnd\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: 0
-    });
-    Object.defineProperty(this, \\"_intervalId\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_timeoutId\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_queue\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_queueClass\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_pendingCount\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: 0
-    }); // The \`!\` is needed because of https://github.com/microsoft/TypeScript/issues/32194
 
-    Object.defineProperty(this, \\"_concurrency\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_isPaused\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_resolveEmpty\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: empty
-    });
-    Object.defineProperty(this, \\"_resolveIdle\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: empty
-    });
-    Object.defineProperty(this, \\"_timeout\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_throwOnTimeout\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    }); // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    _PQueue_instances.add(this);
+
+    _PQueue_carryoverConcurrencyCount.set(this, void 0);
+
+    _PQueue_isIntervalIgnored.set(this, void 0);
+
+    _PQueue_intervalCount.set(this, 0);
+
+    _PQueue_intervalCap.set(this, void 0);
+
+    _PQueue_interval.set(this, void 0);
+
+    _PQueue_intervalEnd.set(this, 0);
+
+    _PQueue_intervalId.set(this, void 0);
+
+    _PQueue_timeoutId.set(this, void 0);
+
+    _PQueue_queue.set(this, void 0);
+
+    _PQueue_queueClass.set(this, void 0);
+
+    _PQueue_pendingCount.set(this, 0); // The \`!\` is needed because of https://github.com/microsoft/TypeScript/issues/32194
+
+
+    _PQueue_concurrency.set(this, void 0);
+
+    _PQueue_isPaused.set(this, void 0);
+
+    _PQueue_resolveEmpty.set(this, empty);
+
+    _PQueue_resolveIdle.set(this, empty);
+
+    _PQueue_timeout.set(this, void 0);
+
+    _PQueue_throwOnTimeout.set(this, void 0); // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+
 
     options = {
       carryoverConcurrencyCount: false,
@@ -627,152 +583,29 @@ class PQueue extends EventEmitter {
       throw new TypeError(\`Expected \\\\\`interval\\\\\` to be a finite number >= 0, got \\\\\`\${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\\\\\` (\${typeof options.interval})\`);
     }
 
-    this._carryoverConcurrencyCount = options.carryoverConcurrencyCount;
-    this._isIntervalIgnored = options.intervalCap === Number.POSITIVE_INFINITY || options.interval === 0;
-    this._intervalCap = options.intervalCap;
-    this._interval = options.interval;
-    this._queue = new options.queueClass();
-    this._queueClass = options.queueClass;
+    __classPrivateFieldSet(this, _PQueue_carryoverConcurrencyCount, options.carryoverConcurrencyCount, \\"f\\");
+
+    __classPrivateFieldSet(this, _PQueue_isIntervalIgnored, options.intervalCap === Number.POSITIVE_INFINITY || options.interval === 0, \\"f\\");
+
+    __classPrivateFieldSet(this, _PQueue_intervalCap, options.intervalCap, \\"f\\");
+
+    __classPrivateFieldSet(this, _PQueue_interval, options.interval, \\"f\\");
+
+    __classPrivateFieldSet(this, _PQueue_queue, new options.queueClass(), \\"f\\");
+
+    __classPrivateFieldSet(this, _PQueue_queueClass, options.queueClass, \\"f\\");
+
     this.concurrency = options.concurrency;
-    this._timeout = options.timeout;
-    this._throwOnTimeout = options.throwOnTimeout === true;
-    this._isPaused = options.autoStart === false;
-  }
 
-  get _doesIntervalAllowAnother() {
-    return this._isIntervalIgnored || this._intervalCount < this._intervalCap;
-  }
+    __classPrivateFieldSet(this, _PQueue_timeout, options.timeout, \\"f\\");
 
-  get _doesConcurrentAllowAnother() {
-    return this._pendingCount < this._concurrency;
-  }
+    __classPrivateFieldSet(this, _PQueue_throwOnTimeout, options.throwOnTimeout === true, \\"f\\");
 
-  _next() {
-    this._pendingCount--;
-
-    this._tryToStartAnother();
-
-    this.emit('next');
-  }
-
-  _resolvePromises() {
-    this._resolveEmpty();
-
-    this._resolveEmpty = empty;
-
-    if (this._pendingCount === 0) {
-      this._resolveIdle();
-
-      this._resolveIdle = empty;
-      this.emit('idle');
-    }
-  }
-
-  _onResumeInterval() {
-    this._onInterval();
-
-    this._initializeIntervalIfNeeded();
-
-    this._timeoutId = undefined;
-  }
-
-  _isIntervalPaused() {
-    const now = Date.now();
-
-    if (this._intervalId === undefined) {
-      const delay = this._intervalEnd - now;
-
-      if (delay < 0) {
-        // Act as the interval was done
-        // We don't need to resume it here because it will be resumed on line 160
-        this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-      } else {
-        // Act as the interval is pending
-        if (this._timeoutId === undefined) {
-          this._timeoutId = setTimeout(() => {
-            this._onResumeInterval();
-          }, delay);
-        }
-
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  _tryToStartAnother() {
-    if (this._queue.size === 0) {
-      // We can clear the interval (\\"pause\\")
-      // Because we can redo it later (\\"resume\\")
-      if (this._intervalId) {
-        clearInterval(this._intervalId);
-      }
-
-      this._intervalId = undefined;
-
-      this._resolvePromises();
-
-      return false;
-    }
-
-    if (!this._isPaused) {
-      const canInitializeInterval = !this._isIntervalPaused();
-
-      if (this._doesIntervalAllowAnother && this._doesConcurrentAllowAnother) {
-        const job = this._queue.dequeue();
-
-        if (!job) {
-          return false;
-        }
-
-        this.emit('active');
-        job();
-
-        if (canInitializeInterval) {
-          this._initializeIntervalIfNeeded();
-        }
-
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  _initializeIntervalIfNeeded() {
-    if (this._isIntervalIgnored || this._intervalId !== undefined) {
-      return;
-    }
-
-    this._intervalId = setInterval(() => {
-      this._onInterval();
-    }, this._interval);
-    this._intervalEnd = Date.now() + this._interval;
-  }
-
-  _onInterval() {
-    if (this._intervalCount === 0 && this._pendingCount === 0 && this._intervalId) {
-      clearInterval(this._intervalId);
-      this._intervalId = undefined;
-    }
-
-    this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-
-    this._processQueue();
-  }
-  /**
-  Executes all queued functions until it reaches the limit.
-  */
-
-
-  _processQueue() {
-    // eslint-disable-next-line no-empty
-    while (this._tryToStartAnother()) {}
+    __classPrivateFieldSet(this, _PQueue_isPaused, options.autoStart === false, \\"f\\");
   }
 
   get concurrency() {
-    return this._concurrency;
+    return __classPrivateFieldGet(this, _PQueue_concurrency, \\"f\\");
   }
 
   set concurrency(newConcurrency) {
@@ -780,9 +613,9 @@ class PQueue extends EventEmitter {
       throw new TypeError(\`Expected \\\\\`concurrency\\\\\` to be a number from 1 and up, got \\\\\`\${newConcurrency}\\\\\` (\${typeof newConcurrency})\`);
     }
 
-    this._concurrency = newConcurrency;
+    __classPrivateFieldSet(this, _PQueue_concurrency, newConcurrency, \\"f\\");
 
-    this._processQueue();
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_processQueue).call(this);
   }
   /**
   Adds a sync or async task to the queue. Always returns a promise.
@@ -792,12 +625,27 @@ class PQueue extends EventEmitter {
   async add(fn, options = {}) {
     return new Promise((resolve, reject) => {
       const run = async () => {
-        this._pendingCount++;
-        this._intervalCount++;
+        var _a;
+
+        var _b, _c;
+
+        __classPrivateFieldSet(this, _PQueue_pendingCount, (_b = __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\"), _b++, _b), \\"f\\");
+
+        __classPrivateFieldSet(this, _PQueue_intervalCount, (_c = __classPrivateFieldGet(this, _PQueue_intervalCount, \\"f\\"), _c++, _c), \\"f\\");
 
         try {
-          const operation = this._timeout === undefined && options.timeout === undefined ? fn() : pTimeout(Promise.resolve(fn()), options.timeout === undefined ? this._timeout : options.timeout, () => {
-            if (options.throwOnTimeout === undefined ? this._throwOnTimeout : options.throwOnTimeout) {
+          if ((_a = options.signal) === null || _a === void 0 ? void 0 : _a.aborted) {
+            // TODO: Use ABORT_ERR code when targeting Node.js 16 (https://nodejs.org/docs/latest-v16.x/api/errors.html#abort_err)
+            reject(new AbortError('The task was aborted.'));
+            return;
+          }
+
+          const operation = __classPrivateFieldGet(this, _PQueue_timeout, \\"f\\") === undefined && options.timeout === undefined ? fn({
+            signal: options.signal
+          }) : pTimeout(Promise.resolve(fn({
+            signal: options.signal
+          })), options.timeout === undefined ? __classPrivateFieldGet(this, _PQueue_timeout, \\"f\\") : options.timeout, () => {
+            if (options.throwOnTimeout === undefined ? __classPrivateFieldGet(this, _PQueue_throwOnTimeout, \\"f\\") : options.throwOnTimeout) {
               reject(timeoutError);
             }
 
@@ -811,12 +659,12 @@ class PQueue extends EventEmitter {
           this.emit('error', error);
         }
 
-        this._next();
+        __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_next).call(this);
       };
 
-      this._queue.enqueue(run, options);
+      __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").enqueue(run, options);
 
-      this._tryToStartAnother();
+      __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_tryToStartAnother).call(this);
 
       this.emit('add');
     });
@@ -836,13 +684,13 @@ class PQueue extends EventEmitter {
 
 
   start() {
-    if (!this._isPaused) {
+    if (!__classPrivateFieldGet(this, _PQueue_isPaused, \\"f\\")) {
       return this;
     }
 
-    this._isPaused = false;
+    __classPrivateFieldSet(this, _PQueue_isPaused, false, \\"f\\");
 
-    this._processQueue();
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_processQueue).call(this);
 
     return this;
   }
@@ -852,7 +700,7 @@ class PQueue extends EventEmitter {
 
 
   pause() {
-    this._isPaused = true;
+    __classPrivateFieldSet(this, _PQueue_isPaused, true, \\"f\\");
   }
   /**
   Clear the queue.
@@ -860,7 +708,7 @@ class PQueue extends EventEmitter {
 
 
   clear() {
-    this._queue = new this._queueClass();
+    __classPrivateFieldSet(this, _PQueue_queue, new (__classPrivateFieldGet(this, _PQueue_queueClass, \\"f\\"))(), \\"f\\");
   }
   /**
   Can be called multiple times. Useful if you for example add additional items at a later time.
@@ -870,17 +718,17 @@ class PQueue extends EventEmitter {
 
   async onEmpty() {
     // Instantly resolve if the queue is empty
-    if (this._queue.size === 0) {
+    if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size === 0) {
       return;
     }
 
     return new Promise(resolve => {
-      const existingResolve = this._resolveEmpty;
+      const existingResolve = __classPrivateFieldGet(this, _PQueue_resolveEmpty, \\"f\\");
 
-      this._resolveEmpty = () => {
+      __classPrivateFieldSet(this, _PQueue_resolveEmpty, () => {
         existingResolve();
         resolve();
-      };
+      }, \\"f\\");
     });
   }
   /**
@@ -892,13 +740,13 @@ class PQueue extends EventEmitter {
 
   async onSizeLessThan(limit) {
     // Instantly resolve if the queue is empty.
-    if (this._queue.size < limit) {
+    if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size < limit) {
       return;
     }
 
     return new Promise(resolve => {
       const listener = () => {
-        if (this._queue.size < limit) {
+        if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size < limit) {
           this.removeListener('next', listener);
           resolve();
         }
@@ -915,17 +763,17 @@ class PQueue extends EventEmitter {
 
   async onIdle() {
     // Instantly resolve if none pending and if nothing else is queued
-    if (this._pendingCount === 0 && this._queue.size === 0) {
+    if (__classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") === 0 && __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size === 0) {
       return;
     }
 
     return new Promise(resolve => {
-      const existingResolve = this._resolveIdle;
+      const existingResolve = __classPrivateFieldGet(this, _PQueue_resolveIdle, \\"f\\");
 
-      this._resolveIdle = () => {
+      __classPrivateFieldSet(this, _PQueue_resolveIdle, () => {
         existingResolve();
         resolve();
-      };
+      }, \\"f\\");
     });
   }
   /**
@@ -934,7 +782,7 @@ class PQueue extends EventEmitter {
 
 
   get size() {
-    return this._queue.size;
+    return __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size;
   }
   /**
   Size of the queue, filtered by the given options.
@@ -944,7 +792,7 @@ class PQueue extends EventEmitter {
 
   sizeBy(options) {
     // eslint-disable-next-line unicorn/no-array-callback-reference
-    return this._queue.filter(options).length;
+    return __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").filter(options).length;
   }
   /**
   Number of running items (no longer in the queue).
@@ -952,7 +800,7 @@ class PQueue extends EventEmitter {
 
 
   get pending() {
-    return this._pendingCount;
+    return __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\");
   }
   /**
   Whether the queue is currently paused.
@@ -960,11 +808,11 @@ class PQueue extends EventEmitter {
 
 
   get isPaused() {
-    return this._isPaused;
+    return __classPrivateFieldGet(this, _PQueue_isPaused, \\"f\\");
   }
 
   get timeout() {
-    return this._timeout;
+    return __classPrivateFieldGet(this, _PQueue_timeout, \\"f\\");
   }
   /**
   Set the timeout for future operations.
@@ -972,10 +820,124 @@ class PQueue extends EventEmitter {
 
 
   set timeout(milliseconds) {
-    this._timeout = milliseconds;
+    __classPrivateFieldSet(this, _PQueue_timeout, milliseconds, \\"f\\");
   }
 
 }
+_PQueue_carryoverConcurrencyCount = new WeakMap(), _PQueue_isIntervalIgnored = new WeakMap(), _PQueue_intervalCount = new WeakMap(), _PQueue_intervalCap = new WeakMap(), _PQueue_interval = new WeakMap(), _PQueue_intervalEnd = new WeakMap(), _PQueue_intervalId = new WeakMap(), _PQueue_timeoutId = new WeakMap(), _PQueue_queue = new WeakMap(), _PQueue_queueClass = new WeakMap(), _PQueue_pendingCount = new WeakMap(), _PQueue_concurrency = new WeakMap(), _PQueue_isPaused = new WeakMap(), _PQueue_resolveEmpty = new WeakMap(), _PQueue_resolveIdle = new WeakMap(), _PQueue_timeout = new WeakMap(), _PQueue_throwOnTimeout = new WeakMap(), _PQueue_instances = new WeakSet(), _PQueue_doesIntervalAllowAnother_get = function _PQueue_doesIntervalAllowAnother_get() {
+  return __classPrivateFieldGet(this, _PQueue_isIntervalIgnored, \\"f\\") || __classPrivateFieldGet(this, _PQueue_intervalCount, \\"f\\") < __classPrivateFieldGet(this, _PQueue_intervalCap, \\"f\\");
+}, _PQueue_doesConcurrentAllowAnother_get = function _PQueue_doesConcurrentAllowAnother_get() {
+  return __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") < __classPrivateFieldGet(this, _PQueue_concurrency, \\"f\\");
+}, _PQueue_next = function _PQueue_next() {
+  var _a;
+
+  __classPrivateFieldSet(this, _PQueue_pendingCount, (_a = __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\"), _a--, _a), \\"f\\");
+
+  __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_tryToStartAnother).call(this);
+
+  this.emit('next');
+}, _PQueue_resolvePromises = function _PQueue_resolvePromises() {
+  __classPrivateFieldGet(this, _PQueue_resolveEmpty, \\"f\\").call(this);
+
+  __classPrivateFieldSet(this, _PQueue_resolveEmpty, empty, \\"f\\");
+
+  if (__classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") === 0) {
+    __classPrivateFieldGet(this, _PQueue_resolveIdle, \\"f\\").call(this);
+
+    __classPrivateFieldSet(this, _PQueue_resolveIdle, empty, \\"f\\");
+
+    this.emit('idle');
+  }
+}, _PQueue_onResumeInterval = function _PQueue_onResumeInterval() {
+  __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_onInterval).call(this);
+
+  __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_initializeIntervalIfNeeded).call(this);
+
+  __classPrivateFieldSet(this, _PQueue_timeoutId, undefined, \\"f\\");
+}, _PQueue_isIntervalPaused = function _PQueue_isIntervalPaused() {
+  const now = Date.now();
+
+  if (__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\") === undefined) {
+    const delay = __classPrivateFieldGet(this, _PQueue_intervalEnd, \\"f\\") - now;
+
+    if (delay < 0) {
+      // Act as the interval was done
+      // We don't need to resume it here because it will be resumed on line 160
+      __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, \\"f\\") ? __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") : 0, \\"f\\");
+    } else {
+      // Act as the interval is pending
+      if (__classPrivateFieldGet(this, _PQueue_timeoutId, \\"f\\") === undefined) {
+        __classPrivateFieldSet(this, _PQueue_timeoutId, setTimeout(() => {
+          __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_onResumeInterval).call(this);
+        }, delay), \\"f\\");
+      }
+
+      return true;
+    }
+  }
+
+  return false;
+}, _PQueue_tryToStartAnother = function _PQueue_tryToStartAnother() {
+  if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size === 0) {
+    // We can clear the interval (\\"pause\\")
+    // Because we can redo it later (\\"resume\\")
+    if (__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\")) {
+      clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\"));
+    }
+
+    __classPrivateFieldSet(this, _PQueue_intervalId, undefined, \\"f\\");
+
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_resolvePromises).call(this);
+
+    return false;
+  }
+
+  if (!__classPrivateFieldGet(this, _PQueue_isPaused, \\"f\\")) {
+    const canInitializeInterval = !__classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_isIntervalPaused).call(this);
+
+    if (__classPrivateFieldGet(this, _PQueue_instances, \\"a\\", _PQueue_doesIntervalAllowAnother_get) && __classPrivateFieldGet(this, _PQueue_instances, \\"a\\", _PQueue_doesConcurrentAllowAnother_get)) {
+      const job = __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").dequeue();
+
+      if (!job) {
+        return false;
+      }
+
+      this.emit('active');
+      job();
+
+      if (canInitializeInterval) {
+        __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_initializeIntervalIfNeeded).call(this);
+      }
+
+      return true;
+    }
+  }
+
+  return false;
+}, _PQueue_initializeIntervalIfNeeded = function _PQueue_initializeIntervalIfNeeded() {
+  if (__classPrivateFieldGet(this, _PQueue_isIntervalIgnored, \\"f\\") || __classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\") !== undefined) {
+    return;
+  }
+
+  __classPrivateFieldSet(this, _PQueue_intervalId, setInterval(() => {
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_onInterval).call(this);
+  }, __classPrivateFieldGet(this, _PQueue_interval, \\"f\\")), \\"f\\");
+
+  __classPrivateFieldSet(this, _PQueue_intervalEnd, Date.now() + __classPrivateFieldGet(this, _PQueue_interval, \\"f\\"), \\"f\\");
+}, _PQueue_onInterval = function _PQueue_onInterval() {
+  if (__classPrivateFieldGet(this, _PQueue_intervalCount, \\"f\\") === 0 && __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") === 0 && __classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\")) {
+    clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\"));
+
+    __classPrivateFieldSet(this, _PQueue_intervalId, undefined, \\"f\\");
+  }
+
+  __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, \\"f\\") ? __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") : 0, \\"f\\");
+
+  __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_processQueue).call(this);
+}, _PQueue_processQueue = function _PQueue_processQueue() {
+  // eslint-disable-next-line no-empty
+  while (__classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_tryToStartAnother).call(this)) {}
+};
 
 async function helper() {
   console.log(\\"Async helper\\");
@@ -1433,19 +1395,19 @@ function lowerBound(array, value, comparator) {
   return first;
 }
 
+var __classPrivateFieldGet$1 = undefined && undefined.__classPrivateFieldGet || function (receiver, state, kind, f) {
+  if (kind === \\"a\\" && !f) throw new TypeError(\\"Private accessor was defined without a getter\\");
+  if (typeof state === \\"function\\" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError(\\"Cannot read private member from an object whose class did not declare it\\");
+  return kind === \\"m\\" ? f : kind === \\"a\\" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+
+var _PriorityQueue_queue;
 class PriorityQueue {
   constructor() {
-    Object.defineProperty(this, \\"_queue\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: []
-    });
+    _PriorityQueue_queue.set(this, []);
   }
 
   enqueue(run, options) {
-    var _a;
-
     options = {
       priority: 0,
       ...options
@@ -1455,36 +1417,57 @@ class PriorityQueue {
       run
     };
 
-    if (this.size && ((_a = this._queue[this.size - 1]) === null || _a === void 0 ? void 0 : _a.priority) >= options.priority) {
-      this._queue.push(element);
+    if (this.size && __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\")[this.size - 1].priority >= options.priority) {
+      __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").push(element);
 
       return;
     }
 
-    const index = lowerBound(this._queue, element, (a, b) => b.priority - a.priority);
+    const index = lowerBound(__classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\"), element, (a, b) => b.priority - a.priority);
 
-    this._queue.splice(index, 0, element);
+    __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").splice(index, 0, element);
   }
 
   dequeue() {
-    const item = this._queue.shift();
+    const item = __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").shift();
 
     return item === null || item === void 0 ? void 0 : item.run;
   }
 
   filter(options) {
-    return this._queue.filter(element => element.priority === options.priority).map(element => element.run);
+    return __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").filter(element => element.priority === options.priority).map(element => element.run);
   }
 
   get size() {
-    return this._queue.length;
+    return __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").length;
   }
 
 }
+_PriorityQueue_queue = new WeakMap();
+
+var __classPrivateFieldSet = undefined && undefined.__classPrivateFieldSet || function (receiver, state, value, kind, f) {
+  if (kind === \\"m\\") throw new TypeError(\\"Private method is not writable\\");
+  if (kind === \\"a\\" && !f) throw new TypeError(\\"Private accessor was defined without a setter\\");
+  if (typeof state === \\"function\\" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError(\\"Cannot write private member to an object whose class did not declare it\\");
+  return kind === \\"a\\" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+};
+
+var __classPrivateFieldGet = undefined && undefined.__classPrivateFieldGet || function (receiver, state, kind, f) {
+  if (kind === \\"a\\" && !f) throw new TypeError(\\"Private accessor was defined without a getter\\");
+  if (typeof state === \\"function\\" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError(\\"Cannot read private member from an object whose class did not declare it\\");
+  return kind === \\"m\\" ? f : kind === \\"a\\" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+
+var _PQueue_instances, _PQueue_carryoverConcurrencyCount, _PQueue_isIntervalIgnored, _PQueue_intervalCount, _PQueue_intervalCap, _PQueue_interval, _PQueue_intervalEnd, _PQueue_intervalId, _PQueue_timeoutId, _PQueue_queue, _PQueue_queueClass, _PQueue_pendingCount, _PQueue_concurrency, _PQueue_isPaused, _PQueue_resolveEmpty, _PQueue_resolveIdle, _PQueue_timeout, _PQueue_throwOnTimeout, _PQueue_doesIntervalAllowAnother_get, _PQueue_doesConcurrentAllowAnother_get, _PQueue_next, _PQueue_resolvePromises, _PQueue_onResumeInterval, _PQueue_isIntervalPaused, _PQueue_tryToStartAnother, _PQueue_initializeIntervalIfNeeded, _PQueue_onInterval, _PQueue_processQueue;
 
 const empty = () => {};
 
 const timeoutError = new TimeoutError();
+/**
+The error thrown by \`queue.add()\` when a job is aborted before it is run. See \`signal\`.
+*/
+
+class AbortError extends Error {}
 /**
 Promise queue with concurrency control.
 */
@@ -1494,109 +1477,44 @@ class PQueue extends EventEmitter {
     var _a, _b, _c, _d;
 
     super();
-    Object.defineProperty(this, \\"_carryoverConcurrencyCount\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_isIntervalIgnored\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_intervalCount\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: 0
-    });
-    Object.defineProperty(this, \\"_intervalCap\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_interval\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_intervalEnd\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: 0
-    });
-    Object.defineProperty(this, \\"_intervalId\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_timeoutId\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_queue\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_queueClass\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_pendingCount\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: 0
-    }); // The \`!\` is needed because of https://github.com/microsoft/TypeScript/issues/32194
 
-    Object.defineProperty(this, \\"_concurrency\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_isPaused\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_resolveEmpty\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: empty
-    });
-    Object.defineProperty(this, \\"_resolveIdle\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: empty
-    });
-    Object.defineProperty(this, \\"_timeout\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    });
-    Object.defineProperty(this, \\"_throwOnTimeout\\", {
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      value: void 0
-    }); // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    _PQueue_instances.add(this);
+
+    _PQueue_carryoverConcurrencyCount.set(this, void 0);
+
+    _PQueue_isIntervalIgnored.set(this, void 0);
+
+    _PQueue_intervalCount.set(this, 0);
+
+    _PQueue_intervalCap.set(this, void 0);
+
+    _PQueue_interval.set(this, void 0);
+
+    _PQueue_intervalEnd.set(this, 0);
+
+    _PQueue_intervalId.set(this, void 0);
+
+    _PQueue_timeoutId.set(this, void 0);
+
+    _PQueue_queue.set(this, void 0);
+
+    _PQueue_queueClass.set(this, void 0);
+
+    _PQueue_pendingCount.set(this, 0); // The \`!\` is needed because of https://github.com/microsoft/TypeScript/issues/32194
+
+
+    _PQueue_concurrency.set(this, void 0);
+
+    _PQueue_isPaused.set(this, void 0);
+
+    _PQueue_resolveEmpty.set(this, empty);
+
+    _PQueue_resolveIdle.set(this, empty);
+
+    _PQueue_timeout.set(this, void 0);
+
+    _PQueue_throwOnTimeout.set(this, void 0); // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+
 
     options = {
       carryoverConcurrencyCount: false,
@@ -1616,152 +1534,29 @@ class PQueue extends EventEmitter {
       throw new TypeError(\`Expected \\\\\`interval\\\\\` to be a finite number >= 0, got \\\\\`\${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\\\\\` (\${typeof options.interval})\`);
     }
 
-    this._carryoverConcurrencyCount = options.carryoverConcurrencyCount;
-    this._isIntervalIgnored = options.intervalCap === Number.POSITIVE_INFINITY || options.interval === 0;
-    this._intervalCap = options.intervalCap;
-    this._interval = options.interval;
-    this._queue = new options.queueClass();
-    this._queueClass = options.queueClass;
+    __classPrivateFieldSet(this, _PQueue_carryoverConcurrencyCount, options.carryoverConcurrencyCount, \\"f\\");
+
+    __classPrivateFieldSet(this, _PQueue_isIntervalIgnored, options.intervalCap === Number.POSITIVE_INFINITY || options.interval === 0, \\"f\\");
+
+    __classPrivateFieldSet(this, _PQueue_intervalCap, options.intervalCap, \\"f\\");
+
+    __classPrivateFieldSet(this, _PQueue_interval, options.interval, \\"f\\");
+
+    __classPrivateFieldSet(this, _PQueue_queue, new options.queueClass(), \\"f\\");
+
+    __classPrivateFieldSet(this, _PQueue_queueClass, options.queueClass, \\"f\\");
+
     this.concurrency = options.concurrency;
-    this._timeout = options.timeout;
-    this._throwOnTimeout = options.throwOnTimeout === true;
-    this._isPaused = options.autoStart === false;
-  }
 
-  get _doesIntervalAllowAnother() {
-    return this._isIntervalIgnored || this._intervalCount < this._intervalCap;
-  }
+    __classPrivateFieldSet(this, _PQueue_timeout, options.timeout, \\"f\\");
 
-  get _doesConcurrentAllowAnother() {
-    return this._pendingCount < this._concurrency;
-  }
+    __classPrivateFieldSet(this, _PQueue_throwOnTimeout, options.throwOnTimeout === true, \\"f\\");
 
-  _next() {
-    this._pendingCount--;
-
-    this._tryToStartAnother();
-
-    this.emit('next');
-  }
-
-  _resolvePromises() {
-    this._resolveEmpty();
-
-    this._resolveEmpty = empty;
-
-    if (this._pendingCount === 0) {
-      this._resolveIdle();
-
-      this._resolveIdle = empty;
-      this.emit('idle');
-    }
-  }
-
-  _onResumeInterval() {
-    this._onInterval();
-
-    this._initializeIntervalIfNeeded();
-
-    this._timeoutId = undefined;
-  }
-
-  _isIntervalPaused() {
-    const now = Date.now();
-
-    if (this._intervalId === undefined) {
-      const delay = this._intervalEnd - now;
-
-      if (delay < 0) {
-        // Act as the interval was done
-        // We don't need to resume it here because it will be resumed on line 160
-        this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-      } else {
-        // Act as the interval is pending
-        if (this._timeoutId === undefined) {
-          this._timeoutId = setTimeout(() => {
-            this._onResumeInterval();
-          }, delay);
-        }
-
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  _tryToStartAnother() {
-    if (this._queue.size === 0) {
-      // We can clear the interval (\\"pause\\")
-      // Because we can redo it later (\\"resume\\")
-      if (this._intervalId) {
-        clearInterval(this._intervalId);
-      }
-
-      this._intervalId = undefined;
-
-      this._resolvePromises();
-
-      return false;
-    }
-
-    if (!this._isPaused) {
-      const canInitializeInterval = !this._isIntervalPaused();
-
-      if (this._doesIntervalAllowAnother && this._doesConcurrentAllowAnother) {
-        const job = this._queue.dequeue();
-
-        if (!job) {
-          return false;
-        }
-
-        this.emit('active');
-        job();
-
-        if (canInitializeInterval) {
-          this._initializeIntervalIfNeeded();
-        }
-
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  _initializeIntervalIfNeeded() {
-    if (this._isIntervalIgnored || this._intervalId !== undefined) {
-      return;
-    }
-
-    this._intervalId = setInterval(() => {
-      this._onInterval();
-    }, this._interval);
-    this._intervalEnd = Date.now() + this._interval;
-  }
-
-  _onInterval() {
-    if (this._intervalCount === 0 && this._pendingCount === 0 && this._intervalId) {
-      clearInterval(this._intervalId);
-      this._intervalId = undefined;
-    }
-
-    this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-
-    this._processQueue();
-  }
-  /**
-  Executes all queued functions until it reaches the limit.
-  */
-
-
-  _processQueue() {
-    // eslint-disable-next-line no-empty
-    while (this._tryToStartAnother()) {}
+    __classPrivateFieldSet(this, _PQueue_isPaused, options.autoStart === false, \\"f\\");
   }
 
   get concurrency() {
-    return this._concurrency;
+    return __classPrivateFieldGet(this, _PQueue_concurrency, \\"f\\");
   }
 
   set concurrency(newConcurrency) {
@@ -1769,9 +1564,9 @@ class PQueue extends EventEmitter {
       throw new TypeError(\`Expected \\\\\`concurrency\\\\\` to be a number from 1 and up, got \\\\\`\${newConcurrency}\\\\\` (\${typeof newConcurrency})\`);
     }
 
-    this._concurrency = newConcurrency;
+    __classPrivateFieldSet(this, _PQueue_concurrency, newConcurrency, \\"f\\");
 
-    this._processQueue();
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_processQueue).call(this);
   }
   /**
   Adds a sync or async task to the queue. Always returns a promise.
@@ -1781,12 +1576,27 @@ class PQueue extends EventEmitter {
   async add(fn, options = {}) {
     return new Promise((resolve, reject) => {
       const run = async () => {
-        this._pendingCount++;
-        this._intervalCount++;
+        var _a;
+
+        var _b, _c;
+
+        __classPrivateFieldSet(this, _PQueue_pendingCount, (_b = __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\"), _b++, _b), \\"f\\");
+
+        __classPrivateFieldSet(this, _PQueue_intervalCount, (_c = __classPrivateFieldGet(this, _PQueue_intervalCount, \\"f\\"), _c++, _c), \\"f\\");
 
         try {
-          const operation = this._timeout === undefined && options.timeout === undefined ? fn() : pTimeout(Promise.resolve(fn()), options.timeout === undefined ? this._timeout : options.timeout, () => {
-            if (options.throwOnTimeout === undefined ? this._throwOnTimeout : options.throwOnTimeout) {
+          if ((_a = options.signal) === null || _a === void 0 ? void 0 : _a.aborted) {
+            // TODO: Use ABORT_ERR code when targeting Node.js 16 (https://nodejs.org/docs/latest-v16.x/api/errors.html#abort_err)
+            reject(new AbortError('The task was aborted.'));
+            return;
+          }
+
+          const operation = __classPrivateFieldGet(this, _PQueue_timeout, \\"f\\") === undefined && options.timeout === undefined ? fn({
+            signal: options.signal
+          }) : pTimeout(Promise.resolve(fn({
+            signal: options.signal
+          })), options.timeout === undefined ? __classPrivateFieldGet(this, _PQueue_timeout, \\"f\\") : options.timeout, () => {
+            if (options.throwOnTimeout === undefined ? __classPrivateFieldGet(this, _PQueue_throwOnTimeout, \\"f\\") : options.throwOnTimeout) {
               reject(timeoutError);
             }
 
@@ -1800,12 +1610,12 @@ class PQueue extends EventEmitter {
           this.emit('error', error);
         }
 
-        this._next();
+        __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_next).call(this);
       };
 
-      this._queue.enqueue(run, options);
+      __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").enqueue(run, options);
 
-      this._tryToStartAnother();
+      __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_tryToStartAnother).call(this);
 
       this.emit('add');
     });
@@ -1825,13 +1635,13 @@ class PQueue extends EventEmitter {
 
 
   start() {
-    if (!this._isPaused) {
+    if (!__classPrivateFieldGet(this, _PQueue_isPaused, \\"f\\")) {
       return this;
     }
 
-    this._isPaused = false;
+    __classPrivateFieldSet(this, _PQueue_isPaused, false, \\"f\\");
 
-    this._processQueue();
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_processQueue).call(this);
 
     return this;
   }
@@ -1841,7 +1651,7 @@ class PQueue extends EventEmitter {
 
 
   pause() {
-    this._isPaused = true;
+    __classPrivateFieldSet(this, _PQueue_isPaused, true, \\"f\\");
   }
   /**
   Clear the queue.
@@ -1849,7 +1659,7 @@ class PQueue extends EventEmitter {
 
 
   clear() {
-    this._queue = new this._queueClass();
+    __classPrivateFieldSet(this, _PQueue_queue, new (__classPrivateFieldGet(this, _PQueue_queueClass, \\"f\\"))(), \\"f\\");
   }
   /**
   Can be called multiple times. Useful if you for example add additional items at a later time.
@@ -1859,17 +1669,17 @@ class PQueue extends EventEmitter {
 
   async onEmpty() {
     // Instantly resolve if the queue is empty
-    if (this._queue.size === 0) {
+    if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size === 0) {
       return;
     }
 
     return new Promise(resolve => {
-      const existingResolve = this._resolveEmpty;
+      const existingResolve = __classPrivateFieldGet(this, _PQueue_resolveEmpty, \\"f\\");
 
-      this._resolveEmpty = () => {
+      __classPrivateFieldSet(this, _PQueue_resolveEmpty, () => {
         existingResolve();
         resolve();
-      };
+      }, \\"f\\");
     });
   }
   /**
@@ -1881,13 +1691,13 @@ class PQueue extends EventEmitter {
 
   async onSizeLessThan(limit) {
     // Instantly resolve if the queue is empty.
-    if (this._queue.size < limit) {
+    if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size < limit) {
       return;
     }
 
     return new Promise(resolve => {
       const listener = () => {
-        if (this._queue.size < limit) {
+        if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size < limit) {
           this.removeListener('next', listener);
           resolve();
         }
@@ -1904,17 +1714,17 @@ class PQueue extends EventEmitter {
 
   async onIdle() {
     // Instantly resolve if none pending and if nothing else is queued
-    if (this._pendingCount === 0 && this._queue.size === 0) {
+    if (__classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") === 0 && __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size === 0) {
       return;
     }
 
     return new Promise(resolve => {
-      const existingResolve = this._resolveIdle;
+      const existingResolve = __classPrivateFieldGet(this, _PQueue_resolveIdle, \\"f\\");
 
-      this._resolveIdle = () => {
+      __classPrivateFieldSet(this, _PQueue_resolveIdle, () => {
         existingResolve();
         resolve();
-      };
+      }, \\"f\\");
     });
   }
   /**
@@ -1923,7 +1733,7 @@ class PQueue extends EventEmitter {
 
 
   get size() {
-    return this._queue.size;
+    return __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size;
   }
   /**
   Size of the queue, filtered by the given options.
@@ -1933,7 +1743,7 @@ class PQueue extends EventEmitter {
 
   sizeBy(options) {
     // eslint-disable-next-line unicorn/no-array-callback-reference
-    return this._queue.filter(options).length;
+    return __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").filter(options).length;
   }
   /**
   Number of running items (no longer in the queue).
@@ -1941,7 +1751,7 @@ class PQueue extends EventEmitter {
 
 
   get pending() {
-    return this._pendingCount;
+    return __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\");
   }
   /**
   Whether the queue is currently paused.
@@ -1949,11 +1759,11 @@ class PQueue extends EventEmitter {
 
 
   get isPaused() {
-    return this._isPaused;
+    return __classPrivateFieldGet(this, _PQueue_isPaused, \\"f\\");
   }
 
   get timeout() {
-    return this._timeout;
+    return __classPrivateFieldGet(this, _PQueue_timeout, \\"f\\");
   }
   /**
   Set the timeout for future operations.
@@ -1961,10 +1771,124 @@ class PQueue extends EventEmitter {
 
 
   set timeout(milliseconds) {
-    this._timeout = milliseconds;
+    __classPrivateFieldSet(this, _PQueue_timeout, milliseconds, \\"f\\");
   }
 
 }
+_PQueue_carryoverConcurrencyCount = new WeakMap(), _PQueue_isIntervalIgnored = new WeakMap(), _PQueue_intervalCount = new WeakMap(), _PQueue_intervalCap = new WeakMap(), _PQueue_interval = new WeakMap(), _PQueue_intervalEnd = new WeakMap(), _PQueue_intervalId = new WeakMap(), _PQueue_timeoutId = new WeakMap(), _PQueue_queue = new WeakMap(), _PQueue_queueClass = new WeakMap(), _PQueue_pendingCount = new WeakMap(), _PQueue_concurrency = new WeakMap(), _PQueue_isPaused = new WeakMap(), _PQueue_resolveEmpty = new WeakMap(), _PQueue_resolveIdle = new WeakMap(), _PQueue_timeout = new WeakMap(), _PQueue_throwOnTimeout = new WeakMap(), _PQueue_instances = new WeakSet(), _PQueue_doesIntervalAllowAnother_get = function _PQueue_doesIntervalAllowAnother_get() {
+  return __classPrivateFieldGet(this, _PQueue_isIntervalIgnored, \\"f\\") || __classPrivateFieldGet(this, _PQueue_intervalCount, \\"f\\") < __classPrivateFieldGet(this, _PQueue_intervalCap, \\"f\\");
+}, _PQueue_doesConcurrentAllowAnother_get = function _PQueue_doesConcurrentAllowAnother_get() {
+  return __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") < __classPrivateFieldGet(this, _PQueue_concurrency, \\"f\\");
+}, _PQueue_next = function _PQueue_next() {
+  var _a;
+
+  __classPrivateFieldSet(this, _PQueue_pendingCount, (_a = __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\"), _a--, _a), \\"f\\");
+
+  __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_tryToStartAnother).call(this);
+
+  this.emit('next');
+}, _PQueue_resolvePromises = function _PQueue_resolvePromises() {
+  __classPrivateFieldGet(this, _PQueue_resolveEmpty, \\"f\\").call(this);
+
+  __classPrivateFieldSet(this, _PQueue_resolveEmpty, empty, \\"f\\");
+
+  if (__classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") === 0) {
+    __classPrivateFieldGet(this, _PQueue_resolveIdle, \\"f\\").call(this);
+
+    __classPrivateFieldSet(this, _PQueue_resolveIdle, empty, \\"f\\");
+
+    this.emit('idle');
+  }
+}, _PQueue_onResumeInterval = function _PQueue_onResumeInterval() {
+  __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_onInterval).call(this);
+
+  __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_initializeIntervalIfNeeded).call(this);
+
+  __classPrivateFieldSet(this, _PQueue_timeoutId, undefined, \\"f\\");
+}, _PQueue_isIntervalPaused = function _PQueue_isIntervalPaused() {
+  const now = Date.now();
+
+  if (__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\") === undefined) {
+    const delay = __classPrivateFieldGet(this, _PQueue_intervalEnd, \\"f\\") - now;
+
+    if (delay < 0) {
+      // Act as the interval was done
+      // We don't need to resume it here because it will be resumed on line 160
+      __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, \\"f\\") ? __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") : 0, \\"f\\");
+    } else {
+      // Act as the interval is pending
+      if (__classPrivateFieldGet(this, _PQueue_timeoutId, \\"f\\") === undefined) {
+        __classPrivateFieldSet(this, _PQueue_timeoutId, setTimeout(() => {
+          __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_onResumeInterval).call(this);
+        }, delay), \\"f\\");
+      }
+
+      return true;
+    }
+  }
+
+  return false;
+}, _PQueue_tryToStartAnother = function _PQueue_tryToStartAnother() {
+  if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size === 0) {
+    // We can clear the interval (\\"pause\\")
+    // Because we can redo it later (\\"resume\\")
+    if (__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\")) {
+      clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\"));
+    }
+
+    __classPrivateFieldSet(this, _PQueue_intervalId, undefined, \\"f\\");
+
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_resolvePromises).call(this);
+
+    return false;
+  }
+
+  if (!__classPrivateFieldGet(this, _PQueue_isPaused, \\"f\\")) {
+    const canInitializeInterval = !__classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_isIntervalPaused).call(this);
+
+    if (__classPrivateFieldGet(this, _PQueue_instances, \\"a\\", _PQueue_doesIntervalAllowAnother_get) && __classPrivateFieldGet(this, _PQueue_instances, \\"a\\", _PQueue_doesConcurrentAllowAnother_get)) {
+      const job = __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").dequeue();
+
+      if (!job) {
+        return false;
+      }
+
+      this.emit('active');
+      job();
+
+      if (canInitializeInterval) {
+        __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_initializeIntervalIfNeeded).call(this);
+      }
+
+      return true;
+    }
+  }
+
+  return false;
+}, _PQueue_initializeIntervalIfNeeded = function _PQueue_initializeIntervalIfNeeded() {
+  if (__classPrivateFieldGet(this, _PQueue_isIntervalIgnored, \\"f\\") || __classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\") !== undefined) {
+    return;
+  }
+
+  __classPrivateFieldSet(this, _PQueue_intervalId, setInterval(() => {
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_onInterval).call(this);
+  }, __classPrivateFieldGet(this, _PQueue_interval, \\"f\\")), \\"f\\");
+
+  __classPrivateFieldSet(this, _PQueue_intervalEnd, Date.now() + __classPrivateFieldGet(this, _PQueue_interval, \\"f\\"), \\"f\\");
+}, _PQueue_onInterval = function _PQueue_onInterval() {
+  if (__classPrivateFieldGet(this, _PQueue_intervalCount, \\"f\\") === 0 && __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") === 0 && __classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\")) {
+    clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\"));
+
+    __classPrivateFieldSet(this, _PQueue_intervalId, undefined, \\"f\\");
+  }
+
+  __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, \\"f\\") ? __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") : 0, \\"f\\");
+
+  __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_processQueue).call(this);
+}, _PQueue_processQueue = function _PQueue_processQueue() {
+  // eslint-disable-next-line no-empty
+  while (__classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_tryToStartAnother).call(this)) {}
+};
 
 async function helper() {
   console.log(\\"Async helper\\");
@@ -2427,19 +2351,19 @@ exports[`Publish Test File via Babel: umd 1`] = `
     return first;
   }
 
+  var __classPrivateFieldGet$1 = undefined && undefined.__classPrivateFieldGet || function (receiver, state, kind, f) {
+    if (kind === \\"a\\" && !f) throw new TypeError(\\"Private accessor was defined without a getter\\");
+    if (typeof state === \\"function\\" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError(\\"Cannot read private member from an object whose class did not declare it\\");
+    return kind === \\"m\\" ? f : kind === \\"a\\" ? f.call(receiver) : f ? f.value : state.get(receiver);
+  };
+
+  var _PriorityQueue_queue;
   class PriorityQueue {
     constructor() {
-      Object.defineProperty(this, \\"_queue\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: []
-      });
+      _PriorityQueue_queue.set(this, []);
     }
 
     enqueue(run, options) {
-      var _a;
-
       options = {
         priority: 0,
         ...options
@@ -2449,36 +2373,57 @@ exports[`Publish Test File via Babel: umd 1`] = `
         run
       };
 
-      if (this.size && ((_a = this._queue[this.size - 1]) === null || _a === void 0 ? void 0 : _a.priority) >= options.priority) {
-        this._queue.push(element);
+      if (this.size && __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\")[this.size - 1].priority >= options.priority) {
+        __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").push(element);
 
         return;
       }
 
-      const index = lowerBound(this._queue, element, (a, b) => b.priority - a.priority);
+      const index = lowerBound(__classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\"), element, (a, b) => b.priority - a.priority);
 
-      this._queue.splice(index, 0, element);
+      __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").splice(index, 0, element);
     }
 
     dequeue() {
-      const item = this._queue.shift();
+      const item = __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").shift();
 
       return item === null || item === void 0 ? void 0 : item.run;
     }
 
     filter(options) {
-      return this._queue.filter(element => element.priority === options.priority).map(element => element.run);
+      return __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").filter(element => element.priority === options.priority).map(element => element.run);
     }
 
     get size() {
-      return this._queue.length;
+      return __classPrivateFieldGet$1(this, _PriorityQueue_queue, \\"f\\").length;
     }
 
   }
+  _PriorityQueue_queue = new WeakMap();
+
+  var __classPrivateFieldSet = undefined && undefined.__classPrivateFieldSet || function (receiver, state, value, kind, f) {
+    if (kind === \\"m\\") throw new TypeError(\\"Private method is not writable\\");
+    if (kind === \\"a\\" && !f) throw new TypeError(\\"Private accessor was defined without a setter\\");
+    if (typeof state === \\"function\\" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError(\\"Cannot write private member to an object whose class did not declare it\\");
+    return kind === \\"a\\" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+  };
+
+  var __classPrivateFieldGet = undefined && undefined.__classPrivateFieldGet || function (receiver, state, kind, f) {
+    if (kind === \\"a\\" && !f) throw new TypeError(\\"Private accessor was defined without a getter\\");
+    if (typeof state === \\"function\\" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError(\\"Cannot read private member from an object whose class did not declare it\\");
+    return kind === \\"m\\" ? f : kind === \\"a\\" ? f.call(receiver) : f ? f.value : state.get(receiver);
+  };
+
+  var _PQueue_instances, _PQueue_carryoverConcurrencyCount, _PQueue_isIntervalIgnored, _PQueue_intervalCount, _PQueue_intervalCap, _PQueue_interval, _PQueue_intervalEnd, _PQueue_intervalId, _PQueue_timeoutId, _PQueue_queue, _PQueue_queueClass, _PQueue_pendingCount, _PQueue_concurrency, _PQueue_isPaused, _PQueue_resolveEmpty, _PQueue_resolveIdle, _PQueue_timeout, _PQueue_throwOnTimeout, _PQueue_doesIntervalAllowAnother_get, _PQueue_doesConcurrentAllowAnother_get, _PQueue_next, _PQueue_resolvePromises, _PQueue_onResumeInterval, _PQueue_isIntervalPaused, _PQueue_tryToStartAnother, _PQueue_initializeIntervalIfNeeded, _PQueue_onInterval, _PQueue_processQueue;
 
   const empty = () => {};
 
   const timeoutError = new TimeoutError();
+  /**
+  The error thrown by \`queue.add()\` when a job is aborted before it is run. See \`signal\`.
+  */
+
+  class AbortError extends Error {}
   /**
   Promise queue with concurrency control.
   */
@@ -2488,109 +2433,44 @@ exports[`Publish Test File via Babel: umd 1`] = `
       var _a, _b, _c, _d;
 
       super();
-      Object.defineProperty(this, \\"_carryoverConcurrencyCount\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_isIntervalIgnored\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_intervalCount\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: 0
-      });
-      Object.defineProperty(this, \\"_intervalCap\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_interval\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_intervalEnd\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: 0
-      });
-      Object.defineProperty(this, \\"_intervalId\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_timeoutId\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_queue\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_queueClass\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_pendingCount\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: 0
-      }); // The \`!\` is needed because of https://github.com/microsoft/TypeScript/issues/32194
 
-      Object.defineProperty(this, \\"_concurrency\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_isPaused\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_resolveEmpty\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: empty
-      });
-      Object.defineProperty(this, \\"_resolveIdle\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: empty
-      });
-      Object.defineProperty(this, \\"_timeout\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, \\"_throwOnTimeout\\", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: void 0
-      }); // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      _PQueue_instances.add(this);
+
+      _PQueue_carryoverConcurrencyCount.set(this, void 0);
+
+      _PQueue_isIntervalIgnored.set(this, void 0);
+
+      _PQueue_intervalCount.set(this, 0);
+
+      _PQueue_intervalCap.set(this, void 0);
+
+      _PQueue_interval.set(this, void 0);
+
+      _PQueue_intervalEnd.set(this, 0);
+
+      _PQueue_intervalId.set(this, void 0);
+
+      _PQueue_timeoutId.set(this, void 0);
+
+      _PQueue_queue.set(this, void 0);
+
+      _PQueue_queueClass.set(this, void 0);
+
+      _PQueue_pendingCount.set(this, 0); // The \`!\` is needed because of https://github.com/microsoft/TypeScript/issues/32194
+
+
+      _PQueue_concurrency.set(this, void 0);
+
+      _PQueue_isPaused.set(this, void 0);
+
+      _PQueue_resolveEmpty.set(this, empty);
+
+      _PQueue_resolveIdle.set(this, empty);
+
+      _PQueue_timeout.set(this, void 0);
+
+      _PQueue_throwOnTimeout.set(this, void 0); // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+
 
       options = {
         carryoverConcurrencyCount: false,
@@ -2610,152 +2490,29 @@ exports[`Publish Test File via Babel: umd 1`] = `
         throw new TypeError(\`Expected \\\\\`interval\\\\\` to be a finite number >= 0, got \\\\\`\${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\\\\\` (\${typeof options.interval})\`);
       }
 
-      this._carryoverConcurrencyCount = options.carryoverConcurrencyCount;
-      this._isIntervalIgnored = options.intervalCap === Number.POSITIVE_INFINITY || options.interval === 0;
-      this._intervalCap = options.intervalCap;
-      this._interval = options.interval;
-      this._queue = new options.queueClass();
-      this._queueClass = options.queueClass;
+      __classPrivateFieldSet(this, _PQueue_carryoverConcurrencyCount, options.carryoverConcurrencyCount, \\"f\\");
+
+      __classPrivateFieldSet(this, _PQueue_isIntervalIgnored, options.intervalCap === Number.POSITIVE_INFINITY || options.interval === 0, \\"f\\");
+
+      __classPrivateFieldSet(this, _PQueue_intervalCap, options.intervalCap, \\"f\\");
+
+      __classPrivateFieldSet(this, _PQueue_interval, options.interval, \\"f\\");
+
+      __classPrivateFieldSet(this, _PQueue_queue, new options.queueClass(), \\"f\\");
+
+      __classPrivateFieldSet(this, _PQueue_queueClass, options.queueClass, \\"f\\");
+
       this.concurrency = options.concurrency;
-      this._timeout = options.timeout;
-      this._throwOnTimeout = options.throwOnTimeout === true;
-      this._isPaused = options.autoStart === false;
-    }
 
-    get _doesIntervalAllowAnother() {
-      return this._isIntervalIgnored || this._intervalCount < this._intervalCap;
-    }
+      __classPrivateFieldSet(this, _PQueue_timeout, options.timeout, \\"f\\");
 
-    get _doesConcurrentAllowAnother() {
-      return this._pendingCount < this._concurrency;
-    }
+      __classPrivateFieldSet(this, _PQueue_throwOnTimeout, options.throwOnTimeout === true, \\"f\\");
 
-    _next() {
-      this._pendingCount--;
-
-      this._tryToStartAnother();
-
-      this.emit('next');
-    }
-
-    _resolvePromises() {
-      this._resolveEmpty();
-
-      this._resolveEmpty = empty;
-
-      if (this._pendingCount === 0) {
-        this._resolveIdle();
-
-        this._resolveIdle = empty;
-        this.emit('idle');
-      }
-    }
-
-    _onResumeInterval() {
-      this._onInterval();
-
-      this._initializeIntervalIfNeeded();
-
-      this._timeoutId = undefined;
-    }
-
-    _isIntervalPaused() {
-      const now = Date.now();
-
-      if (this._intervalId === undefined) {
-        const delay = this._intervalEnd - now;
-
-        if (delay < 0) {
-          // Act as the interval was done
-          // We don't need to resume it here because it will be resumed on line 160
-          this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-        } else {
-          // Act as the interval is pending
-          if (this._timeoutId === undefined) {
-            this._timeoutId = setTimeout(() => {
-              this._onResumeInterval();
-            }, delay);
-          }
-
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    _tryToStartAnother() {
-      if (this._queue.size === 0) {
-        // We can clear the interval (\\"pause\\")
-        // Because we can redo it later (\\"resume\\")
-        if (this._intervalId) {
-          clearInterval(this._intervalId);
-        }
-
-        this._intervalId = undefined;
-
-        this._resolvePromises();
-
-        return false;
-      }
-
-      if (!this._isPaused) {
-        const canInitializeInterval = !this._isIntervalPaused();
-
-        if (this._doesIntervalAllowAnother && this._doesConcurrentAllowAnother) {
-          const job = this._queue.dequeue();
-
-          if (!job) {
-            return false;
-          }
-
-          this.emit('active');
-          job();
-
-          if (canInitializeInterval) {
-            this._initializeIntervalIfNeeded();
-          }
-
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    _initializeIntervalIfNeeded() {
-      if (this._isIntervalIgnored || this._intervalId !== undefined) {
-        return;
-      }
-
-      this._intervalId = setInterval(() => {
-        this._onInterval();
-      }, this._interval);
-      this._intervalEnd = Date.now() + this._interval;
-    }
-
-    _onInterval() {
-      if (this._intervalCount === 0 && this._pendingCount === 0 && this._intervalId) {
-        clearInterval(this._intervalId);
-        this._intervalId = undefined;
-      }
-
-      this._intervalCount = this._carryoverConcurrencyCount ? this._pendingCount : 0;
-
-      this._processQueue();
-    }
-    /**
-    Executes all queued functions until it reaches the limit.
-    */
-
-
-    _processQueue() {
-      // eslint-disable-next-line no-empty
-      while (this._tryToStartAnother()) {}
+      __classPrivateFieldSet(this, _PQueue_isPaused, options.autoStart === false, \\"f\\");
     }
 
     get concurrency() {
-      return this._concurrency;
+      return __classPrivateFieldGet(this, _PQueue_concurrency, \\"f\\");
     }
 
     set concurrency(newConcurrency) {
@@ -2763,9 +2520,9 @@ exports[`Publish Test File via Babel: umd 1`] = `
         throw new TypeError(\`Expected \\\\\`concurrency\\\\\` to be a number from 1 and up, got \\\\\`\${newConcurrency}\\\\\` (\${typeof newConcurrency})\`);
       }
 
-      this._concurrency = newConcurrency;
+      __classPrivateFieldSet(this, _PQueue_concurrency, newConcurrency, \\"f\\");
 
-      this._processQueue();
+      __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_processQueue).call(this);
     }
     /**
     Adds a sync or async task to the queue. Always returns a promise.
@@ -2775,12 +2532,27 @@ exports[`Publish Test File via Babel: umd 1`] = `
     async add(fn, options = {}) {
       return new Promise((resolve, reject) => {
         const run = async () => {
-          this._pendingCount++;
-          this._intervalCount++;
+          var _a;
+
+          var _b, _c;
+
+          __classPrivateFieldSet(this, _PQueue_pendingCount, (_b = __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\"), _b++, _b), \\"f\\");
+
+          __classPrivateFieldSet(this, _PQueue_intervalCount, (_c = __classPrivateFieldGet(this, _PQueue_intervalCount, \\"f\\"), _c++, _c), \\"f\\");
 
           try {
-            const operation = this._timeout === undefined && options.timeout === undefined ? fn() : pTimeout(Promise.resolve(fn()), options.timeout === undefined ? this._timeout : options.timeout, () => {
-              if (options.throwOnTimeout === undefined ? this._throwOnTimeout : options.throwOnTimeout) {
+            if ((_a = options.signal) === null || _a === void 0 ? void 0 : _a.aborted) {
+              // TODO: Use ABORT_ERR code when targeting Node.js 16 (https://nodejs.org/docs/latest-v16.x/api/errors.html#abort_err)
+              reject(new AbortError('The task was aborted.'));
+              return;
+            }
+
+            const operation = __classPrivateFieldGet(this, _PQueue_timeout, \\"f\\") === undefined && options.timeout === undefined ? fn({
+              signal: options.signal
+            }) : pTimeout(Promise.resolve(fn({
+              signal: options.signal
+            })), options.timeout === undefined ? __classPrivateFieldGet(this, _PQueue_timeout, \\"f\\") : options.timeout, () => {
+              if (options.throwOnTimeout === undefined ? __classPrivateFieldGet(this, _PQueue_throwOnTimeout, \\"f\\") : options.throwOnTimeout) {
                 reject(timeoutError);
               }
 
@@ -2794,12 +2566,12 @@ exports[`Publish Test File via Babel: umd 1`] = `
             this.emit('error', error);
           }
 
-          this._next();
+          __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_next).call(this);
         };
 
-        this._queue.enqueue(run, options);
+        __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").enqueue(run, options);
 
-        this._tryToStartAnother();
+        __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_tryToStartAnother).call(this);
 
         this.emit('add');
       });
@@ -2819,13 +2591,13 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 
     start() {
-      if (!this._isPaused) {
+      if (!__classPrivateFieldGet(this, _PQueue_isPaused, \\"f\\")) {
         return this;
       }
 
-      this._isPaused = false;
+      __classPrivateFieldSet(this, _PQueue_isPaused, false, \\"f\\");
 
-      this._processQueue();
+      __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_processQueue).call(this);
 
       return this;
     }
@@ -2835,7 +2607,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 
     pause() {
-      this._isPaused = true;
+      __classPrivateFieldSet(this, _PQueue_isPaused, true, \\"f\\");
     }
     /**
     Clear the queue.
@@ -2843,7 +2615,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 
     clear() {
-      this._queue = new this._queueClass();
+      __classPrivateFieldSet(this, _PQueue_queue, new (__classPrivateFieldGet(this, _PQueue_queueClass, \\"f\\"))(), \\"f\\");
     }
     /**
     Can be called multiple times. Useful if you for example add additional items at a later time.
@@ -2853,17 +2625,17 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
     async onEmpty() {
       // Instantly resolve if the queue is empty
-      if (this._queue.size === 0) {
+      if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size === 0) {
         return;
       }
 
       return new Promise(resolve => {
-        const existingResolve = this._resolveEmpty;
+        const existingResolve = __classPrivateFieldGet(this, _PQueue_resolveEmpty, \\"f\\");
 
-        this._resolveEmpty = () => {
+        __classPrivateFieldSet(this, _PQueue_resolveEmpty, () => {
           existingResolve();
           resolve();
-        };
+        }, \\"f\\");
       });
     }
     /**
@@ -2875,13 +2647,13 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
     async onSizeLessThan(limit) {
       // Instantly resolve if the queue is empty.
-      if (this._queue.size < limit) {
+      if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size < limit) {
         return;
       }
 
       return new Promise(resolve => {
         const listener = () => {
-          if (this._queue.size < limit) {
+          if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size < limit) {
             this.removeListener('next', listener);
             resolve();
           }
@@ -2898,17 +2670,17 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
     async onIdle() {
       // Instantly resolve if none pending and if nothing else is queued
-      if (this._pendingCount === 0 && this._queue.size === 0) {
+      if (__classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") === 0 && __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size === 0) {
         return;
       }
 
       return new Promise(resolve => {
-        const existingResolve = this._resolveIdle;
+        const existingResolve = __classPrivateFieldGet(this, _PQueue_resolveIdle, \\"f\\");
 
-        this._resolveIdle = () => {
+        __classPrivateFieldSet(this, _PQueue_resolveIdle, () => {
           existingResolve();
           resolve();
-        };
+        }, \\"f\\");
       });
     }
     /**
@@ -2917,7 +2689,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 
     get size() {
-      return this._queue.size;
+      return __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size;
     }
     /**
     Size of the queue, filtered by the given options.
@@ -2927,7 +2699,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
     sizeBy(options) {
       // eslint-disable-next-line unicorn/no-array-callback-reference
-      return this._queue.filter(options).length;
+      return __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").filter(options).length;
     }
     /**
     Number of running items (no longer in the queue).
@@ -2935,7 +2707,7 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 
     get pending() {
-      return this._pendingCount;
+      return __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\");
     }
     /**
     Whether the queue is currently paused.
@@ -2943,11 +2715,11 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 
     get isPaused() {
-      return this._isPaused;
+      return __classPrivateFieldGet(this, _PQueue_isPaused, \\"f\\");
     }
 
     get timeout() {
-      return this._timeout;
+      return __classPrivateFieldGet(this, _PQueue_timeout, \\"f\\");
     }
     /**
     Set the timeout for future operations.
@@ -2955,10 +2727,124 @@ exports[`Publish Test File via Babel: umd 1`] = `
 
 
     set timeout(milliseconds) {
-      this._timeout = milliseconds;
+      __classPrivateFieldSet(this, _PQueue_timeout, milliseconds, \\"f\\");
     }
 
   }
+  _PQueue_carryoverConcurrencyCount = new WeakMap(), _PQueue_isIntervalIgnored = new WeakMap(), _PQueue_intervalCount = new WeakMap(), _PQueue_intervalCap = new WeakMap(), _PQueue_interval = new WeakMap(), _PQueue_intervalEnd = new WeakMap(), _PQueue_intervalId = new WeakMap(), _PQueue_timeoutId = new WeakMap(), _PQueue_queue = new WeakMap(), _PQueue_queueClass = new WeakMap(), _PQueue_pendingCount = new WeakMap(), _PQueue_concurrency = new WeakMap(), _PQueue_isPaused = new WeakMap(), _PQueue_resolveEmpty = new WeakMap(), _PQueue_resolveIdle = new WeakMap(), _PQueue_timeout = new WeakMap(), _PQueue_throwOnTimeout = new WeakMap(), _PQueue_instances = new WeakSet(), _PQueue_doesIntervalAllowAnother_get = function _PQueue_doesIntervalAllowAnother_get() {
+    return __classPrivateFieldGet(this, _PQueue_isIntervalIgnored, \\"f\\") || __classPrivateFieldGet(this, _PQueue_intervalCount, \\"f\\") < __classPrivateFieldGet(this, _PQueue_intervalCap, \\"f\\");
+  }, _PQueue_doesConcurrentAllowAnother_get = function _PQueue_doesConcurrentAllowAnother_get() {
+    return __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") < __classPrivateFieldGet(this, _PQueue_concurrency, \\"f\\");
+  }, _PQueue_next = function _PQueue_next() {
+    var _a;
+
+    __classPrivateFieldSet(this, _PQueue_pendingCount, (_a = __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\"), _a--, _a), \\"f\\");
+
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_tryToStartAnother).call(this);
+
+    this.emit('next');
+  }, _PQueue_resolvePromises = function _PQueue_resolvePromises() {
+    __classPrivateFieldGet(this, _PQueue_resolveEmpty, \\"f\\").call(this);
+
+    __classPrivateFieldSet(this, _PQueue_resolveEmpty, empty, \\"f\\");
+
+    if (__classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") === 0) {
+      __classPrivateFieldGet(this, _PQueue_resolveIdle, \\"f\\").call(this);
+
+      __classPrivateFieldSet(this, _PQueue_resolveIdle, empty, \\"f\\");
+
+      this.emit('idle');
+    }
+  }, _PQueue_onResumeInterval = function _PQueue_onResumeInterval() {
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_onInterval).call(this);
+
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_initializeIntervalIfNeeded).call(this);
+
+    __classPrivateFieldSet(this, _PQueue_timeoutId, undefined, \\"f\\");
+  }, _PQueue_isIntervalPaused = function _PQueue_isIntervalPaused() {
+    const now = Date.now();
+
+    if (__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\") === undefined) {
+      const delay = __classPrivateFieldGet(this, _PQueue_intervalEnd, \\"f\\") - now;
+
+      if (delay < 0) {
+        // Act as the interval was done
+        // We don't need to resume it here because it will be resumed on line 160
+        __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, \\"f\\") ? __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") : 0, \\"f\\");
+      } else {
+        // Act as the interval is pending
+        if (__classPrivateFieldGet(this, _PQueue_timeoutId, \\"f\\") === undefined) {
+          __classPrivateFieldSet(this, _PQueue_timeoutId, setTimeout(() => {
+            __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_onResumeInterval).call(this);
+          }, delay), \\"f\\");
+        }
+
+        return true;
+      }
+    }
+
+    return false;
+  }, _PQueue_tryToStartAnother = function _PQueue_tryToStartAnother() {
+    if (__classPrivateFieldGet(this, _PQueue_queue, \\"f\\").size === 0) {
+      // We can clear the interval (\\"pause\\")
+      // Because we can redo it later (\\"resume\\")
+      if (__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\")) {
+        clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\"));
+      }
+
+      __classPrivateFieldSet(this, _PQueue_intervalId, undefined, \\"f\\");
+
+      __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_resolvePromises).call(this);
+
+      return false;
+    }
+
+    if (!__classPrivateFieldGet(this, _PQueue_isPaused, \\"f\\")) {
+      const canInitializeInterval = !__classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_isIntervalPaused).call(this);
+
+      if (__classPrivateFieldGet(this, _PQueue_instances, \\"a\\", _PQueue_doesIntervalAllowAnother_get) && __classPrivateFieldGet(this, _PQueue_instances, \\"a\\", _PQueue_doesConcurrentAllowAnother_get)) {
+        const job = __classPrivateFieldGet(this, _PQueue_queue, \\"f\\").dequeue();
+
+        if (!job) {
+          return false;
+        }
+
+        this.emit('active');
+        job();
+
+        if (canInitializeInterval) {
+          __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_initializeIntervalIfNeeded).call(this);
+        }
+
+        return true;
+      }
+    }
+
+    return false;
+  }, _PQueue_initializeIntervalIfNeeded = function _PQueue_initializeIntervalIfNeeded() {
+    if (__classPrivateFieldGet(this, _PQueue_isIntervalIgnored, \\"f\\") || __classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\") !== undefined) {
+      return;
+    }
+
+    __classPrivateFieldSet(this, _PQueue_intervalId, setInterval(() => {
+      __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_onInterval).call(this);
+    }, __classPrivateFieldGet(this, _PQueue_interval, \\"f\\")), \\"f\\");
+
+    __classPrivateFieldSet(this, _PQueue_intervalEnd, Date.now() + __classPrivateFieldGet(this, _PQueue_interval, \\"f\\"), \\"f\\");
+  }, _PQueue_onInterval = function _PQueue_onInterval() {
+    if (__classPrivateFieldGet(this, _PQueue_intervalCount, \\"f\\") === 0 && __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") === 0 && __classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\")) {
+      clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, \\"f\\"));
+
+      __classPrivateFieldSet(this, _PQueue_intervalId, undefined, \\"f\\");
+    }
+
+    __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, \\"f\\") ? __classPrivateFieldGet(this, _PQueue_pendingCount, \\"f\\") : 0, \\"f\\");
+
+    __classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_processQueue).call(this);
+  }, _PQueue_processQueue = function _PQueue_processQueue() {
+    // eslint-disable-next-line no-empty
+    while (__classPrivateFieldGet(this, _PQueue_instances, \\"m\\", _PQueue_tryToStartAnother).call(this)) {}
+  };
 
   async function helper() {
     console.log(\\"Async helper\\");
